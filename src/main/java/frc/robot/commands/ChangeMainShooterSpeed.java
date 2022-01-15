@@ -10,7 +10,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
-public class ChangeShooterSpeed extends CommandBase {
+public class ChangeMainShooterSpeed extends CommandBase {
 
   // Subsystem Instance
   private Shooter mShooter;
@@ -18,7 +18,7 @@ public class ChangeShooterSpeed extends CommandBase {
   // Saved Variables
   private int mChangeSpeed;
 
-  public ChangeShooterSpeed(Shooter subsystem, int changeSpeed) {
+  public ChangeMainShooterSpeed(Shooter subsystem, int changeSpeed) {
     // Subsystem Instance
     mShooter = subsystem;
 

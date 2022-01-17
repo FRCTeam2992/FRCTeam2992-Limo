@@ -7,26 +7,23 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 
-public class StartShooter extends CommandBase {
+public class ChangeMainShooterSpeed extends CommandBase {
 
   // Subsystem Instance
   private Shooter mShooter;
 
-  private double mMainShooterSpeed;
-  private double mSecondaryShooterSpeed;
+  // Saved Variables
+  private int mChangeSpeed;
 
-  public StartShooter(Shooter subsystem) {
+  public ChangeMainShooterSpeed(Shooter subsystem, int changeSpeed) {
     // Subsystem Instance
     mShooter = subsystem;
 
-
-    // Set the Subsystem Requirement
-    addRequirements(mShooter);
+    // Saved Variables
+    mChangeSpeed = changeSpeed;
   }
 
   // Called when the command is initially scheduled.
@@ -38,27 +35,22 @@ public class StartShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mMainShooterSpeed = mShooter.mainShooterSetSpeed;
-    mSecondaryShooterSpeed = mShooter.secondaryShooterSetSpeed;
-    mMainShooterSpeed = (mMainShooterSpeed / 600.0) * (Constants.shooterEncoderPulses * 4.0);
-    mSecondaryShooterSpeed = (mSecondaryShooterSpeed / 600.0) * (Constants.shooterEncoderPulses * 4.0);
-    SmartDashboard.putNumber("Commanded Main Speed", mMainShooterSpeed);
-    SmartDashboard.putNumber("Commanded Secondary Speed", mSecondaryShooterSpeed);
+    int changeSpeed = mShooter.mainShooterSetSpeed + mChangeSpeed;
 
-    mShooter.setMainShooterVelocity(mMainShooterSpeed);
-    mShooter.setSecondaryShooterVelocity(mSecondaryShooterSpeed);
+    changeSpeed = Math.max(0, changeSpeed);
+
+    mShooter.mainShooterSetSpeed = changeSpeed;
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mShooter.setMainShooterSpeed(0.0);
-    mShooter.setSecondaryShooterSpeed(0.0);
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

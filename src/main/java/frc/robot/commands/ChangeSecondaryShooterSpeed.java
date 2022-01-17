@@ -1,16 +1,13 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
-public class ChangeShooterSpeed extends CommandBase {
+public class ChangeSecondaryShooterSpeed extends CommandBase {
 
   // Subsystem Instance
   private Shooter mShooter;
@@ -18,7 +15,7 @@ public class ChangeShooterSpeed extends CommandBase {
   // Saved Variables
   private int mChangeSpeed;
 
-  public ChangeShooterSpeed(Shooter subsystem, int changeSpeed) {
+  public ChangeSecondaryShooterSpeed(Shooter subsystem, int changeSpeed) {
     // Subsystem Instance
     mShooter = subsystem;
 
@@ -29,23 +26,22 @@ public class ChangeShooterSpeed extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    int changeSpeed = mShooter.mainShooterSetSpeed + mChangeSpeed;
+    int changeSpeed = mShooter.secondaryShooterSetSpeed + mChangeSpeed;
 
     changeSpeed = Math.max(0, changeSpeed);
 
-    mShooter.mainShooterSetSpeed = changeSpeed;
+    mShooter.secondaryShooterSetSpeed = changeSpeed;
   }
+  
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
   }
 
   // Returns true when the command should end.

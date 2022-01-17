@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
@@ -34,6 +34,8 @@ public class Intake extends SubsystemBase {
     public Intake() {
 
         intakeMotor = new WPI_TalonSRX(11);
+        intakeMotor.setNeutralMode(NeutralMode.Brake);
+        intakeMotor.setInverted(true);
         addChild("Intake Motor", intakeMotor);
 
         intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, 0);

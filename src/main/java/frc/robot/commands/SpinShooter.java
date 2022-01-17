@@ -7,46 +7,29 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Shooter;
 
-public class ChangeSecondaryShooterSpeed extends CommandBase {
-
-  // Subsystem Instance
-  private Shooter mShooter;
-
-  // Saved Variables
-  private int mChangeSpeed;
-
-  public ChangeSecondaryShooterSpeed(Shooter subsystem, int changeSpeed) {
-    // Subsystem Instance
+public class SpinShooter extends CommandBase {
+  /** Creates a new SpinShooter. */
+ private Shooter mShooter;
+ 
+  public SpinShooter(Shooter subsystem) {
     mShooter = subsystem;
-
-    // Saved Variables
-    mChangeSpeed = changeSpeed;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    int changeSpeed = mShooter.secondaryShooterSetSpeed + mChangeSpeed;
-
-    changeSpeed = Math.max(0, changeSpeed);
-
-    mShooter.secondaryShooterSetSpeed = changeSpeed;
-  }
-  
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

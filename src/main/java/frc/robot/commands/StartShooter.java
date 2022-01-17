@@ -7,6 +7,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
@@ -38,8 +39,11 @@ public class StartShooter extends CommandBase {
   @Override
   public void execute() {
     mMainShooterSpeed = mShooter.mainShooterSetSpeed;
-
+    mSecondaryShooterSpeed = mShooter.secondaryShooterSetSpeed;
     mMainShooterSpeed = (mMainShooterSpeed / 600.0) * (Constants.shooterEncoderPulses * 4.0);
+    mSecondaryShooterSpeed = (mSecondaryShooterSpeed / 600.0) * (Constants.shooterEncoderPulses * 4.0);
+    SmartDashboard.putNumber("Commanded Main Speed", mMainShooterSpeed);
+    SmartDashboard.putNumber("Commanded Secondary Speed", mSecondaryShooterSpeed);
 
     mShooter.setMainShooterVelocity(mMainShooterSpeed);
     mShooter.setSecondaryShooterVelocity(mSecondaryShooterSpeed);

@@ -16,7 +16,8 @@ public class StartShooter extends CommandBase {
   // Subsystem Instance
   private Shooter mShooter;
 
-  private double mShooterSpeed;
+  private double mMainShooterSpeed;
+  private double mSecondaryShooterSpeed;
 
   public StartShooter(Shooter subsystem) {
     // Subsystem Instance
@@ -36,11 +37,12 @@ public class StartShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mShooterSpeed = mShooter.shooterSetSpeed;
+    mMainShooterSpeed = mShooter.mainShooterSetSpeed;
 
-    mShooterSpeed = (mShooterSpeed / 600.0) * (Constants.shooterEncoderPulses * 4.0);
+    mMainShooterSpeed = (mMainShooterSpeed / 600.0) * (Constants.shooterEncoderPulses * 4.0);
 
-    mShooter.setShooterVelocity(mShooterSpeed);
+    mShooter.setMainShooterVelocity(mMainShooterSpeed);
+    mShooter.setSecondaryShooterVelocity(mSecondaryShooterSpeed);
   }
 
   // Called once the command ends or is interrupted.

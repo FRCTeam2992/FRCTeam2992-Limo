@@ -32,8 +32,9 @@ public class Constants {
      * public static final int kRightMotor2Port = 3;
      * }
      */
-    
-     // Shooter Constants
-    public static final int defaultShooterSpeed = 3500;
+
+    // Shooter Constants
+    public static final int defaultMainShooterSpeed = 3500;
+    public static final int defaultSecondaryShooterSpeed = 1800;
     public static final int shooterEncoderPulses = 2048;
 }

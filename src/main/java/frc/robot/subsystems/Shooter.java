@@ -61,16 +61,17 @@ public class Shooter extends SubsystemBase {
     mainShooterFollow.follow(mainShooterLead);
 
     secondaryShooterLead = new WPI_TalonSRX(11);
-    
-
+    secondaryShooterLead.setNeutralMode(NeutralMode.Coast);
+    addChild("secondaryShooterLead", secondaryShooterLead);
+    secondaryShooterLead.setInverted(true);
     // secondaryShooterFollow = new WPI_VictorSPX(12);
 
-    addChild("secondaryShooterLead", secondaryShooterLead);
+    
     // addChild("secondaryShooterFollow", secondaryShooterFollow);
 
     // secondaryShooterFollow.follow(secondaryShooterLead);
     // secondaryShooterFollow.setInverted(true);
-    secondaryShooterLead.setNeutralMode(NeutralMode.Coast);
+    
     // secondaryShooterFollow.setNeutralMode(NeutralMode.Coast);
 
   }

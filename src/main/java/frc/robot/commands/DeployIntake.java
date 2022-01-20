@@ -26,6 +26,7 @@ public class DeployIntake extends CommandBase {
   @Override
   public void execute() {
     mIntake.deployIntake(!mIntake.getIntakeSloenoid());
+    // mIntake.deployIntake(toggle);
   }
 
   // Called once the command ends or is interrupted.

@@ -115,8 +115,8 @@ public class RobotContainer {
     SmartDashboard.putData("DecreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, -50));
 
     final JoystickButton startIntakeButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
-    startIntakeButton.toggleWhenPressed(new StartIntake(mIntake, 0.5));
-    SmartDashboard.putData("Start Intake", new StartIntake(mIntake, 0.5));
+    startIntakeButton.toggleWhenPressed(new StartIntake(mIntake, 0.75));
+    SmartDashboard.putData("Start Intake", new StartIntake(mIntake, 0.75));
 
     final JoystickButton deployIntakeButton = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
     deployIntakeButton.whenPressed(new DeployIntake(mIntake));

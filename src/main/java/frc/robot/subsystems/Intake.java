@@ -20,21 +20,24 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 /**
  *
  */
 public class Intake extends SubsystemBase {
 
-    private WPI_TalonSRX intakeMotor;
+    private WPI_VictorSPX intakeMotor;
     private Solenoid intakeSolenoid;
 
     private boolean intakeDeployed = false;
 
     public Intake() {
 
-        intakeMotor = new WPI_TalonSRX(11);
+        intakeMotor = new WPI_VictorSPX(11);
         intakeMotor.setNeutralMode(NeutralMode.Brake);
         intakeMotor.setInverted(true);
         addChild("Intake Motor", intakeMotor);
@@ -64,11 +67,12 @@ public class Intake extends SubsystemBase {
     }
 
     public boolean getIntakeSloenoid(){
-        return intakeSolenoid.get();
+        //return intakeSolenoid.get();
+        return intakeDeployed;
     }
 
     public void setIntakeMotor(double powerLevel){
-        intakeMotor.set(TalonSRXControlMode.PercentOutput, powerLevel);
+        intakeMotor.set(VictorSPXControlMode.PercentOutput, powerLevel);
     }
 
 }

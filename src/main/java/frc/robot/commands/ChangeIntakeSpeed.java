@@ -7,17 +7,20 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
-public class StartIntake extends CommandBase {
-  /** Creates a new StartIntake. */
+public class ChangeIntakeSpeed extends CommandBase {
+
   private Intake mIntake;
-  private double mPowerLevel;
 
-  public StartIntake(Intake subsystem, double powerLevel) {
-    // Use addRequirements() here to declare subsystem dependencies.
+  private double mChangeSpeed;
+
+  /** Creates a new ChangeIntakeSpeed. */
+  public ChangeIntakeSpeed(Intake subsystem, double changeSpeed) {
+
     mIntake = subsystem;
-    mPowerLevel = powerLevel;
 
-    addRequirements(subsystem);
+    mChangeSpeed = changeSpeed; 
+
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -27,8 +30,11 @@ public class StartIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mPowerLevel = mIntake.intakeSetSpeed;
-    mIntake.setIntakeMotor(mPowerLevel);
+    double changeSpeed = mIntake.intakeSetSpeed + mChangeSpeed;
+    
+    changeSpeed = Math.max(0, changeSpeed);
+
+    mIntake.setIntakeMotor(changeSpeed);
   }
 
   // Called once the command ends or is interrupted.

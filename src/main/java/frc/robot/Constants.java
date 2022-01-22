@@ -37,4 +37,7 @@ public class Constants {
     public static final int defaultMainShooterSpeed = 2300;
     public static final int defaultSecondaryShooterSpeed = 1700;
     public static final int shooterEncoderPulses = 2048;
+
+    //Intake Constant
+    public static final double defaultInatkeSpeed = 0.5;
 }

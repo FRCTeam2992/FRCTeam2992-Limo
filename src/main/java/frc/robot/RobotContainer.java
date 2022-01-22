@@ -100,12 +100,12 @@ public class RobotContainer {
 
     //Shooter stuff
     final POVButton decreaseShooterSpeed = new POVButton(controller0, 180);
-    decreaseShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, -100), true);
-    SmartDashboard.putData("DecreaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, -100));
+    decreaseShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, -50), true);
+    SmartDashboard.putData("DecreaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, -50));
 
     final POVButton increaseShooterSpeed = new POVButton(controller0, 0);
-    increaseShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, 100), true);
-    SmartDashboard.putData("increaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, 100));
+    increaseShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, 50), true);
+    SmartDashboard.putData("increaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, 50));
 
     final JoystickButton startShooterButton = new JoystickButton(controller0, XboxController.Button.kX.value);
     startShooterButton.toggleWhenPressed(new StartShooter(mShooter), true);

@@ -50,21 +50,21 @@ public class Shooter extends SubsystemBase {
   *
   */
   public Shooter() {
-    mainShooterLead = new WPI_TalonSRX(9);
+    mainShooterLead = new WPI_TalonSRX(12);
     mainShooterLead.setInverted(true);
     mainShooterLead.setNeutralMode(NeutralMode.Coast);
     addChild("mainShooterLead", mainShooterLead);
 
-    mainShooterFollow = new WPI_VictorSPX(10);
+    mainShooterFollow = new WPI_VictorSPX(13);
     mainShooterFollow.setInverted(false);
     mainShooterFollow.setNeutralMode(NeutralMode.Coast);
     addChild("mainShooterFollow", mainShooterFollow);
     mainShooterFollow.follow(mainShooterLead);
 
-    secondaryShooterLead = new WPI_TalonSRX(11);
+    secondaryShooterLead = new WPI_TalonSRX(14);
     secondaryShooterLead.setNeutralMode(NeutralMode.Coast);
     addChild("secondaryShooterLead", secondaryShooterLead);
-    secondaryShooterLead.setInverted(true);
+    //secondaryShooterLead.setSensorPhase(true);
 
     setDefaultCommand(new StopShooter(this));
     // secondaryShooterFollow = new WPI_VictorSPX(12);

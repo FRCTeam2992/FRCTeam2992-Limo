@@ -42,7 +42,6 @@ public class Intake extends SubsystemBase {
         intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, 0);
         addChild("Intake Solenoid", intakeSolenoid);
 
-        setDefaultCommand(new StopIntake(this));
     }
 
     @Override

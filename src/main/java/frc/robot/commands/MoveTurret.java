@@ -9,43 +9,36 @@ import frc.robot.subsystems.Turret;
 
 public class MoveTurret extends CommandBase {
 
-  //subsystem instances
+  private double mTurretSpeed = 0;
+
   private Turret mTurret;
 
-  //variables 
-  private double mTurretSpeed;
+  public MoveTurret(Turret subsystem, double speed) {
+      mTurretSpeed = speed;
 
-  /** Creates a new MoveSpindexer. */
-  public MoveTurret(Turret subsystem, double turretSpeed) {
-
-    mTurret = subsystem;
-
-    addRequirements(mTurret);
-
-    mTurretSpeed = turretSpeed; 
-
-    // Use addRequirements() here to declare subsystem dependencies.
+      addRequirements(subsystem);
   }
 
-  // Called when the command is initially scheduled.
+  // Called just before this Command runs the first time
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
-  // Called every time the scheduler runs while the command is scheduled.
+  // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    mTurret.setTurretSpeed(mTurretSpeed);
+        mTurret.setTurretSpeed(mTurretSpeed);
   }
 
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    mTurret.setTurretSpeed(0.0);
-  }
-
-  // Returns true when the command should end.
+  // Make this return true when this Command no longer needs to run execute()
   @Override
   public boolean isFinished() {
-    return false;
+      return false;
+  }
+
+  // Called once after isFinished returns true
+  @Override
+  public void end(boolean interrupted) {
+      mTurret.setTurretSpeed(0.0);
   }
 }

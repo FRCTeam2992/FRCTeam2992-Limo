@@ -25,7 +25,7 @@ public class Turret extends SubsystemBase {
 
   public Turret() {
       // Turret Motors
-      turretTalon = new WPI_TalonSRX(10);
+      turretTalon = new WPI_TalonSRX(13);
       turretTalon.setNeutralMode(NeutralMode.Brake);
 
       // Turret PID Controller
@@ -60,8 +60,7 @@ public class Turret extends SubsystemBase {
       turretTalon.set(ControlMode.PercentOutput, setSpeed);
   }
 
-  public Sendable
-  public Sendable goToAngle(double angle) {
+  public void goToAngle(double angle) {
       setTurretSpeed(turretRotate.calculate(getTurretAngle(), angle));
   }
 

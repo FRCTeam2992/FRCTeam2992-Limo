@@ -24,17 +24,48 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public class Constants {
-    /**
-     * public static final class DriveConstants {
-     * public static final int kLeftMotor1Port = 0;
-     * public static final int kLeftMotor2Port = 1;
-     * public static final int kRightMotor1Port = 2;
-     * public static final int kRightMotor2Port = 3;
-     * }
-     */
 
     // Shooter Constants
     public static final int defaultMainShooterSpeed = 2300;
     public static final int defaultSecondaryShooterSpeed = 1700;
     public static final int shooterEncoderPulses = 2048;
+
+    // Drive Variables
+    public static final boolean isFieldCentric = true;
+    public static final boolean isVelocityControlled = true;
+    public static final boolean isGyroCorrected = true;
+    public static final double joystickDeadband = 0.1;
+    public static double joystickXYSmoothFactor = 0.5;
+    public static double joystickRotationSmoothFactor = 0.5;
+    public static double joystickRotationInverseDeadband = 0.14;
+
+    // Length and Width of the Robot in Meters (Inches: 22.0 x 24.5)
+    // TODO Set these properly for minibot chassis
+    public static final double swerveWidth = 0.5588;
+    public static final double swerveLength = 0.6223;
+
+    // Max Swerve Speed (Velocity Control)
+    public static final double swerveMaxSpeed = 5.0; // (Meters per Second)
+
+    // Swerve Wheels and Gear Ratio
+    public static final double driveGearRatio = (50.0 / 14.0) * (16.0 / 28.0) * (45.0 / 15.0);
+    public static final double driveWheelDiameter = 0.1016;
+
+    // Analog Encoder Offsets (Degrees) - Opposite of Raw Reading - Bevel Gear to
+    // Right
+    public static final double frontLeftOffset = 0.0;
+    public static final double frontRightOffset = 0.0;
+    public static final double rearLeftOffset = 0.0;
+    public static final double rearRightOffset = 0.0;
+
+    // Swerve Drive PID (Velocity Control)
+    public static final double driveP = 0.15;
+    public static final double driveI = 0.0;
+    public static final double driveD = 0.0;
+    public static final double driveF = 0.05;
+
+    // Swerve Turn PID
+    public static final double turnP = 0.008;
+    public static final double turnI = 0.0;
+    public static final double turnD = 0.00005;
 }

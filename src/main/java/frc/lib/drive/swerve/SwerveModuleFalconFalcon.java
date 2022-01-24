@@ -3,12 +3,10 @@ package frc.lib.drive.swerve;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.sensors.CANCoder;
-import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.AnalogInput;
 
 public class SwerveModuleFalconFalcon {
 
@@ -97,9 +95,10 @@ public class SwerveModuleFalconFalcon {
     }
 
     public double getEncoderAngle() {
-        double tempAngle = (encoderInput.getAbsolutePosition() * (360.0 / 5.0)) - encoderOffset;
+        double tempAngle = encoderInput.getAbsolutePosition() - encoderOffset;
 
-        tempAngle -= 180.0;
+        // Not sure if -180 adjust needed.  Not sure why this was here before
+        // tempAngle -= 180.0;
 
         if (tempAngle < -180.0) {
             tempAngle += 360.0;

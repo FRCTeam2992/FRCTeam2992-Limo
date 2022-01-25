@@ -96,23 +96,23 @@ public class RobotContainer {
     // Create some buttons
     final POVButton decreaseShooterSpeed = new POVButton(controller0, 180);
     decreaseShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, -100), true);
-    SmartDashboard.putData("DecreaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, -100));
+    //SmartDashboard.putData("DecreaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, -100));
 
     final POVButton increaseShooterSpeed = new POVButton(controller0, 0);
     increaseShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, 100), true);
-    SmartDashboard.putData("increaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, 100));
+    //SmartDashboard.putData("increaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, 100));
 
     final JoystickButton startShooterButton = new JoystickButton(controller0, XboxController.Button.kX.value);
     startShooterButton.toggleWhenPressed(new StartShooter(mShooter), true);
-    SmartDashboard.putData("Start Shooter", new StartShooter(mShooter));
+    //SmartDashboard.putData("Start Shooter", new StartShooter(mShooter));
 
     final JoystickButton increaseSecondSpeed = new JoystickButton(controller0, XboxController.Button.kY.value);
     increaseSecondSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter, 50), true);
-    SmartDashboard.putData("IncreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, 50));
+    //SmartDashboard.putData("IncreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, 50));
 
     final JoystickButton decreaseSecondSpeed = new JoystickButton(controller0, XboxController.Button.kA.value);
     decreaseSecondSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter, -50), true);
-    SmartDashboard.putData("DecreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, -50));
+    //SmartDashboard.putData("DecreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, -50));
 
     final JoystickButton startIntakeButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
     startIntakeButton.toggleWhenPressed(new StartIntake(mIntake, 0.75));

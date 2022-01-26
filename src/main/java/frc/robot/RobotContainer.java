@@ -46,6 +46,8 @@ public class RobotContainer {
   public final Intake mIntake;
 
   public final Shooter mShooter;
+
+  public final Drivetrain mDrivetrain;
   // Joysticks
   private final XboxController controller0 = new XboxController(0);
 
@@ -62,10 +64,15 @@ public class RobotContainer {
     mShooter = new Shooter();
     mShooter.setDefaultCommand(new StopShooter(mShooter));
 
+    mDrivetrain = new Drivetrain();
+    mDrivetrain.setDefaultCommand(new DriveSticks(mDrivetrain));
+
     // Smartdashboard Subsystems
     SmartDashboard.putData(mIntake);
 
     SmartDashboard.putData(mShooter);
+
+    SmartDashboard.putData(mDrivetrain);
 
     // SmartDashboard Buttons
     SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
@@ -104,19 +111,19 @@ public class RobotContainer {
 
     final JoystickButton startShooterButton = new JoystickButton(controller0, XboxController.Button.kX.value);
     startShooterButton.toggleWhenPressed(new StartShooter(mShooter), true);
-    SmartDashboard.putData("Start Shooter", new StartShooter(mShooter));
+    //SmartDashboard.putData("Start Shooter", new StartShooter(mShooter));
 
     final JoystickButton increaseSecondSpeed = new JoystickButton(controller0, XboxController.Button.kY.value);
     increaseSecondSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter, 50), true);
-    SmartDashboard.putData("IncreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, 50));
+    //SmartDashboard.putData("IncreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, 50));
 
     final JoystickButton decreaseSecondSpeed = new JoystickButton(controller0, XboxController.Button.kA.value);
     decreaseSecondSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter, -50), true);
-    SmartDashboard.putData("DecreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, -50));
+   // SmartDashboard.putData("DecreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, -50));
 
     final JoystickButton startIntakeButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
-    startIntakeButton.toggleWhenPressed(new StartIntake(mIntake, 0.5));
-    SmartDashboard.putData("Start Intake", new StartIntake(mIntake, 0.5));
+    startIntakeButton.toggleWhenPressed(new StartIntake(mIntake, 0.75));
+    SmartDashboard.putData("Start Intake", new StartIntake(mIntake, 0.75));
 
     final JoystickButton deployIntakeButton = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
     deployIntakeButton.whenPressed(new DeployIntake(mIntake));

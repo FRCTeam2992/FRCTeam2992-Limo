@@ -32,7 +32,7 @@ public class Constants {
 
     // Drive Variables
     public static final boolean isFieldCentric = true;
-    public static final boolean isVelocityControlled = true;
+    public static final boolean isVelocityControlled = false;
     public static final boolean isGyroCorrected = true;
     public static final double joystickDeadband = 0.1;
     public static double joystickXYSmoothFactor = 0.5;
@@ -53,10 +53,10 @@ public class Constants {
 
     // Analog Encoder Offsets (Degrees) - Opposite of Raw Reading - Bevel Gear to
     // Right
-    public static final double frontLeftOffset = 0.0;
-    public static final double frontRightOffset = 0.0;
-    public static final double rearLeftOffset = 0.0;
-    public static final double rearRightOffset = 0.0;
+    public static final double frontLeftOffset = -84.1;
+    public static final double frontRightOffset = 145.2;
+    public static final double rearLeftOffset = -101.7;
+    public static final double rearRightOffset = 86.2;
 
     // Swerve Drive PID (Velocity Control)
     public static final double driveP = 0.15;

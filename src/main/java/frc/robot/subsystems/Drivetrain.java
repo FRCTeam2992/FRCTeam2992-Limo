@@ -82,29 +82,41 @@ public class Drivetrain extends SubsystemBase {
 
   public Drivetrain() {
     // Drive Motors
-    frontLeftDrive = new WPI_TalonFX(2);
-    frontLeftDrive.setInverted(false);
-
-    frontLeftTurn = new WPI_TalonFX(3);
-    frontLeftTurn.setInverted(false);
-
-    frontRightDrive = new WPI_TalonFX(4);
+    frontRightDrive = new WPI_TalonFX(2);
     frontRightDrive.setInverted(false);
+    addChild("frontRightDrive", frontRightDrive);
 
-    frontRightTurn = new WPI_TalonFX(5);
+    frontRightTurn = new WPI_TalonFX(3);
     frontRightTurn.setInverted(false);
+    addChild("frontRightTurn", frontRightTurn);
 
-    rearLeftDrive = new WPI_TalonFX(6);
-    rearLeftDrive.setInverted(false);
+    
+    frontLeftDrive = new WPI_TalonFX(4);
+    frontLeftDrive.setInverted(false);
+    addChild("frontLeftDrive", frontLeftDrive);
 
-    rearLeftTurn = new WPI_TalonFX(7);
-    rearLeftTurn.setInverted(false);
 
-    rearRightDrive = new WPI_TalonFX(8);
+    frontLeftTurn = new WPI_TalonFX(5);
+    frontLeftTurn.setInverted(false);
+    addChild("frontLeftTurn", frontLeftTurn);
+
+
+    rearRightDrive = new WPI_TalonFX(6);
     rearRightDrive.setInverted(false);
+    addChild("rearRightDrive", rearRightDrive);
 
-    rearRightTurn = new WPI_TalonFX(9);
+    rearRightTurn = new WPI_TalonFX(7);
     rearRightTurn.setInverted(false);
+    addChild("rearRightTurn", rearRightTurn);
+
+
+    rearLeftDrive = new WPI_TalonFX(8);
+    rearLeftDrive.setInverted(false);
+    addChild("rearLeftDrive", rearLeftDrive);
+
+    rearLeftTurn = new WPI_TalonFX(9);
+    rearLeftTurn.setInverted(false);
+    addChild("rearLeftTurn", rearLeftTurn);
 
     // Set motor states
     setTalonNeutralMode(NeutralMode.Coast);
@@ -114,14 +126,14 @@ public class Drivetrain extends SubsystemBase {
     setTurnCurrentLimit(60.0); // potentially unused
 
     // Drive Encoders
-    frontLeftEncoder = new CANCoder(0);
-    frontLeftEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
-    frontRightEncoder = new CANCoder(1);
+    frontRightEncoder = new CANCoder(3);
     frontRightEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
-    rearLeftEncoder = new CANCoder(2);
-    rearLeftEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
-    rearRightEncoder = new CANCoder(3);
+    frontLeftEncoder = new CANCoder(5);
+    frontLeftEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
+    rearRightEncoder = new CANCoder(7);
     rearRightEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
+    rearLeftEncoder = new CANCoder(9);
+    rearLeftEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
 
     // Turn PID Controllers
     frontLeftController = new PIDController(Constants.turnP, Constants.turnI, Constants.turnD);

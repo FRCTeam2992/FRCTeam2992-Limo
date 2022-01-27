@@ -98,7 +98,7 @@ public class SwerveModuleFalconFalcon {
         double tempAngle = encoderInput.getAbsolutePosition() - encoderOffset;
 
         // Not sure if -180 adjust needed.  Not sure why this was here before
-        // tempAngle -= 180.0;
+        //tempAngle += 180.0;
 
         if (tempAngle < -180.0) {
             tempAngle += 360.0;

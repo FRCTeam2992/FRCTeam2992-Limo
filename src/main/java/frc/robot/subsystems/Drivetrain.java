@@ -42,7 +42,7 @@ public class Drivetrain extends SubsystemBase {
   private WPI_TalonFX rearRightTurn;
 
   // Swerve modules
-  private SwerveModuleFalconFalcon m_frontLeftModule;
+  
 
   // Module CAN Encoders
   private final CANCoder frontLeftEncoder;
@@ -87,7 +87,7 @@ public class Drivetrain extends SubsystemBase {
     addChild("frontRightDrive", frontRightDrive);
 
     frontRightTurn = new WPI_TalonFX(3);
-    frontRightTurn.setInverted(false);
+    frontRightTurn.setInverted(true);
     addChild("frontRightTurn", frontRightTurn);
 
     
@@ -97,7 +97,7 @@ public class Drivetrain extends SubsystemBase {
 
 
     frontLeftTurn = new WPI_TalonFX(5);
-    frontLeftTurn.setInverted(false);
+    frontLeftTurn.setInverted(true);
     addChild("frontLeftTurn", frontLeftTurn);
 
 
@@ -106,7 +106,7 @@ public class Drivetrain extends SubsystemBase {
     addChild("rearRightDrive", rearRightDrive);
 
     rearRightTurn = new WPI_TalonFX(7);
-    rearRightTurn.setInverted(false);
+    rearRightTurn.setInverted(true);
     addChild("rearRightTurn", rearRightTurn);
 
 
@@ -115,7 +115,7 @@ public class Drivetrain extends SubsystemBase {
     addChild("rearLeftDrive", rearLeftDrive);
 
     rearLeftTurn = new WPI_TalonFX(9);
-    rearLeftTurn.setInverted(false);
+    rearLeftTurn.setInverted(true);
     addChild("rearLeftTurn", rearLeftTurn);
 
     // Set motor states
@@ -128,12 +128,19 @@ public class Drivetrain extends SubsystemBase {
     // Drive Encoders
     frontRightEncoder = new CANCoder(3);
     frontRightEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
+    frontRightEncoder.configSensorDirection(true);
+
     frontLeftEncoder = new CANCoder(5);
     frontLeftEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
+    frontLeftEncoder.configSensorDirection(true);
+
     rearRightEncoder = new CANCoder(7);
     rearRightEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
+    rearRightEncoder.configSensorDirection(true);
+
     rearLeftEncoder = new CANCoder(9);
     rearLeftEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
+    rearLeftEncoder.configSensorDirection(true);
 
     // Turn PID Controllers
     frontLeftController = new PIDController(Constants.turnP, Constants.turnI, Constants.turnD);

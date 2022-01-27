@@ -32,7 +32,7 @@ public class Constants {
 
     // Drive Variables
     public static final boolean isFieldCentric = true;
-    public static final boolean isVelocityControlled = false;
+    public static final boolean isVelocityControlled = true;
     public static final boolean isGyroCorrected = true;
     public static final double joystickDeadband = 0.1;
     public static double joystickXYSmoothFactor = 0.5;
@@ -41,14 +41,14 @@ public class Constants {
 
     // Length and Width of the Robot in Meters (Inches: 22.0 x 24.5)
     // TODO Set these properly for minibot chassis
-    public static final double swerveWidth = 0.5588;
-    public static final double swerveLength = 0.6223;
+    public static final double swerveWidth = 0.508;
+    public static final double swerveLength = 0.508;
 
     // Max Swerve Speed (Velocity Control)
-    public static final double swerveMaxSpeed = 5.0; // (Meters per Second)
+    public static final double swerveMaxSpeed = 2; // (Meters per Second)
 
     // Swerve Wheels and Gear Ratio
-    public static final double driveGearRatio = (50.0 / 14.0) * (16.0 / 28.0) * (45.0 / 15.0);
+    public static final double driveGearRatio = 6.75;//6.75:1
     public static final double driveWheelDiameter = 0.1016;
 
     // Analog Encoder Offsets (Degrees) - Opposite of Raw Reading - Bevel Gear to
@@ -59,12 +59,12 @@ public class Constants {
     public static final double rearRightOffset = 86.2;
 
     // Swerve Drive PID (Velocity Control)
-    public static final double driveP = 0.15;
+    public static final double driveP = 0.05;
     public static final double driveI = 0.0;
-    public static final double driveD = 0.0;
-    public static final double driveF = 0.05;
+    public static final double driveD = 0.01;
+    public static final double driveF = 0.047;
 
-    // Swerve Turn PID
+    // Swerve Turn PIDs
     public static final double turnP = 0.008;
     public static final double turnI = 0.0;
     public static final double turnD = 0.00005;

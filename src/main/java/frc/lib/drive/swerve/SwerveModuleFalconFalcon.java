@@ -128,15 +128,15 @@ public class SwerveModuleFalconFalcon {
         //angle -= 180.0;
 
 
-        // if (Math.abs(getEncoderAngle() - angle) > 90.0) {
-        //     if (angle > 0) {
-        //         angle -= 180.0;
-        //     } else {
-        //         angle += 180.0;
-        //     }
+        if (Math.abs(getEncoderAngle() - angle) > 90.0) {
+            if (angle > 0) {
+                angle -= 180.0;
+            } else {
+                angle += 180.0;
+            }
 
-        //     speed = -speed;
-        // }
+            speed = -speed;
+        }
 
         setVelocityMeters(speed);
         setTurnAngle(angle);

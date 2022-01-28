@@ -50,7 +50,7 @@ public class RobotContainer {
 
   public final Drivetrain mDrivetrain;
   // Joysticks
-  private final XboxController controller0 = new XboxController(0);
+  public final XboxController controller0 = new XboxController(0);
 
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -134,6 +134,9 @@ public class RobotContainer {
     SmartDashboard.putData("90 Modules", new SetSwerveAngle(mDrivetrain, 90));
     SmartDashboard.putData("180 Modules", new SetSwerveAngle(mDrivetrain, 180));
     SmartDashboard.putData("270 Modules", new SetSwerveAngle(mDrivetrain, -90));
+
+    final JoystickButton resetGyroButton = new JoystickButton(controller0, XboxController.Button.kStart.value);
+    resetGyroButton.whenPressed(new ResetGyro(mDrivetrain));
 
   }
 

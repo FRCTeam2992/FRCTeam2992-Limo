@@ -10,6 +10,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Translation2d;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -53,10 +55,10 @@ public class Constants {
 
     // Analog Encoder Offsets (Degrees) - Opposite of Raw Reading - Bevel Gear to
     // Right
-    public static final double frontLeftOffset = 95.5;
-    public static final double frontRightOffset = -33.6;
-    public static final double rearLeftOffset = 78.3;
-    public static final double rearRightOffset = -93.7;
+    public static final double frontLeftOffset = 84.29;
+    public static final double frontRightOffset = -144.2;
+    public static final double rearLeftOffset = 101.25;
+    public static final double rearRightOffset = -86.48;
 
     // Swerve Drive PID (Velocity Control)
     public static final double driveP = 0.05;
@@ -68,4 +70,13 @@ public class Constants {
     public static final double turnP = 0.008;
     public static final double turnI = 0.0;
     public static final double turnD = 0.00005;
+
+    //Gyro P
+    public static final double driveGyroP = 0.005;
+
+     // Swerve Module Translations
+     public static final Translation2d frontLeftLocation = new Translation2d(0.184, 0.184);
+     public static final Translation2d frontRightLocation = new Translation2d(0.184, -0.184);
+     public static final Translation2d rearLeftLocation = new Translation2d(-0.184, 0.184);
+     public static final Translation2d rearRightLocation = new Translation2d(-0.184, -0.184);
 }

@@ -68,11 +68,11 @@ public class Drivetrain extends SubsystemBase {
   // Robot Gyro
   public AHRS navx;
 
-  // // Swerve Drive Kinematics
-  // public final SwerveDriveKinematics swerveDriveKinematics;
+  // Swerve Drive Kinematics
+  public final SwerveDriveKinematics swerveDriveKinematics;
 
-  // // Swerve Drive Odometry
-  // public final SwerveDriveOdometry swerveDriveOdometry;
+  // Swerve Drive Odometry
+  public final SwerveDriveOdometry swerveDriveOdometry;
 
   // // Swerve Pose
   // public Pose2d latestSwervePose;
@@ -199,16 +199,16 @@ public class Drivetrain extends SubsystemBase {
     // robot gyro initialization
     navx = new AHRS(SPI.Port.kMXP);
 
-    // // Swerve Drive Kinematics
-    // swerveDriveKinematics = new
-    // SwerveDriveKinematics(Constants.frontLeftLocation,
-    // Constants.frontRightLocation,
-    // Constants.rearLeftLocation, Constants.rearRightLocation);
+    // Swerve Drive Kinematics
+    swerveDriveKinematics = new
+    SwerveDriveKinematics(Constants.frontLeftLocation,
+    Constants.frontRightLocation,
+    Constants.rearLeftLocation, Constants.rearRightLocation);
 
-    // // Serve Drive Odometry
-    // swerveDriveOdometry = new SwerveDriveOdometry(swerveDriveKinematics,
-    // Rotation2d.fromDegrees(-navx.getYaw()),
-    // new Pose2d(0.0, 0.0, new Rotation2d()));
+    // Serve Drive Odometry
+    swerveDriveOdometry = new SwerveDriveOdometry(
+      swerveDriveKinematics,Rotation2d.fromDegrees(navx.getYaw()),
+        new Pose2d(0.0, 0.0, new Rotation2d()));
 
     // Motion Trajectories
     loadMotionPaths();
@@ -250,6 +250,11 @@ public class Drivetrain extends SubsystemBase {
           rearRightModule.getWheelSpeedMeters());
 
       dashboardCounter = 0;
+
+      SmartDashboard.putNumber("Gyro Pitch", navx.getPitch());
+      SmartDashboard.putNumber("Gyro Roll", navx.getRoll());
+      SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
+
     }
 
   }
@@ -301,15 +306,15 @@ public class Drivetrain extends SubsystemBase {
     rearRightModule.stop();
   }
 
-  // public void resetOdometry() {
-  // swerveDriveOdometry.resetPosition(new Pose2d(0.0, 0.0, new Rotation2d()),
-  // Rotation2d.fromDegrees(-navx.getYaw()));
-  // }
+  public void resetOdometry() {
+  swerveDriveOdometry.resetPosition(new Pose2d(0.0, 0.0, new Rotation2d()),
+  Rotation2d.fromDegrees(-navx.getYaw()));
+  }
 
-  // public void setOdometryPosition(Pose2d position) {
-  // swerveDriveOdometry.resetPosition(position,
-  // Rotation2d.fromDegrees(-navx.getYaw()));
-  // }
+  public void setOdometryPosition(Pose2d position) {
+  swerveDriveOdometry.resetPosition(position,
+  Rotation2d.fromDegrees(-navx.getYaw()));
+  }
 
   private void loadMotionPaths() {
     // Trajectory Paths

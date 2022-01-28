@@ -94,7 +94,7 @@ public class DriveSticks extends CommandBase {
       double tempInverseDeadband = Constants.joystickRotationInverseDeadband;
 
       // if (Robot.m_robotContainer.slowModeButton.get()) {
-      //   tempInverseDeadband /= 0.6;
+      // tempInverseDeadband /= 0.6;
       // }
 
       if (x2 >= 0.0) {
@@ -110,19 +110,20 @@ public class DriveSticks extends CommandBase {
 
     // // Check if LimeLight Button Pressed
     // if (Robot.m_robotContainer.autoAimButton.get()) {
-    //   // Turn On the LimeLight
-    //   mDriveTrain.limeLightCamera.setLedMode(LedMode.On);
+    // // Turn On the LimeLight
+    // mDriveTrain.limeLightCamera.setLedMode(LedMode.On);
 
-    //   // Check if LimeLight Has a Target
-    //   if (mDriveTrain.limeLightCamera.hasTarget() && Math.abs(mDriveTrain.limeLightCamera.getTargetXOffset()) > .5) {
-    //     // Calculate the Drive Aim Correction
-    //     x2 = -mDriveTrain.limeLightCamera.getTargetXOffset() * Constants.driveAimP;
+    // // Check if LimeLight Has a Target
+    // if (mDriveTrain.limeLightCamera.hasTarget() &&
+    // Math.abs(mDriveTrain.limeLightCamera.getTargetXOffset()) > .5) {
+    // // Calculate the Drive Aim Correction
+    // x2 = -mDriveTrain.limeLightCamera.getTargetXOffset() * Constants.driveAimP;
 
-    //     gyroTargetRecorded = false;
-    //   }
+    // gyroTargetRecorded = false;
+    // }
     // } else {
-    //   // Turn Off the LimeLight
-    //   mDriveTrain.limeLightCamera.setLedMode(LedMode.Off);
+    // // Turn Off the LimeLight
+    // mDriveTrain.limeLightCamera.setLedMode(LedMode.Off);
     // }
 
     // Check for Movement
@@ -138,9 +139,9 @@ public class DriveSticks extends CommandBase {
 
       // // Check for Slow Mode
       // if (Robot.m_robotContainer.slowModeButton.get()) {
-      //   x1 *= 0.6;
-      //   y1 *= 0.6;
-      //   x2 *= 0.6;
+      // x1 *= 0.6;
+      // y1 *= 0.6;
+      // x2 *= 0.6;
       // }
 
       // Gyro Input (-180 to 180)
@@ -150,60 +151,60 @@ public class DriveSticks extends CommandBase {
         gyroTargetRecorded = false;
       }
 
-      // // Gyro Correction
-      // if (Math.abs(x2) <= Constants.joystickDeadband && Constants.isGyroCorrected) {
+      // Gyro Correction
+      if (Math.abs(x2) <= Constants.joystickDeadband && Constants.isGyroCorrected) {
 
-      //   // Check for Recorded Value
-      //   if (gyroTargetRecorded) {
-      //     // Get the Gyro Value
-      //     double tempGyroValue = gyroValue;
+        // Check for Recorded Value
+        if (gyroTargetRecorded) {
+          // Get the Gyro Value
+          double tempGyroValue = gyroValue;
 
-      //     // Normalize the Target Angle (-180 - 180)
-      //     if (gyroTarget < -180.0) {
-      //       gyroTarget += 360.0;
-      //     } else if (gyroTarget > 180) {
-      //       gyroTarget -= 360.0;
-      //     }
+          // Normalize the Target Angle (-180 - 180)
+          if (gyroTarget < -180.0) {
+            gyroTarget += 360.0;
+          } else if (gyroTarget > 180) {
+            gyroTarget -= 360.0;
+          }
 
-      //     // Normalize the Gyro Angle (-180 - 180)
-      //     if (tempGyroValue > 180.0) {
-      //       tempGyroValue -= 360;
-      //     } else if (tempGyroValue < -180) {
-      //       tempGyroValue += 360;
-      //     }
+          // Normalize the Gyro Angle (-180 - 180)
+          if (tempGyroValue > 180.0) {
+            tempGyroValue -= 360;
+          } else if (tempGyroValue < -180) {
+            tempGyroValue += 360;
+          }
 
-      //     // Get the Gyro Error
-      //     double gyroError = gyroTarget + tempGyroValue;
+          // Get the Gyro Error
+          double gyroError = gyroTarget + tempGyroValue;
 
-      //     // Normalize the Gyro Error (-180 - 180)
-      //     if (gyroError > 180.0) {
-      //       gyroError -= 360.0;
-      //     } else if (gyroError < -180.0) {
-      //       gyroError += 360.0;
-      //     }
+          // Normalize the Gyro Error (-180 - 180)
+          if (gyroError > 180.0) {
+            gyroError -= 360.0;
+          } else if (gyroError < -180.0) {
+            gyroError += 360.0;
+          }
 
-      //     // Calculate Correction Speed
-      //     x2 = gyroError * Constants.driveGyroP;
-      //   } else {
-      //     // Record a Gyro Value
-      //     gyroTarget = -gyroValue;
-      //     gyroTargetRecorded = true;
-      //   }
-      // } else {
-      //   // Reset the Target Recorded State
-      //   gyroTargetRecorded = false;
-      // }
+          // Calculate Correction Speed
+          x2 = gyroError * Constants.driveGyroP;
+        } else {
+          // Record a Gyro Value
+          gyroTarget = -gyroValue;
+          gyroTargetRecorded = true;
+        }
+      } else {
+        // Reset the Target Recorded State
+        gyroTargetRecorded = false;
+      }
 
       // Calculate the Swerve States
       double[] swerveStates;
 
-      // // Check for Field Centric Enabled
-      // if (Constants.isFieldCentric && !Robot.m_robotContainer.controller1.getBumper(Hand.kRight)) {
-      //   swerveStates = mDriveTrain.swerveController.calculate(x1, y1, x2, gyroValue + 180.0);
-      // } else {
-      swerveStates = mDriveTrain.swerveController.calculate(x1, y1, x2);
-      // }
- 
+      // Check for Field Centric Enabled
+      if (Constants.isFieldCentric) {
+        swerveStates = mDriveTrain.swerveController.calculate(x1, y1, x2, gyroValue + 180);
+      } else {
+        swerveStates = mDriveTrain.swerveController.calculate(x1, y1, x2);
+      }
+
       // Get the Swerve Modules
       SwerveModuleFalconFalcon frontLeft = mDriveTrain.frontLeftModule;
       SwerveModuleFalconFalcon frontRight = mDriveTrain.frontRightModule;

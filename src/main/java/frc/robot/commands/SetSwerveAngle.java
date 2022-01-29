@@ -6,18 +6,23 @@ package frc.robot.commands;
 
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.lib.drive.swerve.SwerveModuleFalconFalcon;
 import frc.robot.subsystems.Drivetrain;
 
 public class SetSwerveAngle extends CommandBase {
   private Drivetrain mDrivetrain;
 
-  private double mAngle;
+  private double mFLAngle;
+  private double mFRAngle;
+  private double mRLAngle;
+  private double mRRAngle;
 
-  public SetSwerveAngle(Drivetrain subsystem, double angle) {
+  public SetSwerveAngle(Drivetrain subsystem, double flAngle, double frAngle, double rlAngle, double rrAngle) {
     mDrivetrain = subsystem;
+    mFLAngle = flAngle;
+    mFRAngle = frAngle;
+    mRLAngle = rlAngle;
+    mRRAngle = rrAngle;
 
-    mAngle = angle;
     addRequirements(mDrivetrain);
   }
 
@@ -29,10 +34,10 @@ public class SetSwerveAngle extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mDrivetrain.frontLeftModule.setTurnAngle(mAngle);
-    mDrivetrain.frontRightModule.setTurnAngle(mAngle);
-    mDrivetrain.rearLeftModule.setTurnAngle(mAngle);
-    mDrivetrain.rearRightModule.setTurnAngle(mAngle);
+    mDrivetrain.frontLeftModule.setTurnAngle(mFLAngle);
+    mDrivetrain.frontRightModule.setTurnAngle(mFRAngle);
+    mDrivetrain.rearLeftModule.setTurnAngle(mRLAngle);
+    mDrivetrain.rearRightModule.setTurnAngle(mRRAngle);
   }
 
   // Called once the command ends or is interrupted.

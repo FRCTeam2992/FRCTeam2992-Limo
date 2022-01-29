@@ -102,38 +102,44 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Create some buttons
-    final POVButton decreaseShooterSpeed = new POVButton(controller0, 180);
-    decreaseShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, -100), true);
+    // final POVButton decreaseShooterSpeed = new POVButton(controller0, 180);
+    // decreaseShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, -100), true);
     SmartDashboard.putData("DecreaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, -100));
 
-    final POVButton increaseShooterSpeed = new POVButton(controller0, 0);
-    increaseShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, 100), true);
+    // final POVButton increaseShooterSpeed = new POVButton(controller0, 0);
+    // increaseShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, 100), true);
     SmartDashboard.putData("increaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, 100));
 
     final JoystickButton startShooterButton = new JoystickButton(controller0, XboxController.Button.kX.value);
     startShooterButton.toggleWhenPressed(new StartShooter(mShooter), true);
     //SmartDashboard.putData("Start Shooter", new StartShooter(mShooter));
 
-    final JoystickButton increaseSecondSpeed = new JoystickButton(controller0, XboxController.Button.kY.value);
-    increaseSecondSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter, 50), true);
-    //SmartDashboard.putData("IncreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, 50));
+    // final JoystickButton increaseSecondSpeed = new JoystickButton(controller0, XboxController.Button.kY.value);
+    // increaseSecondSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter, 50), true);
+    SmartDashboard.putData("IncreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, 50));
 
-    final JoystickButton decreaseSecondSpeed = new JoystickButton(controller0, XboxController.Button.kA.value);
-    decreaseSecondSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter, -50), true);
+  //   final JoystickButton decreaseSecondSpeed = new JoystickButton(controller0, XboxController.Button.kA.value);
+  //   decreaseSecondSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter, -50), true);
    // SmartDashboard.putData("DecreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, -50));
 
-    final JoystickButton startIntakeButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
-    startIntakeButton.toggleWhenPressed(new StartIntake(mIntake, 0.75));
-    SmartDashboard.putData("Start Intake", new StartIntake(mIntake, 0.75));
+    // final JoystickButton startIntakeButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
+    // startIntakeButton.toggleWhenPressed(new StartIntake(mIntake, 0.75));
+    // SmartDashboard.putData("Start Intake", new StartIntake(mIntake, 0.75));
 
-    final JoystickButton deployIntakeButton = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
-    deployIntakeButton.whenPressed(new DeployIntake(mIntake));
-    SmartDashboard.putData("Deploy Intake", new DeployIntake(mIntake));
+    // final JoystickButton deployIntakeButton = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
+    // deployIntakeButton.whenPressed(new DeployIntake(mIntake));
+    // SmartDashboard.putData("Deploy Intake", new DeployIntake(mIntake));
 
-    SmartDashboard.putData("0 Modules", new SetSwerveAngle(mDrivetrain, 0));
-    SmartDashboard.putData("90 Modules", new SetSwerveAngle(mDrivetrain, 90));
-    SmartDashboard.putData("180 Modules", new SetSwerveAngle(mDrivetrain, 180));
-    SmartDashboard.putData("270 Modules", new SetSwerveAngle(mDrivetrain, -90));
+    SmartDashboard.putData("0 Modules", new SetSwerveAngle(mDrivetrain, 0.0, 0.0, 0.0, 0.0));
+
+    final JoystickButton swerveXPatterButton = new JoystickButton(controller0, XboxController.Button.kX.value);
+    swerveXPatterButton.whenPressed(new SetSwerveAngle(mDrivetrain, 45.0, -45.0, -45.0, 45.0));
+    swerveXPatterButton.whenReleased(new DriveSticks(mDrivetrain));
+
+    
+    // SmartDashboard.putData("90 Modules", new SetSwerveAngle(mDrivetrain, 90));
+    // SmartDashboard.putData("180 Modules", new SetSwerveAngle(mDrivetrain, 180));
+    // SmartDashboard.putData("270 Modules", new SetSwerveAngle(mDrivetrain, -90));
 
     final JoystickButton resetGyroButton = new JoystickButton(controller0, XboxController.Button.kStart.value);
     resetGyroButton.whenPressed(new ResetGyro(mDrivetrain));

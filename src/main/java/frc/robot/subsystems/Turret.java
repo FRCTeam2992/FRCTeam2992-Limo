@@ -61,6 +61,8 @@ public class Turret extends SubsystemBase {
   }
 
   public void goToAngle(double angle) {
+      angle = Math.min(angle, Constants.turretMaxEnd);
+      angle = Math.max(angle, Constants.turretMinEnd);
       setTurretSpeed(turretRotate.calculate(getTurretAngle(), angle));
   }
 

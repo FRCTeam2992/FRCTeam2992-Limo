@@ -119,7 +119,7 @@ public class Drivetrain extends SubsystemBase {
     addChild("rearLeftTurn", rearLeftTurn);
 
     // Set motor states
-    setTalonNeutralMode(NeutralMode.Coast);
+    setTalonNeutralMode(NeutralMode.Brake);
 
     // TODO: figure out current values
     setDriveCurrentLimit(60.0);

@@ -42,12 +42,11 @@ public class Constants {
     public static double joystickRotationInverseDeadband = 0.14;
 
     // Length and Width of the Robot in Meters (Inches: 22.0 x 24.5)
-    // TODO Set these properly for minibot chassis
-    public static final double swerveWidth = 0.508;
-    public static final double swerveLength = 0.508;
+    public static final double swerveWidth = 0.591;
+    public static final double swerveLength = 0.654;
 
     // Max Swerve Speed (Velocity Control)
-    public static final double swerveMaxSpeed = 2; // (Meters per Second)
+    public static final double swerveMaxSpeed = 3.5; // (Meters per Second)
 
     // Swerve Wheels and Gear Ratio
     public static final double driveGearRatio = 6.75;//6.75:1
@@ -74,9 +73,9 @@ public class Constants {
     //Gyro P
     public static final double driveGyroP = 0.005;
 
-     // Swerve Module Translations
-     public static final Translation2d frontLeftLocation = new Translation2d(0.184, 0.184);
-     public static final Translation2d frontRightLocation = new Translation2d(0.184, -0.184);
-     public static final Translation2d rearLeftLocation = new Translation2d(-0.184, 0.184);
-     public static final Translation2d rearRightLocation = new Translation2d(-0.184, -0.184);
+     // Swerve Module Translations x=.591/2  y=.654/2
+     public static final Translation2d frontLeftLocation = new Translation2d(0.2955, 0.327);
+     public static final Translation2d frontRightLocation = new Translation2d(0.2955, -0.327);
+     public static final Translation2d rearLeftLocation = new Translation2d(-0.2955, 0.327);
+     public static final Translation2d rearRightLocation = new Translation2d(-0.2955, -0.327);
 }

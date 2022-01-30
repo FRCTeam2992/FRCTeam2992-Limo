@@ -42,7 +42,6 @@ public class Drivetrain extends SubsystemBase {
   private WPI_TalonFX rearRightTurn;
 
   // Swerve modules
-  
 
   // Module CAN Encoders
   private final CANCoder frontLeftEncoder;
@@ -90,16 +89,13 @@ public class Drivetrain extends SubsystemBase {
     frontRightTurn.setInverted(true);
     addChild("frontRightTurn", frontRightTurn);
 
-    
     frontLeftDrive = new WPI_TalonFX(4);
     frontLeftDrive.setInverted(false);
     addChild("frontLeftDrive", frontLeftDrive);
 
-
     frontLeftTurn = new WPI_TalonFX(5);
     frontLeftTurn.setInverted(true);
     addChild("frontLeftTurn", frontLeftTurn);
-
 
     rearRightDrive = new WPI_TalonFX(6);
     rearRightDrive.setInverted(false);
@@ -108,7 +104,6 @@ public class Drivetrain extends SubsystemBase {
     rearRightTurn = new WPI_TalonFX(7);
     rearRightTurn.setInverted(true);
     addChild("rearRightTurn", rearRightTurn);
-
 
     rearLeftDrive = new WPI_TalonFX(8);
     rearLeftDrive.setInverted(false);
@@ -119,7 +114,8 @@ public class Drivetrain extends SubsystemBase {
     addChild("rearLeftTurn", rearLeftTurn);
 
     // Set motor states
-    setTalonNeutralMode(NeutralMode.Brake);
+    setDriveNeutralMode(NeutralMode.Coast);
+    setTurnNeutralMode(NeutralMode.Coast);
 
     // TODO: figure out current values
     setDriveCurrentLimit(60.0);
@@ -200,14 +196,13 @@ public class Drivetrain extends SubsystemBase {
     navx = new AHRS(SPI.Port.kMXP);
 
     // Swerve Drive Kinematics
-    swerveDriveKinematics = new
-    SwerveDriveKinematics(Constants.frontLeftLocation,
-    Constants.frontRightLocation,
-    Constants.rearLeftLocation, Constants.rearRightLocation);
+    swerveDriveKinematics = new SwerveDriveKinematics(Constants.frontLeftLocation,
+        Constants.frontRightLocation,
+        Constants.rearLeftLocation, Constants.rearRightLocation);
 
     // Serve Drive Odometry
     swerveDriveOdometry = new SwerveDriveOdometry(
-      swerveDriveKinematics,Rotation2d.fromDegrees(navx.getYaw()),
+        swerveDriveKinematics, Rotation2d.fromDegrees(navx.getYaw()),
         new Pose2d(0.0, 0.0, new Rotation2d()));
 
     // Motion Trajectories
@@ -259,14 +254,17 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
-  public void setTalonNeutralMode(NeutralMode mode) {
+  public void setDriveNeutralMode(NeutralMode mode) {
     frontLeftDrive.setNeutralMode(mode);
-    frontLeftTurn.setNeutralMode(mode);
     frontRightDrive.setNeutralMode(mode);
-    frontRightTurn.setNeutralMode(mode);
     rearLeftDrive.setNeutralMode(mode);
-    rearLeftTurn.setNeutralMode(mode);
     rearRightDrive.setNeutralMode(mode);
+  }
+
+  public void setTurnNeutralMode(NeutralMode mode) {
+    frontLeftTurn.setNeutralMode(mode);
+    frontRightTurn.setNeutralMode(mode);
+    rearLeftTurn.setNeutralMode(mode);
     rearRightTurn.setNeutralMode(mode);
   }
 
@@ -307,13 +305,13 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void resetOdometry() {
-  swerveDriveOdometry.resetPosition(new Pose2d(0.0, 0.0, new Rotation2d()),
-  Rotation2d.fromDegrees(-navx.getYaw()));
+    swerveDriveOdometry.resetPosition(new Pose2d(0.0, 0.0, new Rotation2d()),
+        Rotation2d.fromDegrees(-navx.getYaw()));
   }
 
   public void setOdometryPosition(Pose2d position) {
-  swerveDriveOdometry.resetPosition(position,
-  Rotation2d.fromDegrees(-navx.getYaw()));
+    swerveDriveOdometry.resetPosition(position,
+        Rotation2d.fromDegrees(-navx.getYaw()));
   }
 
   private void loadMotionPaths() {

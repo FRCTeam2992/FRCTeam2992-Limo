@@ -74,7 +74,7 @@ public class Drivetrain extends SubsystemBase {
   public final SwerveDriveOdometry swerveDriveOdometry;
 
   // // Swerve Pose
-  // public Pose2d latestSwervePose;
+  public Pose2d latestSwervePose;
 
   // DriveTrain Dashboard Update Counter
   private int dashboardCounter = 0;

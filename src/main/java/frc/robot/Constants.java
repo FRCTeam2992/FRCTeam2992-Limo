@@ -30,7 +30,7 @@ public class Constants {
     public static final double driveGearRatio = 6.75;//6.75:1
     public static final double driveWheelDiameter = 0.1016;
 
-    // Analog Encoder Offsets (Degrees) - Opposite of Raw Reading - Bevel Gear to
+    // Analog Encoder Offsets (Degrees) - Opposite of Raw Reading - Bevel Gear to 
     // Right
     public static final double frontLeftOffset = 84.29;
     public static final double frontRightOffset = -144.2;
@@ -56,4 +56,28 @@ public class Constants {
      public static final Translation2d frontRightLocation = new Translation2d(0.2955, -0.327);
      public static final Translation2d rearLeftLocation = new Translation2d(-0.2955, 0.327);
      public static final Translation2d rearRightLocation = new Translation2d(-0.2955, -0.327);
+
+      // Swerve X Axis Correction PID (Path Following)
+    public static final double xCorrectionP = 5.0;
+    public static final double xCorrectionI = 0.0;
+    public static final double xCorrectionD = 0.0;
+
+    // Swerve Y Axis Correction PID (Path Following)
+    public static final double yCorrectionP = 5.0;
+    public static final double yCorrectionI = 0.0;
+    public static final double yCorrectionD = 0.0;
+
+    // Swerve Theta Axis Correction PID (Path Following)
+    public static final double thetaCorrectionP = 6.0;
+    public static final double thetaCorrectionI = 0.0;
+    public static final double thetaCorrectionD = 0.0;
+
+     // Max Path Following Drive Speeds
+     public static final double maxPathFollowingVelocity = 2.0; // (Meters per Second)
+     public static final double maxPathFollowingAcceleration = 0.5; // (Meters per Second Squared)
+ 
+     // Max Path Following Turn Speeds
+     public static final double maxThetaVelocity = 6.28; // (Radians per Second)
+     public static final double maxThetaAcceleration = 6.28; // (Radians per Second Squared)
+ 
 }

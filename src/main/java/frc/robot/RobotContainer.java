@@ -131,12 +131,17 @@ public class RobotContainer {
     // SmartDashboard.putData("Deploy Intake", new DeployIntake(mIntake));
 
     SmartDashboard.putData("0 Modules", new SetSwerveAngle(mDrivetrain, 0.0, 0.0, 0.0, 0.0));
+    SmartDashboard.putData("180 Modules", new SetSwerveAngle(mDrivetrain, 180.0, 180.0, 180.0, 180.0));
+
 
     final JoystickButton swerveXPatterButton = new JoystickButton(controller0, XboxController.Button.kX.value);
     swerveXPatterButton.whenPressed(new SetSwerveAngle(mDrivetrain, 45.0, -45.0, -45.0, 45.0));
     swerveXPatterButton.whenReleased(new DriveSticks(mDrivetrain));
 
+    SmartDashboard.putData("X Pattern", new SetSwerveAngle(mDrivetrain, 45.0, -45.0, -45.0, 45.0));
+
     
+
     // SmartDashboard.putData("90 Modules", new SetSwerveAngle(mDrivetrain, 90));
     // SmartDashboard.putData("180 Modules", new SetSwerveAngle(mDrivetrain, 180));
     // SmartDashboard.putData("270 Modules", new SetSwerveAngle(mDrivetrain, -90));

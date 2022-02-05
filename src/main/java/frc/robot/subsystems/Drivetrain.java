@@ -67,6 +67,8 @@ public class Drivetrain extends SubsystemBase {
   // Robot Gyro
   public AHRS navx;
 
+  public Pose2d latestSwervePose;
+
   // Swerve Drive Kinematics
   public final SwerveDriveKinematics swerveDriveKinematics;
 
@@ -115,7 +117,7 @@ public class Drivetrain extends SubsystemBase {
 
     // Set motor states
     setDriveNeutralMode(NeutralMode.Coast);
-    setTurnNeutralMode(NeutralMode.Coast);
+    setTurnNeutralMode(NeutralMode.Brake);
 
     // TODO: figure out current values
     setDriveCurrentLimit(60.0);
@@ -310,8 +312,10 @@ public class Drivetrain extends SubsystemBase {
   }
 
   public void setOdometryPosition(Pose2d position) {
-    swerveDriveOdometry.resetPosition(position,
-        Rotation2d.fromDegrees(-navx.getYaw()));
+    swerveDriveOdometry.resetPosition(position, Rotation2d.fromDegrees(-navx.getYaw()));
+
+    latestSwervePose = swerveDriveOdometry.update(Rotation2d.fromDegrees(-navx.getYaw()), frontLeftModule.getState(),
+    frontRightModule.getState(), rearLeftModule.getState(), rearRightModule.getState());
   }
 
   private void loadMotionPaths() {

@@ -13,15 +13,20 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.vision.LimeLight;
 import frc.robot.Constants;
 
 public class Turret extends SubsystemBase {
 
   // Turret Motors
-  private WPI_TalonSRX turretTalon;
+  private static WPI_TalonSRX turretTalon;
 
   // Turret PID Controller
   public PIDController turretRotate;
+
+  // Limelight Camera
+  public final LimeLight limeLightCamera;
+
 
   public Turret() {
       // Turret Motors
@@ -32,6 +37,9 @@ public class Turret extends SubsystemBase {
       turretRotate = new PIDController(Constants.turretP, Constants.turretI, Constants.turretD);
       turretRotate.setTolerance(Constants.turretTolerance);
       turretRotate.disableContinuousInput();
+
+      // LimeLight Camera
+      limeLightCamera = new LimeLight();
   }
 
   @Override
@@ -61,10 +69,12 @@ public class Turret extends SubsystemBase {
   }
 
   public void goToAngle(double angle) {
+      angle = Math.min(angle, Constants.turretMaxEnd);
+      angle = Math.max(angle, Constants.turretMinEnd);
       setTurretSpeed(turretRotate.calculate(getTurretAngle(), angle));
   }
 
-  public double getTurretPostion() {
+  public static double getTurretPostion() {
       double position = turretTalon.getSelectedSensorPosition() - Constants.turretOffset;
 
       if (position < 0) {
@@ -74,7 +84,7 @@ public class Turret extends SubsystemBase {
       return position;
   }
 
-  public double getTurretAngle() {
+  public static double getTurretAngle() {
       return getTurretPostion() * (360.0 / 4096.0);
   }
 }

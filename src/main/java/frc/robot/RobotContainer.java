@@ -108,7 +108,8 @@ public class RobotContainer {
     SmartDashboard.putData("increaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, 50));
 
     final JoystickButton startShooterButton = new JoystickButton(controller0, XboxController.Button.kX.value);
-    startShooterButton.toggleWhenPressed(new StartShooter(mShooter), true);
+    startShooterButton.whenPressed(new StartShooter(mShooter));
+    startShooterButton.whenReleased(new StopShooter(mShooter));
     SmartDashboard.putData("Start Shooter", new StartShooter(mShooter));
 
     final JoystickButton increaseSecondSpeed = new JoystickButton(controller0, XboxController.Button.kY.value);

@@ -10,6 +10,8 @@
 
 package frc.robot;
 
+import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -34,8 +36,8 @@ public class Constants {
      */
 
     // Shooter Constants
-    public static final int defaultMainShooterSpeed = 2300;
-    public static final int defaultSecondaryShooterSpeed = 1700;
+    public static final int defaultMainShooterSpeed = 1700; 
+    public static final int defaultSecondaryShooterSpeed = 2300;
     public static final int shooterEncoderPulses = 2048;
 
     //Intake Constant
@@ -54,4 +56,15 @@ public class Constants {
     public static final double cameraAngle = 0;
     public static final double cameraHeight = 0;
     public static final double goalHeight = 0;
+    public static final double hoodP = 0;
+    public static final double hoodI = 0;
+    public static final double hoodD = 0;
+
+    public static final double hoodEncoderOffset = 0;
+    //the tooth to tooth of the hood
+    public static final double hoodAngleRatio = 34.000 / 536.000;
+    //the max and min of the hood angle not the encoder values
+    public static final double minHoodPosition = .5;
+    public static final double maxHoodPosition = 20.0;
+
 }

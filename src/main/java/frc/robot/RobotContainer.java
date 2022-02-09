@@ -143,7 +143,7 @@ public class RobotContainer {
     SmartDashboard.putData("Move Turret Right", new MoveTurret(mTurret, 0.75));
 
     final JoystickButton autoAimTurretButton = new JoystickButton(controller0, XboxController.Button.kB.value);
-    autoAimTurretButton.whenPressed(new AutoTurretAim(mTurret));
+    autoAimTurretButton.whileHeld(new AutoTurretAim(mTurret));
     SmartDashboard.putData("Auto Turret Aim", new AutoTurretAim(mTurret));
 
     SmartDashboard.putData("Set Turret to 0 degrees", new MoveTurretToAngle(mTurret, 0.0, 2));

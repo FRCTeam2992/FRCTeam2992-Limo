@@ -51,6 +51,8 @@ public class Constants {
     public static final int turretOffset = 2074;
     public static final int turretMinEnd = 20;
     public static final int turretMaxEnd = 340;
+    public static final int turretMaxSlowZone = 300;
+    public static final int turretMinSlowZone = 60;
 
     // Vision Constants
     public static final double cameraAngle = 0;

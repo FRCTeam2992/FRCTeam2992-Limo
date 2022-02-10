@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Turret;
 
 public class MoveTurret extends CommandBase {
@@ -15,7 +16,7 @@ public class MoveTurret extends CommandBase {
 
   public MoveTurret(Turret subsystem, double speed) {
       mTurret = subsystem;
-      
+
       mTurretSpeed = speed;
 
       addRequirements(subsystem);
@@ -29,6 +30,7 @@ public class MoveTurret extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
+
         mTurret.setTurretSpeed(mTurretSpeed);
   }
 

@@ -35,9 +35,12 @@ public class AutoTurretAim extends CommandBase {
                 if (Math.abs(xOffset) > 0.5) {
                     turretSetAngle = Turret.getTurretAngle() + xOffset;
                 }
+                mTurret.goToAngle(turretSetAngle);
             }
 
-        mTurret.goToAngle(turretSetAngle);
+            else{
+                mTurret.setTurretSpeed(0);
+            }
     }
 
     // Called once after isFinished returns true

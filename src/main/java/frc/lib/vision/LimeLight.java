@@ -1,6 +1,7 @@
 
 package frc.lib.vision;
 
+import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -32,6 +33,12 @@ public class LimeLight {
     NetworkTableEntry pipeline;
     NetworkTableEntry stream;
     NetworkTableEntry snapshot;
+
+    MedianFilter xFilter = new MedianFilter(5);
+    MedianFilter yFilter = new MedianFilter(5);
+
+    double xMedian = 0;
+    double yMedian = 0;
 
     public enum LedMode {
         /**
@@ -129,14 +136,17 @@ public class LimeLight {
      * @return the X offset value from the crosshair to the target in degrees.
      */
     public double getTargetXOffset() {
-        return tx.getDouble(0);
+       xMedian = xFilter.calculate(tx.getDouble(0));
+       return xMedian ;
+     //return tx.getDouble(0);
     }
 
     /**
      * @return the Y offset value from the crosshair to the target in degrees.
      */
     public double getTargetYOffset() {
-        return ty.getDouble(0);
+        yMedian = yFilter.calculate(tx.getDouble(0));
+        return yMedian;
     }
 
     /**

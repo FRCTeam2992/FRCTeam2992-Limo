@@ -13,6 +13,8 @@ public class SpinShooter extends CommandBase {
  
   public SpinShooter(Shooter subsystem) {
     mShooter = subsystem;
+
+    addRequirements(mShooter);
   }
 
   // Called when the command is initially scheduled.

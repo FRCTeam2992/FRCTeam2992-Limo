@@ -16,14 +16,10 @@ import frc.robot.Constants;
 import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 /**
@@ -57,7 +53,7 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         if (++dashboardCounter >= 5){
-            SmartDashboard.putNumber("Intake Motor Speed", intakeSetSpeed);
+            // SmartDashboard.putNumber("Intake Motor Speed", intakeSetSpeed);
             dashboardCounter = 0;
         }
 

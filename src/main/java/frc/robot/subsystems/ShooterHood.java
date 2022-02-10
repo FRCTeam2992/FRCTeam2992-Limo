@@ -23,12 +23,12 @@ public class ShooterHood extends SubsystemBase {
 
   public ShooterHood() {
     hoodMotor = new WPI_TalonSRX(20);
-    hoodMotor.setInverted(false);
+    hoodMotor.setInverted(true);
     hoodMotor.setNeutralMode(NeutralMode.Brake);
 
     hoodEncoder = new CANCoder(20);
-    hoodEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
-    hoodEncoder.configSensorDirection(false);
+    hoodEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+    hoodEncoder.configSensorDirection(true);
 
     hoodMotor.configRemoteFeedbackFilter(hoodEncoder, 20);
   }
@@ -38,6 +38,8 @@ public class ShooterHood extends SubsystemBase {
     // This method will be called once per scheduler run
 
     SmartDashboard.putNumber("encoder angle", getEncoderAngle());
+    SmartDashboard.putNumber("hood angle", getHoodAngle());
+
   }
 
   public void setHoodSpeed(double speed) {
@@ -48,14 +50,19 @@ public class ShooterHood extends SubsystemBase {
   }
 
   public double getEncoderAngle() {
-    double tempAngle = hoodEncoder.getAbsolutePosition() - Constants.hoodEncoderOffset;
+    double tempAngle = hoodEncoder.getAbsolutePosition() + Constants.hoodEncoderOffset;
 
-    if (tempAngle < -180.0){
-      tempAngle += 360.0;
-    } else if (tempAngle > 180){
-      tempAngle -= 360;
-    }
-    return -tempAngle;
+    // if (tempAngle < -180.0){
+    //   tempAngle += 360.0;
+    // } else if (tempAngle > 180){
+    //   tempAngle -= 360;
+    // }
+    if (tempAngle < 0.0){
+        tempAngle += 360.0;
+      } else if (tempAngle > 360.0){
+        tempAngle -= 360;
+      }
+    return tempAngle;
   }
 
   public double getHoodAngle() {

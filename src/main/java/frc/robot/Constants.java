@@ -10,7 +10,7 @@
 
 package frc.robot;
 
-import com.fasterxml.jackson.databind.deser.std.StdScalarDeserializer;
+import org.ejml.FancyPrint;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -60,11 +60,14 @@ public class Constants {
     public static final double hoodI = 0;
     public static final double hoodD = 0;
 
-    public static final double hoodEncoderOffset = 0;
+    public static final double hoodEncoderOffset = -31.9;
     //the tooth to tooth of the hood
     public static final double hoodAngleRatio = 34.000 / 536.000;
     //the max and min of the hood angle not the encoder values
-    public static final double minHoodPosition = .5;
-    public static final double maxHoodPosition = 20.0;
+    public static final double minHoodPosition = 0.0;
+    public static final double minHoodPositionOverlap = 355.0;
+
+    public static final double maxHoodPosition = 334.0;
+    // public static final double maxHoodPositionOverlap = 0;
 
 }

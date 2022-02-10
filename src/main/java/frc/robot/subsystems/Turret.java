@@ -6,11 +6,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.vision.LimeLight;
@@ -47,7 +45,7 @@ public class Turret extends SubsystemBase {
       // Put code here to be run every loop
 
       // Update Dashboard
-      SmartDashboard.putNumber("Turret Angle", getTurretAngle());
+     // SmartDashboard.putNumber("Turret Angle", getTurretAngle());
   }
 
   // Put methods for controlling this subsystem

@@ -136,7 +136,7 @@ public class LimeLight {
      * @return the X offset value from the crosshair to the target in degrees.
      */
     public double getTargetXOffset() {
-       xMedian = xFilter.calculate(tx.getDouble(0));
+      xMedian = xFilter.calculate(tx.getDouble(0));
        return xMedian ;
      //return tx.getDouble(0);
     }

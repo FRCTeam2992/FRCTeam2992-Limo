@@ -43,7 +43,7 @@ public class Turret extends SubsystemBase {
   public void periodic() {
     // Put code here to be run every loop
 
-      Update Dashboard
+    //Update Dashboard
      SmartDashboard.putNumber("Turret Angle", getTurretAngle());
   }
 
@@ -69,7 +69,7 @@ public class Turret extends SubsystemBase {
          || (setSpeed > 0 && getTurretAngle() > Constants.turretMaxEnd)) {
        setSpeed = 0;
   }
-    setSpeed *= -0.3;
+    setSpeed *= -0.5;
     turretTalon.set(ControlMode.PercentOutput, setSpeed);
 }
 

@@ -12,6 +12,8 @@
 
 package frc.robot;
 
+import frc.lib.vision.LimeLight;
+import frc.lib.vision.LimeLight.LedMode;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -49,6 +51,8 @@ public class RobotContainer {
   // Joysticks
   private final XboxController controller0 = new XboxController(0);
 
+  public final LimeLight limeLightCamera;
+
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
@@ -67,6 +71,8 @@ public class RobotContainer {
 
     mShooterHood = new ShooterHood();
     mShooterHood.setDefaultCommand(new StopHood(mShooterHood));
+
+    limeLightCamera = new LimeLight();
 
     // Smartdashboard Subsystems
     //sSmartDashboard.putData(mIntake);
@@ -168,6 +174,8 @@ public class RobotContainer {
     // SmartDashboard.putData("Set Turret to 260 degrees", new
     // MoveTurretToAngle(mTurret, 260, 2));
     SmartDashboard.putData("Set Turret to 340 degrees", new MoveTurretToAngle(mTurret, 340, 2));
+
+    SmartDashboard.putData("Toggle Lime Light LEDS", new ToggleLimeLight(mTurret));
 
   //hood
     final POVButton hoodUpButton = new POVButton(controller0, 0);

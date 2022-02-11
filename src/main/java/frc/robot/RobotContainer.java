@@ -111,8 +111,7 @@ public class RobotContainer {
 
     // shooter button
     final JoystickButton startShooterButton = new JoystickButton(controller0, XboxController.Button.kX.value);
-    startShooterButton.whenPressed(new StartShooter(mShooter));
-    startShooterButton.whenReleased(new StopShooter(mShooter));
+    startShooterButton.toggleWhenPressed(new StartShooter(mShooter));
     SmartDashboard.putData("Start Shooter", new StartShooter(mShooter));
 
     // primary speed control
@@ -160,7 +159,7 @@ public class RobotContainer {
     SmartDashboard.putData("Move Turret Right", new MoveTurret(mTurret, 0.75));
 
     final JoystickButton autoAimTurretButton = new JoystickButton(controller0, XboxController.Button.kB.value);
-    autoAimTurretButton.whenPressed(new AutoTurretAim(mTurret));
+    autoAimTurretButton.toggleWhenPressed(new AutoTurretAim(mTurret));
     // SmartDashboard.putData("Auto Turret Aim", new AutoTurretAim(mTurret));
 
     SmartDashboard.putData("Set Turret to 0 degrees", new MoveTurretToAngle(mTurret, 0.0, 2));

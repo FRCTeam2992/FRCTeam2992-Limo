@@ -177,13 +177,13 @@ public class RobotContainer {
     SmartDashboard.putData("Toggle Lime Light LEDS", new ToggleLimeLight(mTurret));
 
   //hood
-    final POVButton hoodUpButton = new POVButton(controller0, 0);
-    hoodUpButton.whenPressed(new MoveHood(mShooterHood, .25));
+    final JoystickButton hoodUpButton = new JoystickButton(controller0,XboxController.Button.kRightBumper.value);
+    hoodUpButton.whenPressed(new MoveHood(mShooterHood, .40));
     hoodUpButton.whenReleased(new StopHood(mShooterHood));
 
 
-    final POVButton hoodDownButton = new POVButton(controller0, 180);
-    hoodDownButton.whenPressed(new MoveHood(mShooterHood, -.25));
+    final JoystickButton hoodDownButton = new JoystickButton(controller0,XboxController.Button.kLeftBumper.value);
+    hoodDownButton.whenPressed(new MoveHood(mShooterHood, -.40));
     hoodDownButton.whenReleased(new StopHood(mShooterHood));
 
 

@@ -29,6 +29,7 @@ public class Turret extends SubsystemBase {
     // Turret Motors
     turretTalon = new WPI_TalonSRX(13);
     turretTalon.setNeutralMode(NeutralMode.Brake);
+    turretTalon.setInverted(true);
 
     // Turret PID Controller
     turretRotate = new PIDController(Constants.turretP, Constants.turretI, Constants.turretD);
@@ -69,7 +70,7 @@ public class Turret extends SubsystemBase {
          || (setSpeed > 0 && getTurretAngle() > Constants.turretMaxEnd)) {
        setSpeed = 0;
   }
-    setSpeed *= -0.3;
+    setSpeed *= 0.5;
     turretTalon.set(ControlMode.PercentOutput, setSpeed);
 }
 

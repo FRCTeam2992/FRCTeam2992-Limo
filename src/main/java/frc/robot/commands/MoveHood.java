@@ -32,13 +32,11 @@ public class MoveHood extends CommandBase {
   @Override
   public void execute() {
 
-    if ((mHoodSpeed < 0.0 && (
-      mShooterHood.getEncoderAngle() < Constants.minHoodPosition || 
-      mShooterHood.getEncoderAngle() > Constants.minHoodPositionOverlap
-      ))
-        || (mHoodSpeed > 0.0 && (
-          mShooterHood.getEncoderAngle() < Constants.maxHoodPosition  
-          // || mShooterHood.getEncoderAngle() > Constants.maxHoodPositionOverlap
+    if ((mHoodSpeed < 0.0 && ((
+      mShooterHood.getEncoderAngle() < Constants.minHoodPosition) && (
+      mShooterHood.getEncoderAngle() > Constants.minHoodPositionOverlap))) || (mHoodSpeed > 0.0 && ((
+          mShooterHood.getEncoderAngle() > Constants.maxHoodPosition) && (
+          mShooterHood.getEncoderAngle() < Constants.maxHoodPositionOverlap)
           ))) {
       mShooterHood.setHoodSpeed(0.0);
 

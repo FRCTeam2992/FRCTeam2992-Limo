@@ -10,7 +10,7 @@
 
 package frc.robot;
 
-import org.ejml.FancyPrint;
+// import org.ejml.FancyPrint;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -44,7 +44,7 @@ public class Constants {
     public static final double defaultInatkeSpeed = 0.5;
 
     //Turret Constants
-    public static final double turretP = 0.05;
+    public static final double turretP = 0.062;
     public static final double turretI = 0.0;
     public static final double turretD = 0.003;
     public static final double turretTolerance = 0.5;
@@ -62,14 +62,16 @@ public class Constants {
     public static final double hoodI = 0;
     public static final double hoodD = 0;
 
-    public static final double hoodEncoderOffset = -31.9;
+    public static final double hoodEncoderOffset = -315.0;
+    
     //the tooth to tooth of the hood
     public static final double hoodAngleRatio = 34.000 / 536.000;
     //the max and min of the hood angle not the encoder values
-    public static final double minHoodPosition = 0.0;
-    public static final double minHoodPositionOverlap = 355.0;
+    public static final double minHoodPosition = 360.0;
+    public static final double minHoodPositionOverlap = 340.0;
 
-    public static final double maxHoodPosition = 334.0;
+    public static final double maxHoodPosition = 295.0;
+    public static final double maxHoodPositionOverlap = 315.0;
     // public static final double maxHoodPositionOverlap = 0;
 
 }

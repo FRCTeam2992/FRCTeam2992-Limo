@@ -57,6 +57,7 @@ public class ShooterHood extends SubsystemBase {
     // } else if (tempAngle > 180){
     //   tempAngle -= 360;
     // }
+    
     if (tempAngle < 0.0){
         tempAngle += 360.0;
       } else if (tempAngle > 360.0){

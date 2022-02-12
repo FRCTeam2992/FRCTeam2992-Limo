@@ -27,7 +27,7 @@ public class ShooterHood extends SubsystemBase {
     hoodMotor.setNeutralMode(NeutralMode.Brake);
 
     hoodEncoder = new CANCoder(20);
-    hoodEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Unsigned_0_to_360);
+    hoodEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
     hoodEncoder.configSensorDirection(true);
 
     hoodMotor.configRemoteFeedbackFilter(hoodEncoder, 20);
@@ -52,17 +52,17 @@ public class ShooterHood extends SubsystemBase {
   public double getEncoderAngle() {
     double tempAngle = hoodEncoder.getAbsolutePosition() + Constants.hoodEncoderOffset;
 
-    // if (tempAngle < -180.0){
-    //   tempAngle += 360.0;
-    // } else if (tempAngle > 180){
-    //   tempAngle -= 360;
-    // }
+    if (tempAngle < -180.0){
+      tempAngle += 360.0;
+    } else if (tempAngle > 180){
+      tempAngle -= 360;
+    }
     
-    if (tempAngle < 0.0){
-        tempAngle += 360.0;
-      } else if (tempAngle > 360.0){
-        tempAngle -= 360;
-      }
+    // if (tempAngle < 0.0){
+    //     tempAngle += 360.0;
+    //   } else if (tempAngle > 360.0){
+    //     tempAngle -= 360;
+    //   }
     return tempAngle;
   }
 

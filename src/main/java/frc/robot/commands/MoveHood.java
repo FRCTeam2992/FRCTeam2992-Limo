@@ -32,17 +32,21 @@ public class MoveHood extends CommandBase {
   @Override
   public void execute() {
 
-    if ((mHoodSpeed < 0.0 && ((
-      mShooterHood.getEncoderAngle() < Constants.minHoodPosition) && (
-      mShooterHood.getEncoderAngle() > Constants.minHoodPositionOverlap))) || (mHoodSpeed > 0.0 && ((
-          mShooterHood.getEncoderAngle() > Constants.maxHoodPosition) && (
-          mShooterHood.getEncoderAngle() < Constants.maxHoodPositionOverlap)
-          ))) {
+    if (inDeadZone()) {
       mShooterHood.setHoodSpeed(0.0);
+
+    } else if (inMinPZone()) {
+      double distance = Constants.minHoodPosition - mShooterHood.getEncoderAngle();
+      double tempHoodSpeed = distance * Constants.hoodPValueBottom;
+      mShooterHood.setHoodSpeed(tempHoodSpeed);
+
+    } else if (inMaxPZone()) {
+      double distance = Constants.maxHoodPosition - mShooterHood.getEncoderAngle();
+      double tempHoodSpeed = distance * Constants.hoodPValueTop;
+      mShooterHood.setHoodSpeed(tempHoodSpeed);
 
     } else {
       mShooterHood.setHoodSpeed(mHoodSpeed);
-
     }
   }
 
@@ -57,4 +61,32 @@ public class MoveHood extends CommandBase {
   public boolean isFinished() {
     return false;
   }
+
+  private boolean inMinPZone() {
+    if (mHoodSpeed < 0.0 && ((mShooterHood.getEncoderAngle() < Constants.minHoodPZone)
+        && (mShooterHood.getEncoderAngle() > Constants.minHoodPosition))) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  private boolean inMaxPZone() {
+    if (mHoodSpeed > 0.0 && ((mShooterHood.getEncoderAngle() > Constants.maxHoodPZone)
+        && (mShooterHood.getEncoderAngle() < Constants.maxHoodPosition))) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public boolean inDeadZone() {
+    if (((mHoodSpeed > 0.0) && (mShooterHood.getEncoderAngle() > Constants.maxHoodPosition))
+        || ((mHoodSpeed < 0) && (mShooterHood.getEncoderAngle() < Constants.minHoodPosition))) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
 }

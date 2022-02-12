@@ -36,14 +36,14 @@ public class Constants {
      */
 
     // Shooter Constants
-    public static final int defaultMainShooterSpeed = 1700; 
+    public static final int defaultMainShooterSpeed = 1700;
     public static final int defaultSecondaryShooterSpeed = 2300;
     public static final int shooterEncoderPulses = 2048;
 
-    //Intake Constant
+    // Intake Constant
     public static final double defaultInatkeSpeed = 0.5;
 
-    //Turret Constants
+    // Turret Constants
     public static final double turretP = 0.062;
     public static final double turretI = 0.0;
     public static final double turretD = 0.003;
@@ -62,16 +62,17 @@ public class Constants {
     public static final double hoodI = 0;
     public static final double hoodD = 0;
 
-    public static final double hoodEncoderOffset = -315.0;
-    
-    //the tooth to tooth of the hood
+    // the tooth to tooth of the hood
     public static final double hoodAngleRatio = 34.000 / 536.000;
-    //the max and min of the hood angle not the encoder values
-    public static final double minHoodPosition = 360.0;
-    public static final double minHoodPositionOverlap = 340.0;
+    // the max and min of the hood angle not the encoder values
+    public static final double minHoodPosition = -160.0;
+    public static final double minHoodPZone = -125.0;
 
-    public static final double maxHoodPosition = 295.0;
-    public static final double maxHoodPositionOverlap = 315.0;
-    // public static final double maxHoodPositionOverlap = 0;
+    public static final double maxHoodPosition = 165.0;
+    public static final double maxHoodPZone = 130.0;
+
+    public static final double hoodPValueBottom = 0.012;
+    public static final double hoodPValueTop = 0.01515;
+    public static final double hoodEncoderOffset = -(-100.7 + 170);
 
 }

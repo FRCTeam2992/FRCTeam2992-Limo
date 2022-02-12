@@ -122,10 +122,10 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getMainShooterRPM() {
-    return (mainShooterLead.getSelectedSensorVelocity() * 600) / (Constants.shooterEncoderPulses * 4 / 0.75);
+    return (mainShooterLead.getSelectedSensorVelocity() * 600) / (Constants.shooterEncoderPulses * 0.75);
   }
 
   public double getSecondaryShooterRPM() {
-    return (secondaryShooterLead.getSelectedSensorVelocity() * 600) / (Constants.shooterEncoderPulses * 4);
+    return (secondaryShooterLead.getSelectedSensorVelocity() * 600) / (Constants.shooterEncoderPulses);
   }
 }

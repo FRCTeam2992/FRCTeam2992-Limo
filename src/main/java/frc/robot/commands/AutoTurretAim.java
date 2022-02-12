@@ -21,6 +21,7 @@ public class AutoTurretAim extends CommandBase {
     // Called just before this Command runs the first time
     @Override
     public void initialize() {
+        mTurret.limeLightCamera.resetMedianFilters();
     }
 
     // Called repeatedly when this Command is scheduled to run

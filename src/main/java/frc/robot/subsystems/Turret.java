@@ -58,16 +58,16 @@ public class Turret extends SubsystemBase {
   public void setTurretSpeed(double speed) {
     double setSpeed = speed;
 
-       if (setSpeed < 0 && getTurretAngle() <= Constants.turretMinSlowZone) {
-      setSpeed = -0.3;
-    }
-
-    if (setSpeed > 0 && getTurretAngle() >= Constants.turretMaxSlowZone) {
+       if (setSpeed > 0 && getTurretAngle() <= Constants.turretMinSlowZone) {
       setSpeed = 0.3;
     }
 
-     if ((setSpeed < 0 && getTurretAngle() <= Constants.turretMinEnd)
-         || (setSpeed > 0 && getTurretAngle() > Constants.turretMaxEnd)) {
+    if (setSpeed < 0 && getTurretAngle() >= Constants.turretMaxSlowZone) {
+      setSpeed = -0.3;
+    }
+
+     if ((setSpeed > 0 && getTurretAngle() <= Constants.turretMinEnd)
+         || (setSpeed < 0 && getTurretAngle() > Constants.turretMaxEnd)) {
        setSpeed = 0;
   }
     setSpeed *= 0.5;

@@ -57,7 +57,7 @@ public class Constants {
     // Vision Constants
     public static final double cameraAngle = 0;
     public static final double cameraHeight = 0;
-    public static final double goalHeight = 0;
+    public static final double goalHeight = 103;
     public static final double hoodP = 0;
     public static final double hoodI = 0;
     public static final double hoodD = 0;

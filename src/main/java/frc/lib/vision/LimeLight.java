@@ -132,6 +132,11 @@ public class LimeLight {
         }
     }
 
+    public void resetMedianFilters(){
+        xFilter.reset();
+        yFilter.reset();
+    }
+
     /**
      * @return the X offset value from the crosshair to the target in degrees.
      */

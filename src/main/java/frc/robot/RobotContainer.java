@@ -151,11 +151,11 @@ public class RobotContainer {
 
   // Turret stuff
     final POVButton moveTurretLeftButton = new POVButton(controller0, 270);
-    moveTurretLeftButton.whileHeld(new MoveTurret(mTurret, -1));
+    moveTurretLeftButton.whileHeld(new MoveTurret(mTurret, -0.75));
     SmartDashboard.putData("Move Turret Left", new MoveTurret(mTurret, -0.75));
 
     final POVButton moveTurretRightButton = new POVButton(controller0, 90);
-    moveTurretRightButton.whileHeld(new MoveTurret(mTurret, 1));
+    moveTurretRightButton.whileHeld(new MoveTurret(mTurret, 0.75));
     SmartDashboard.putData("Move Turret Right", new MoveTurret(mTurret, 0.75));
 
     final JoystickButton autoAimTurretButton = new JoystickButton(controller0, XboxController.Button.kB.value);

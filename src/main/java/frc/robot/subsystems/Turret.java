@@ -70,7 +70,7 @@ public class Turret extends SubsystemBase {
          || (setSpeed < 0 && getTurretAngle() > Constants.turretMaxEnd)) {
        setSpeed = 0;
   }
-    setSpeed *= 0.5;
+    setSpeed *= 0.7;
     turretTalon.set(ControlMode.PercentOutput, setSpeed);
 }
 

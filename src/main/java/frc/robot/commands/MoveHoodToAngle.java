@@ -7,35 +7,36 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterHood;
 
-public class StopHood extends CommandBase {
-  private ShooterHood mShooterHood;
-  
-  public StopHood(ShooterHood subsystem) {
-    // Use addRequirements() here to declare subsystem dependencies
-    mShooterHood = subsystem;
+public class MoveHoodToAngle extends CommandBase {
 
-    addRequirements(mShooterHood);
+  private ShooterHood mShooterHood;
+  private double mEncoderAngle;
+  /** Creates a new MoveHoodToAngle. */
+  public MoveHoodToAngle(ShooterHood subsystem, double encoderAngle) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    mShooterHood = subsystem; 
+    mEncoderAngle = encoderAngle;
+
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mShooterHood.setHoodSpeed(0.0);
+    mShooterHood.setHoodPosition(mEncoderAngle);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
+    mShooterHood.setHoodSpeed(0.0);
   }
 
-  // Returns true when the command should end.
+  // Returns true when the command should end
   @Override
   public boolean isFinished() {
     return false;

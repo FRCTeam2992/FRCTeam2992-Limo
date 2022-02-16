@@ -58,9 +58,7 @@ public class Constants {
     public static final double cameraAngle = 0;
     public static final double cameraHeight = 0;
     public static final double goalHeight = 103;
-    public static final double hoodP = 0;
-    public static final double hoodI = 0;
-    public static final double hoodD = 0;
+    
 
     // the tooth to tooth of the hood
     public static final double hoodAngleRatio = 34.000 / 536.000;
@@ -74,5 +72,10 @@ public class Constants {
     public static final double hoodPValueBottom = 0.012;
     public static final double hoodPValueTop = 0.01515;
     public static final double hoodEncoderOffset = -(-100.7 + 170);
+
+    public static final double hoodP = 0;
+    public static final double hoodI = 0;
+    public static final double hoodD = 0;
+    public static final double hoodTolerance = 0.5;
 
 }

@@ -33,7 +33,7 @@ public class MoveHood extends CommandBase {
   public void execute() {
 
     if (inDeadZone()) {
-      mShooterHood.setHoodSpeed(0.0);
+      mHoodSpeed = 0.0;
 
     } else if (inMinPZone()) {
       double distance = Constants.minHoodPosition - mShooterHood.getEncoderAngle();

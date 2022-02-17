@@ -16,81 +16,84 @@ import frc.robot.Constants;
 
 public class Turret extends SubsystemBase {
 
-  // Turret Motors
-  private static WPI_TalonSRX turretTalon;
-
-  // Turret PID Controller
-  public PIDController turretRotate;
-
-  // Limelight Camera
-  public final LimeLight limeLightCamera;
-
-  public Turret() {
     // Turret Motors
-    turretTalon = new WPI_TalonSRX(13);
-    turretTalon.setNeutralMode(NeutralMode.Brake);
-    turretTalon.setInverted(true);
+    private static WPI_TalonSRX turretTalon;
 
     // Turret PID Controller
-    turretRotate = new PIDController(Constants.turretP, Constants.turretI, Constants.turretD);
-    turretRotate.setTolerance(Constants.turretTolerance);
-    turretRotate.disableContinuousInput();
+    public PIDController turretRotate;
 
-    // LimeLight Camera
-    limeLightCamera = new LimeLight();
-  }
+    // Limelight Camera
+    public final LimeLight limeLightCamera;
 
-  @Override
-  public void periodic() {
-    // Put code here to be run every loop
+    public Turret() {
+        // Turret Motors
+        turretTalon = new WPI_TalonSRX(13);
+        turretTalon.setNeutralMode(NeutralMode.Brake);
+        turretTalon.setInverted(true);
 
-    //Update Dashboard
-     SmartDashboard.putNumber("Turret Angle", getTurretAngle());
-  }
+        // Turret PID Controller
+        turretRotate = new PIDController(Constants.turretP, Constants.turretI, Constants.turretD);
+        turretRotate.setTolerance(Constants.turretTolerance);
+        turretRotate.disableContinuousInput();
 
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-
-  public void stopTurret() {
-    turretTalon.set(ControlMode.PercentOutput, 0);
-  }
-
-  public void setTurretSpeed(double speed) {
-    double setSpeed = speed;
-
-       if (setSpeed > 0 && getTurretAngle() <= Constants.turretMinSlowZone) {
-      setSpeed = 0.3;
+        // LimeLight Camera
+        limeLightCamera = new LimeLight();
     }
 
-    if (setSpeed < 0 && getTurretAngle() >= Constants.turretMaxSlowZone) {
-      setSpeed = -0.3;
+    @Override
+    public void periodic() {
+        // Put code here to be run every loop
+
+        // Update Dashboard
+        SmartDashboard.putNumber("Turret Angle", getTurretAngle());
+        SmartDashboard.putNumber("Camera Angle", limeLightCamera.getCameraAngle(Constants.distanceTest,
+                Constants.cameraHeight, Constants.goalHeight));
+        SmartDashboard.putNumber("Y-Offset", limeLightCamera.getTargetYOffset());
     }
 
-     if ((setSpeed > 0 && getTurretAngle() <= Constants.turretMinEnd)
-         || (setSpeed < 0 && getTurretAngle() > Constants.turretMaxEnd)) {
-       setSpeed = 0;
-  }
-    setSpeed *= 0.7;
-    turretTalon.set(ControlMode.PercentOutput, setSpeed);
-}
+    // Put methods for controlling this subsystem
+    // here. Call these from Commands.
 
-  public void goToAngle(double angle) {
-    angle = Math.min(angle, Constants.turretMaxEnd);
-    angle = Math.max(angle, Constants.turretMinEnd);
-    setTurretSpeed(turretRotate.calculate(getTurretAngle(), angle));
-  }
-
-  public static double getTurretPostion() {
-    double position = turretTalon.getSelectedSensorPosition() - Constants.turretOffset;
-
-    if (position < 0) {
-      position += 4096;
+    public void stopTurret() {
+        turretTalon.set(ControlMode.PercentOutput, 0);
     }
 
-    return position;
-  }
+    public void setTurretSpeed(double speed) {
+        double setSpeed = speed;
 
-  public static double getTurretAngle() {
-    return getTurretPostion() * (360.0 / 4096.0);
-  }
+        if (setSpeed > 0 && getTurretAngle() <= Constants.turretMinSlowZone) {
+            setSpeed = 0.3;
+        }
+
+        if (setSpeed < 0 && getTurretAngle() >= Constants.turretMaxSlowZone) {
+            setSpeed = -0.3;
+        }
+
+        if ((setSpeed > 0 && getTurretAngle() <= Constants.turretMinEnd)
+                || (setSpeed < 0 && getTurretAngle() > Constants.turretMaxEnd)) {
+            setSpeed = 0;
+        }
+        setSpeed *= 0.7;
+        turretTalon.set(ControlMode.PercentOutput, setSpeed);
+    }
+
+    public void goToAngle(double angle) {
+        angle = Math.min(angle, Constants.turretMaxEnd);
+        angle = Math.max(angle, Constants.turretMinEnd);
+        setTurretSpeed(turretRotate.calculate(getTurretAngle(), angle));
+    }
+
+    public static double getTurretPostion() {
+        double position = turretTalon.getSelectedSensorPosition() - Constants.turretOffset;
+
+        if (position < 0) {
+            position += 4096;
+        }
+
+        return position;
+    }
+
+    public static double getTurretAngle() {
+        return getTurretPostion() * (360.0 / 4096.0);
+    }
 }

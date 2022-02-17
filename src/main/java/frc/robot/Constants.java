@@ -35,7 +35,7 @@ public class Constants {
      * }
      */
 
-    // Shooter Constants
+    // Shooter Constants 
     public static final int defaultMainShooterSpeed = 1700;
     public static final int defaultSecondaryShooterSpeed = 2300;
     public static final int shooterEncoderPulses = 2048;
@@ -55,9 +55,6 @@ public class Constants {
     public static final int turretMinSlowZone = 60;
 
     // Vision Constants
-    public static final double cameraAngle = 0;
-    public static final double cameraHeight = 0;
-    public static final double goalHeight = 103;
     public static final double hoodP = 0;
     public static final double hoodI = 0;
     public static final double hoodD = 0;
@@ -75,4 +72,8 @@ public class Constants {
     public static final double hoodPValueTop = 0.01515;
     public static final double hoodEncoderOffset = -(-100.7 + 170);
 
+    public static final double cameraHeight = 44.5;
+    public static final double goalHeight = 103.12;
+    public static final double distanceTest = 120;
+    public static final double cameraAngle = 0;
 }

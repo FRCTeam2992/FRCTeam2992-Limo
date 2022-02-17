@@ -140,7 +140,7 @@ public class LimeLight {
     /**
      * @return the X offset value from the crosshair to the target in degrees.
      */
-    public double getTargetXOffset() {
+    public double getTargetXOffset() { 
       xMedian = xFilter.calculate(tx.getDouble(0));
        return xMedian ;
      //return tx.getDouble(0);
@@ -150,7 +150,7 @@ public class LimeLight {
      * @return the Y offset value from the crosshair to the target in degrees.
      */
     public double getTargetYOffset() {
-        yMedian = yFilter.calculate(tx.getDouble(0));
+        yMedian = yFilter.calculate(ty.getDouble(0));
         return yMedian;
     }
 
@@ -263,5 +263,9 @@ public class LimeLight {
      */
     public double getDistanceToTarget(double cameraAngle, double cameraHeight, double targetHeight) {
         return (targetHeight - cameraHeight) / Math.tan(Math.toRadians(cameraAngle + getTargetYOffset()));
+    }
+
+    public double getCameraAngle(double distance, double targetHeight, double cameraHeight) {
+        return (Math.toDegrees(Math.atan((targetHeight - cameraHeight) / distance)) + getTargetYOffset());
     }
 }

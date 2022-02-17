@@ -5,21 +5,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Sorter;
+import frc.robot.subsystems.BottomLift;
 
-public class SpinSosrter extends CommandBase {
+public class StopBottomLift extends CommandBase {
 
-  private Sorter mSorter;
-  private double mBottomLiftSpeed;
-  private double mTopLiftSpeed;
+  private BottomLift mBottomLift;
 
-  public SpinSosrter(Sorter subsystem, double bottomLiftSpeed, double topLiftSpeed) {
+  public StopBottomLift(BottomLift subsystem) {
 
-    mSorter = subsystem;
-    mBottomLiftSpeed = bottomLiftSpeed;
-    mTopLiftSpeed = topLiftSpeed;
+    mBottomLift = subsystem;
 
-    addRequirements(mSorter);
+    addRequirements(mBottomLift);
 
   }
 
@@ -31,8 +27,7 @@ public class SpinSosrter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mSorter.setBottomLiftSpeed(mBottomLiftSpeed);
-    mSorter.setTopLiftSpeed(mTopLiftSpeed);
+    mBottomLift.setBottomLiftSpeed(0.0);
   }
 
   // Called once the command ends or is interrupted.

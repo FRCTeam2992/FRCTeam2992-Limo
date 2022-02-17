@@ -5,18 +5,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Sorter;
+import frc.robot.subsystems.TopLift;
 
-public class StopSorter extends CommandBase {
+public class SpinTopLiftSensor extends CommandBase {
+  /** Creates a new SpinTopLift. */
+  private TopLift mTopLift;
 
-  private Sorter mSorter;
+  private double mTopLiftSpeed;
 
-  public StopSorter(Sorter subsystem) {
+  public SpinTopLiftSensor(TopLift subsystem, double topLiftSpeed) {
+    mTopLift = subsystem;
 
-    mSorter = subsystem;
+    mTopLiftSpeed = topLiftSpeed;
 
-    addRequirements(mSorter);
-
+    addRequirements(mTopLift);
   }
 
   // Called when the command is initially scheduled.
@@ -27,7 +29,12 @@ public class StopSorter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mSorter.setBottomLiftSpeed(0.0);
+    if (mTopLift.getSensorState()) {
+      mTopLift.setTopLiftSpeed(0.0);
+    } else {
+      mTopLift.setTopLiftSpeed(mTopLiftSpeed);
+    }
+
   }
 
   // Called once the command ends or is interrupted.

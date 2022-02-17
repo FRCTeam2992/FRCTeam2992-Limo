@@ -11,24 +11,16 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Sorter extends SubsystemBase {
+public class BottomLift extends SubsystemBase {
 
   private WPI_VictorSPX bottomLiftMotor;
-  private WPI_VictorSPX topLiftMotor;
 
-  private DigitalInput topLiftSensor;
   private DigitalInput bottomLiftSensor;
 
-  public Sorter() {
+  public BottomLift() {
     bottomLiftMotor = new WPI_VictorSPX(42);
     bottomLiftMotor.setInverted(false);
     bottomLiftMotor.setNeutralMode(NeutralMode.Coast);
-
-    topLiftMotor = new WPI_VictorSPX(42);
-    topLiftMotor.setInverted(false);
-    topLiftMotor.setNeutralMode(NeutralMode.Coast);
-
-    addChild("topLiftMotor", topLiftMotor);
 
     addChild("bottomLiftMotor", bottomLiftMotor);
   }
@@ -38,11 +30,11 @@ public class Sorter extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
-  public void setTopLiftSpeed(double speed) {
-    topLiftMotor.set(ControlMode.PercentOutput, speed);
-  }
-
   public void setBottomLiftSpeed(double speed) {
     bottomLiftMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public boolean getSensorState() {
+    return bottomLiftSensor.get();
   }
 }

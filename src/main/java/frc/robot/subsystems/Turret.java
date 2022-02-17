@@ -7,12 +7,15 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.vision.LimeLight;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 public class Turret extends SubsystemBase {
 
@@ -24,6 +27,8 @@ public class Turret extends SubsystemBase {
 
     // Limelight Camera
     public final LimeLight limeLightCamera;
+
+    public AHRS navx;
 
     public Turret() {
         // Turret Motors
@@ -38,6 +43,8 @@ public class Turret extends SubsystemBase {
 
         // LimeLight Camera
         limeLightCamera = new LimeLight();
+
+        navx = new AHRS(SPI.Port.kMXP);
     }
 
     @Override
@@ -49,6 +56,11 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putNumber("Camera Angle", limeLightCamera.getCameraAngle(Constants.distanceTest,
                 Constants.cameraHeight, Constants.goalHeight));
         SmartDashboard.putNumber("Y-Offset", limeLightCamera.getTargetYOffset());
+
+        SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
+        SmartDashboard.putNumber("Joystick X", RobotContainer.controller0.getLeftX());
+        SmartDashboard.putNumber("Joystick Y", RobotContainer.controller0.getLeftY());
+        SmartDashboard.putNumber("Joystick Angle", Math.atan2(RobotContainer.controller0.getLeftY(), RobotContainer.controller0.getLeftX()));
     }
 
     // Put methods for controlling this subsystem

@@ -55,9 +55,10 @@ public class Constants {
     public static final int turretMinSlowZone = 60;
 
     // Vision Constants
-    public static final double hoodP = 0;
-    public static final double hoodI = 0;
-    public static final double hoodD = 0;
+    public static final double cameraAngle = 0;
+    public static final double cameraHeight = 0;
+    public static final double goalHeight = 103;
+    
 
     // the tooth to tooth of the hood
     public static final double hoodAngleRatio = 34.000 / 536.000;

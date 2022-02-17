@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -19,6 +20,8 @@ public class ShooterHood extends SubsystemBase {
   private WPI_TalonSRX hoodMotor;
 
   private CANCoder hoodEncoder;
+
+  public PIDController hoodPID;
 
 
   public ShooterHood() {
@@ -30,6 +33,10 @@ public class ShooterHood extends SubsystemBase {
     hoodEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
     hoodEncoder.configSensorDirection(true);
 
+    hoodPID = new PIDController(Constants.hoodP, Constants.hoodI, Constants.hoodD);
+    hoodPID.setTolerance(Constants.hoodTolerance);
+    hoodPID.disableContinuousInput();
+
     hoodMotor.configRemoteFeedbackFilter(hoodEncoder, 20);
   }
 
@@ -38,15 +45,17 @@ public class ShooterHood extends SubsystemBase {
     // This method will be called once per scheduler run
 
     SmartDashboard.putNumber("encoder angle", getEncoderAngle());
-    SmartDashboard.putNumber("hood angle", getHoodAngle());
-
   }
 
   public void setHoodSpeed(double speed) {
+
     hoodMotor.set(ControlMode.PercentOutput, speed);
   }
 
   public void setHoodPosition(double position){
+    position = Math.min(position, Constants.minHoodPosition);
+    position = Math.max(position, Constants.maxHoodPosition);
+    setHoodSpeed(hoodPID.calculate(getEncoderAngle(), position));
   }
 
   public double getEncoderAngle() {
@@ -71,5 +80,4 @@ public class ShooterHood extends SubsystemBase {
 
     return angle;
   }
-
 }

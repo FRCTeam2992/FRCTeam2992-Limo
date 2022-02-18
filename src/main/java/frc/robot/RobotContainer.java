@@ -48,7 +48,10 @@ public class RobotContainer {
 
   public final Shooter mShooter;
 
+  public final CargoFunnel mCargoFunnel;
+
   public final Drivetrain mDrivetrain;
+  
   // Joysticks
   public final XboxController controller0 = new XboxController(0);
 
@@ -65,6 +68,8 @@ public class RobotContainer {
     mShooter = new Shooter();
     mShooter.setDefaultCommand(new StopShooter(mShooter));
 
+    mCargoFunnel = new CargoFunnel();
+    mCargoFunnel.setDefaultCommand(new StopCargoFunnel(mCargoFunnel));
     mDrivetrain = new Drivetrain();
     mDrivetrain.setDefaultCommand(new DriveSticks(mDrivetrain));
 
@@ -72,6 +77,8 @@ public class RobotContainer {
     SmartDashboard.putData(mIntake);
 
     SmartDashboard.putData(mShooter);
+
+    SmartDashboard.putData(mCargoFunnel);
 
     SmartDashboard.putData(mDrivetrain);
 
@@ -148,6 +155,15 @@ public class RobotContainer {
 
     final JoystickButton resetGyroButton = new JoystickButton(controller0, XboxController.Button.kStart.value);
     resetGyroButton.whenPressed(new ResetGyro(mDrivetrain));
+
+    final JoystickButton cargoFunnelButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
+    cargoFunnelButton.whenPressed(new SpinCargoFunnel(mCargoFunnel, .5));
+    cargoFunnelButton.whenReleased(new StopCargoFunnel(mCargoFunnel));
+
+    final JoystickButton cargoFunnelButton2 = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
+    cargoFunnelButton2.toggleWhenPressed(new SpinCargoFunnel(mCargoFunnel, .5));
+
+    SmartDashboard.putData("spin cargo funnel", new SpinCargoFunnel(mCargoFunnel, .5));;
 
   }
 

@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -60,12 +61,13 @@ public class Intake extends SubsystemBase {
         intakeDeployed = toggle;
     }
 
-    public boolean getIntakeSloenoid(){
+    public boolean getIntakeSloenoid() {
         return intakeSolenoid.get();
     }
 
-    public void setIntakeMotor(double powerLevel){
-        intakeMotor.set(TalonSRXControlMode.PercentOutput, powerLevel);
+    public void setIntakeSpeed(double speed) {
+        intakeMotor.set(ControlMode.PercentOutput, speed);
     }
 
+   
 }

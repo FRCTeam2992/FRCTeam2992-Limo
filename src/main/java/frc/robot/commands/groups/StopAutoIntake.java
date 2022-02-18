@@ -24,7 +24,7 @@ public class StopAutoIntake extends SequentialCommandGroup {
   public StopAutoIntake(Intake mIntake, CargoFunnel mCargoFunnel) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new DeployIntake(mIntake, false), 
+    addCommands(//new DeployIntake(mIntake, false), 
     new ParallelCommandGroup(new StopIntake(mIntake), new StopCargoFunnel(mCargoFunnel)));
   }
 }

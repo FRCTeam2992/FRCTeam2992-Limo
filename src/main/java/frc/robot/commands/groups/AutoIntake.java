@@ -22,7 +22,7 @@ public class AutoIntake extends SequentialCommandGroup {
   public AutoIntake(Intake mIntake, CargoFunnel mCargoFunnel) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(new DeployIntake(mIntake, true), 
+    addCommands(//new DeployIntake(mIntake, true), 
     new ParallelCommandGroup(new SpinIntake(mIntake, .75), new SpinCargoFunnel(mCargoFunnel, .5)));
   }
 }

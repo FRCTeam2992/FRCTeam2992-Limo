@@ -12,14 +12,13 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 /**
@@ -40,6 +39,8 @@ public class Intake extends SubsystemBase {
         addChild("Intake Motor", intakeMotor);
 
         intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, 0);
+        addChild("Intake Solenoid", intakeSolenoid);
+
     }
 
     @Override
@@ -67,4 +68,6 @@ public class Intake extends SubsystemBase {
     public void setIntakeSpeed(double speed) {
         intakeMotor.set(ControlMode.PercentOutput, speed);
     }
+
+   
 }

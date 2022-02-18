@@ -13,6 +13,7 @@
 package frc.robot.subsystems;
 
 import frc.robot.Constants;
+import frc.robot.commands.StopShooter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -64,6 +65,8 @@ public class Shooter extends SubsystemBase {
     secondaryShooterLead.setNeutralMode(NeutralMode.Coast);
     addChild("secondaryShooterLead", secondaryShooterLead);
     secondaryShooterLead.setInverted(true);
+
+    setDefaultCommand(new StopShooter(this));
     // secondaryShooterFollow = new WPI_VictorSPX(12);
 
     

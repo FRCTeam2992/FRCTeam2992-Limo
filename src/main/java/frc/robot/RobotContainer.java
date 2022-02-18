@@ -13,6 +13,8 @@
 package frc.robot;
 
 import frc.robot.commands.*;
+import frc.robot.commands.groups.AutoIntake;
+import frc.robot.commands.groups.StopAutoIntake;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -46,12 +48,12 @@ public class RobotContainer {
   // The robot's subsystems
   public final Intake mIntake;
 
-  public final Shooter mShooter;
+  // public final Shooter mShooter;
 
   public final CargoFunnel mCargoFunnel;
 
   public final Drivetrain mDrivetrain;
-  
+
   // Joysticks
   public final XboxController controller0 = new XboxController(0);
 
@@ -65,8 +67,8 @@ public class RobotContainer {
 
     mIntake = new Intake();
 
-    mShooter = new Shooter();
-    mShooter.setDefaultCommand(new StopShooter(mShooter));
+    // mShooter = new Shooter();
+    // mShooter.setDefaultCommand(new StopShooter(mShooter));
 
     mCargoFunnel = new CargoFunnel();
     mCargoFunnel.setDefaultCommand(new StopCargoFunnel(mCargoFunnel));
@@ -76,7 +78,7 @@ public class RobotContainer {
     // Smartdashboard Subsystems
     SmartDashboard.putData(mIntake);
 
-    SmartDashboard.putData(mShooter);
+    // SmartDashboard.putData(mShooter);
 
     SmartDashboard.putData(mCargoFunnel);
 
@@ -110,44 +112,50 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Create some buttons
     // final POVButton decreaseShooterSpeed = new POVButton(controller0, 180);
-    // decreaseShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, -100), true);
-    SmartDashboard.putData("DecreaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, -100));
+    // decreaseShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, -100),
+    // true);
+    // SmartDashboard.putData("DecreaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, -100));
 
     // final POVButton increaseShooterSpeed = new POVButton(controller0, 0);
-    // increaseShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, 100), true);
-    SmartDashboard.putData("increaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, 100));
+    // increaseShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, 100),
+    // true);
+    // SmartDashboard.putData("increaseShooterSpeed", new ChangeMainShooterSpeed(mShooter, 100));
 
-    final JoystickButton startShooterButton = new JoystickButton(controller0, XboxController.Button.kX.value);
-    startShooterButton.toggleWhenPressed(new StartShooter(mShooter), true);
-    //SmartDashboard.putData("Start Shooter", new StartShooter(mShooter));
+    // final JoystickButton startShooterButton = new JoystickButton(controller0, XboxController.Button.kX.value);
+    // startShooterButton.toggleWhenPressed(new StartShooter(mShooter), true);
+    // SmartDashboard.putData("Start Shooter", new StartShooter(mShooter));
 
-    // final JoystickButton increaseSecondSpeed = new JoystickButton(controller0, XboxController.Button.kY.value);
-    // increaseSecondSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter, 50), true);
-    SmartDashboard.putData("IncreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, 50));
+    // final JoystickButton increaseSecondSpeed = new JoystickButton(controller0,
+    // XboxController.Button.kY.value);
+    // increaseSecondSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter,
+    // 50), true);
+    // SmartDashboard.putData("IncreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, 50));
 
-  //   final JoystickButton decreaseSecondSpeed = new JoystickButton(controller0, XboxController.Button.kA.value);
-  //   decreaseSecondSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter, -50), true);
-   // SmartDashboard.putData("DecreaseSecondaryShooter", new ChangeSecondaryShooterSpeed(mShooter, -50));
+    // final JoystickButton decreaseSecondSpeed = new JoystickButton(controller0,
+    // XboxController.Button.kA.value);
+    // decreaseSecondSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter,
+    // -50), true);
+    // SmartDashboard.putData("DecreaseSecondaryShooter", new
+    // ChangeSecondaryShooterSpeed(mShooter, -50));
 
-    // final JoystickButton startIntakeButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
+    // final JoystickButton startIntakeButton = new JoystickButton(controller0,
+    // XboxController.Button.kLeftBumper.value);
     // startIntakeButton.toggleWhenPressed(new StartIntake(mIntake, 0.75));
     // SmartDashboard.putData("Start Intake", new StartIntake(mIntake, 0.75));
 
-    // final JoystickButton deployIntakeButton = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
+    // final JoystickButton deployIntakeButton = new JoystickButton(controller0,
+    // XboxController.Button.kRightBumper.value);
     // deployIntakeButton.whenPressed(new DeployIntake(mIntake));
     // SmartDashboard.putData("Deploy Intake", new DeployIntake(mIntake));
 
     SmartDashboard.putData("0 Modules", new SetSwerveAngle(mDrivetrain, 0.0, 0.0, 0.0, 0.0));
     SmartDashboard.putData("180 Modules", new SetSwerveAngle(mDrivetrain, 180.0, 180.0, 180.0, 180.0));
 
-
     final JoystickButton swerveXPatterButton = new JoystickButton(controller0, XboxController.Button.kX.value);
     swerveXPatterButton.whenPressed(new SetSwerveAngle(mDrivetrain, 45.0, -45.0, -45.0, 45.0));
     swerveXPatterButton.whenReleased(new DriveSticks(mDrivetrain));
 
     SmartDashboard.putData("X Pattern", new SetSwerveAngle(mDrivetrain, 45.0, -45.0, -45.0, 45.0));
-
-    
 
     // SmartDashboard.putData("90 Modules", new SetSwerveAngle(mDrivetrain, 90));
     // SmartDashboard.putData("180 Modules", new SetSwerveAngle(mDrivetrain, 180));
@@ -156,14 +164,21 @@ public class RobotContainer {
     final JoystickButton resetGyroButton = new JoystickButton(controller0, XboxController.Button.kStart.value);
     resetGyroButton.whenPressed(new ResetGyro(mDrivetrain));
 
-    final JoystickButton cargoFunnelButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
-    cargoFunnelButton.whenPressed(new SpinCargoFunnel(mCargoFunnel, .5));
-    cargoFunnelButton.whenReleased(new StopCargoFunnel(mCargoFunnel));
+    // final JoystickButton cargoFunnelButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
+    // cargoFunnelButton.whenPressed(new SpinCargoFunnel(mCargoFunnel, .5));
+    // cargoFunnelButton.whenReleased(new StopCargoFunnel(mCargoFunnel));
 
-    final JoystickButton cargoFunnelButton2 = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
-    cargoFunnelButton2.toggleWhenPressed(new SpinCargoFunnel(mCargoFunnel, .5));
+    // final JoystickButton cargoFunnelButton2 = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
+    // cargoFunnelButton2.toggleWhenPressed(new SpinCargoFunnel(mCargoFunnel, .5));
 
-    SmartDashboard.putData("spin cargo funnel", new SpinCargoFunnel(mCargoFunnel, .5));;
+    SmartDashboard.putData("spin cargo funnel", new SpinCargoFunnel(mCargoFunnel, .5));
+
+    final JoystickButton depolyIntakeButton = new JoystickButton(controller0, XboxController.Button.kA.value);
+    depolyIntakeButton.whenPressed(new AutoIntake(mIntake, mCargoFunnel), true);
+
+    final JoystickButton stopIntakeButton = new JoystickButton(controller0, XboxController.Button.kB.value);
+    stopIntakeButton.whenPressed(new StopAutoIntake(mIntake, mCargoFunnel), true);
+    
 
   }
 

@@ -12,9 +12,13 @@ public class DeployIntake extends CommandBase {
 
   private Intake mIntake;
 
-  public DeployIntake(Intake subsystem) {
+  private boolean mToggle;
+
+  public DeployIntake(Intake subsystem, boolean toggle) {
 
     mIntake = subsystem;
+
+    mToggle = toggle;
   }
 
   // Called when the command is initially scheduled.
@@ -25,7 +29,7 @@ public class DeployIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mIntake.deployIntake(!mIntake.getIntakeSloenoid());
+    mIntake.deployIntake(mToggle);
   }
 
   // Called once the command ends or is interrupted.

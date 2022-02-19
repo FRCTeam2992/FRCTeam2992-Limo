@@ -9,12 +9,7 @@ import frc.robot.subsystems.Intake;
 
 public class DeployIntake extends CommandBase {
 
-
   private Intake mIntake;
-
-  public DeployIntake(Intake subsystem) {
-
-    mIntake = subsystem;
 
   private boolean mToggle;
 

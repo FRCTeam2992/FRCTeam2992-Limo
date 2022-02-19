@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands; 
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -42,37 +42,36 @@ public class AutoDriveRotate extends CommandBase {
   @Override
   public void execute() {
     double correctionSpeed;
-   
-      // Get the Gyro Value
-      double gyroValue = mDriveTrain.navx.getYaw();
 
-      // Normalize the Target Angle (-180 - 180)
-      if (mTargetRotation < -180.0) {
-        mTargetRotation += 360.0;
-      } else if (mTargetRotation > 180) {
-        mTargetRotation -= 360.0;
-      }
+    // Get the Gyro Value
+    double gyroValue = mDriveTrain.navx.getYaw();
 
-      // Normalize the Gyro Angle (-180 - 180)
-      if (gyroValue > 180.0) {
-        gyroValue -= 360;
-      } else if (gyroValue < -180) {
-        gyroValue += 360;
-      }
+    // Normalize the Target Angle (-180 - 180)
+    if (mTargetRotation < -180.0) {
+      mTargetRotation += 360.0;
+    } else if (mTargetRotation > 180) {
+      mTargetRotation -= 360.0;
+    }
 
-      // Get the Gyro Error
-      double gyroError = gyroValue - mTargetRotation;
+    // Normalize the Gyro Angle (-180 - 180)
+    if (gyroValue > 180.0) {
+      gyroValue -= 360;
+    } else if (gyroValue < -180) {
+      gyroValue += 360;
+    }
 
-      // Normalize the Gyro Error (-180 - 180)
-      if (gyroError > 180.0) {
-        gyroError -= 360.0;
-      } else if (gyroError < -180.0) {
-        gyroError += 360.0;
-      }
+    // Get the Gyro Error
+    double gyroError = gyroValue - mTargetRotation;
 
-      // Calculate Correction Speed
-      correctionSpeed = gyroError * 0.008;
-    
+    // Normalize the Gyro Error (-180 - 180)
+    if (gyroError > 180.0) {
+      gyroError -= 360.0;
+    } else if (gyroError < -180.0) {
+      gyroError += 360.0;
+    }
+
+    // Calculate Correction Speed
+    correctionSpeed = gyroError * 0.008;
 
     // Calculate the Swerve States
     double[] swerveStates;
@@ -109,20 +108,19 @@ public class AutoDriveRotate extends CommandBase {
   public void end(boolean interrupted) {
     mDriveTrain.stopDrive();
 
-    
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    
-      if(Math.abs(mDriveTrain.navx.getYaw() - mTargetRotation) < 1.0) {
-        atSetpointCounter++;
-      } else {
-        atSetpointCounter = 0;
-      }
 
-      return atSetpointCounter >= 3 || timeoutTimer.get() > mTimeout;
-    
+    if (Math.abs(mDriveTrain.navx.getYaw() - mTargetRotation) < 1.0) {
+      atSetpointCounter++;
+    } else {
+      atSetpointCounter = 0;
+    }
+
+    return atSetpointCounter >= 3 || timeoutTimer.get() > mTimeout;
+
   }
 }

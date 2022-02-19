@@ -23,7 +23,6 @@ public class ShooterHood extends SubsystemBase {
 
   public PIDController hoodPID;
 
-
   public ShooterHood() {
     hoodMotor = new WPI_TalonSRX(20);
     hoodMotor.setInverted(true);
@@ -52,7 +51,7 @@ public class ShooterHood extends SubsystemBase {
     hoodMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void setHoodPosition(double position){
+  public void setHoodPosition(double position) {
     position = Math.min(position, Constants.minHoodPosition);
     position = Math.max(position, Constants.maxHoodPosition);
     setHoodSpeed(hoodPID.calculate(getEncoderAngle(), position));
@@ -61,17 +60,17 @@ public class ShooterHood extends SubsystemBase {
   public double getEncoderAngle() {
     double tempAngle = hoodEncoder.getAbsolutePosition() + Constants.hoodEncoderOffset;
 
-    if (tempAngle < -180.0){
+    if (tempAngle < -180.0) {
       tempAngle += 360.0;
-    } else if (tempAngle > 180){
+    } else if (tempAngle > 180) {
       tempAngle -= 360;
     }
-    
+
     // if (tempAngle < 0.0){
-    //     tempAngle += 360.0;
-    //   } else if (tempAngle > 360.0){
-    //     tempAngle -= 360;
-    //   }
+    // tempAngle += 360.0;
+    // } else if (tempAngle > 360.0){
+    // tempAngle -= 360;
+    // }
     return tempAngle;
   }
 

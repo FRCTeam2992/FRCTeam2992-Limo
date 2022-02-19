@@ -18,13 +18,12 @@ import frc.robot.subsystems.Intake;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class StopAutoIntake extends SequentialCommandGroup {
- 
-  
+
   /** Creates a new AutoIntake. */
   public StopAutoIntake(Intake mIntake, CargoFunnel mCargoFunnel) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(//new DeployIntake(mIntake, false), 
-    new ParallelCommandGroup(new StopIntake(mIntake), new StopCargoFunnel(mCargoFunnel)));
+    addCommands(// new DeployIntake(mIntake, false),
+        new ParallelCommandGroup(new StopIntake(mIntake), new StopCargoFunnel(mCargoFunnel)));
   }
 }

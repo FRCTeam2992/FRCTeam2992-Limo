@@ -9,8 +9,8 @@ import frc.robot.subsystems.Intake;
 
 public class SpinIntake extends CommandBase {
 
-private Intake mIntake;
-private double mIntakeSpeed;
+  private Intake mIntake;
+  private double mIntakeSpeed;
 
   public SpinIntake(Intake subsystem, double intakeSpeed) {
     mIntake = subsystem;
@@ -21,7 +21,8 @@ private double mIntakeSpeed;
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -31,7 +32,8 @@ private double mIntakeSpeed;
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override

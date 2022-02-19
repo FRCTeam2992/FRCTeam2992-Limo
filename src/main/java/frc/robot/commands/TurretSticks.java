@@ -41,8 +41,8 @@ public class TurretSticks extends CommandBase {
         || Math.abs(y) > Constants.turretJoystickDeadband) {
       targetAngle = 360 - gyroValue + (mTurret.angleOverlap(Math.toDegrees(Math.atan2(y, x)) - 90));
 
-    mTurret.goToAngle(mTurret.angleOverlap(targetAngle));
-    } 
+      mTurret.goToAngle(mTurret.angleOverlap(targetAngle));
+    }
   }
 
   // Called once the command ends or is interrupted.

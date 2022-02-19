@@ -11,10 +11,11 @@ public class MoveHoodToAngle extends CommandBase {
 
   private ShooterHood mShooterHood;
   private double mEncoderAngle;
+
   /** Creates a new MoveHoodToAngle. */
   public MoveHoodToAngle(ShooterHood subsystem, double encoderAngle) {
     // Use addRequirements() here to declare subsystem dependencies.
-    mShooterHood = subsystem; 
+    mShooterHood = subsystem;
     mEncoderAngle = encoderAngle;
 
     addRequirements(subsystem);
@@ -22,7 +23,8 @@ public class MoveHoodToAngle extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

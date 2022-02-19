@@ -14,7 +14,7 @@ import frc.robot.subsystems.Shooter;
 
 public class StartShooter extends CommandBase {
 
-  //cheating for a change
+  // cheating for a change
   // Subsystem Instance
   private Shooter mShooter;
 
@@ -24,7 +24,6 @@ public class StartShooter extends CommandBase {
   public StartShooter(Shooter subsystem) {
     // Subsystem Instance
     mShooter = subsystem;
-
 
     // Set the Subsystem Requirement
     addRequirements(mShooter);
@@ -44,7 +43,8 @@ public class StartShooter extends CommandBase {
     mMainShooterSpeed = (mMainShooterSpeed / 600.0) * (Constants.shooterEncoderPulses * 0.75);
     mSecondaryShooterSpeed = (mSecondaryShooterSpeed / 600.0) * (Constants.shooterEncoderPulses);
     // SmartDashboard.putNumber("Commanded Main Speed", mMainShooterSpeed);
-    // SmartDashboard.putNumber("Commanded Secondary Speed", mSecondaryShooterSpeed);
+    // SmartDashboard.putNumber("Commanded Secondary Speed",
+    // mSecondaryShooterSpeed);
 
     mShooter.setMainShooterVelocity(mMainShooterSpeed);
     mShooter.setSecondaryShooterVelocity(mSecondaryShooterSpeed);

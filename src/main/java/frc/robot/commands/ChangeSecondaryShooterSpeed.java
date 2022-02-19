@@ -37,7 +37,6 @@ public class ChangeSecondaryShooterSpeed extends CommandBase {
 
     mShooter.secondaryShooterSetSpeed = changeSpeed;
   }
-  
 
   // Called once the command ends or is interrupted.
   @Override

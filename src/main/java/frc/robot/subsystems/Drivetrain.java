@@ -314,7 +314,7 @@ public class Drivetrain extends SubsystemBase {
     swerveDriveOdometry.resetPosition(position, Rotation2d.fromDegrees(-navx.getYaw()));
 
     latestSwervePose = swerveDriveOdometry.update(Rotation2d.fromDegrees(-navx.getYaw()), frontLeftModule.getState(),
-    frontRightModule.getState(), rearLeftModule.getState(), rearRightModule.getState());
+        frontRightModule.getState(), rearLeftModule.getState(), rearRightModule.getState());
   }
 
   private void loadMotionPaths() {

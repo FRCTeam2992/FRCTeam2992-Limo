@@ -25,7 +25,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
-
 /**
  *
  */
@@ -55,7 +54,7 @@ public class Intake extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        if (++dashboardCounter >= 5){
+        if (++dashboardCounter >= 5) {
             // SmartDashboard.putNumber("Intake Motor Speed", intakeSetSpeed);
             dashboardCounter = 0;
         }
@@ -77,7 +76,6 @@ public class Intake extends SubsystemBase {
     public boolean getIntakeSloenoid() {
         return intakeSolenoid.get();
     }
-
 
     public void setIntakeSpeed(double speed) {
         intakeMotor.set(ControlMode.PercentOutput, speed);

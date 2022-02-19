@@ -9,7 +9,7 @@ import frc.robot.subsystems.ShooterHood;
 
 public class StopHood extends CommandBase {
   private ShooterHood mShooterHood;
-  
+
   public StopHood(ShooterHood subsystem) {
     // Use addRequirements() here to declare subsystem dependencies
     mShooterHood = subsystem;

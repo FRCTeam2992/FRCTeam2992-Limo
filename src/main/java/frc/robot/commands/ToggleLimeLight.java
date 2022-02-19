@@ -11,6 +11,7 @@ import frc.robot.subsystems.Turret;
 public class ToggleLimeLight extends CommandBase {
 
   private Turret mTurret;
+
   /** Creates a new ToggleLimeLight. */
   public ToggleLimeLight(Turret subsystem) {
     mTurret = subsystem;
@@ -19,7 +20,8 @@ public class ToggleLimeLight extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override

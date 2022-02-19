@@ -64,18 +64,16 @@ public class Shooter extends SubsystemBase {
     secondaryShooterLead.setNeutralMode(NeutralMode.Coast);
     secondaryShooterLead.setInverted(true);
     addChild("secondaryShooterLead", secondaryShooterLead);
-    //secondaryShooterLead.setSensorPhase(true);
-
+    // secondaryShooterLead.setSensorPhase(true);
 
     setDefaultCommand(new StopShooter(this));
     // secondaryShooterFollow = new WPI_VictorSPX(12);
 
-    
     // addChild("secondaryShooterFollow", secondaryShooterFollow);
 
     // secondaryShooterFollow.follow(secondaryShooterLead);
     // secondaryShooterFollow.setInverted(true);
-    
+
     // secondaryShooterFollow.setNeutralMode(NeutralMode.Coast);
 
   }

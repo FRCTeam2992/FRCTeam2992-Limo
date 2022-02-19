@@ -15,7 +15,7 @@ public class SpinTopLift extends CommandBase {
 
   public SpinTopLift(TopLift subsystem, double topLiftSpeed) {
     mTopLift = subsystem;
- 
+
     mTopLiftSpeed = topLiftSpeed;
 
     // Use addRequirements() here to declare subsystem dependencies.

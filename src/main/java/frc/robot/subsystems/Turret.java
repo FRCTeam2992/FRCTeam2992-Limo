@@ -58,13 +58,15 @@ public class Turret extends SubsystemBase {
                 Constants.cameraHeight, Constants.goalHeight));
         SmartDashboard.putNumber("Y-Offset", limeLightCamera.getTargetYOffset());
 
-    //     double x = -Robot.m_robotContainer.controller0.getLeftX();
-    // double y = -Robot.m_robotContainer.controller0.getLeftY();
-    // double xyAngle = (Math.toDegrees(Math.atan2(y, x)) - 90);
-    //      SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
-    //      SmartDashboard.putNumber("Joystick X", -Robot.m_robotContainer.controller0.getLeftX());
-    //     SmartDashboard.putNumber("Joystick Y", -Robot.m_robotContainer.controller0.getLeftY());
-    //     SmartDashboard.putNumber("Joystick Angle", (angleOverlap(xyAngle))); 
+        // double x = -Robot.m_robotContainer.controller0.getLeftX();
+        // double y = -Robot.m_robotContainer.controller0.getLeftY();
+        // double xyAngle = (Math.toDegrees(Math.atan2(y, x)) - 90);
+        // SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
+        // SmartDashboard.putNumber("Joystick X",
+        // -Robot.m_robotContainer.controller0.getLeftX());
+        // SmartDashboard.putNumber("Joystick Y",
+        // -Robot.m_robotContainer.controller0.getLeftY());
+        // SmartDashboard.putNumber("Joystick Angle", (angleOverlap(xyAngle)));
     }
 
     // Put methods for controlling this subsystem
@@ -113,12 +115,12 @@ public class Turret extends SubsystemBase {
         return getTurretPostion() * (360.0 / 4096.0);
     }
 
-    public double angleOverlap(double tempAngle){
-        if (tempAngle > 360){
+    public double angleOverlap(double tempAngle) {
+        if (tempAngle > 360) {
             tempAngle -= 360;
-          } else if (tempAngle < 0){
+        } else if (tempAngle < 0) {
             tempAngle += 360;
-          }
-          return tempAngle;
+        }
+        return tempAngle;
     }
 }

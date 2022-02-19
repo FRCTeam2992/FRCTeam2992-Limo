@@ -16,10 +16,10 @@ public class MoveTurretToAngle extends CommandBase {
     private Turret mTurret;
 
     public MoveTurretToAngle(Turret subsystem, double angle, double timeout) {
-      mTurret = subsystem; 
-      
-      mAngle = angle;
-        
+        mTurret = subsystem;
+
+        mAngle = angle;
+
         mTimeout = timeout;
         timeoutTimer = new Timer();
 
@@ -42,13 +42,13 @@ public class MoveTurretToAngle extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        //return mTurret.turretRotate.atSetpoint() || timeoutTimer.get() >= mTimeout;
+        // return mTurret.turretRotate.atSetpoint() || timeoutTimer.get() >= mTimeout;
         return false;
     }
 
     // Called once after isFinished returns true
     @Override
     public void end(boolean interrupted) {
-      mTurret.setTurretSpeed(0.0);
+        mTurret.setTurretSpeed(0.0);
     }
 }

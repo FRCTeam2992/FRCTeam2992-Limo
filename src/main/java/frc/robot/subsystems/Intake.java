@@ -14,13 +14,17 @@ package frc.robot.subsystems;
 
 import frc.robot.Constants;
 import frc.robot.commands.*;
+
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+
 
 /**
  *
@@ -29,7 +33,7 @@ public class Intake extends SubsystemBase {
 
     public double intakeSetSpeed = Constants.defaultInatkeSpeed;
 
-    private WPI_VictorSPX intakeMotor;
+    private WPI_TalonFX intakeMotor;
     private Solenoid intakeSolenoid;
 
     private boolean intakeDeployed = false;
@@ -38,7 +42,7 @@ public class Intake extends SubsystemBase {
 
     public Intake() {
 
-        intakeMotor = new WPI_VictorSPX(14);
+        intakeMotor = new WPI_TalonFX(11);
         intakeMotor.setNeutralMode(NeutralMode.Brake);
         intakeMotor.setInverted(true);
         addChild("Intake Motor", intakeMotor);
@@ -46,7 +50,6 @@ public class Intake extends SubsystemBase {
         intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, 0);
         addChild("Intake Solenoid", intakeSolenoid);
 
-        setDefaultCommand(new StopIntake(this));
     }
 
     @Override
@@ -71,12 +74,13 @@ public class Intake extends SubsystemBase {
         intakeDeployed = toggle;
     }
 
-    public boolean getIntakeSloenoid(){
+    public boolean getIntakeSloenoid() {
         return intakeSolenoid.get();
     }
 
-    public void setIntakeMotor(double powerLevel){
-        intakeMotor.set(VictorSPXControlMode.PercentOutput, powerLevel);
+
+    public void setIntakeSpeed(double speed) {
+        intakeMotor.set(ControlMode.PercentOutput, speed);
     }
 
 }

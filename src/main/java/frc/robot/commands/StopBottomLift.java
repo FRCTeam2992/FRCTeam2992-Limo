@@ -5,24 +5,18 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.BottomLift;
 
-public class DeployIntake extends CommandBase {
+public class StopBottomLift extends CommandBase {
 
+  private BottomLift mBottomLift;
 
-  private Intake mIntake;
+  public StopBottomLift(BottomLift subsystem) {
 
-  public DeployIntake(Intake subsystem) {
+    mBottomLift = subsystem;
 
-    mIntake = subsystem;
+    addRequirements(mBottomLift);
 
-  private boolean mToggle;
-
-  public DeployIntake(Intake subsystem, boolean toggle) {
-
-    mIntake = subsystem;
-
-    mToggle = toggle;
   }
 
   // Called when the command is initially scheduled.
@@ -33,7 +27,7 @@ public class DeployIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mIntake.deployIntake(mToggle);
+    mBottomLift.setBottomLiftSpeed(0.0);
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +38,6 @@ public class DeployIntake extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

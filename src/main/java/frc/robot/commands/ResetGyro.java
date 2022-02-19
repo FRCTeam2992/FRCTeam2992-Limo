@@ -5,40 +5,41 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Drivetrain;
 
-public class DeployIntake extends CommandBase {
+public class ResetGyro extends CommandBase {
 
+  // Subsystem Instance
+  private Drivetrain mDriveTrain;
 
-  private Intake mIntake;
+  public ResetGyro(Drivetrain subsystem) {
+    // Subsystem Instance
+    mDriveTrain = subsystem;
 
-  public DeployIntake(Intake subsystem) {
-
-    mIntake = subsystem;
-
-  private boolean mToggle;
-
-  public DeployIntake(Intake subsystem, boolean toggle) {
-
-    mIntake = subsystem;
-
-    mToggle = toggle;
+    // Set the Subsystem Requirement
+    addRequirements(mDriveTrain);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    // Reset the Gyro
+    mDriveTrain.navx.zeroYaw();
+
+    // Reset the Odometry
+    mDriveTrain.resetOdometry();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mIntake.deployIntake(mToggle);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+
   }
 
   // Returns true when the command should end.

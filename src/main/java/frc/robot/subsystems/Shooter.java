@@ -66,6 +66,7 @@ public class Shooter extends SubsystemBase {
     addChild("secondaryShooterLead", secondaryShooterLead);
     //secondaryShooterLead.setSensorPhase(true);
 
+
     setDefaultCommand(new StopShooter(this));
     // secondaryShooterFollow = new WPI_VictorSPX(12);
 

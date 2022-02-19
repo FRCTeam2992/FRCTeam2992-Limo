@@ -5,24 +5,20 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.CargoFunnel;
 
-public class DeployIntake extends CommandBase {
+public class SpinCargoFunnel extends CommandBase {
 
+  private CargoFunnel mCargoFunnel;
+  private double mFunnelSpeed;
 
-  private Intake mIntake;
+  public SpinCargoFunnel(CargoFunnel subsystem, double funnelSpeed) {
 
-  public DeployIntake(Intake subsystem) {
+    mCargoFunnel = subsystem;
+    mFunnelSpeed = funnelSpeed;
 
-    mIntake = subsystem;
+    addRequirements(mCargoFunnel);
 
-  private boolean mToggle;
-
-  public DeployIntake(Intake subsystem, boolean toggle) {
-
-    mIntake = subsystem;
-
-    mToggle = toggle;
   }
 
   // Called when the command is initially scheduled.
@@ -33,7 +29,7 @@ public class DeployIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mIntake.deployIntake(mToggle);
+    mCargoFunnel.setFunnelSpeed(mFunnelSpeed);
   }
 
   // Called once the command ends or is interrupted.
@@ -44,6 +40,6 @@ public class DeployIntake extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

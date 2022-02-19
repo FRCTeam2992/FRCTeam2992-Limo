@@ -12,11 +12,11 @@
 
 package frc.robot;
 
+import frc.lib.Ranging.CargoBallDataPoint;
+import frc.lib.Ranging.CargoBallInterpolator;
 import frc.lib.vision.LimeLight;
 import frc.lib.vision.LimeLight.LedMode;
 import frc.robot.commands.*;
-import frc.robot.commands.groups.AutoIntake;
-import frc.robot.commands.groups.StopAutoIntake;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -65,6 +65,8 @@ public class RobotContainer {
 
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
+
+  private CargoBallInterpolator cargoBallInterpolator;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -154,6 +156,13 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     // The selected command will be run in autonomous
     return m_chooser.getSelected();
+  }
+
+  public void initInterpolator() {
+    cargoBallInterpolator = new CargoBallInterpolator();
+
+    //Example adding point
+    //cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(0.0, 0, 0, 0.0));
   }
 
 }

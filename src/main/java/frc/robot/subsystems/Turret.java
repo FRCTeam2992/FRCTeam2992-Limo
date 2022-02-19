@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.vision.LimeLight;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 
 public class Turret extends SubsystemBase {
@@ -57,10 +58,13 @@ public class Turret extends SubsystemBase {
                 Constants.cameraHeight, Constants.goalHeight));
         SmartDashboard.putNumber("Y-Offset", limeLightCamera.getTargetYOffset());
 
-        SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
-        SmartDashboard.putNumber("Joystick X", RobotContainer.controller0.getLeftX());
-        SmartDashboard.putNumber("Joystick Y", RobotContainer.controller0.getLeftY());
-        SmartDashboard.putNumber("Joystick Angle", Math.atan2(RobotContainer.controller0.getLeftY(), RobotContainer.controller0.getLeftX()));
+    //     double x = -Robot.m_robotContainer.controller0.getLeftX();
+    // double y = -Robot.m_robotContainer.controller0.getLeftY();
+    // double xyAngle = (Math.toDegrees(Math.atan2(y, x)) - 90);
+    //      SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
+    //      SmartDashboard.putNumber("Joystick X", -Robot.m_robotContainer.controller0.getLeftX());
+    //     SmartDashboard.putNumber("Joystick Y", -Robot.m_robotContainer.controller0.getLeftY());
+    //     SmartDashboard.putNumber("Joystick Angle", (angleOverlap(xyAngle))); 
     }
 
     // Put methods for controlling this subsystem
@@ -107,5 +111,14 @@ public class Turret extends SubsystemBase {
 
     public static double getTurretAngle() {
         return getTurretPostion() * (360.0 / 4096.0);
+    }
+
+    public double angleOverlap(double tempAngle){
+        if (tempAngle > 360){
+            tempAngle -= 360;
+          } else if (tempAngle < 0){
+            tempAngle += 360;
+          }
+          return tempAngle;
     }
 }

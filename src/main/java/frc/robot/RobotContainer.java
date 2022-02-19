@@ -41,7 +41,7 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
  */
 public class RobotContainer {
 
-  public static RobotContainer m_robotContainer = new RobotContainer();
+  private static RobotContainer m_robotContainer = new RobotContainer();
 
   // The robot's subsystems
   //public final Intake mIntake;
@@ -49,7 +49,7 @@ public class RobotContainer {
   public final Shooter mShooter;
   public final ShooterHood mShooterHood;
   // Joysticks
-  public static final XboxController controller0 = new XboxController(0);
+  public XboxController controller0;
 
   //public final LimeLight limeLightCamera;
 
@@ -64,13 +64,16 @@ public class RobotContainer {
    // mIntake = new Intake();
 
     mTurret = new Turret();
-    mTurret.setDefaultCommand(new StopTurret(mTurret));
+    mTurret.setDefaultCommand(new TurretSticks(mTurret));
 
     mShooter = new Shooter();
     mShooter.setDefaultCommand(new StopShooter(mShooter));
 
     mShooterHood = new ShooterHood();
     mShooterHood.setDefaultCommand(new StopHood(mShooterHood));
+
+    controller0 = new XboxController(0);
+
 
     //limeLightCamera = new LimeLight();
 
@@ -80,6 +83,7 @@ public class RobotContainer {
     SmartDashboard.putData(mShooter);
     SmartDashboard.putData(mShooterHood);
     SmartDashboard.putData(mTurret);
+
 
 
 

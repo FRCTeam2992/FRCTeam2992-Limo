@@ -14,7 +14,7 @@ public class Constants {
     public static final boolean isFieldCentric = true;
     public static final boolean isVelocityControlled = true;
     public static final boolean isGyroCorrected = true;
-    public static final double joystickDeadband = 0.1;
+    public static final double joystickDeadband = 0.15;
     public static double joystickXYSmoothFactor = 0.5;
     public static double joystickRotationSmoothFactor = 0.5;
     public static double joystickRotationInverseDeadband = 0.14;

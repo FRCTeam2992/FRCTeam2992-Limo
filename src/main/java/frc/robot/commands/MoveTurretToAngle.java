@@ -42,8 +42,8 @@ public class MoveTurretToAngle extends CommandBase {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     public boolean isFinished() {
-        // return mTurret.turretRotate.atSetpoint() || timeoutTimer.get() >= mTimeout;
-        return false;
+        return mTurret.turretRotate.atSetpoint();// || timeoutTimer.get() >= mTimeout;
+        //return false;
     }
 
     // Called once after isFinished returns true

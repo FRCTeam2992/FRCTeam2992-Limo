@@ -9,16 +9,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Turret;
 
 public class TurretSticks extends CommandBase {
 
   private Turret mTurret;
+  private Climb mClimb;
 
   /** Creates a new TurretSticks. */
-  public TurretSticks(Turret subsystem) {
+  public TurretSticks(Turret subsystem, Climb climbSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     mTurret = subsystem;
+    mClimb = climbSubsystem;
 
     addRequirements(subsystem);
   }
@@ -37,8 +40,8 @@ public class TurretSticks extends CommandBase {
     double y = -Robot.m_robotContainer.controller0.getLeftY();
     double targetAngle;
 
-    if (Math.abs(x) > Constants.turretJoystickDeadband
-        || Math.abs(y) > Constants.turretJoystickDeadband) {
+    if ((Math.abs(x) > Constants.turretJoystickDeadband
+        || Math.abs(y) > Constants.turretJoystickDeadband) && mClimb.toggleClimbMode) {
       targetAngle = 360 - gyroValue + (mTurret.angleOverlap(Math.toDegrees(Math.atan2(y, x)) - 90));
 
       mTurret.goToAngle(mTurret.angleOverlap(targetAngle));

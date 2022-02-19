@@ -6,32 +6,35 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climb;
-import frc.robot.subsystems.Intake;
 
-public class ClimbModeOn extends CommandBase {
-
+public class DeployClimb extends CommandBase {
+  
   private Climb mClimb;
 
-  public ClimbModeOn(Climb subsystem) {
+  private boolean mToggle;
+  /** Creates a new DeployClimb. */
+  public DeployClimb(Climb subsystem, boolean toggle) {
+
     mClimb = subsystem;
+    mToggle = toggle;
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mClimb.toggleClimbMode = true;
+    if (mClimb.toggleClimbMode){
+    mClimb.deployClimb(mToggle);
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

@@ -12,25 +12,33 @@
 
 package frc.robot.subsystems;
 
+import frc.robot.Constants;
+import frc.robot.commands.*;
+
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 
 /**
  *
  */
 public class Intake extends SubsystemBase {
 
+    public double intakeSetSpeed = Constants.defaultInatkeSpeed;
+
     private WPI_TalonFX intakeMotor;
     private Solenoid intakeSolenoid;
 
     private boolean intakeDeployed = false;
+
+    private int dashboardCounter = 0;
 
     public Intake() {
 
@@ -47,6 +55,10 @@ public class Intake extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+        if (++dashboardCounter >= 5){
+            // SmartDashboard.putNumber("Intake Motor Speed", intakeSetSpeed);
+            dashboardCounter = 0;
+        }
 
     }
 
@@ -65,6 +77,7 @@ public class Intake extends SubsystemBase {
     public boolean getIntakeSloenoid() {
         return intakeSolenoid.get();
     }
+
 
     public void setIntakeSpeed(double speed) {
         intakeMotor.set(ControlMode.PercentOutput, speed);

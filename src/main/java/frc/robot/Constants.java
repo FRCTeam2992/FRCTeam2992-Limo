@@ -1,15 +1,72 @@
 
 package frc.robot;
 
+// import org.ejml.FancyPrint;
+
+/**
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants
+ * should be
+ * declared globally (i.e. public static). Do not put anything functional in
+ * this class.
+ *
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the
+ * constants are needed, to reduce verbosity.
+ */
+=======
 import edu.wpi.first.math.geometry.Translation2d;
 
 public class Constants {
 
-    // Shooter Constants
-    public static final int defaultMainShooterSpeed = 2300;
-    public static final int defaultSecondaryShooterSpeed = 1700;
+    // Shooter Constants 
+    public static final int defaultMainShooterSpeed = 1700;
+    public static final int defaultSecondaryShooterSpeed = 2300;
     public static final int shooterEncoderPulses = 2048;
 
+    // Intake Constant
+    public static final double defaultInatkeSpeed = 0.5;
+
+    // Turret Constants
+    public static final double turretP = 0.062;
+    public static final double turretI = 0.0;
+    public static final double turretD = 0.003;
+    public static final double turretTolerance = 0.5;
+    public static final int turretOffset = 2074;
+    public static final int turretMinEnd = 20;
+    public static final int turretMaxEnd = 340;
+    public static final int turretMaxSlowZone = 300;
+    public static final int turretMinSlowZone = 60;
+
+    // Vision Constants
+    
+
+    // the tooth to tooth of the hood
+    public static final double hoodAngleRatio = 34.000 / 536.000;
+    // the max and min of the hood angle not the encoder values
+    public static final double minHoodPosition = -160.0;
+    public static final double minHoodPZone = -125.0;
+
+    public static final double maxHoodPosition = 165.0;
+    public static final double maxHoodPZone = 130.0;
+
+    public static final double hoodPValueBottom = 0.012;
+    public static final double hoodPValueTop = 0.01515;
+    public static final double hoodEncoderOffset = -(-100.7 + 170);
+
+    public static final double cameraHeight = 44.5;
+    public static final double goalHeight = 103.12;
+    public static final double distanceTest = 120;
+    public static final double cameraAngle = 0;
+
+    public static final double hoodP = 0;
+    public static final double hoodI = 0;
+    public static final double hoodD = 0;
+    
+    public static final double hoodTolerance = 0;
+=======
     // Drive Variables
     public static final boolean isFieldCentric = true;
     public static final boolean isVelocityControlled = true;

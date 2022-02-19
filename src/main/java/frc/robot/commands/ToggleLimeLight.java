@@ -5,45 +5,37 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.lib.vision.LimeLight.LedMode;
+import frc.robot.subsystems.Turret;
 
-public class DeployIntake extends CommandBase {
+public class ToggleLimeLight extends CommandBase {
 
-
-  private Intake mIntake;
-
-  public DeployIntake(Intake subsystem) {
-
-    mIntake = subsystem;
-
-  private boolean mToggle;
-
-  public DeployIntake(Intake subsystem, boolean toggle) {
-
-    mIntake = subsystem;
-
-    mToggle = toggle;
+  private Turret mTurret;
+  /** Creates a new ToggleLimeLight. */
+  public ToggleLimeLight(Turret subsystem) {
+    mTurret = subsystem;
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mIntake.deployIntake(mToggle);
+    mTurret.limeLightCamera.setLedMode(LedMode.On);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    mTurret.limeLightCamera.setLedMode(LedMode.Off);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

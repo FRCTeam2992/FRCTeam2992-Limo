@@ -41,10 +41,10 @@ public class StartShooter extends CommandBase {
   public void execute() {
     mMainShooterSpeed = mShooter.mainShooterSetSpeed;
     mSecondaryShooterSpeed = mShooter.secondaryShooterSetSpeed;
-    mMainShooterSpeed = (mMainShooterSpeed / 600.0) * (Constants.shooterEncoderPulses * 4.0);
-    mSecondaryShooterSpeed = (mSecondaryShooterSpeed / 600.0) * (Constants.shooterEncoderPulses * 4.0);
-    SmartDashboard.putNumber("Commanded Main Speed", mMainShooterSpeed);
-    SmartDashboard.putNumber("Commanded Secondary Speed", mSecondaryShooterSpeed);
+    mMainShooterSpeed = (mMainShooterSpeed / 600.0) * (Constants.shooterEncoderPulses * 0.75);
+    mSecondaryShooterSpeed = (mSecondaryShooterSpeed / 600.0) * (Constants.shooterEncoderPulses);
+    // SmartDashboard.putNumber("Commanded Main Speed", mMainShooterSpeed);
+    // SmartDashboard.putNumber("Commanded Secondary Speed", mSecondaryShooterSpeed);
 
     mShooter.setMainShooterVelocity(mMainShooterSpeed);
     mShooter.setSecondaryShooterVelocity(mSecondaryShooterSpeed);

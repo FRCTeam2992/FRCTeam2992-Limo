@@ -5,45 +5,39 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.ShooterHood;
 
-public class DeployIntake extends CommandBase {
+public class StopHood extends CommandBase {
+  private ShooterHood mShooterHood;
+  
+  public StopHood(ShooterHood subsystem) {
+    // Use addRequirements() here to declare subsystem dependencies
+    mShooterHood = subsystem;
 
-
-  private Intake mIntake;
-
-  public DeployIntake(Intake subsystem) {
-
-    mIntake = subsystem;
-
-  private boolean mToggle;
-
-  public DeployIntake(Intake subsystem, boolean toggle) {
-
-    mIntake = subsystem;
-
-    mToggle = toggle;
+    addRequirements(mShooterHood);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mIntake.deployIntake(mToggle);
+    mShooterHood.setHoodSpeed(0.0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

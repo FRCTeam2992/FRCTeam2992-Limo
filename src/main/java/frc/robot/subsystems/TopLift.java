@@ -17,7 +17,7 @@ public class TopLift extends SubsystemBase {
   private DigitalInput topLiftSensor;
 
   public TopLift() {
-    topLiftMotor = new WPI_VictorSPX(42);
+    topLiftMotor = new WPI_VictorSPX(24);
     topLiftMotor.setInverted(false);
     topLiftMotor.setNeutralMode(NeutralMode.Coast);
 

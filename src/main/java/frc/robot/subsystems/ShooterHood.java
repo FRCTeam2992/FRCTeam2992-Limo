@@ -24,11 +24,11 @@ public class ShooterHood extends SubsystemBase {
   public PIDController hoodPID;
 
   public ShooterHood() {
-    hoodMotor = new WPI_TalonSRX(20);
+    hoodMotor = new WPI_TalonSRX(33);
     hoodMotor.setInverted(true);
     hoodMotor.setNeutralMode(NeutralMode.Brake);
 
-    hoodEncoder = new CANCoder(20);
+    hoodEncoder = new CANCoder(33);
     hoodEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
     hoodEncoder.configSensorDirection(true);
 
@@ -36,7 +36,7 @@ public class ShooterHood extends SubsystemBase {
     hoodPID.setTolerance(Constants.hoodTolerance);
     hoodPID.disableContinuousInput();
 
-    hoodMotor.configRemoteFeedbackFilter(hoodEncoder, 20);
+    hoodMotor.configRemoteFeedbackFilter(hoodEncoder, 33);
   }
 
   @Override

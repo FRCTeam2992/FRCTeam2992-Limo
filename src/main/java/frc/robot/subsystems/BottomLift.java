@@ -18,7 +18,7 @@ public class BottomLift extends SubsystemBase {
   private DigitalInput bottomLiftSensor;
 
   public BottomLift() {
-    bottomLiftMotor = new WPI_VictorSPX(42);
+    bottomLiftMotor = new WPI_VictorSPX(23);
     bottomLiftMotor.setInverted(false);
     bottomLiftMotor.setNeutralMode(NeutralMode.Coast);
 

@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class TopLift extends SubsystemBase {
   /** Creates a new TopLift. */
   private WPI_VictorSPX topLiftMotor;
-  private DigitalInput topLiftSensor;
 
   public TopLift() {
     topLiftMotor = new WPI_VictorSPX(24);
@@ -34,7 +33,5 @@ public class TopLift extends SubsystemBase {
     topLiftMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public boolean getSensorState() {
-    return topLiftSensor.get();
-  }
+  
 }

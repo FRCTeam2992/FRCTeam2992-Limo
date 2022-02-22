@@ -29,7 +29,7 @@ public class SpinBottomLiftSenor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (mBottomLift.getSensorState()) {
+    if (mBottomLift.getSensor1State() || mBottomLift.getSensor2State()) {
       mBottomLift.setBottomLiftSpeed(0.0);
     } else {
       mBottomLift.setBottomLiftSpeed(mBottomLiftSpeed);

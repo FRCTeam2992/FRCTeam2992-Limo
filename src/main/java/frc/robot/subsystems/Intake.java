@@ -43,7 +43,7 @@ public class Intake extends SubsystemBase {
 
         intakeMotor = new WPI_TalonFX(21);
         intakeMotor.setNeutralMode(NeutralMode.Brake);
-        intakeMotor.setInverted(true);
+        intakeMotor.setInverted(false);
         addChild("Intake Motor", intakeMotor);
 
         intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, 0);

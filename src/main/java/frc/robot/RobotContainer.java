@@ -74,9 +74,11 @@ public class RobotContainer {
   private RobotContainer() {
 
     // mIntake = new Intake();
+    mClimb = new Climb();
+    mClimb.setDefaultCommand(new ClimbSticks(mClimb));
 
     mTurret = new Turret();
-    mTurret.setDefaultCommand(new TurretSticks(mTurret));
+    mTurret.setDefaultCommand(new TurretSticks(mTurret, mClimb));
     mShooterHood = new ShooterHood();
     mShooterHood.setDefaultCommand(new StopHood(mShooterHood));
     mShooter = new Shooter();
@@ -93,8 +95,6 @@ public class RobotContainer {
 
     mDrivetrain = new Drivetrain();
     mDrivetrain.setDefaultCommand(new DriveSticks(mDrivetrain));
-
-    mClimb = new Climb();
 
     controller0 = new XboxController(0);
     controller1 = new XboxController(1);

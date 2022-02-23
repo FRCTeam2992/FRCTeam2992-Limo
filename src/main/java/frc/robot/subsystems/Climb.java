@@ -4,6 +4,9 @@
 
 package frc.robot.subsystems;
 
+import java.util.ResourceBundle.Control;
+
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
@@ -53,7 +56,13 @@ public class Climb extends SubsystemBase {
   }
 
   public void moveClimb(double speed){
-    climbRightMotor.set(speed);
-    climbLeftMotor.set(speed);
+    if (toggleClimbMode){
+      climbRightMotor.set(ControlMode.PercentOutput, speed);
+      climbLeftMotor.set(ControlMode.PercentOutput, speed);
+    }
+    else {
+      climbRightMotor.set(ControlMode.PercentOutput, 0);
+      climbLeftMotor.set(ControlMode.PercentOutput, 0);
+    }
   }
 }

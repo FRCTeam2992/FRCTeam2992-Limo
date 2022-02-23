@@ -50,13 +50,13 @@ public class DriveSticks extends CommandBase {
     double x2;
 
     if (isLeftStrafe) {
-      x1 = -Robot.m_robotContainer.getController0().getLeftX();
-      y1 = -Robot.m_robotContainer.getController0().getLeftY();
-      x2 = -Robot.m_robotContainer.getController0().getRightX();
+      x1 = -Robot.mRobotContainer.getController0().getLeftX();
+      y1 = -Robot.mRobotContainer.getController0().getLeftY();
+      x2 = -Robot.mRobotContainer.getController0().getRightX();
     } else {
-      x1 = -Robot.m_robotContainer.getController0().getRightX();
-      y1 = -Robot.m_robotContainer.getController0().getRightY();
-      x2 = -Robot.m_robotContainer.getController0().getLeftX();
+      x1 = -Robot.mRobotContainer.getController0().getRightX();
+      y1 = -Robot.mRobotContainer.getController0().getRightY();
+      x2 = -Robot.mRobotContainer.getController0().getLeftX();
     }
 
     // Get the Joystick Magnitude

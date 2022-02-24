@@ -14,6 +14,9 @@ package frc.robot;
 
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,7 +34,7 @@ public class Robot extends TimedRobot {
 
     private Command m_autonomousCommand;
 
-    public static RobotContainer m_robotContainer;
+    public static RobotContainer mRobotContainer;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -42,7 +45,7 @@ public class Robot extends TimedRobot {
         // Instantiate our RobotContainer. This will perform all our button bindings,
         // and put our
         // autonomous chooser on the dashboard.
-        m_robotContainer = RobotContainer.getInstance();
+        mRobotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
     }
 
@@ -85,12 +88,22 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+        m_autonomousCommand = mRobotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
         if (m_autonomousCommand != null) {
             m_autonomousCommand.schedule();
         }
+
+        // Set the Drive Train to Brake
+    mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
+    mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
+
+    // Set the Drive Motors Current Limit
+    mRobotContainer.mDrivetrain.setDriveCurrentLimit(60.0, 60.0);
+
+    // Set the Drive Motors Ramp Rate
+    mRobotContainer.mDrivetrain.setDriveRampRate(0.0);
     }
 
     /**
@@ -109,6 +122,12 @@ public class Robot extends TimedRobot {
         if (m_autonomousCommand != null) {
             m_autonomousCommand.cancel();
         }
+
+        mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
+        mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
+
+        mRobotContainer.mDrivetrain.setDriveCurrentLimit(40.0, 40.0);
+        mRobotContainer.mDrivetrain.setDriveRampRate(0.25);
     }
 
     /**

@@ -20,6 +20,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drive.swerve.SwerveController;
@@ -119,7 +121,7 @@ public class Drivetrain extends SubsystemBase {
     setTurnNeutralMode(NeutralMode.Brake);
 
     // TODO: figure out current values
-    setDriveCurrentLimit(60.0);
+    setDriveCurrentLimit(40.0, 40.0);
     setTurnCurrentLimit(60.0); // potentially unused
 
     // Drive Encoders
@@ -194,7 +196,8 @@ public class Drivetrain extends SubsystemBase {
     swerveController = new SwerveController(Constants.swerveLength, Constants.swerveWidth);
 
     // robot gyro initialization
-    navx = new AHRS(SPI.Port.kMXP);
+    //navx = new AHRS(SPI.Port.kMXP);
+    navx = new AHRS(SerialPort.Port.kMXP);
 
     // Swerve Drive Kinematics
     swerveDriveKinematics = new SwerveDriveKinematics(Constants.frontLeftLocation,
@@ -249,9 +252,12 @@ public class Drivetrain extends SubsystemBase {
 
       SmartDashboard.putNumber("Gyro Pitch", navx.getPitch());
       SmartDashboard.putNumber("Gyro Roll", navx.getRoll());
-      SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
-
+      //SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
+      SmartDashboard.putBoolean("Gyro Ready", navx.isConnected());
+      SmartDashboard.putBoolean("Gyro Calibrating", navx.isCalibrating());
     }
+
+  
 
   }
 
@@ -269,11 +275,11 @@ public class Drivetrain extends SubsystemBase {
     rearRightTurn.setNeutralMode(mode);
   }
 
-  public void setDriveCurrentLimit(double current) {
-    frontLeftDrive.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, current, current, 0));
-    frontRightDrive.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, current, current, 0));
-    rearLeftDrive.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, current, current, 0));
-    rearRightDrive.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, current, current, 0));
+  public void setDriveCurrentLimit(double currentLimit, double triggerCurrent) {
+    frontLeftDrive.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, triggerCurrent, 0));
+    frontRightDrive.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, triggerCurrent, 0));
+    rearLeftDrive.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, triggerCurrent, 0));
+    rearRightDrive.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, triggerCurrent, 0));
   }
 
   // seconds from idle to max speed

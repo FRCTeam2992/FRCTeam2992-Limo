@@ -20,6 +20,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drive.swerve.SwerveController;
@@ -194,7 +196,8 @@ public class Drivetrain extends SubsystemBase {
     swerveController = new SwerveController(Constants.swerveLength, Constants.swerveWidth);
 
     // robot gyro initialization
-    navx = new AHRS(SPI.Port.kMXP);
+    //navx = new AHRS(SPI.Port.kMXP);
+    navx = new AHRS(SerialPort.Port.kMXP);
 
     // Swerve Drive Kinematics
     swerveDriveKinematics = new SwerveDriveKinematics(Constants.frontLeftLocation,
@@ -249,9 +252,12 @@ public class Drivetrain extends SubsystemBase {
 
       SmartDashboard.putNumber("Gyro Pitch", navx.getPitch());
       SmartDashboard.putNumber("Gyro Roll", navx.getRoll());
-      SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
-
+      //SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
+      SmartDashboard.putBoolean("Gyro Ready", navx.isConnected());
+      SmartDashboard.putBoolean("Gyro Calibrating", navx.isCalibrating());
     }
+
+  
 
   }
 

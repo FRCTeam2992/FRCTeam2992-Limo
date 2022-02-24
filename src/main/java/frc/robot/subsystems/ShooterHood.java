@@ -28,7 +28,7 @@ public class ShooterHood extends SubsystemBase {
     hoodMotor.setInverted(true);
     hoodMotor.setNeutralMode(NeutralMode.Brake);
 
-    hoodEncoder = new CANCoder(20);
+    hoodEncoder = new CANCoder(20, "CanBus2");
     hoodEncoder.configAbsoluteSensorRange(AbsoluteSensorRange.Signed_PlusMinus180);
     hoodEncoder.configSensorDirection(true);
 

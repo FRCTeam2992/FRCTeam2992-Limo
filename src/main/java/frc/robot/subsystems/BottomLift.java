@@ -21,7 +21,7 @@ public class BottomLift extends SubsystemBase {
   public BottomLift() {
     bottomLiftMotor = new WPI_VictorSPX(23);
     bottomLiftMotor.setInverted(false);
-    bottomLiftMotor.setNeutralMode(NeutralMode.Coast);
+    bottomLiftMotor.setNeutralMode(NeutralMode.Brake);
 
     addChild("bottomLiftMotor", bottomLiftMotor);
   }

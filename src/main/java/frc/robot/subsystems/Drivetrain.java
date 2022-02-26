@@ -251,12 +251,20 @@ public class Drivetrain extends SubsystemBase {
 
       SmartDashboard.putNumber("Gyro Pitch", navx.getPitch());
       SmartDashboard.putNumber("Gyro Roll", navx.getRoll());
-      //SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
+      // SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
       SmartDashboard.putBoolean("Gyro Ready", navx.isConnected());
       SmartDashboard.putBoolean("Gyro Calibrating", navx.isCalibrating());
     }
 
-  
+    // Update the Odometry
+    latestSwervePose = swerveDriveOdometry.update(Rotation2d.fromDegrees(-navx.getYaw()), frontLeftModule.getState(),
+        frontRightModule.getState(), rearLeftModule.getState(), rearRightModule.getState());
+
+    // Display Odometry
+    SmartDashboard.putNumber("Odometry Rotation",
+        latestSwervePose.getRotation().getDegrees());
+    SmartDashboard.putNumber("Odometry X", (latestSwervePose.getX() * (100 / 2.54)));
+    SmartDashboard.putNumber("Odometry Y", (latestSwervePose.getY() * (100 / 2.54)));
 
   }
 
@@ -276,7 +284,8 @@ public class Drivetrain extends SubsystemBase {
 
   public void setDriveCurrentLimit(double currentLimit, double triggerCurrent) {
     frontLeftDrive.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, triggerCurrent, 0));
-    frontRightDrive.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, triggerCurrent, 0));
+    frontRightDrive
+        .configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, triggerCurrent, 0));
     rearLeftDrive.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, triggerCurrent, 0));
     rearRightDrive.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, currentLimit, triggerCurrent, 0));
   }

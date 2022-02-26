@@ -128,6 +128,8 @@ public class Robot extends TimedRobot {
 
         mRobotContainer.mDrivetrain.setDriveCurrentLimit(40.0, 40.0);
         mRobotContainer.mDrivetrain.setDriveRampRate(0.25);
+
+        mRobotContainer.mDrivetrain.resetOdometry();
     }
 
     /**

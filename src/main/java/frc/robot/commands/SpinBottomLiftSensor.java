@@ -7,15 +7,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.BottomLift;
 
-public class SpinBottomLiftSenor extends CommandBase {
+public class SpinBottomLiftSensor extends CommandBase {
   /** Creates a new SpinBottomLift. */
   private BottomLift mBottomLift;
 
   private double mBottomLiftSpeed;
 
-  public SpinBottomLiftSenor(BottomLift subsystem, double bottomLiftSpeed) {
+  public SpinBottomLiftSensor(BottomLift subsystem, double bottomLiftSpeed) {
     mBottomLift = subsystem;
-
     mBottomLiftSpeed = bottomLiftSpeed;
 
     addRequirements(mBottomLift);

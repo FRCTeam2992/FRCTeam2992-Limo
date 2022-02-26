@@ -197,7 +197,7 @@ public class Drivetrain extends SubsystemBase {
 
     // robot gyro initialization
     //navx = new AHRS(SPI.Port.kMXP);
-    navx = new AHRS(SerialPort.Port.kMXP);
+    navx = new AHRS(SPI.Port.kMXP);
 
     // Swerve Drive Kinematics
     swerveDriveKinematics = new SwerveDriveKinematics(Constants.frontLeftLocation,

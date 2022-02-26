@@ -139,6 +139,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Create some buttons
 
+
     JoystickButton intakeButton = new JoystickButton(controller0, XboxController.Button.kA.value);
     intakeButton.whenPressed(new SpinIntake(mIntake, .5), true);
     intakeButton.whenReleased(new StopIntake(mIntake), true);
@@ -149,6 +150,9 @@ public class RobotContainer {
 
     TriggerButton autoShoot = new TriggerButton(controller0, .2, "right");
     autoShoot.whenActive(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift));
+
+    JoystickButton fieldOrientButton = new JoystickButton(controller0, XboxController.Button.kStart.value);
+    fieldOrientButton.whenPressed(new ResetGyro(mDrivetrain), true)
 
   }
 

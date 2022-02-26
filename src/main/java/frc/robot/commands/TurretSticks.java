@@ -33,8 +33,8 @@ public class TurretSticks extends CommandBase {
   public void execute() {
     double gyroValue = mTurret.navx.getYaw();
 
-    double x = -Robot.m_robotContainer.controller0.getLeftX();
-    double y = -Robot.m_robotContainer.controller0.getLeftY();
+    double x = -Robot.mRobotContainer.controller0.getLeftX();
+    double y = -Robot.mRobotContainer.controller0.getLeftY();
     double targetAngle;
 
     if (Math.abs(x) > Constants.turretJoystickDeadband

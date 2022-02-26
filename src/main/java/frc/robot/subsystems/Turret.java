@@ -33,7 +33,7 @@ public class Turret extends SubsystemBase {
 
     public Turret() {
         // Turret Motors
-        turretTalon = new WPI_TalonSRX(13);
+        turretTalon = new WPI_TalonSRX(34);
         turretTalon.setNeutralMode(NeutralMode.Brake);
         turretTalon.setInverted(true);
 

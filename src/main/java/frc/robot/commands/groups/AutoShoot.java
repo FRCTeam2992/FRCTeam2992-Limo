@@ -4,29 +4,27 @@
 
 package frc.robot.commands.groups;
 
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.commands.DeployIntake;
-import frc.robot.commands.SpinBottomLiftSenor;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import frc.robot.commands.SpinBottomLift;
 import frc.robot.commands.SpinCargoFunnel;
-import frc.robot.commands.SpinIntake;
+import frc.robot.commands.SpinTopLift;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.TopLift;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoIntake extends ParallelCommandGroup {
+public class AutoShoot extends ParallelRaceGroup {
 
-  /** Creates a new AutoIntake. */
-  public AutoIntake(Intake mIntake, CargoFunnel mCargoFunnel, BottomLift mBottomLift) {
+  /** Creates a new AutoShoot. */
+  public AutoShoot(CargoFunnel mCargoFunnel, TopLift mTopLift, BottomLift mBottomLift) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new DeployIntake(mIntake, true),
-      new SpinIntake(mIntake, .75),
-      new SpinCargoFunnel(mCargoFunnel, .5),
-      new SpinBottomLiftSenor(mBottomLift, .5)
+      new SpinCargoFunnel(mCargoFunnel, 1),
+      new SpinTopLift(mTopLift, 1),
+      new SpinBottomLift(mBottomLift, 1)
     );
   }
 }

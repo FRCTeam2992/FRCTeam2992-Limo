@@ -12,10 +12,12 @@
 
 package frc.robot;
 
+import frc.lib.oi.controller.TriggerButton;
 import frc.lib.vision.LimeLight;
 import frc.lib.vision.LimeLight.LedMode;
 import frc.robot.commands.*;
 import frc.robot.commands.groups.AutoIntake;
+import frc.robot.commands.groups.AutoShoot;
 import frc.robot.commands.groups.StopAutoIntake;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -137,10 +139,20 @@ public class RobotContainer {
   private void configureButtonBindings() {
     // Create some buttons
 
+
+    JoystickButton intakeButton = new JoystickButton(controller0, XboxController.Button.kA.value);
+    intakeButton.whenPressed(new SpinIntake(mIntake, .5), true);
+    intakeButton.whenReleased(new StopIntake(mIntake), true);
+  
+    JoystickButton funnelButton = new JoystickButton(controller0, XboxController.Button.kB.value);
+    funnelButton.whenPressed(new SpinCargoFunnel(mCargoFunnel, .75));
+    funnelButton.whenReleased(new StopCargoFunnel(mCargoFunnel), true);
+
+    TriggerButton autoShoot = new TriggerButton(controller0, .2, "right");
+    autoShoot.whenActive(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift));
+
     JoystickButton fieldOrientButton = new JoystickButton(controller0, XboxController.Button.kStart.value);
-    fieldOrientButton.whenPressed(new ResetGyro(mDrivetrain), true);
-
-
+    fieldOrientButton.whenPressed(new ResetGyro(mDrivetrain), true)
 
   }
 

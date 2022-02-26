@@ -152,7 +152,7 @@ public class RobotContainer {
     autoShoot.whenActive(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift));
 
     JoystickButton fieldOrientButton = new JoystickButton(controller0, XboxController.Button.kStart.value);
-    fieldOrientButton.whenPressed(new ResetGyro(mDrivetrain), true)
+    fieldOrientButton.whenPressed(new ResetGyro(mDrivetrain), true);
 
   }
 

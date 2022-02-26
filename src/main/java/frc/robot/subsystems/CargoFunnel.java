@@ -16,8 +16,8 @@ public class CargoFunnel extends SubsystemBase {
 
   public CargoFunnel() {
 
-    funnelMotor = new WPI_VictorSPX(40);
-    funnelMotor.setInverted(false);
+    funnelMotor = new WPI_VictorSPX(22);
+    funnelMotor.setInverted(true);
     funnelMotor.setNeutralMode(NeutralMode.Coast);
 
     addChild("funnelMotor", funnelMotor);

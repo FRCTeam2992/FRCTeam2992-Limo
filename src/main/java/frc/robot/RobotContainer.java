@@ -17,6 +17,13 @@ import frc.lib.Ranging.CargoBallInterpolator;
 import frc.lib.vision.LimeLight;
 import frc.lib.vision.LimeLight.LedMode;
 import frc.robot.commands.*;
+import frc.lib.oi.controller.TriggerButton;
+import frc.lib.vision.LimeLight;
+import frc.lib.vision.LimeLight.LedMode;
+import frc.robot.commands.*;
+import frc.robot.commands.groups.AutoIntake;
+import frc.robot.commands.groups.AutoShoot;
+import frc.robot.commands.groups.StopAutoIntake;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -147,9 +154,6 @@ public class RobotContainer {
     JoystickButton startShooterButton = new JoystickButton(controller0, XboxController.Button.kX.value);
     startShooterButton.toggleWhenPressed(new StartShooter(mShooter), true);
 
-    JoystickButton fieldOrientButton = new JoystickButton(controller0, XboxController.Button.kStart.value);
-    fieldOrientButton.whenPressed(new ResetGyro(mDrivetrain), true);
-
     JoystickButton moveTurretLeftButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
     moveTurretLeftButton.whenPressed(new MoveTurret(mTurret, -.5), true);
 
@@ -158,6 +162,20 @@ public class RobotContainer {
   
     POVButton moveHoodUpButton = new POVButton(controller0, 0);
     moveHoodUpButton.whenPressed(new MoveHood(mShooterHood, .5), true);
+
+    JoystickButton intakeButton = new JoystickButton(controller0, XboxController.Button.kA.value);
+    intakeButton.whenPressed(new SpinIntake(mIntake, .5), true);
+    intakeButton.whenReleased(new StopIntake(mIntake), true);
+  
+    JoystickButton funnelButton = new JoystickButton(controller0, XboxController.Button.kB.value);
+    funnelButton.whenPressed(new SpinCargoFunnel(mCargoFunnel, .75));
+    funnelButton.whenReleased(new StopCargoFunnel(mCargoFunnel), true);
+
+    TriggerButton autoShoot = new TriggerButton(controller0, .2, "right");
+    autoShoot.whenActive(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift));
+
+    JoystickButton fieldOrientButton = new JoystickButton(controller0, XboxController.Button.kStart.value);
+    fieldOrientButton.whenPressed(new ResetGyro(mDrivetrain), true);
 
     POVButton moveHoodDownButton= new POVButton(controller0, 180);
     moveHoodDownButton.whenPressed(new MoveHood(mShooterHood, -.5), true);

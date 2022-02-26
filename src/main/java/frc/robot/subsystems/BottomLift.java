@@ -15,10 +15,11 @@ public class BottomLift extends SubsystemBase {
 
   private WPI_VictorSPX bottomLiftMotor;
 
-  private DigitalInput bottomLiftSensor;
+  private DigitalInput liftSensor1;
+  private DigitalInput liftSensor2;
 
   public BottomLift() {
-    bottomLiftMotor = new WPI_VictorSPX(42);
+    bottomLiftMotor = new WPI_VictorSPX(23);
     bottomLiftMotor.setInverted(false);
     bottomLiftMotor.setNeutralMode(NeutralMode.Coast);
 
@@ -34,7 +35,11 @@ public class BottomLift extends SubsystemBase {
     bottomLiftMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public boolean getSensorState() {
-    return bottomLiftSensor.get();
+  public boolean getSensor1State() {
+    return liftSensor1.get();
+  }
+
+  public boolean getSensor2State() {
+    return liftSensor2.get();
   }
 }

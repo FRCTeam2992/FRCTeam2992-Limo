@@ -1,25 +1,29 @@
-// package frc.lib.oi.controller;
+package frc.lib.oi.controller;
 
-// import edu.wpi.first.wpilibj.XboxController;
-// import edu.wpi.first.wpilibj.GenericHID.Hand;
-// import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-// public class TriggerButton extends Trigger {
+public class TriggerButton extends Trigger {
 
-//     // Variables
-//     private XboxController controller;
-//     private Hand triggerHand;
-//     private double threshhold;
+    // Variables
+    private XboxController controller;
+    private double threshhold;
+    private String hand;
 
-//     public TriggerButton(XboxController controller, Hand triggerHand, double threshhold) {
-//         // Variables
-//         this.controller = controller;
-//         this.triggerHand = triggerHand;
-//         this.threshhold = threshhold;
-//     }
+    public TriggerButton(XboxController controller, double threshhold, String hand) {
+        // Variables
+        this.controller = controller;
+        this.threshhold = threshhold;
+        this.hand = hand;
+    }
 
-//     @Override
-//     public boolean get() {
-//         return Math.abs(controller.getTriggerAxis(triggerHand)) >= threshhold;
-//     }
-// }
+    @Override
+    public boolean get() {
+        if (hand == "left") {
+            return Math.abs(controller.getLeftTriggerAxis()) >= threshhold;
+        } else {
+            return Math.abs(controller.getRightTriggerAxis()) >= threshhold;
+        }
+    }
+
+}

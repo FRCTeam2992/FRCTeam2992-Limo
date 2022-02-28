@@ -43,7 +43,7 @@ public class Constants {
   // Vision Constants
 
   // the tooth to tooth of the hood
-  public static final double hoodAngleRatio = 34.000 / 536.000;
+  public static final double hoodAngleRatio = 38.000 / 520.000;
   // the max and min of the hood angle not the encoder values
   public static final double minHoodPosition = -160.0;
   public static final double minHoodPZone = -125.0;
@@ -88,10 +88,10 @@ public class Constants {
 
   // Analog Encoder Offsets (Degrees) - Opposite of Raw Reading - Bevel Gear to
   // Right
-  public static final double frontLeftOffset = 147.2;
-  public static final double frontRightOffset = -144.8;
-  public static final double rearLeftOffset = 101.3;
-  public static final double rearRightOffset = -24.2;
+  public static final double frontLeftOffset = 147.57;
+  public static final double frontRightOffset = -144.23;
+  public static final double rearLeftOffset = 100.00;
+  public static final double rearRightOffset = -24.35;
 
   // Swerve Drive PID (Velocity Control)
   public static final double driveP = 0.05;

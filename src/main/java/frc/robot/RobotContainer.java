@@ -166,6 +166,12 @@ public class RobotContainer {
     JoystickButton funnelButton = new JoystickButton(controller0, XboxController.Button.kA.value);
     funnelButton.toggleWhenPressed(new SpinCargoFunnel(mCargoFunnel, .6));
 
+    JoystickButton intakeBackButton = new JoystickButton(controller0, XboxController.Button.kB.value);
+    intakeBackButton.toggleWhenPressed(new SpinIntake(mIntake, -.6), true);
+  
+    JoystickButton funnelBackButton = new JoystickButton(controller0, XboxController.Button.kB.value);
+    funnelBackButton.toggleWhenPressed(new SpinCargoFunnel(mCargoFunnel, -.6));
+
     // TriggerButton autoShoot = new TriggerButton(controller0, .2, 'r');
     // autoShoot.whenActive(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift), true);
 
@@ -186,6 +192,10 @@ public class RobotContainer {
     SmartDashboard.putData("0 Hood", new MoveHoodToAngle(mShooterHood, 0.0));
     SmartDashboard.putData("Top Hood", new MoveHoodToAngle(mShooterHood, 140.0));
     SmartDashboard.putData("Bottom Hood", new MoveHoodToAngle(mShooterHood, -140.0));
+    // SmartDashboard.putData("100 Hood", new MoveHoodToAngle(mShooterHood, -140.0));
+    // SmartDashboard.putData("120 Hood", new MoveHoodToAngle(mShooterHood, -140.0));
+    // SmartDashboard.putData("130 Hood", new MoveHoodToAngle(mShooterHood, -140.0));
+
 
   }
 

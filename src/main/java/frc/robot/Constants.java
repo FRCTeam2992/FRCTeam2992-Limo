@@ -21,8 +21,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 public class Constants {
 
   // Shooter Constants
-  public static final int defaultMainShooterSpeed = 1700;
-  public static final int defaultSecondaryShooterSpeed = 2300;
+  public static final int defaultMainShooterSpeed = 2700;
+  public static final int defaultSecondaryShooterSpeed = 3300;
   public static final int shooterEncoderPulses = 2048;
 
   // Intake Constant

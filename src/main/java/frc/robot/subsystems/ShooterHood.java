@@ -12,6 +12,7 @@ import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.filter.MedianFilter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -23,6 +24,8 @@ public class ShooterHood extends SubsystemBase {
   private CANCoder hoodEncoder;
 
   public PIDController hoodPID;
+
+  public MedianFilter hoodMedianFilter;
 
   public ShooterHood() {
     hoodMotor = new WPI_TalonSRX(33);
@@ -39,8 +42,11 @@ public class ShooterHood extends SubsystemBase {
     hoodPID = new PIDController(Constants.hoodP, Constants.hoodI, Constants.hoodD);
     hoodPID.setTolerance(Constants.hoodTolerance);
     hoodPID.disableContinuousInput();
+    hoodPID.setIntegratorRange(-0.2, 0.2);
 
-    hoodMotor.configRemoteFeedbackFilter(hoodEncoder, 33);
+    hoodMotor.configRemoteFeedbackFilter(hoodEncoder, 0);
+
+    hoodMedianFilter = new MedianFilter(5);
   }
 
   @Override
@@ -56,9 +62,18 @@ public class ShooterHood extends SubsystemBase {
   }
 
   public void setHoodPosition(double position) {
-    position = Math.min(position, Constants.minHoodPosition);
-    position = Math.max(position, Constants.maxHoodPosition);
-    setHoodSpeed(hoodPID.calculate(getEncoderAngle(), position));
+    position = Math.max(position, Constants.minHoodPosition);
+    position = Math.min(position, Constants.maxHoodPosition);
+
+    if(Math.abs(getEncoderAngle() - position) > 15.0){
+      hoodPID.reset();
+    }
+
+    double power = hoodPID.calculate(getEncoderAngle(), position) + Constants.hoodF;
+    power = Math.min(power, .5);
+    power = Math.max(power, -.4);
+
+    hoodMotor.set(ControlMode.PercentOutput, power);
   }
 
   public double getEncoderAngle() {
@@ -70,12 +85,14 @@ public class ShooterHood extends SubsystemBase {
       tempAngle -= 360;
     }
 
+    
+
     // if (tempAngle < 0.0){
     // tempAngle += 360.0;
     // } else if (tempAngle > 360.0){
     // tempAngle -= 360;
     // }
-    return tempAngle;
+    return hoodMedianFilter.calculate(tempAngle);
   }
 
   public double getHoodAngle() {

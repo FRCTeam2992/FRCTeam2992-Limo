@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.ShooterHood;
@@ -31,23 +32,25 @@ public class MoveHood extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double tempHoodSpeed = mHoodSpeed;
 
     if (inDeadZone()) {
-      mHoodSpeed = 0.0;
-
+      tempHoodSpeed = 0.0;
+      
     } else if (inMinPZone()) {
       double distance = Constants.minHoodPosition - mShooterHood.getEncoderAngle();
-      double tempHoodSpeed = distance * Constants.hoodPValueBottom;
-      mShooterHood.setHoodSpeed(tempHoodSpeed);
+      tempHoodSpeed = distance * Constants.hoodPValueBottom;
 
     } else if (inMaxPZone()) {
       double distance = Constants.maxHoodPosition - mShooterHood.getEncoderAngle();
-      double tempHoodSpeed = distance * Constants.hoodPValueTop;
-      mShooterHood.setHoodSpeed(tempHoodSpeed);
+      tempHoodSpeed = distance * Constants.hoodPValueTop;
+    } 
 
-    } else {
-      mShooterHood.setHoodSpeed(mHoodSpeed);
-    }
+    mShooterHood.setHoodSpeed(tempHoodSpeed);
+
+    SmartDashboard.putBoolean("In Max P-Zone", inMaxPZone());
+    SmartDashboard.putBoolean("In Min P-Zone", inMinPZone());
+    SmartDashboard.putBoolean("In Dead-Zone", inDeadZone());
   }
 
   // Called once the command ends or is interrupted.

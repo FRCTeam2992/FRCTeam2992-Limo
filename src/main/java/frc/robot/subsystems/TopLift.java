@@ -18,7 +18,17 @@ public class TopLift extends SubsystemBase {
   public TopLift() {
     topLiftMotor = new WPI_VictorSPX(24);
     topLiftMotor.setInverted(false);
-    topLiftMotor.setNeutralMode(NeutralMode.Coast);
+    topLiftMotor.setNeutralMode(NeutralMode.Coast);    
+    topLiftMotor.setStatusFramePeriod(1, 255);
+    topLiftMotor.setStatusFramePeriod(2, 255);
+    topLiftMotor.setStatusFramePeriod(3, 255);
+    topLiftMotor.setStatusFramePeriod(4, 255);
+    topLiftMotor.setStatusFramePeriod(8, 255);
+    topLiftMotor.setStatusFramePeriod(10, 255);
+    topLiftMotor.setStatusFramePeriod(12, 255);
+    topLiftMotor.setStatusFramePeriod(13, 255);
+    topLiftMotor.setStatusFramePeriod(14, 255);
+    topLiftMotor.setStatusFramePeriod(21, 255);
 
     addChild("topLiftMotor", topLiftMotor);
 

@@ -18,7 +18,17 @@ public class CargoFunnel extends SubsystemBase {
 
     funnelMotor = new WPI_VictorSPX(22);
     funnelMotor.setInverted(true);
-    funnelMotor.setNeutralMode(NeutralMode.Coast);
+    funnelMotor.setNeutralMode(NeutralMode.Coast);    
+    funnelMotor.setStatusFramePeriod(1, 255);
+    funnelMotor.setStatusFramePeriod(2, 255);
+    funnelMotor.setStatusFramePeriod(3, 255);
+    funnelMotor.setStatusFramePeriod(4, 255);
+    funnelMotor.setStatusFramePeriod(8, 255);
+    funnelMotor.setStatusFramePeriod(10, 255);
+    funnelMotor.setStatusFramePeriod(12, 255);
+    funnelMotor.setStatusFramePeriod(13, 255);
+    funnelMotor.setStatusFramePeriod(14, 255);
+    funnelMotor.setStatusFramePeriod(21, 255);
 
     addChild("funnelMotor", funnelMotor);
   }

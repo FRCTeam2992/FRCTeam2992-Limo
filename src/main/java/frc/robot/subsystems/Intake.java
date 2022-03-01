@@ -44,9 +44,19 @@ public class Intake extends SubsystemBase {
         intakeMotor = new WPI_TalonFX(21);
         intakeMotor.setNeutralMode(NeutralMode.Brake);
         intakeMotor.setInverted(false);
+        intakeMotor.setStatusFramePeriod(1, 255);
+        intakeMotor.setStatusFramePeriod(2, 255);
+        intakeMotor.setStatusFramePeriod(3, 255);
+        intakeMotor.setStatusFramePeriod(4, 255);
+        intakeMotor.setStatusFramePeriod(8, 255);
+        intakeMotor.setStatusFramePeriod(10, 255);
+        intakeMotor.setStatusFramePeriod(12, 255);
+        intakeMotor.setStatusFramePeriod(13, 255);
+        intakeMotor.setStatusFramePeriod(14, 255);
+        intakeMotor.setStatusFramePeriod(21, 255);
         addChild("Intake Motor", intakeMotor);
 
-        intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, 0);
+        //intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, 0);
         addChild("Intake Solenoid", intakeSolenoid);
 
     }
@@ -69,12 +79,13 @@ public class Intake extends SubsystemBase {
 
     // Put methods for controlling this subsystem
     public void deployIntake(boolean toggle) {
-        intakeSolenoid.set(toggle);
+        //intakeSolenoid.set(toggle);
         intakeDeployed = toggle;
     }
 
     public boolean getIntakeSloenoid() {
-        return intakeSolenoid.get();
+        //return intakeSolenoid.get();
+        return false;
     }
 
     public void setIntakeSpeed(double speed) {

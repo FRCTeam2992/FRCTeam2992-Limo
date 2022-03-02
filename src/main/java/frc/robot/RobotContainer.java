@@ -86,7 +86,7 @@ public class RobotContainer {
     mDrivetrain.setDefaultCommand(new DriveSticks(mDrivetrain));
 
     mTurret = new Turret(mDrivetrain);
-    mTurret.setDefaultCommand(new StopTurret(mTurret));
+    mTurret.setDefaultCommand(new TurretSticks(mTurret));
     //mTurret.setDefaultCommand(new TurretSticks(mTurret));
     mShooterHood = new ShooterHood();
     mShooterHood.setDefaultCommand(new StopHood(mShooterHood));
@@ -170,14 +170,26 @@ public class RobotContainer {
     JoystickButton intakeButton = new JoystickButton(controller1, XboxController.Button.kA.value);
     intakeButton.toggleWhenPressed(new SpinIntake(mIntake, .6), true);
 
-    JoystickButton funnelButton = new JoystickButton(controller1, XboxController.Button.kA.value);
-    funnelButton.toggleWhenPressed(new SpinCargoFunnel(mCargoFunnel, .6));
+    JoystickButton funnelButton = new JoystickButton(controller1, XboxController.Button.kB.value);
+    funnelButton.toggleWhenPressed(new SpinCargoFunnel(mCargoFunnel, .5));
 
-    JoystickButton intakeBackButton = new JoystickButton(controller1, XboxController.Button.kB.value);
+    JoystickButton intakeBackButton = new JoystickButton(controller1, XboxController.Button.kY.value);
     intakeBackButton.toggleWhenPressed(new SpinIntake(mIntake, -.6), true);
 
-    JoystickButton funnelBackButton = new JoystickButton(controller1, XboxController.Button.kB.value);
+    JoystickButton funnelBackButton = new JoystickButton(controller1, XboxController.Button.kY.value);
     funnelBackButton.toggleWhenPressed(new SpinCargoFunnel(mCargoFunnel, -.6));
+
+    JoystickButton bottomLiftUpButton = new JoystickButton(controller1, XboxController.Button.kB.value);
+    bottomLiftUpButton.toggleWhenPressed(new SpinBottomLift(mBottomLift, .6));
+
+    JoystickButton bottomLiftDownButton = new JoystickButton(controller1, XboxController.Button.kY.value);
+    bottomLiftDownButton.toggleWhenPressed(new SpinBottomLift(mBottomLift, -.6));
+
+    TriggerButton topLiftUpButton = new TriggerButton(controller0, .2, 'r');
+    topLiftUpButton.toggleWhenActive(new SpinTopLift(mTopLift, .6));
+
+    JoystickButton topLiftDownButton = new JoystickButton(controller1, XboxController.Button.kY.value);
+    topLiftDownButton.toggleWhenPressed(new SpinTopLift(mTopLift, -.6));
 
     // TriggerButton autoShoot = new TriggerButton(controller0, .2, 'r');
     // autoShoot.whenActive(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift),

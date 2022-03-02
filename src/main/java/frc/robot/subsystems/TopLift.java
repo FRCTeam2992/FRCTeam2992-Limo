@@ -17,8 +17,8 @@ public class TopLift extends SubsystemBase {
 
   public TopLift() {
     topLiftMotor = new WPI_VictorSPX(24);
-    topLiftMotor.setInverted(false);
-    topLiftMotor.setNeutralMode(NeutralMode.Coast);
+    topLiftMotor.setInverted(true);
+    topLiftMotor.setNeutralMode(NeutralMode.Brake);
 
     addChild("topLiftMotor", topLiftMotor);
 

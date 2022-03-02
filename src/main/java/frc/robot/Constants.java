@@ -33,8 +33,8 @@ public class Constants {
   public static final double turretI = 0.0;
   public static final double turretD = 0.0015;
   public static final double turretTolerance = 0.5;
-  public static final int turretEncoderOffset = 2827;
-  public static final double turretRobotOffset = 23.1;
+  public static final int turretEncoderOffset = 1800;
+  public static final double turretRobotOffset = 296;
   public static final int turretMinEnd = 20;
   public static final int turretMaxEnd = 340;
   public static final int turretMaxSlowZone = 300;

@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.kauailabs.navx.frc.AHRS;
@@ -39,7 +40,7 @@ public class Turret extends SubsystemBase {
         turretTalon = new WPI_TalonSRX(34);
         turretTalon.setNeutralMode(NeutralMode.Brake);
         turretTalon.setInverted(true);
-
+        turretTalon.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
         addChild("Turret Motor", turretTalon);
 
         // Turret PID Controller

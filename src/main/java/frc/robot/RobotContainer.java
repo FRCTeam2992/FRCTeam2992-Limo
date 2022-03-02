@@ -167,7 +167,7 @@ public class RobotContainer {
     // Temp to allow start / stop of turretsticks from Dashboard
     SmartDashboard.putData(new TurretSticks(mTurret));
 
-    TriggerButton autoIntakeButton = new TriggerButton(controller1, .2, 'r');
+    JoystickButton autoIntakeButton = new JoystickButton(controller1, XboxController.Button.kA.value);
     autoIntakeButton.toggleWhenActive(new AutoIntake(mIntake, mCargoFunnel, mBottomLift), true);
    
     TriggerButton autoShootButton = new TriggerButton(controller0, .2, 'r');

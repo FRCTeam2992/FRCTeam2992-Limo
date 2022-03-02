@@ -331,8 +331,13 @@ public class Drivetrain extends SubsystemBase {
         frontRightModule.getState(), rearLeftModule.getState(), rearRightModule.getState());
   }
 
+  public double getGyroYaw(){
+    return navx.getYaw();
+  } 
+
   private void loadMotionPaths() {
     // Trajectory Paths
-
   }
+
+
 }

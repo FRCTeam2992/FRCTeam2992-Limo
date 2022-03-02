@@ -54,6 +54,8 @@ public class RobotContainer {
 
   // The robot's subsystems
   // public final Intake mIntake;
+  public final Drivetrain mDrivetrain;
+
   public final Turret mTurret;
   public final ShooterHood mShooterHood;
   public final Shooter mShooter;
@@ -63,10 +65,9 @@ public class RobotContainer {
   public final TopLift mTopLift;
   public final BottomLift mBottomLift;
 
-  public final Drivetrain mDrivetrain;
-
   // Joysticks
   public XboxController controller0;
+  public XboxController controller1;
 
   // public final LimeLight limeLightCamera;
 
@@ -81,9 +82,12 @@ public class RobotContainer {
   private RobotContainer() {
 
     // mIntake = new Intake();
+    mDrivetrain = new Drivetrain();
+    mDrivetrain.setDefaultCommand(new DriveSticks(mDrivetrain));
 
-    mTurret = new Turret();
-    mTurret.setDefaultCommand(new TurretSticks(mTurret));
+    mTurret = new Turret(mDrivetrain);
+    mTurret.setDefaultCommand(new StopTurret(mTurret));
+    //mTurret.setDefaultCommand(new TurretSticks(mTurret));
     mShooterHood = new ShooterHood();
     mShooterHood.setDefaultCommand(new StopHood(mShooterHood));
     mShooter = new Shooter();
@@ -98,10 +102,8 @@ public class RobotContainer {
     mBottomLift = new BottomLift();
     mBottomLift.setDefaultCommand(new StopBottomLift(mBottomLift));
 
-    mDrivetrain = new Drivetrain();
-    mDrivetrain.setDefaultCommand(new DriveSticks(mDrivetrain));
-
     controller0 = new XboxController(0);
+    controller1 = new XboxController(1);
 
     // limeLightCamera = new LimeLight();
 
@@ -151,29 +153,35 @@ public class RobotContainer {
     SmartDashboard.putData("Increase Second Shooter Speed", new ChangeSecondaryShooterSpeed(mShooter, 50));
     SmartDashboard.putData("Decrease Second Shooter Speed", new ChangeSecondaryShooterSpeed(mShooter, -50));
 
-    JoystickButton startShooterButton = new JoystickButton(controller0, XboxController.Button.kX.value);
+    JoystickButton startShooterButton = new JoystickButton(controller1, XboxController.Button.kX.value);
     startShooterButton.toggleWhenPressed(new StartShooter(mShooter), true);
 
-    JoystickButton moveTurretLeftButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
-    moveTurretLeftButton.whenPressed(new MoveTurret(mTurret, -.5), true);
+    JoystickButton moveTurretLeftButton = new JoystickButton(controller1, XboxController.Button.kLeftBumper.value);
+    moveTurretLeftButton.whileHeld(new MoveTurret(mTurret, -.3), true);
+    
 
-    JoystickButton moveTurretRightButton = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
-    moveTurretRightButton.whenPressed(new MoveTurret(mTurret, .5), true);
+    JoystickButton moveTurretRightButton = new JoystickButton(controller1, XboxController.Button.kRightBumper.value);
+    moveTurretRightButton.whileHeld(new MoveTurret(mTurret, .3), true);
 
-    JoystickButton intakeButton = new JoystickButton(controller0, XboxController.Button.kA.value);
+    // Temp to allow start / stop of turretsticks from Dashboard
+    SmartDashboard.putData(new TurretSticks(mTurret));
+
+
+    JoystickButton intakeButton = new JoystickButton(controller1, XboxController.Button.kA.value);
     intakeButton.toggleWhenPressed(new SpinIntake(mIntake, .6), true);
-  
-    JoystickButton funnelButton = new JoystickButton(controller0, XboxController.Button.kA.value);
+
+    JoystickButton funnelButton = new JoystickButton(controller1, XboxController.Button.kA.value);
     funnelButton.toggleWhenPressed(new SpinCargoFunnel(mCargoFunnel, .6));
 
-    JoystickButton intakeBackButton = new JoystickButton(controller0, XboxController.Button.kB.value);
+    JoystickButton intakeBackButton = new JoystickButton(controller1, XboxController.Button.kB.value);
     intakeBackButton.toggleWhenPressed(new SpinIntake(mIntake, -.6), true);
-  
-    JoystickButton funnelBackButton = new JoystickButton(controller0, XboxController.Button.kB.value);
+
+    JoystickButton funnelBackButton = new JoystickButton(controller1, XboxController.Button.kB.value);
     funnelBackButton.toggleWhenPressed(new SpinCargoFunnel(mCargoFunnel, -.6));
 
     // TriggerButton autoShoot = new TriggerButton(controller0, .2, 'r');
-    // autoShoot.whenActive(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift), true);
+    // autoShoot.whenActive(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift),
+    // true);
 
     JoystickButton fieldOrientButton = new JoystickButton(controller0, XboxController.Button.kStart.value);
     fieldOrientButton.whenPressed(new ResetGyro(mDrivetrain), true);
@@ -182,20 +190,25 @@ public class RobotContainer {
     moveHoodUpButton.whenPressed(new MoveHood(mShooterHood, .5), true);
     moveHoodUpButton.whenReleased(new StopHood(mShooterHood), true);
 
-    POVButton moveHoodDownButton= new POVButton(controller0, 180);
+    POVButton moveHoodDownButton = new POVButton(controller0, 180);
     moveHoodDownButton.whenPressed(new MoveHood(mShooterHood, -.5), true);
     moveHoodDownButton.whenReleased(new StopHood(mShooterHood), true);
-
 
     SmartDashboard.putData("0 Wheels", new SetSwerveAngle(mDrivetrain, 0, 0, 0, 0));
 
     SmartDashboard.putData("0 Hood", new MoveHoodToAngle(mShooterHood, 0.0));
     SmartDashboard.putData("Top Hood", new MoveHoodToAngle(mShooterHood, 140.0));
     SmartDashboard.putData("Bottom Hood", new MoveHoodToAngle(mShooterHood, -140.0));
-    // SmartDashboard.putData("100 Hood", new MoveHoodToAngle(mShooterHood, -140.0));
-    // SmartDashboard.putData("120 Hood", new MoveHoodToAngle(mShooterHood, -140.0));
-    // SmartDashboard.putData("130 Hood", new MoveHoodToAngle(mShooterHood, -140.0));
+    // SmartDashboard.putData("100 Hood", new MoveHoodToAngle(mShooterHood,
+    // -140.0));
+    // SmartDashboard.putData("120 Hood", new MoveHoodToAngle(mShooterHood,
+    // -140.0));
+    // SmartDashboard.putData("130 Hood", new MoveHoodToAngle(mShooterHood,
+    // -140.0));
 
+    SmartDashboard.putData("turret forward", new MoveTurretToAngle(mTurret, 180, 1));
+    SmartDashboard.putData("turret backward", new MoveTurretToAngle(mTurret, 270, 1));
+    SmartDashboard.putData("turret 45", new MoveTurretToAngle(mTurret, 90, 1));
 
   }
 
@@ -219,8 +232,8 @@ public class RobotContainer {
   public void initInterpolator() {
     cargoBallInterpolator = new CargoBallInterpolator();
 
-    //Example adding point
-    //cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(0.0, 0, 0, 0.0));
+    // Example adding point
+    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(0.0, 0, 0, 0.0));
   }
 
 }

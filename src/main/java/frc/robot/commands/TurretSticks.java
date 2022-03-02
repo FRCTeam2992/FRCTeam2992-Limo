@@ -31,23 +31,32 @@ public class TurretSticks extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double gyroValue = mTurret.navx.getYaw();
+    double gyroValue = mTurret.gyroYaw;
 
-    double x = -Robot.mRobotContainer.controller0.getLeftX();
-    double y = -Robot.mRobotContainer.controller0.getLeftY();
+    double x = -Robot.mRobotContainer.controller1.getRightX();
+    double y = -Robot.mRobotContainer.controller1.getRightY();
     double targetAngle;
+    double xyMagnitude = Math.sqrt((x * x) + (y * y));
 
-    if (Math.abs(x) > Constants.turretJoystickDeadband
-        || Math.abs(y) > Constants.turretJoystickDeadband) {
-      targetAngle = 360 - gyroValue + (mTurret.angleOverlap(Math.toDegrees(Math.atan2(y, x)) - 90));
-
+    if (xyMagnitude >= Constants.turretJoystickDeadband) {
+      if(xyMagnitude > 1){
+        x /= xyMagnitude;
+        y /= xyMagnitude;
+      }
+      if(Constants.isFieldCentric){
+      targetAngle = mTurret.angleOverlap((Math.toDegrees(Math.atan2(y, x)) - 90) - mTurret.getGyroYaw());
+      }
       mTurret.goToAngle(mTurret.angleOverlap(targetAngle));
+      //SmartDashboard.putNumber("TurretStick output", targetAngle);
+    } else {
+      mTurret.stopTurret();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    mTurret.stopTurret();
   }
 
   // Returns true when the command should end.

@@ -29,11 +29,12 @@ public class Constants {
   public static final double defaultInatkeSpeed = 0.5;
 
   // Turret Constants
-  public static final double turretP = 0.062;
+  public static final double turretP = 0.02;
   public static final double turretI = 0.0;
-  public static final double turretD = 0.003;
+  public static final double turretD = 0.0015;
   public static final double turretTolerance = 0.5;
-  public static final int turretOffset = 2074;
+  public static final int turretEncoderOffset = 2827;
+  public static final double turretRobotOffset = 23.1;
   public static final int turretMinEnd = 20;
   public static final int turretMaxEnd = 340;
   public static final int turretMaxSlowZone = 300;
@@ -82,7 +83,7 @@ public class Constants {
   public static final double swerveLength = 0.654;
 
   // Max Swerve Speed (Velocity Control)
-  public static final double swerveMaxSpeed = 2; // (Meters per Second)
+  public static final double swerveMaxSpeed = 4; // (Meters per Second)
 
   // Swerve Wheels and Gear Ratio
   public static final double driveGearRatio = 6.75;// 6.75:1

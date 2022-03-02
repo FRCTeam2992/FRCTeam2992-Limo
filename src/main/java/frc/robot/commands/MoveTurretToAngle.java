@@ -49,6 +49,6 @@ public class MoveTurretToAngle extends CommandBase {
     // Called once after isFinished returns true
     @Override
     public void end(boolean interrupted) {
-        mTurret.setTurretSpeed(0.0);
+        mTurret.stopTurret();
     }
 }

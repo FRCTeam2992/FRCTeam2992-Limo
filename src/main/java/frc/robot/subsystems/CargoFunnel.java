@@ -8,11 +8,15 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Robot;
 
 public class CargoFunnel extends SubsystemBase {
 
   private WPI_VictorSPX funnelMotor;
+  
+  
 
   public CargoFunnel() {
 
@@ -21,6 +25,7 @@ public class CargoFunnel extends SubsystemBase {
     funnelMotor.setNeutralMode(NeutralMode.Coast);
 
     addChild("funnelMotor", funnelMotor);
+
   }
 
   @Override
@@ -31,4 +36,5 @@ public class CargoFunnel extends SubsystemBase {
   public void setFunnelSpeed(double speed) {
     funnelMotor.set(ControlMode.PercentOutput, speed);
   }
+  
 }

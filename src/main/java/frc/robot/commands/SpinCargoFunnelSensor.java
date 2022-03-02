@@ -4,25 +4,24 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.BottomLift;
+import frc.robot.subsystems.CargoFunnel;
 
-public class SpinBottomLiftSensor extends CommandBase {
-  /** Creates a new SpinBottomLift. */
+public class SpinCargoFunnelSensor extends CommandBase {
+  /** Creates a new SpinCargoFunnel. */
+  private CargoFunnel mCargoFunnel;
   private BottomLift mBottomLift;
 
-  private double mBottomLiftSpeed;
+  private double mCargoFunnelSpeed;
 
-  private Timer delayTimer;
 
-  public SpinBottomLiftSensor(BottomLift subsystem, double bottomLiftSpeed) {
-    mBottomLift = subsystem;
-    mBottomLiftSpeed = bottomLiftSpeed;
+  public SpinCargoFunnelSensor(CargoFunnel CFSubsystem, BottomLift BLSubsystem, double cargoFunnelSpeed, double cargo) {
+    mCargoFunnel = CFSubsystem;
+    mBottomLift = BLSubsystem;
+    mCargoFunnelSpeed = cargoFunnelSpeed;
 
-    delayTimer = new Timer();
-
-    addRequirements(mBottomLift);
+    addRequirements(mCargoFunnel);
   }
 
   // Called when the command is initially scheduled.
@@ -34,15 +33,10 @@ public class SpinBottomLiftSensor extends CommandBase {
   @Override
   public void execute() {
     if (mBottomLift.getSensor1State() || mBottomLift.getSensor2State()) {
-      delayTimer.start();
-      if (delayTimer.get() >= .07) {
-        mBottomLift.setBottomLiftSpeed(0.0);
-
-      }
+      mCargoFunnel.setFunnelSpeed(.1);
 
     } else {
-      mBottomLift.setBottomLiftSpeed(mBottomLiftSpeed);
-      delayTimer.reset();
+      mCargoFunnel.setFunnelSpeed(mCargoFunnelSpeed);
     }
 
   }
@@ -50,7 +44,7 @@ public class SpinBottomLiftSensor extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mBottomLift.setBottomLiftSpeed(0.0);
+    mCargoFunnel.setFunnelSpeed(0.0);
   }
 
   // Returns true when the command should end.

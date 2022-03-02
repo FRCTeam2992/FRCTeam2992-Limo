@@ -22,7 +22,7 @@ public class AutoShoot extends ParallelRaceGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SpinCargoFunnel(mCargoFunnel, 1),
+      new SpinCargoFunnel(mCargoFunnel, .7),
       new SpinTopLift(mTopLift, 1),
       new SpinBottomLift(mBottomLift, 1)
     );

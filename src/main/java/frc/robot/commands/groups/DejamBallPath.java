@@ -23,12 +23,12 @@ public class DejamBallPath extends SequentialCommandGroup {
   /** Creates a new DejamBallPath. */
   public DejamBallPath(Intake mIntake, CargoFunnel mCargoFunnel, BottomLift mBottomLift, TopLift mTopLift) {
     addCommands(
-      new DeployIntake(mIntake, true),
+      //new DeployIntake(mIntake, true),
       new ParallelCommandGroup(
         new SpinTopLift(mTopLift, -1),
         new SpinBottomLift(mBottomLift, -1),
-        new SpinCargoFunnel(mCargoFunnel, -1),
-        new SpinIntake(mIntake, -1)
+        new SpinCargoFunnel(mCargoFunnel, -.75),
+        new SpinIntake(mIntake, -.75)
       )
     );
   }

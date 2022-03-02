@@ -5,9 +5,11 @@
 package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import frc.robot.commands.DeployIntake;
 import frc.robot.commands.SpinBottomLiftSensor;
 import frc.robot.commands.SpinCargoFunnel;
+import frc.robot.commands.SpinCargoFunnelSensor;
 import frc.robot.commands.SpinIntake;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;
@@ -23,7 +25,7 @@ public class AutoIntake extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new DeployIntake(mIntake, true),
+      // new DeployIntake(mIntake, true),
       new SpinIntake(mIntake, .75),
       new SpinCargoFunnel(mCargoFunnel, .5),
       new SpinBottomLiftSensor(mBottomLift, .5)

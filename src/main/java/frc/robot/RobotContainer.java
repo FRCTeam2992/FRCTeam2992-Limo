@@ -23,6 +23,7 @@ import frc.lib.vision.LimeLight.LedMode;
 import frc.robot.commands.*;
 import frc.robot.commands.groups.AutoIntake;
 import frc.robot.commands.groups.AutoShoot;
+import frc.robot.commands.groups.DejamBallPath;
 import frc.robot.commands.groups.StopAutoIntake;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -166,30 +167,14 @@ public class RobotContainer {
     // Temp to allow start / stop of turretsticks from Dashboard
     SmartDashboard.putData(new TurretSticks(mTurret));
 
+    TriggerButton autoIntakeButton = new TriggerButton(controller1, .2, 'r');
+    autoIntakeButton.toggleWhenActive(new AutoIntake(mIntake, mCargoFunnel, mBottomLift), true);
+   
+    TriggerButton autoShootButton = new TriggerButton(controller0, .2, 'r');
+    autoShootButton.toggleWhenActive(new SpinTopLift(mTopLift, .6));
 
-    JoystickButton intakeButton = new JoystickButton(controller1, XboxController.Button.kA.value);
-    intakeButton.toggleWhenPressed(new SpinIntake(mIntake, .6), true);
-
-    JoystickButton funnelButton = new JoystickButton(controller1, XboxController.Button.kB.value);
-    funnelButton.toggleWhenPressed(new SpinCargoFunnel(mCargoFunnel, .5));
-
-    JoystickButton intakeBackButton = new JoystickButton(controller1, XboxController.Button.kY.value);
-    intakeBackButton.toggleWhenPressed(new SpinIntake(mIntake, -.6), true);
-
-    JoystickButton funnelBackButton = new JoystickButton(controller1, XboxController.Button.kY.value);
-    funnelBackButton.toggleWhenPressed(new SpinCargoFunnel(mCargoFunnel, -.6));
-
-    JoystickButton bottomLiftUpButton = new JoystickButton(controller1, XboxController.Button.kB.value);
-    bottomLiftUpButton.toggleWhenPressed(new SpinBottomLift(mBottomLift, .6));
-
-    JoystickButton bottomLiftDownButton = new JoystickButton(controller1, XboxController.Button.kY.value);
-    bottomLiftDownButton.toggleWhenPressed(new SpinBottomLift(mBottomLift, -.6));
-
-    TriggerButton topLiftUpButton = new TriggerButton(controller0, .2, 'r');
-    topLiftUpButton.toggleWhenActive(new SpinTopLift(mTopLift, .6));
-
-    JoystickButton topLiftDownButton = new JoystickButton(controller1, XboxController.Button.kY.value);
-    topLiftDownButton.toggleWhenPressed(new SpinTopLift(mTopLift, -.6));
+    JoystickButton dejamButton = new JoystickButton(controller1, XboxController.Button.kY.value);
+    dejamButton.whileHeld(new DejamBallPath(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
 
     // TriggerButton autoShoot = new TriggerButton(controller0, .2, 'r');
     // autoShoot.whenActive(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift),

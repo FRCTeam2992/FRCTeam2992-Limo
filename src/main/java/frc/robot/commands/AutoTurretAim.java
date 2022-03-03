@@ -10,7 +10,7 @@ public class AutoTurretAim extends CommandBase {
 
     private Turret mTurret;
 
-    private double turretSetAngle = Turret.getTurretAngle();
+    private double turretSetAngle = Turret.getTurretAngleRaw();
 
     public AutoTurretAim(Turret subsystem) {
         addRequirements(subsystem);

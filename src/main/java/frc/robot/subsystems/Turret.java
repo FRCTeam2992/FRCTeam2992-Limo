@@ -47,6 +47,7 @@ public class Turret extends SubsystemBase {
         turretRotate = new PIDController(Constants.turretP, Constants.turretI, Constants.turretD);
         turretRotate.setTolerance(Constants.turretTolerance);
         turretRotate.disableContinuousInput();
+        turretRotate.setIntegratorRange(-0.2, 0.2);
 
 
         // LimeLight Camera
@@ -66,6 +67,8 @@ public class Turret extends SubsystemBase {
                 Constants.cameraHeight, Constants.goalHeight));
         SmartDashboard.putNumber("Y-Offset", limeLightCamera.getTargetYOffset());
         SmartDashboard.putNumber("Distance", limeLightCamera.getDistanceToTarget(35.8, 44, 104));
+        SmartDashboard.putNumber("x-Offset", limeLightCamera.getTargetXOffset());
+
 
 
         // double x = -Robot.m_robotContainer.controller0.getLeftX();
@@ -90,16 +93,16 @@ public class Turret extends SubsystemBase {
     public void setTurretSpeed(double speed) {
         double setSpeed = speed;
 
-        if (setSpeed > 0 && getTurretAngle() >= Constants.turretMaxSlowZone) {
+        if (setSpeed > 0 && getTurretAngleRaw() >= Constants.turretMaxSlowZone) {
             setSpeed = Math.min(0.15, setSpeed);
         }
 
-        if (setSpeed < 0 && getTurretAngle() <= Constants.turretMinSlowZone) {
+        if (setSpeed < 0 && getTurretAngleRaw() <= Constants.turretMinSlowZone) {
             setSpeed = Math.max(-0.15, setSpeed);
         }
 
-        if ((setSpeed > 0 && getTurretAngle() >= Constants.turretMaxEnd)
-                || (setSpeed < 0 && getTurretAngle() < Constants.turretMinEnd)) {
+        if ((setSpeed > 0 && getTurretAngleRaw() >= Constants.turretMaxEnd)
+                || (setSpeed < 0 && getTurretAngleRaw() < Constants.turretMinEnd)) {
             setSpeed = 0;
         }
         setSpeed = MathUtil.clamp(setSpeed, -.3, .3);
@@ -107,15 +110,24 @@ public class Turret extends SubsystemBase {
     }
 
     public void goToAngle(double angle) {
-
+        SmartDashboard.putNumber("TurretToAngle Angle", angle);
         angle = angleOverlap(angle + Constants.turretRobotOffset);
         angle = Math.min(angle, Constants.turretMaxEnd);
         angle = Math.max(angle, Constants.turretMinEnd);
         
-        turretRotate.setSetpoint(angle);
-        double power = turretRotate.calculate(getTurretAngle());
+        
+        
+        if (Math.abs(angle - getTurretAngleRaw()) > Constants.turretTolerance) {
+            turretRotate.setSetpoint(angle);
+        }
+        if (Math.abs(angle - getTurretAngleRaw()) > 5.0) {
+            turretRotate.reset();
+        }
+        
+        
+        double power = turretRotate.calculate(getTurretAngleRaw());
         power = MathUtil.clamp(power, -1, 1);
-        SmartDashboard.putNumber("TurretToAngle Angle", angle);
+        
         SmartDashboard.putNumber("TurretToAngle Speed", power);
         
         setTurretSpeed(power);
@@ -134,11 +146,15 @@ public class Turret extends SubsystemBase {
         return position;
     }
 
-    public static double getTurretAngle() {
+    public static double getTurretAngleRaw() {
         return getTurretPostion() * (360.0 / 4096.0);
     }
+    
+    public static double getTurretAngle() {
+        return angleOverlap(getTurretAngleRaw() - Constants.turretRobotOffset);
+    }
 
-    public double angleOverlap(double tempAngle) {
+    public static double angleOverlap(double tempAngle) {
         while (tempAngle > 360) {
             tempAngle -= 360;
         } 

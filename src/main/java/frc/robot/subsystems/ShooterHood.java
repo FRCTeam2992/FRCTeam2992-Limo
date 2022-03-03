@@ -53,7 +53,7 @@ public class ShooterHood extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    SmartDashboard.putNumber("encoder angle", getEncoderAngle());
+    SmartDashboard.putNumber("Hood Encoder Angle", getEncoderAngle());
   }
 
   public void setHoodSpeed(double speed) {

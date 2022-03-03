@@ -65,6 +65,8 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putNumber("Camera Angle", limeLightCamera.getCameraAngle(Constants.distanceTest,
                 Constants.cameraHeight, Constants.goalHeight));
         SmartDashboard.putNumber("Y-Offset", limeLightCamera.getTargetYOffset());
+        SmartDashboard.putNumber("Distance", limeLightCamera.getDistanceToTarget(35.8, 44, 104));
+
 
         // double x = -Robot.m_robotContainer.controller0.getLeftX();
         // double y = -Robot.m_robotContainer.controller0.getLeftY();
@@ -100,7 +102,7 @@ public class Turret extends SubsystemBase {
                 || (setSpeed < 0 && getTurretAngle() < Constants.turretMinEnd)) {
             setSpeed = 0;
         }
-        setSpeed = MathUtil.clamp(setSpeed, -1, 1);
+        setSpeed = MathUtil.clamp(setSpeed, -.3, .3);
         turretTalon.set(ControlMode.PercentOutput, setSpeed);
     }
 

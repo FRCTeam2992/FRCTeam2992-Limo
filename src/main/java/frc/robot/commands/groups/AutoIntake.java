@@ -27,7 +27,7 @@ public class AutoIntake extends ParallelCommandGroup {
     addCommands(
       // new DeployIntake(mIntake, true),
       new SpinIntake(mIntake, .75),
-      new SpinCargoFunnel(mCargoFunnel, .5),
+      new SpinCargoFunnelSensor(mCargoFunnel, mBottomLift, .5, .1),
       new SpinBottomLiftSensor(mBottomLift, .5)
     );
   }

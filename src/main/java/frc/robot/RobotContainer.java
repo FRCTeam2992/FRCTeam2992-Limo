@@ -171,7 +171,7 @@ public class RobotContainer {
     autoIntakeButton.toggleWhenActive(new AutoIntake(mIntake, mCargoFunnel, mBottomLift), true);
    
     TriggerButton autoShootButton = new TriggerButton(controller0, .2, 'r');
-    autoShootButton.toggleWhenActive(new SpinTopLift(mTopLift, .6));
+    autoShootButton.toggleWhenActive(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift), true);
 
     JoystickButton dejamButton = new JoystickButton(controller1, XboxController.Button.kY.value);
     dejamButton.whileHeld(new DejamBallPath(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
@@ -184,11 +184,11 @@ public class RobotContainer {
     fieldOrientButton.whenPressed(new ResetGyro(mDrivetrain), true);
 
     POVButton moveHoodUpButton = new POVButton(controller0, 0);
-    moveHoodUpButton.whenPressed(new MoveHood(mShooterHood, .5), true);
+    moveHoodUpButton.whenPressed(new MoveHood(mShooterHood, .25), true);
     moveHoodUpButton.whenReleased(new StopHood(mShooterHood), true);
 
     POVButton moveHoodDownButton = new POVButton(controller0, 180);
-    moveHoodDownButton.whenPressed(new MoveHood(mShooterHood, -.5), true);
+    moveHoodDownButton.whenPressed(new MoveHood(mShooterHood, -.25), true);
     moveHoodDownButton.whenReleased(new StopHood(mShooterHood), true);
 
     SmartDashboard.putData("0 Wheels", new SetSwerveAngle(mDrivetrain, 0, 0, 0, 0));
@@ -203,9 +203,12 @@ public class RobotContainer {
     // SmartDashboard.putData("130 Hood", new MoveHoodToAngle(mShooterHood,
     // -140.0));
 
-    SmartDashboard.putData("turret forward", new MoveTurretToAngle(mTurret, 180, 1));
-    SmartDashboard.putData("turret backward", new MoveTurretToAngle(mTurret, 270, 1));
-    SmartDashboard.putData("turret 45", new MoveTurretToAngle(mTurret, 90, 1));
+    SmartDashboard.putData("turret 180", new MoveTurretToAngle(mTurret, 180, 1));
+    SmartDashboard.putData("turret 270", new MoveTurretToAngle(mTurret, 270, 1));
+    SmartDashboard.putData("turret 90", new MoveTurretToAngle(mTurret, 90, 1));
+
+    JoystickButton autoAimButton = new JoystickButton(controller0, XboxController.Button.kA.value);
+    autoAimButton.whileHeld(new AutoTurretAim(mTurret), true);    
 
   }
 

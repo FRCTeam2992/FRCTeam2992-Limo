@@ -14,12 +14,14 @@ public class SpinCargoFunnelSensor extends CommandBase {
   private BottomLift mBottomLift;
 
   private double mCargoFunnelSpeed;
+  private double mCargoFunnelSensorSpeed;
 
 
-  public SpinCargoFunnelSensor(CargoFunnel CFSubsystem, BottomLift BLSubsystem, double cargoFunnelSpeed, double cargo) {
+  public SpinCargoFunnelSensor(CargoFunnel CFSubsystem, BottomLift BLSubsystem, double cargoFunnelSpeed, double cargoFunnelSensorSpeed) {
     mCargoFunnel = CFSubsystem;
     mBottomLift = BLSubsystem;
     mCargoFunnelSpeed = cargoFunnelSpeed;
+    mCargoFunnelSensorSpeed = cargoFunnelSensorSpeed;
 
     addRequirements(mCargoFunnel);
   }
@@ -33,7 +35,7 @@ public class SpinCargoFunnelSensor extends CommandBase {
   @Override
   public void execute() {
     if (mBottomLift.getSensor1State() || mBottomLift.getSensor2State()) {
-      mCargoFunnel.setFunnelSpeed(.1);
+      mCargoFunnel.setFunnelSpeed(mCargoFunnelSensorSpeed);
 
     } else {
       mCargoFunnel.setFunnelSpeed(mCargoFunnelSpeed);

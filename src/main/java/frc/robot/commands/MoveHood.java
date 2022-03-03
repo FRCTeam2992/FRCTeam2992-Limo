@@ -39,7 +39,7 @@ public class MoveHood extends CommandBase {
       
     } else if (inMinPZone()) {
       double distance = Constants.minHoodPosition - mShooterHood.getEncoderAngle();
-      tempHoodSpeed = distance * Constants.hoodPValueBottom;
+      tempHoodSpeed = (distance * Constants.hoodPValueBottom) + 0.02; 
 
     } else if (inMaxPZone()) {
       double distance = Constants.maxHoodPosition - mShooterHood.getEncoderAngle();
@@ -51,6 +51,7 @@ public class MoveHood extends CommandBase {
     SmartDashboard.putBoolean("In Max P-Zone", inMaxPZone());
     SmartDashboard.putBoolean("In Min P-Zone", inMinPZone());
     SmartDashboard.putBoolean("In Dead-Zone", inDeadZone());
+    SmartDashboard.putNumber("Temp Hood Speed", tempHoodSpeed);
   }
 
   // Called once the command ends or is interrupted.

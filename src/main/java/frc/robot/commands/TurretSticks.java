@@ -47,7 +47,7 @@ public class TurretSticks extends CommandBase {
       targetAngle = mTurret.angleOverlap((Math.toDegrees(Math.atan2(y, x)) - 90) - mTurret.getGyroYaw());
       }
       mTurret.goToAngle(mTurret.angleOverlap(targetAngle));
-      //SmartDashboard.putNumber("TurretStick output", targetAngle);
+      // SmartDashboard.putNumber("TurretStick output", targetAngle);
     } else {
       mTurret.stopTurret();
     }

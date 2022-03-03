@@ -33,8 +33,8 @@ public class Constants {
   public static final double turretI = 0.0;
   public static final double turretD = 0.0015;
   public static final double turretTolerance = 0.5;
-  public static final int turretEncoderOffset = 1800;
-  public static final double turretRobotOffset = 296;
+  public static final int turretEncoderOffset = -1640;
+  public static final double turretRobotOffset = 320;
   public static final int turretMinEnd = 20;
   public static final int turretMaxEnd = 340;
   public static final int turretMaxSlowZone = 300;
@@ -48,14 +48,14 @@ public class Constants {
   public static final double hoodEncoderAngleRatio = 520.000 / 38.000;
   // the max and min of the encoder values not the hood angles
   public static final double minHoodPosition = -153.0;
-  public static final double minHoodPZone = -123.0;
+  public static final double minHoodPZone = -100.0;
 
   public static final double maxHoodPosition = 153.0;
-  public static final double maxHoodPZone = 123.0;
+  public static final double maxHoodPZone = 100.0;
 
-  public static final double hoodPValueBottom = 0.005;
-  public static final double hoodPValueTop = 0.005;
-  public static final double hoodEncoderOffset = -130.0;
+  public static final double hoodPValueBottom = 0.0045;
+  public static final double hoodPValueTop = 0.0072;
+  public static final double hoodEncoderOffset = -28.9 + 180;
 
   public static final double cameraHeight = 44.5;
   public static final double goalHeight = 103.12;

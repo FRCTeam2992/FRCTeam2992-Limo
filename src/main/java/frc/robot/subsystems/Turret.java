@@ -66,7 +66,7 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putNumber("Camera Angle", limeLightCamera.getCameraAngle(Constants.distanceTest,
                 Constants.cameraHeight, Constants.goalHeight));
         SmartDashboard.putNumber("Y-Offset", limeLightCamera.getTargetYOffset());
-        SmartDashboard.putNumber("Distance", limeLightCamera.getDistanceToTarget(35.8, 44, 104));
+        SmartDashboard.putNumber("Distance", limeLightCamera.getDistanceToTarget(Constants.cameraAngle, Constants.cameraHeight, Constants.goalHeight));
         SmartDashboard.putNumber("x-Offset", limeLightCamera.getTargetXOffset());
 
 

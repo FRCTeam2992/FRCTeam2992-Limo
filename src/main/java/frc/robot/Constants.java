@@ -57,7 +57,7 @@ public class Constants {
   public static final double cameraHeight = 44.5;
   public static final double goalHeight = 103.12;
   public static final double distanceTest = 120;
-  public static final double cameraAngle = 0;
+  public static final double cameraAngle = 35.8;
 
   public static final double hoodP = .007;
   public static final double hoodI = 0.05; 

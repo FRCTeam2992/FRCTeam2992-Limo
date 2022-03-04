@@ -35,7 +35,7 @@ public class SpinBottomLiftSensor extends CommandBase {
   public void execute() {
     if (mBottomLift.getSensor1State() || mBottomLift.getSensor2State()) {
       delayTimer.start();
-      if (delayTimer.get() >= .07) {
+      if (delayTimer.get() >= .11) {
         mBottomLift.setBottomLiftSpeed(0.0);
 
       }

@@ -30,7 +30,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
  */
 public class Intake extends SubsystemBase {
 
-    public double intakeSetSpeed = Constants.defaultInatkeSpeed;
 
     private WPI_TalonFX intakeMotor;
     private Solenoid intakeSolenoid;

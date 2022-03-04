@@ -39,9 +39,10 @@ public class CargoBallInterpolator {
      */
     public int calcMainShooterSpeed(double distance) {
         int tempMainSpeed = 0;
-
+        System.out.println("calcmainshooterspeed distance " + distance);
         if (dataPointList.size() == 1) {
             tempMainSpeed = dataPointList.get(0).getMainShooterSpeed();
+            System.out.println("calcmainshooterspeed list size 1");
         } else if (dataPointList.size() > 1) {
             CargoBallDataPoint upperDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0);
             CargoBallDataPoint lowerDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0);
@@ -69,6 +70,7 @@ public class CargoBallInterpolator {
         }
 
         SmartDashboard.putNumber("Main Shooter Speed", tempMainSpeed);
+        System.out.println("calcmainshooterspeed returns " + tempMainSpeed);
 
         return tempMainSpeed;
     }

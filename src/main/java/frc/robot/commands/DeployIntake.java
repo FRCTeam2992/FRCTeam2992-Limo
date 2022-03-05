@@ -6,18 +6,23 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeDeploy;
 
 public class DeployIntake extends CommandBase {
 
-  private Intake mIntake;
+  private IntakeDeploy mIntakeDeploy;
 
-  private boolean mToggle;
+  private double mDeploySpeed;
 
-  public DeployIntake(Intake subsystem, boolean toggle) {
+  private boolean mIsPanic;
 
-    mIntake = subsystem;
+  public DeployIntake(IntakeDeploy subsystem, double deploySpeed, boolean isPanic) {
 
-    mToggle = toggle;
+    mIntakeDeploy = subsystem;
+
+    mDeploySpeed = deploySpeed;
+
+    mIsPanic = isPanic;
   }
 
   // Called when the command is initially scheduled.
@@ -28,7 +33,24 @@ public class DeployIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mIntake.deployIntake(mToggle);
+    if (mIsPanic){
+      if (mIntakeDeploy.panicState){
+        mIntakeDeploy.deployIntake(mDeploySpeed);
+
+        mIntakeDeploy.isDeployed = true;
+      }
+
+      else {
+        mIntakeDeploy.deployIntake(0);
+
+       mIntakeDeploy.isDeployed = false;
+      }
+    }
+
+    mIntakeDeploy.deployIntake(mDeploySpeed);
+
+    mIntakeDeploy.isDeployed = true;
+
   }
 
   // Called once the command ends or is interrupted.

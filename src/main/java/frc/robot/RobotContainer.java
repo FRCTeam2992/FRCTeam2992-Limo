@@ -23,6 +23,7 @@ import frc.lib.vision.LimeLight.LedMode;
 import frc.robot.commands.*;
 import frc.robot.commands.groups.AutoIntake;
 import frc.robot.commands.groups.AutoLimelightRange;
+import frc.robot.commands.groups.AutoPanicIntake;
 import frc.robot.commands.groups.AutoShoot;
 import frc.robot.commands.groups.DejamBallPath;
 import frc.robot.commands.groups.StopAutoIntake;
@@ -71,6 +72,8 @@ public class RobotContainer {
   public final TopLift mTopLift;
   public final BottomLift mBottomLift;
 
+  public final IntakeDeploy mIntakeDeploy;
+
   // Joysticks
   public XboxController controller0;
   public XboxController controller1;
@@ -107,6 +110,8 @@ public class RobotContainer {
     mTopLift.setDefaultCommand(new StopTopLift(mTopLift));
     mBottomLift = new BottomLift();
     mBottomLift.setDefaultCommand(new StopBottomLift(mBottomLift));
+
+    mIntakeDeploy = new IntakeDeploy();
 
     controller0 = new XboxController(0);
     controller1 = new XboxController(1);
@@ -175,13 +180,17 @@ public class RobotContainer {
     SmartDashboard.putData(new TurretSticks(mTurret));
 
     JoystickButton autoIntakeButton = new JoystickButton(controller1, XboxController.Button.kA.value);
-    autoIntakeButton.toggleWhenActive(new AutoIntake(mIntake, mCargoFunnel, mBottomLift), true);
+    autoIntakeButton.toggleWhenActive(new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mIntakeDeploy), true);
 
     TriggerButton autoShootButton = new TriggerButton(controller0, .2, 'r');
     autoShootButton.whileActiveContinuous(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift), true);
 
     JoystickButton dejamButton = new JoystickButton(controller1, XboxController.Button.kY.value);
     dejamButton.whileHeld(new DejamBallPath(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
+
+    JoystickButton panicIntake = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
+    panicIntake.whenPressed(new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mIntakeDeploy, true));
+    panicIntake.whenReleased(new AutoPanicIntake(mIntake, mCargoFunnel, mBottomLift, mIntakeDeploy));
 
     // TriggerButton autoShoot = new TriggerButton(controller0, .2, 'r');
     // autoShoot.whenActive(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift),

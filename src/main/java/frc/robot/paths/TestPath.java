@@ -13,9 +13,9 @@ public class TestPath extends SwerveTrajectoryGenerator {
         super(subsystem.testPathTrajectory);
 
         // Set the Start Rotation
-        setStartRotation(180.0);
+        setStartRotation(90.0);
     
-        addHeadingWaypoint(0.1, 180.0);
-        addTimedHeadingWaypoint(1.0, 2.0, 225.0);
+        addHeadingWaypoint(0.1, 90.0);
+        addTimedHeadingWaypoint(1.0, 2.0, 135.0);
     }
 }

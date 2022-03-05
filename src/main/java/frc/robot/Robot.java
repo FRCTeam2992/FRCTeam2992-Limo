@@ -47,6 +47,7 @@ public class Robot extends TimedRobot {
         // autonomous chooser on the dashboard.
         mRobotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
+        mRobotContainer.mDrivetrain.navx.zeroYaw();
     }
 
     /**

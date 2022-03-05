@@ -145,7 +145,7 @@ public class DriveSticks extends CommandBase {
       // }
 
       // Gyro Input (-180 to 180)
-      double gyroValue = mDriveTrain.navx.getYaw();
+      double gyroValue = mDriveTrain.getGyroYaw();
 
       if (Math.abs(x1) <= Constants.joystickDeadband && Math.abs(y1) <= Constants.joystickDeadband) {
         gyroTargetRecorded = false;

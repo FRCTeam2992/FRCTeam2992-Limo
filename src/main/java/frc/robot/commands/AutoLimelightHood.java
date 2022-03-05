@@ -25,6 +25,8 @@ public class AutoLimelightHood extends CommandBase {
     mShooterHood = sHSubsytem;
 
     mInterpolator = interpolator;
+
+    addRequirements(mShooterHood);
   }
 
   // Called when the command is initially scheduled.
@@ -44,10 +46,9 @@ public class AutoLimelightHood extends CommandBase {
       double targetAngle = mInterpolator.calcHoodPosition(currentDistance);
 
       SmartDashboard.putNumber("Hood Target Angle", targetAngle);
-    //  mShooterHood.setHoodPosition(targetAngle);
-    } else {
-      mShooterHood.setHoodPosition(0);
-    }
+      mShooterHood.setHoodPosition(targetAngle);
+    } 
+    
   }
 
   // Called once the command ends or is interrupted.

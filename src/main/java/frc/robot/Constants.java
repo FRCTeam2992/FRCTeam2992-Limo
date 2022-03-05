@@ -114,7 +114,7 @@ public class Constants {
   public static final Translation2d rearRightLocation = new Translation2d(-0.2955, -0.327);
 
   // Swerve X Axis Correction PID (Path Following)
-  public static final double xCorrectionP = 5.0;
+  public static final double xCorrectionP = 6.0;
   public static final double xCorrectionI = 0.0;
   public static final double xCorrectionD = 0.0;
 

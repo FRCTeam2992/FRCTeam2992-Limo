@@ -5,6 +5,8 @@
 package frc.robot.subsystems;
 
 import java.io.IOException;
+import java.nio.file.FileSystem;
+import java.nio.file.Path;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
@@ -16,9 +18,14 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.SerialPort;
@@ -68,6 +75,7 @@ public class Drivetrain extends SubsystemBase {
 
   // Robot Gyro
   public AHRS navx;
+  public double gyroOffset = 0.0;
 
   public Pose2d latestSwervePose;
 
@@ -78,6 +86,9 @@ public class Drivetrain extends SubsystemBase {
   public final SwerveDriveOdometry swerveDriveOdometry;
 
   // // Swerve Pose
+
+  // Motion Trajectories
+  public Trajectory testPathTrajectory;
 
   // DriveTrain Dashboard Update Counter
   private int dashboardCounter = 0;
@@ -225,7 +236,7 @@ public class Drivetrain extends SubsystemBase {
       // Constants.cameraHeight, Constants.targetHeight));
 
       // Display Gyro Angle
-      SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
+      SmartDashboard.putNumber("Gyro Yaw", getGyroYaw());
 
       // Display Module Angles
       SmartDashboard.putNumber("Front Left Module Angle",
@@ -251,13 +262,13 @@ public class Drivetrain extends SubsystemBase {
 
       SmartDashboard.putNumber("Gyro Pitch", navx.getPitch());
       SmartDashboard.putNumber("Gyro Roll", navx.getRoll());
-      // SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
+      // SmartDashboard.putNumber("Gyro Yaw", getGyroYaw());
       SmartDashboard.putBoolean("Gyro Ready", navx.isConnected());
       SmartDashboard.putBoolean("Gyro Calibrating", navx.isCalibrating());
     }
 
     // Update the Odometry
-    latestSwervePose = swerveDriveOdometry.update(Rotation2d.fromDegrees(-navx.getYaw()), frontLeftModule.getState(),
+    latestSwervePose = swerveDriveOdometry.update(Rotation2d.fromDegrees(-getGyroYaw()), frontLeftModule.getState(),
         frontRightModule.getState(), rearLeftModule.getState(), rearRightModule.getState());
 
     // Display Odometry
@@ -321,23 +332,40 @@ public class Drivetrain extends SubsystemBase {
 
   public void resetOdometry() {
     swerveDriveOdometry.resetPosition(new Pose2d(0.0, 0.0, new Rotation2d()),
-        Rotation2d.fromDegrees(-navx.getYaw()));
+        Rotation2d.fromDegrees(-getGyroYaw()));
   }
 
   public void setOdometryPosition(Pose2d position) {
-    swerveDriveOdometry.resetPosition(position, Rotation2d.fromDegrees(-navx.getYaw()));
+    swerveDriveOdometry.resetPosition(position, Rotation2d.fromDegrees(-getGyroYaw()));
 
-    latestSwervePose = swerveDriveOdometry.update(Rotation2d.fromDegrees(-navx.getYaw()), frontLeftModule.getState(),
+    latestSwervePose = swerveDriveOdometry.update(Rotation2d.fromDegrees(-getGyroYaw()), frontLeftModule.getState(),
         frontRightModule.getState(), rearLeftModule.getState(), rearRightModule.getState());
   }
 
-  public double getGyroYaw(){
-    return navx.getYaw();
-  } 
+  public double getGyroYaw() {
+    double angle = navx.getYaw() + gyroOffset;
+    while (angle > 360) {
+      angle -= 360;
+    }
+    while (angle < 0) {
+      angle += 360;
+    }
+    return angle;
+  }
 
   private void loadMotionPaths() {
     // Trajectory Paths
-  }
+    Path testPath = Filesystem.getDeployDirectory().toPath().resolve("output/TestPath.wpilib.json");
+    
 
+    try {
+      testPathTrajectory = TrajectoryUtil.fromPathweaverJson(testPath);
+    } catch (IOException e) {
+      DriverStation.reportError("Unable to load motion trajectories!", e.getStackTrace());
+      e.printStackTrace();
+    }
+   
+
+  }
 
 }

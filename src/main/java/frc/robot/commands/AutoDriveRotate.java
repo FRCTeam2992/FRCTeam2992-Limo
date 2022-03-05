@@ -44,7 +44,7 @@ public class AutoDriveRotate extends CommandBase {
     double correctionSpeed;
 
     // Get the Gyro Value
-    double gyroValue = mDriveTrain.navx.getYaw();
+    double gyroValue = mDriveTrain.getGyroYaw();
 
     // Normalize the Target Angle (-180 - 180)
     if (mTargetRotation < -180.0) {
@@ -78,7 +78,7 @@ public class AutoDriveRotate extends CommandBase {
 
     // Check for Field Centric Enabled
     if (Constants.isFieldCentric) {
-      swerveStates = mDriveTrain.swerveController.calculate(0.0, 0.0, correctionSpeed, mDriveTrain.navx.getYaw());
+      swerveStates = mDriveTrain.swerveController.calculate(0.0, 0.0, correctionSpeed, mDriveTrain.getGyroYaw());
     } else {
       swerveStates = mDriveTrain.swerveController.calculate(0.0, 0.0, correctionSpeed);
     }
@@ -114,7 +114,7 @@ public class AutoDriveRotate extends CommandBase {
   @Override
   public boolean isFinished() {
 
-    if (Math.abs(mDriveTrain.navx.getYaw() - mTargetRotation) < 1.0) {
+    if (Math.abs(mDriveTrain.getGyroYaw() - mTargetRotation) < 1.0) {
       atSetpointCounter++;
     } else {
       atSetpointCounter = 0;

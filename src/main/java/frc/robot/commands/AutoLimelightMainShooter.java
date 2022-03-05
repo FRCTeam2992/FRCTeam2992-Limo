@@ -43,10 +43,8 @@ public class AutoLimelightMainShooter extends CommandBase {
       double targetSpeed = mInterpolator.calcMainShooterSpeed(currentDistance);
 
       SmartDashboard.putNumber("Main Target Speed", targetSpeed);
-    //  mShooter.setMainShooterVelocity(targetSpeed);
-    } else {
-      mShooter.setMainShooterVelocity(Constants.defaultMainShooterSpeed);
-    }
+      mShooter.mainShooterSetSpeed = targetSpeed;
+    } 
   }
 
   // Called once the command ends or is interrupted.
@@ -57,6 +55,6 @@ public class AutoLimelightMainShooter extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

@@ -74,7 +74,7 @@ public class Turret extends SubsystemBase {
         // double x = -Robot.m_robotContainer.controller0.getLeftX();
         // double y = -Robot.m_robotContainer.controller0.getLeftY();
         // double xyAngle = (Math.toDegrees(Math.atan2(y, x)) - 90);
-        // SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
+        // SmartDashboard.putNumber("Gyro Yaw", getGyroYaw());
         // SmartDashboard.putNumber("Joystick X",
         // -Robot.m_robotContainer.controller0.getLeftX());
         // SmartDashboard.putNumber("Joystick Y",

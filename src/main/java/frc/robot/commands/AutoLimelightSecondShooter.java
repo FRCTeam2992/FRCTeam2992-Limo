@@ -43,9 +43,7 @@ public class AutoLimelightSecondShooter extends CommandBase {
       double targetSpeed = mInterpolator.calcSecondShooterSpeed(currentDistance);
 
       SmartDashboard.putNumber("Second Target Speed", targetSpeed);
-    //  mShooter.setSecondaryShooterVelocity(targetSpeed);
-    } else {
-      mShooter.setSecondaryShooterVelocity(Constants.defaultSecondaryShooterSpeed);
+      mShooter.secondaryShooterSetSpeed = targetSpeed;
     }
   }
 
@@ -57,6 +55,6 @@ public class AutoLimelightSecondShooter extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

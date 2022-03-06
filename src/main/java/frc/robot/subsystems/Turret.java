@@ -105,7 +105,7 @@ public class Turret extends SubsystemBase {
                 || (setSpeed < 0 && getTurretAngleRaw() < Constants.turretMinEnd)) {
             setSpeed = 0;
         }
-        setSpeed = MathUtil.clamp(setSpeed, -.3, .3);
+        setSpeed = MathUtil.clamp(setSpeed, -1, 1);
         turretTalon.set(ControlMode.PercentOutput, setSpeed);
     }
 

@@ -8,52 +8,46 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterHood;
 
-public class StartShooter extends CommandBase {
+public class StartHood extends CommandBase {
 
   // cheating for a change
   // Subsystem Instance
-  private Shooter mShooter;
+  private ShooterHood mShooterHood;
 
-  private double mMainShooterSpeed;
-  private double mSecondaryShooterSpeed;
+  private double mHoodPosition;
 
-  public StartShooter(Shooter subsystem) {
+  public StartHood(ShooterHood subsystem) {
     // Subsystem Instance
-    mShooter = subsystem;
+    mShooterHood = subsystem;
 
     // Set the Subsystem Requirement
-    addRequirements(mShooter);
+    addRequirements(mShooterHood);
   }
 
   // Called when the command is initially scheduled.
   @Override
+  
   public void initialize() {
-
-  }
+}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mMainShooterSpeed = mShooter.mainShooterSetSpeed;
-    mSecondaryShooterSpeed = mShooter.secondaryShooterSetSpeed;
-    mMainShooterSpeed = (mMainShooterSpeed / 600.0) * (Constants.shooterEncoderPulses * 0.75);
-    mSecondaryShooterSpeed = (mSecondaryShooterSpeed / 600.0) * (Constants.shooterEncoderPulses);
+    mHoodPosition = mShooterHood.hoodPosition;
+    
     // SmartDashboard.putNumber("Commanded Main Speed", mMainShooterSpeed);
     // SmartDashboard.putNumber("Commanded Secondary Speed",
     // mSecondaryShooterSpeed);
 
-    mShooter.setMainShooterVelocity(mMainShooterSpeed);
-    mShooter.setSecondaryShooterVelocity(mSecondaryShooterSpeed);
+    mShooterHood.setHoodPosition(mHoodPosition);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
+  // Called once the command ends or is interrupted.
   public void end(boolean interrupted) {
-    mShooter.setMainShooterSpeed(0.0);
-    mShooter.setSecondaryShooterSpeed(0.0);
+    mShooterHood.setHoodPosition(mHoodPosition); 
   }
 
   // Returns true when the command should end.

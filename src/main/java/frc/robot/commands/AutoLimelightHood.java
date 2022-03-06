@@ -46,7 +46,7 @@ public class AutoLimelightHood extends CommandBase {
       double targetAngle = mInterpolator.calcHoodPosition(currentDistance);
 
       SmartDashboard.putNumber("Hood Target Angle", targetAngle);
-      mShooterHood.setHoodPosition(targetAngle);
+      mShooterHood.hoodPosition = targetAngle;
     } 
     
   }

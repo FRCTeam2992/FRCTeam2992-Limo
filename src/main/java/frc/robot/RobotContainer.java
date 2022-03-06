@@ -162,42 +162,100 @@ public class RobotContainer {
     SmartDashboard.putData("Increase Second Shooter Speed", new ChangeSecondaryShooterSpeed(mShooter, 50));
     SmartDashboard.putData("Decrease Second Shooter Speed", new ChangeSecondaryShooterSpeed(mShooter, -50));
 
-    JoystickButton startShooterButton = new JoystickButton(controller1, XboxController.Button.kX.value);
-    startShooterButton.toggleWhenPressed(new StartShooter(mShooter), true);
+  /*
+  controller0 buttons
+  */
+    //-Triggers
+      TriggerButton autoAimButton = new TriggerButton(controller0, .4, 'l');
+      autoAimButton.whileActiveContinuous(new AutoTurretAim(mTurret));
+      autoAimButton.whileActiveContinuous(new AutoLimelightHood(mTurret, mShooterHood, cargoBallInterpolator));
+      autoAimButton.whileActiveContinuous(new AutoLimelightMainShooter(mTurret, mShooter, cargoBallInterpolator));
+      autoAimButton.whileActiveContinuous(new AutoLimelightSecondShooter(mTurret, mShooter, cargoBallInterpolator));
 
-    JoystickButton moveTurretLeftButton = new JoystickButton(controller1, XboxController.Button.kLeftBumper.value);
-    moveTurretLeftButton.whileHeld(new MoveTurret(mTurret, -.3), true);
+      TriggerButton autoShootButton = new TriggerButton(controller0, .4, 'r');
+      autoShootButton.whileActiveContinuous(new AutoShoot(mIntake, mCargoFunnel, mTopLift, mBottomLift), true);
 
-    JoystickButton moveTurretRightButton = new JoystickButton(controller1, XboxController.Button.kRightBumper.value);
-    moveTurretRightButton.whileHeld(new MoveTurret(mTurret, .3), true);
+    //-D-Pad
+      POVButton xPatternButtonUp = new POVButton(controller0, 0);
+      xPatternButtonUp.whenHeld(new SetSwerveAngle(mDrivetrain, 45, -45, -45, 45));
+      POVButton xPatternButtonRight = new POVButton(controller0, 90);
+      xPatternButtonRight.whenHeld(new SetSwerveAngle(mDrivetrain, 45, -45, -45, 45));
+      POVButton xPatternButtonDown = new POVButton(controller0, 180);
+      xPatternButtonDown.whenHeld(new SetSwerveAngle(mDrivetrain, 45, -45, -45, 45));
+      POVButton xPatternButtonLeft = new POVButton(controller0, 270);
+      xPatternButtonLeft.whenHeld(new SetSwerveAngle(mDrivetrain, 45, -45, -45, 45));
 
-    // Temp to allow start / stop of turretsticks from Dashboard
-    SmartDashboard.putData(new TurretSticks(mTurret));
+    //-ABXY
+      JoystickButton increaseMainShooterSpeed = new JoystickButton(controller0, XboxController.Button.kY.value);
+      increaseMainShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, 50));
 
-    JoystickButton autoIntakeButton = new JoystickButton(controller1, XboxController.Button.kA.value);
-    autoIntakeButton.toggleWhenActive(new AutoIntake(mIntake, mCargoFunnel, mBottomLift), true);
+      JoystickButton decreaseMainShooterSpeed = new JoystickButton(controller0, XboxController.Button.kX.value);
+      decreaseMainShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, -50));
 
-    TriggerButton autoShootButton = new TriggerButton(controller0, .2, 'r');
-    autoShootButton.whileActiveContinuous(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift), true);
+      JoystickButton increaseSecondShooterSpeed = new JoystickButton(controller0, XboxController.Button.kB.value);
+      increaseSecondShooterSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter, 50));
 
-    JoystickButton dejamButton = new JoystickButton(controller1, XboxController.Button.kY.value);
-    dejamButton.whileHeld(new DejamBallPath(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
+      JoystickButton decreaseSecondShooterSpeed = new JoystickButton(controller0, XboxController.Button.kY.value);
+      decreaseSecondShooterSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter, -50));
 
-    // TriggerButton autoShoot = new TriggerButton(controller0, .2, 'r');
-    // autoShoot.whenActive(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift),
-    // true);
+    //-Other Buttons
+      JoystickButton fieldOrientButton = new JoystickButton(controller0, XboxController.Button.kStart.value);
+      fieldOrientButton.whenPressed(new ResetGyro(mDrivetrain), true);
 
-    JoystickButton fieldOrientButton = new JoystickButton(controller0, XboxController.Button.kStart.value);
-    fieldOrientButton.whenPressed(new ResetGyro(mDrivetrain), true);
+      //TODO: Remove Field Orient
+    
+      //TODO: Saftey Button
 
-    POVButton moveHoodUpButton = new POVButton(controller0, 0);
-    moveHoodUpButton.whileHeld(new MoveHood(mShooterHood, .25), true);
 
-    POVButton moveHoodDownButton = new POVButton(controller0, 180);
-    moveHoodDownButton.whileHeld(new MoveHood(mShooterHood, -.25), true);
+  /*
+  controller1 Buttons
+  */
+    //-Triggers
+      TriggerButton dejamButton = new TriggerButton(controller1, .3, 'r');
+      dejamButton.whileActiveContinuous(new DejamBallPath(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
 
-    SmartDashboard.putData("0 Wheels", new SetSwerveAngle(mDrivetrain, 0, 0, 0, 0));
+    //-D-Pad
+      POVButton moveHoodUpButton = new POVButton(controller1, 0);
+      moveHoodUpButton.whileHeld(new MoveHood(mShooterHood, .25), true);
 
+      POVButton moveHoodDownButton = new POVButton(controller1, 180);
+      moveHoodDownButton.whileHeld(new MoveHood(mShooterHood, -.25), true);
+
+      POVButton moveTurretLeftButton = new POVButton(controller1, 270);
+      moveTurretLeftButton.whileHeld(new MoveTurret(mTurret, -.45), true);
+
+      POVButton moveTurretRightButton = new POVButton(controller1, 90);
+      moveTurretRightButton.whileHeld(new MoveTurret(mTurret, .45), true);
+
+
+    //-ABXY
+      JoystickButton startShooterButton = new JoystickButton(controller1, XboxController.Button.kX.value);
+      startShooterButton.whenPressed(new StartShooter(mShooter), true);
+
+      JoystickButton autoIntakeButton = new JoystickButton(controller1, XboxController.Button.kA.value);
+      autoIntakeButton.whenPressed(new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
+
+      JoystickButton stopAutoIntakeButton = new JoystickButton(controller1, XboxController.Button.kB.value);
+      stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
+
+
+    //-Other Buttons
+      
+      JoystickButton stopShooterButton = new JoystickButton(controller1, XboxController.Button.kBack.value);
+      stopShooterButton.whenPressed(new StopShooter(mShooter));
+
+      //TODO: Start Climb Button left bumper
+
+
+      //TODO JoystickButton AutoClimb
+
+  /*
+  SmartDashBoard Buttons
+  */
+      SmartDashboard.putData("0 Wheels", new SetSwerveAngle(mDrivetrain, 0, 0, 0, 0));
+
+    
+    /*
     SmartDashboard.putData("0 Hood", new MoveHoodToAngle(mShooterHood, 0.0));
     SmartDashboard.putData("Top Hood", new MoveHoodToAngle(mShooterHood, 140.0));
     SmartDashboard.putData("Bottom Hood", new MoveHoodToAngle(mShooterHood, -140.0));
@@ -212,12 +270,8 @@ public class RobotContainer {
     SmartDashboard.putData("turret 270", new MoveTurretToAngle(mTurret, 270, 1));
     SmartDashboard.putData("turret 90", new MoveTurretToAngle(mTurret, 90, 1));
 
-    JoystickButton autoAimButton = new JoystickButton(controller0, XboxController.Button.kA.value);
-    autoAimButton.whileHeld(new AutoTurretAim(mTurret));
-    autoAimButton.whileHeld(new AutoLimelightHood(mTurret, mShooterHood, cargoBallInterpolator));
-    autoAimButton.whileHeld(new AutoLimelightMainShooter(mTurret, mShooter, cargoBallInterpolator));
-    autoAimButton.whileHeld(new AutoLimelightSecondShooter(mTurret, mShooter, cargoBallInterpolator));
-
+    
+*/
   }
 
   private void setupAutoSelector() {

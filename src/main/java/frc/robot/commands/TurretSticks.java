@@ -33,8 +33,8 @@ public class TurretSticks extends CommandBase {
   public void execute() {
     double gyroValue = mTurret.gyroYaw;
 
-    double x = -Robot.mRobotContainer.controller1.getRightX();
-    double y = -Robot.mRobotContainer.controller1.getRightY();
+    double x = -Robot.mRobotContainer.controller1.getLeftX();
+    double y = -Robot.mRobotContainer.controller1.getLeftY();
     double targetAngle;
     double xyMagnitude = Math.sqrt((x * x) + (y * y));
 

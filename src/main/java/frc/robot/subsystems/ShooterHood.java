@@ -23,6 +23,8 @@ public class ShooterHood extends SubsystemBase {
 
   private CANCoder hoodEncoder;
 
+  public double hoodPosition = Constants.defaultHoodPosition;
+
   public PIDController hoodPID;
 
   public MedianFilter hoodMedianFilter;

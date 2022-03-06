@@ -7,9 +7,11 @@ package frc.robot.commands.groups;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import frc.robot.commands.SpinBottomLift;
 import frc.robot.commands.SpinCargoFunnel;
+import frc.robot.commands.SpinIntake;
 import frc.robot.commands.SpinTopLift;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.TopLift;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -18,10 +20,11 @@ import frc.robot.subsystems.TopLift;
 public class AutoShoot extends ParallelRaceGroup {
 
   /** Creates a new AutoShoot. */
-  public AutoShoot(CargoFunnel mCargoFunnel, TopLift mTopLift, BottomLift mBottomLift) {
+  public AutoShoot(Intake mIntake, CargoFunnel mCargoFunnel, TopLift mTopLift, BottomLift mBottomLift) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new SpinIntake(mIntake, .5),
       new SpinCargoFunnel(mCargoFunnel, .7),
       new SpinTopLift(mTopLift, 1),
       new SpinBottomLift(mBottomLift, 1)

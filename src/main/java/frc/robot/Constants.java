@@ -36,7 +36,7 @@ public class Constants {
   public static final int turretMaxEnd = 340;
   public static final int turretMaxSlowZone = 300;
   public static final int turretMinSlowZone = 60;
-  public static final double turretJoystickDeadband = .15;
+  public static final double turretJoystickDeadband = .75;
 
   // Vision Constants
 
@@ -65,6 +65,8 @@ public class Constants {
   public static final double hoodF = 0.02; 
 
   public static final double hoodTolerance = 0;
+
+  public static final double defaultHoodPosition = 0;
 
   // Drive Variables
   public static final boolean isFieldCentric = true;

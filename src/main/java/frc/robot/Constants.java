@@ -34,8 +34,8 @@ public class Constants {
   public static final double turretRobotOffset = 320;
   public static final int turretMinEnd = 20;
   public static final int turretMaxEnd = 340;
-  public static final int turretMaxSlowZone = 300;
-  public static final int turretMinSlowZone = 60;
+  public static final int turretMaxSlowZone = 310;
+  public static final int turretMinSlowZone = 50;
   public static final double turretJoystickDeadband = .15;
 
   // Vision Constants

@@ -35,6 +35,8 @@ public class Turret extends SubsystemBase {
 
     public Drivetrain mDrivetrain;
 
+    public double goToAngle = 180;
+
     public Turret(Drivetrain drivetrain) {
         // Turret Motors
         turretTalon = new WPI_TalonSRX(34);
@@ -110,6 +112,7 @@ public class Turret extends SubsystemBase {
     }
 
     public void goToAngle(double angle) {
+        goToAngle = angle;
         SmartDashboard.putNumber("TurretToAngle Angle", angle);
         angle = angleOverlap(angle + Constants.turretRobotOffset);
         angle = Math.min(angle, Constants.turretMaxEnd);

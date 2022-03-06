@@ -7,18 +7,27 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.BottomLift;
+import frc.robot.subsystems.IntakeDeploy;
 
 public class SpinBottomLiftSensor extends CommandBase {
   /** Creates a new SpinBottomLift. */
   private BottomLift mBottomLift;
 
+  private IntakeDeploy mIntakeDeploy;
+
+  private boolean mIsPanic;
+
   private double mBottomLiftSpeed;
 
   private Timer delayTimer;
 
-  public SpinBottomLiftSensor(BottomLift subsystem, double bottomLiftSpeed) {
+  public SpinBottomLiftSensor(BottomLift subsystem, IntakeDeploy IDSubsystem, double bottomLiftSpeed, boolean isPanic) {
     mBottomLift = subsystem;
     mBottomLiftSpeed = bottomLiftSpeed;
+
+    mIntakeDeploy = IDSubsystem;
+
+    mIsPanic = isPanic;
 
     delayTimer = new Timer();
 
@@ -33,14 +42,38 @@ public class SpinBottomLiftSensor extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (mIsPanic){
+      if (mIntakeDeploy.panicState){
+        if (mBottomLift.getSensor1State() || mBottomLift.getSensor2State()) {
+          delayTimer.start();
+          if (delayTimer.get() >= .11) {
+            mBottomLift.setBottomLiftSpeed(0.0);
+    
+          }
+        } 
+        
+        else {
+          mBottomLift.setBottomLiftSpeed(mBottomLiftSpeed);
+          delayTimer.reset();
+        }
+
+      }
+
+      else {
+        mBottomLift.setBottomLiftSpeed(0.0);
+      }
+    }
+
+
     if (mBottomLift.getSensor1State() || mBottomLift.getSensor2State()) {
       delayTimer.start();
       if (delayTimer.get() >= .11) {
         mBottomLift.setBottomLiftSpeed(0.0);
 
       }
-
-    } else {
+    } 
+    
+    else {
       mBottomLift.setBottomLiftSpeed(mBottomLiftSpeed);
       delayTimer.reset();
     }

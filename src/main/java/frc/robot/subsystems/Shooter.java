@@ -34,6 +34,7 @@ public class Shooter extends SubsystemBase {
 
   private double mainShooterSetRPM = Constants.defaultMainShooterSpeed;
   private double secondaryShooterSetRPM = Constants.defaultSecondaryShooterSpeed;
+  private boolean shooterCommanded = false;
 
   private int dashboardCounter = 0;
 
@@ -157,4 +158,14 @@ public class Shooter extends SubsystemBase {
   public boolean atShooterRPM() {
     return (atMainShooterRPM() && atSecondaryShooterRPM());
   }
+
+  public boolean isShooterCommanded() {
+    return shooterCommanded;
+  }
+
+  public void setShooterCommanded(boolean shooterCommanded) {
+    this.shooterCommanded = shooterCommanded;
+  }
+
+  
 }

@@ -92,11 +92,8 @@ public class RobotContainer {
     mShooterHood.setDefaultCommand(new HoldHoodAngle(mShooterHood));
     
     mShooter = new Shooter();
-    mShooter.setDefaultCommand(new StopShooter(mShooter));
-
-    mIntake = new Intake();
-    mIntake.setDefaultCommand(new StopIntake(mIntake));
-
+    mShooter.setDefaultCommand(new DefaultShooter(mShooter));
+    
     mCargoFunnel = new CargoFunnel();
     mCargoFunnel.setDefaultCommand(new StopCargoFunnel(mCargoFunnel));
     
@@ -106,6 +103,9 @@ public class RobotContainer {
     mBottomLift = new BottomLift();
     mBottomLift.setDefaultCommand(new StopBottomLift(mBottomLift));
 
+    mIntake = new Intake();
+    mIntake.setDefaultCommand(new DefaultIntake(mIntake));
+    
     controller0 = new XboxController(0);
     controller1 = new XboxController(1);
 
@@ -229,19 +229,21 @@ public class RobotContainer {
 
     //-ABXY
       JoystickButton startShooterButton = new JoystickButton(controller1, XboxController.Button.kX.value);
-      startShooterButton.whenPressed(new StartShooter(mShooter), true);
+      startShooterButton.whenPressed(new SetShooterCommanded(mShooter, true), true);
 
       JoystickButton autoIntakeButton = new JoystickButton(controller1, XboxController.Button.kA.value);
-      autoIntakeButton.whenPressed(new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
+      autoIntakeButton.whenPressed(new SetIntakeCommanded(mIntake, true));
+      autoIntakeButton.whenPressed(new AutoIntake(mCargoFunnel, mBottomLift, mTopLift), true);
 
       JoystickButton stopAutoIntakeButton = new JoystickButton(controller1, XboxController.Button.kB.value);
-      stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
+      stopAutoIntakeButton.whenPressed(new SetIntakeCommanded(mIntake, false));
+      stopAutoIntakeButton.whenPressed(new StopAutoIntake(mCargoFunnel, mBottomLift, mTopLift), true);
 
 
     //-Other Buttons
       
       JoystickButton stopShooterButton = new JoystickButton(controller1, XboxController.Button.kBack.value);
-      stopShooterButton.whenPressed(new StopShooter(mShooter));
+      stopShooterButton.whenPressed(new SetShooterCommanded(mShooter, false), true);
 
       //TODO: Start Climb Button left bumper
 

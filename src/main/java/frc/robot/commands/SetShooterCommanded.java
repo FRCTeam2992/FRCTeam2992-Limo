@@ -5,29 +5,29 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
-public class SpinIntake extends CommandBase {
+public class SetShooterCommanded extends CommandBase {
 
-  private Intake mIntake;
-  private double mIntakeSpeed;
+  private Shooter mShooter;
+  private boolean mCommanded;
 
-  public SpinIntake(Intake subsystem, double intakeSpeed) {
-    mIntake = subsystem;
-    mIntakeSpeed = intakeSpeed;
+  public SetShooterCommanded (Shooter subsystem, boolean commanded) {
+    mShooter = subsystem;
+    mCommanded = commanded;
 
-    addRequirements(mIntake);
+    addRequirements(mShooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    mShooter.setShooterCommanded(mCommanded);;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mIntake.setIntakeSpeed(mIntakeSpeed);
   }
 
   // Called once the command ends or is interrupted.

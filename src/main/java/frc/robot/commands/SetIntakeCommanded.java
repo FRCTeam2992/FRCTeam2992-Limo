@@ -7,14 +7,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
-public class SpinIntake extends CommandBase {
+public class SetIntakeCommanded extends CommandBase {
 
   private Intake mIntake;
-  private double mIntakeSpeed;
+  private boolean mCommanded;
 
-  public SpinIntake(Intake subsystem, double intakeSpeed) {
+  public SetIntakeCommanded(Intake subsystem, boolean commanded) {
     mIntake = subsystem;
-    mIntakeSpeed = intakeSpeed;
+    mCommanded = commanded;
 
     addRequirements(mIntake);
   }
@@ -22,12 +22,12 @@ public class SpinIntake extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    mIntake.setIntakeCommanded(mCommanded);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mIntake.setIntakeSpeed(mIntakeSpeed);
   }
 
   // Called once the command ends or is interrupted.

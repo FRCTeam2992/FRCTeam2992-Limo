@@ -7,11 +7,11 @@ package frc.robot.commands.groups;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.HoodAtAngle;
+import frc.robot.commands.SetShooterCommanded;
 import frc.robot.commands.ShooterAtSpeed;
 import frc.robot.commands.SpinBottomLift;
 import frc.robot.commands.SpinCargoFunnel;
 import frc.robot.commands.SpinTopLift;
-import frc.robot.commands.StartShooter;
 import frc.robot.commands.TurretOnTarget;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;
@@ -23,26 +23,24 @@ import frc.robot.subsystems.Turret;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoShoot extends ParallelCommandGroup {
+public class AutoShoot extends SequentialCommandGroup {
 
   /** Creates a new AutoShoot. */
   public AutoShoot(CargoFunnel mCargoFunnel, TopLift mTopLift, BottomLift mBottomLift,
         Shooter mShooter, ShooterHood mHood, Turret mTurret) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-      new StartShooter(mShooter),
-      new SequentialCommandGroup(
-        new ParallelCommandGroup(
-          new ShooterAtSpeed(mShooter).withTimeout(0.75),
-          new HoodAtAngle(mHood).withTimeout(0.5),
-          new TurretOnTarget(mTurret).withTimeout(0.5)
-        ),      
-        new ParallelCommandGroup(
-          new SpinCargoFunnel(mCargoFunnel, 0.7),
-          new SpinTopLift(mTopLift, 1.0),
-          new SpinBottomLift(mBottomLift, 1.0)
-        )
+  addCommands(
+    new ParallelCommandGroup(                       // Preshoot checks must be completed first
+      new SetShooterCommanded(mShooter, true),      // Make sure shooter is running
+      new ShooterAtSpeed(mShooter).withTimeout(0.75),
+      new HoodAtAngle(mHood).withTimeout(0.5),
+      new TurretOnTarget(mTurret).withTimeout(0.5)
+      ),      
+    new ParallelCommandGroup(                       // OK TO shoot
+      new SpinCargoFunnel(mCargoFunnel, 0.7),
+      new SpinTopLift(mTopLift, 1.0),
+      new SpinBottomLift(mBottomLift, 1.0)
       )
     );
   }

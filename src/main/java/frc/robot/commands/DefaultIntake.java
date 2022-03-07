@@ -5,32 +5,37 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Intake;
 
-public class SpinIntake extends CommandBase {
-
+public class DefaultIntake extends CommandBase {
+  /** Creates a new StopIntake. */
   private Intake mIntake;
-  private double mIntakeSpeed;
-
-  public SpinIntake(Intake subsystem, double intakeSpeed) {
-    mIntake = subsystem;
-    mIntakeSpeed = intakeSpeed;
-
+  
+  public DefaultIntake(Intake intake) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    mIntake = intake;
     addRequirements(mIntake);
   }
 
   // Called when the command is initially scheduled.
   @Override
+
   public void initialize() {
+    if (mIntake.getIntakeCommanded()) {
+      // Intake was last commanded on so spin the Intake
+      CommandScheduler.getInstance().schedule(new SpinIntake(mIntake, 0.5));
+    } else {
+      CommandScheduler.getInstance().schedule(new StopIntake(mIntake));
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mIntake.setIntakeSpeed(mIntakeSpeed);
   }
 
-  // Called once the command ends or is interrupted.
+  // Called once the command ends or is interrupted
   @Override
   public void end(boolean interrupted) {
   }

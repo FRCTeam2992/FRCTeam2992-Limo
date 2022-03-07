@@ -31,6 +31,8 @@ public class Intake extends SubsystemBase {
 
     private int dashboardCounter = 0;
 
+    private boolean intakeCommanded = false;                 // Did driver request intake running
+
     public Intake() {
 
         intakeMotor = new WPI_TalonFX(21);
@@ -67,6 +69,14 @@ public class Intake extends SubsystemBase {
 
     public void setIntakeSpeed(double speed) {
         intakeMotor.set(ControlMode.PercentOutput, speed);
+    }
+
+    public void setIntakeCommanded (boolean commanded) {
+        intakeCommanded = commanded;
+    }
+
+    public boolean getIntakeCommanded () {
+        return intakeCommanded;
     }
 
 }

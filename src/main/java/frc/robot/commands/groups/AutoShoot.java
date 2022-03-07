@@ -4,30 +4,46 @@
 
 package frc.robot.commands.groups;
 
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.HoodAtAngle;
+import frc.robot.commands.ShooterAtSpeed;
 import frc.robot.commands.SpinBottomLift;
 import frc.robot.commands.SpinCargoFunnel;
-import frc.robot.commands.SpinIntake;
 import frc.robot.commands.SpinTopLift;
+import frc.robot.commands.StartShooter;
+import frc.robot.commands.TurretOnTarget;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterHood;
 import frc.robot.subsystems.TopLift;
+import frc.robot.subsystems.Turret;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoShoot extends ParallelRaceGroup {
+public class AutoShoot extends ParallelCommandGroup {
 
   /** Creates a new AutoShoot. */
-  public AutoShoot(Intake mIntake, CargoFunnel mCargoFunnel, TopLift mTopLift, BottomLift mBottomLift) {
+  public AutoShoot(CargoFunnel mCargoFunnel, TopLift mTopLift, BottomLift mBottomLift,
+        Shooter mShooter, ShooterHood mHood, Turret mTurret) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SpinIntake(mIntake, .5),
-      new SpinCargoFunnel(mCargoFunnel, .7),
-      new SpinTopLift(mTopLift, 1),
-      new SpinBottomLift(mBottomLift, 1)
+      new StartShooter(mShooter),
+      new SequentialCommandGroup(
+        new ParallelCommandGroup(
+          new ShooterAtSpeed(mShooter).withTimeout(0.75),
+          new HoodAtAngle(mHood).withTimeout(0.5),
+          new TurretOnTarget(mTurret).withTimeout(0.5)
+        ),      
+        new ParallelCommandGroup(
+          new SpinCargoFunnel(mCargoFunnel, 0.7),
+          new SpinTopLift(mTopLift, 1.0),
+          new SpinBottomLift(mBottomLift, 1.0)
+        )
+      )
     );
   }
 }

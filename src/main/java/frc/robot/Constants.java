@@ -24,6 +24,7 @@ public class Constants {
   public static final double defaultMainShooterSpeed = 2700;
   public static final double defaultSecondaryShooterSpeed = 3300;
   public static final int shooterEncoderPulses = 2048;
+  public static final double shooterSpeedTolerance = 100;
 
   // Turret Constants
   public static final double turretP = 0.04;
@@ -65,7 +66,7 @@ public class Constants {
   public static final double hoodD = 0.0002; 
   public static final double hoodF = 0.02; 
 
-  public static final double hoodTolerance = 0;
+  public static final double hoodTolerance = 2;
 
   public static final double defaultHoodPosition = 0;
 

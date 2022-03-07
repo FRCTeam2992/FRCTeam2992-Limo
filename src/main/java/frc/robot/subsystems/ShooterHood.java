@@ -103,4 +103,8 @@ public class ShooterHood extends SubsystemBase {
 
     return angle;
   }
+
+  public boolean atTarget() {
+    return (Math.abs(getHoodAngle() - hoodPosition) < Constants.hoodTolerance);
+  }
 }

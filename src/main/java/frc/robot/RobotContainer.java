@@ -171,7 +171,8 @@ public class RobotContainer {
       autoAimButton.whileActiveContinuous(new AutoLimelightSecondShooter(mTurret, mShooter, cargoBallInterpolator));
 
       TriggerButton autoShootButton = new TriggerButton(controller0, .4, 'r');
-      autoShootButton.whileActiveContinuous(new AutoShoot(mIntake, mCargoFunnel, mTopLift, mBottomLift), true);
+      autoShootButton.whileActiveContinuous(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift,
+            mShooter, mShooterHood, mTurret), true);
 
     //-D-Pad
       POVButton xPatternButtonUp = new POVButton(controller0, 0);

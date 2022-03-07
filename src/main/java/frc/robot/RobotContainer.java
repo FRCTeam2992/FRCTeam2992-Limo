@@ -120,12 +120,11 @@ public class RobotContainer {
     SmartDashboard.putData(mShooter);
     SmartDashboard.putData(mShooterHood);
     SmartDashboard.putData(mTurret);
-
-    // SmartDashboard.putData(mShooter);
-
+    SmartDashboard.putData(mIntake);
     SmartDashboard.putData(mCargoFunnel);
-
     SmartDashboard.putData(mDrivetrain);
+    SmartDashboard.putData(mBottomLift);
+    SmartDashboard.putData(mTopLift);
 
     // SmartDashboard Buttons
     // SmartDashboard.putData("Autonomous Command", new AutonomousCommand());

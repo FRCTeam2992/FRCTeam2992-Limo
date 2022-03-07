@@ -15,8 +15,6 @@ public class SetShooterCommanded extends CommandBase {
   public SetShooterCommanded (Shooter subsystem, boolean commanded) {
     mShooter = subsystem;
     mCommanded = commanded;
-
-    addRequirements(mShooter);
   }
 
   // Called when the command is initially scheduled.

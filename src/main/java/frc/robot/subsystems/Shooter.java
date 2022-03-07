@@ -69,7 +69,6 @@ public class Shooter extends SubsystemBase {
     secondaryShooterLead.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 40.0, 60.0, .25));
     addChild("secondaryShooterLead", secondaryShooterLead);
    
-    setDefaultCommand(new StopShooter(this));
      }
 
   @Override

@@ -16,8 +16,6 @@ public class StartHood extends CommandBase {
   // Subsystem Instance
   private ShooterHood mShooterHood;
 
-  private double mHoodPosition;
-
   public StartHood(ShooterHood subsystem) {
     // Subsystem Instance
     mShooterHood = subsystem;
@@ -35,19 +33,13 @@ public class StartHood extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mHoodPosition = mShooterHood.hoodPosition;
-    
-    // SmartDashboard.putNumber("Commanded Main Speed", mMainShooterSpeed);
-    // SmartDashboard.putNumber("Commanded Secondary Speed",
-    // mSecondaryShooterSpeed);
-
-    mShooterHood.setHoodPosition(mHoodPosition);
+   mShooterHood.setToTarget();    
   }
 
   @Override
   // Called once the command ends or is interrupted.
   public void end(boolean interrupted) {
-    mShooterHood.setHoodPosition(mHoodPosition); 
+    mShooterHood.setHoodSpeed(0.0);
   }
 
   // Returns true when the command should end.

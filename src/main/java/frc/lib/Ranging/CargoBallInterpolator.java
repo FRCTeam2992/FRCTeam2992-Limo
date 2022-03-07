@@ -148,7 +148,7 @@ public class CargoBallInterpolator {
         return start + (count * (end - start));
     }
 
-    private int lerp(int start, int end, double count) {
-        return (int) Math.round(start + (count * (end - start)));
-    }
+    // private int lerp(int start, int end, double count) {
+    //     return (int) Math.round(start + (count * (end - start)));
+    // }
 }

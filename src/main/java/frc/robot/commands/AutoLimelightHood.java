@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.Ranging.CargoBallInterpolator;
 import frc.robot.Constants;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterHood;
 import frc.robot.subsystems.Turret;
 
@@ -25,8 +24,6 @@ public class AutoLimelightHood extends CommandBase {
     mShooterHood = sHSubsytem;
 
     mInterpolator = interpolator;
-
-    addRequirements(mShooterHood);
   }
 
   // Called when the command is initially scheduled.
@@ -46,7 +43,7 @@ public class AutoLimelightHood extends CommandBase {
       double targetAngle = mInterpolator.calcHoodPosition(currentDistance);
 
       SmartDashboard.putNumber("Hood Target Angle", targetAngle);
-      mShooterHood.hoodPosition = targetAngle;
+      mShooterHood.setHoodTarget(targetAngle);
     } 
     
   }

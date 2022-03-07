@@ -4,11 +4,9 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.Turret;
 
 public class TurretSticks extends CommandBase {
@@ -31,8 +29,6 @@ public class TurretSticks extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double gyroValue = mTurret.gyroYaw;
-
     double x = -Robot.mRobotContainer.controller1.getLeftX();
     double y = -Robot.mRobotContainer.controller1.getLeftY();
     double targetAngle;
@@ -44,9 +40,9 @@ public class TurretSticks extends CommandBase {
         y /= xyMagnitude;
       }
       if(Constants.isFieldCentric){
-      targetAngle = mTurret.angleOverlap((Math.toDegrees(Math.atan2(y, x)) - 90) - mTurret.getGyroYaw());
+      targetAngle = Turret.angleOverlap((Math.toDegrees(Math.atan2(y, x)) - 90) - mTurret.getGyroYaw());
       }
-      mTurret.goToAngle(mTurret.angleOverlap(targetAngle));
+      mTurret.goToAngle(Turret.angleOverlap(targetAngle));
       // SmartDashboard.putNumber("TurretStick output", targetAngle);
     } else {
       mTurret.stopTurret();

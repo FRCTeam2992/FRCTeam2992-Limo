@@ -8,17 +8,12 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.vision.LimeLight;
 import frc.robot.Constants;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
 
 public class Turret extends SubsystemBase {
 
@@ -31,7 +26,7 @@ public class Turret extends SubsystemBase {
     // Limelight Camera
     public final LimeLight limeLightCamera;
 
-    public double gyroYaw;
+    public double turretTargetAngle = Constants.turretDefaultAngle;              // Angle the turret was last targeted to turn to
 
     public Drivetrain mDrivetrain;
 
@@ -61,7 +56,7 @@ public class Turret extends SubsystemBase {
         // Put code here to be run every loop
 
         // Update Dashboard
-        SmartDashboard.putNumber("Turret Encoder", getTurretPostion());
+        SmartDashboard.putNumber("Turret Encoder", getTurretEncoder());
         SmartDashboard.putNumber("Turret Angle", angleOverlap(getTurretAngle()));
         SmartDashboard.putNumber("Camera Angle", limeLightCamera.getCameraAngle(Constants.distanceTest,
                 Constants.cameraHeight, Constants.goalHeight));
@@ -115,7 +110,7 @@ public class Turret extends SubsystemBase {
         angle = Math.min(angle, Constants.turretMaxEnd);
         angle = Math.max(angle, Constants.turretMinEnd);
         
-        
+        turretTargetAngle = angle;          // Save the angle that was last targeted
         
         if (Math.abs(angle - getTurretAngleRaw()) > Constants.turretTolerance) {
             turretRotate.setSetpoint(angle);
@@ -133,7 +128,7 @@ public class Turret extends SubsystemBase {
         setTurretSpeed(power);
     }
 
-    public static double getTurretPostion() {
+    public static double getTurretEncoder() {
         double position = -1 * (turretTalon.getSelectedSensorPosition() + Constants.turretEncoderOffset);
 
         while (position < 0) {
@@ -147,7 +142,7 @@ public class Turret extends SubsystemBase {
     }
 
     public static double getTurretAngleRaw() {
-        return getTurretPostion() * (360.0 / 4096.0);
+        return getTurretEncoder() * (360.0 / 4096.0);
     }
     
     public static double getTurretAngle() {
@@ -166,5 +161,9 @@ public class Turret extends SubsystemBase {
 
     public double getGyroYaw(){
         return mDrivetrain.getGyroYaw();
+    }
+
+    public boolean onTarget(){
+        return (Math.abs(turretTargetAngle - getTurretAngle()) < Constants.turretTolerance);
     }
 }

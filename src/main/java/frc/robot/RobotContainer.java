@@ -14,15 +14,10 @@ package frc.robot;
 
 import frc.lib.Ranging.CargoBallDataPoint;
 import frc.lib.Ranging.CargoBallInterpolator;
-import frc.lib.vision.LimeLight;
-import frc.lib.vision.LimeLight.LedMode;
 import frc.robot.commands.*;
+import frc.robot.commands.Deprecated.HoldHoodAngle;
 import frc.lib.oi.controller.TriggerButton;
-import frc.lib.vision.LimeLight;
-import frc.lib.vision.LimeLight.LedMode;
-import frc.robot.commands.*;
 import frc.robot.commands.groups.AutoIntake;
-import frc.robot.commands.groups.AutoLimelightRange;
 import frc.robot.commands.groups.AutoShoot;
 import frc.robot.commands.groups.DejamBallPath;
 import frc.robot.commands.groups.StopAutoIntake;
@@ -36,7 +31,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
@@ -93,18 +87,22 @@ public class RobotContainer {
 
     mTurret = new Turret(mDrivetrain);
     mTurret.setDefaultCommand(new TurretSticks(mTurret));
-    // mTurret.setDefaultCommand(new TurretSticks(mTurret));
+    
     mShooterHood = new ShooterHood();
     mShooterHood.setDefaultCommand(new HoldHoodAngle(mShooterHood));
+    
     mShooter = new Shooter();
     mShooter.setDefaultCommand(new StopShooter(mShooter));
 
     mIntake = new Intake();
     mIntake.setDefaultCommand(new StopIntake(mIntake));
+
     mCargoFunnel = new CargoFunnel();
     mCargoFunnel.setDefaultCommand(new StopCargoFunnel(mCargoFunnel));
+    
     mTopLift = new TopLift();
     mTopLift.setDefaultCommand(new StopTopLift(mTopLift));
+    
     mBottomLift = new BottomLift();
     mBottomLift.setDefaultCommand(new StopBottomLift(mBottomLift));
 

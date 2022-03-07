@@ -7,7 +7,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 
@@ -23,7 +22,7 @@ public class ShooterHood extends SubsystemBase {
 
   private CANCoder hoodEncoder;
 
-  public double hoodPosition = Constants.defaultHoodPosition;
+  private double hoodPosition = Constants.defaultHoodPosition;
 
   public PIDController hoodPID;
 
@@ -63,8 +62,18 @@ public class ShooterHood extends SubsystemBase {
     hoodMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void setHoodPosition(double position) {
+  public void setHoodTarget(double position) {
     position = Math.max(position, Constants.minHoodPosition);
+    position = Math.min(position, Constants.maxHoodPosition);
+    hoodPosition = position;                    // Save the last targeted angle
+  }
+
+  public double getHoodTarget() {
+    return hoodPosition;
+  }
+
+  public void setToTarget() {
+    double position = Math.max(hoodPosition, Constants.minHoodPosition);
     position = Math.min(position, Constants.maxHoodPosition);
 
     if(Math.abs(getEncoderAngle() - position) > 15.0){
@@ -86,14 +95,6 @@ public class ShooterHood extends SubsystemBase {
     } else if (tempAngle > 180) {
       tempAngle -= 360;
     }
-
-    
-
-    // if (tempAngle < 0.0){
-    // tempAngle += 360.0;
-    // } else if (tempAngle > 360.0){
-    // tempAngle -= 360;
-    // }
     return hoodMedianFilter.calculate(tempAngle);
   }
 

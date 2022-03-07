@@ -1,8 +1,5 @@
 package frc.robot.paths;
 
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Transform2d;
-import edu.wpi.first.math.geometry.Translation2d;
 import frc.lib.drive.swerve.trajectory.SwerveTrajectoryGenerator;
 import frc.robot.subsystems.Drivetrain;
 

@@ -37,6 +37,7 @@ public class Constants {
   public static final int turretMaxSlowZone = 300;
   public static final int turretMinSlowZone = 60;
   public static final double turretJoystickDeadband = .75;
+  public static final double turretDefaultAngle = 180;
 
   // Vision Constants
 

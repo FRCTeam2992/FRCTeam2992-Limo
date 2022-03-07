@@ -7,16 +7,16 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ShooterHood;
 
-public class ChangeHoodPosition extends CommandBase {
+public class ChangeHoodTarget extends CommandBase {
   /** Creates a new ChangeHoodPosition. */
   private ShooterHood mShooterHood;
 
   private double mHoodPosition;
-  public ChangeHoodPosition(ShooterHood subsystem, double changePosition) {
+  public ChangeHoodTarget(ShooterHood subsystem, double positionChange) {
     // Use addRequirements() here to declare subsystem dependencies.
     mShooterHood = subsystem;
 
-    mHoodPosition = changePosition;
+    mHoodPosition = positionChange;
 
   }
 
@@ -27,10 +27,10 @@ public class ChangeHoodPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double newPosition = mShooterHood.hoodPosition; 
+    double newPosition = mShooterHood.getHoodTarget();
     newPosition += mHoodPosition;
 
-    mShooterHood.hoodPosition = newPosition;
+    mShooterHood.setHoodTarget(newPosition);
   }
 
   // Called once the command ends or is interrupted.

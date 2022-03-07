@@ -30,7 +30,6 @@ public class ShooterAtSpeed extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (Math.abs(mShooter.mainShooterSetSpeed - mShooter.getMainShooterRPM()) <= 100) && 
-    (Math.abs(mShooter.secondaryShooterSetSpeed - mShooter.getSecondaryShooterRPM()) <= 100);
+    return (mShooter.atShooterRPM());
   }
 }

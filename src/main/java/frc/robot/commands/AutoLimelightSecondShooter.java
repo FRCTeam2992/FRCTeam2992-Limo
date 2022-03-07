@@ -43,7 +43,7 @@ public class AutoLimelightSecondShooter extends CommandBase {
       double targetSpeed = mInterpolator.calcSecondShooterSpeed(currentDistance);
 
       SmartDashboard.putNumber("Second Target Speed", targetSpeed);
-      mShooter.secondaryShooterSetSpeed = targetSpeed;
+      mShooter.setSecondaryShooterTargetRPM(targetSpeed);
     }
   }
 

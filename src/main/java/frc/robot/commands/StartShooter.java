@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 
 public class StartShooter extends CommandBase {
@@ -17,10 +16,7 @@ public class StartShooter extends CommandBase {
   // Subsystem Instance
   private Shooter mShooter;
 
-  private double mMainShooterSpeed;
-  private double mSecondaryShooterSpeed;
-
-  public StartShooter(Shooter subsystem) {
+    public StartShooter(Shooter subsystem) {
     // Subsystem Instance
     mShooter = subsystem;
 
@@ -37,23 +33,15 @@ public class StartShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mMainShooterSpeed = mShooter.mainShooterSetSpeed;
-    mSecondaryShooterSpeed = mShooter.secondaryShooterSetSpeed;
-    mMainShooterSpeed = (mMainShooterSpeed / 600.0) * (Constants.shooterEncoderPulses * 0.75);
-    mSecondaryShooterSpeed = (mSecondaryShooterSpeed / 600.0) * (Constants.shooterEncoderPulses);
-    // SmartDashboard.putNumber("Commanded Main Speed", mMainShooterSpeed);
-    // SmartDashboard.putNumber("Commanded Secondary Speed",
-    // mSecondaryShooterSpeed);
-
-    mShooter.setMainShooterVelocity(mMainShooterSpeed);
-    mShooter.setSecondaryShooterVelocity(mSecondaryShooterSpeed);
+    mShooter.setMainShooterToTargetRPM();
+    mShooter.setSecondaryShooterToTargetRPM();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    mShooter.setMainShooterSpeed(0.0);
-    mShooter.setSecondaryShooterSpeed(0.0);
+    mShooter.setMainShooterPower(0.0);
+    mShooter.setSecondaryShooterPower(0.0);
   }
 
   // Returns true when the command should end.

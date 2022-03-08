@@ -25,6 +25,7 @@ public class ResetGyro extends CommandBase {
   public void initialize() {
     // Reset the Gyro
     mDriveTrain.navx.zeroYaw();
+    mDriveTrain.gyroOffset = 0.0;
 
     // Reset the Odometry
     mDriveTrain.resetOdometry();

@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class CargoFunnel extends SubsystemBase {
 
   private WPI_VictorSPX funnelMotor;
+  
+  
 
   public CargoFunnel() {
 
@@ -31,6 +33,7 @@ public class CargoFunnel extends SubsystemBase {
     funnelMotor.setStatusFramePeriod(21, 255);
 
     addChild("funnelMotor", funnelMotor);
+
   }
 
   @Override
@@ -41,4 +44,5 @@ public class CargoFunnel extends SubsystemBase {
   public void setFunnelSpeed(double speed) {
     funnelMotor.set(ControlMode.PercentOutput, speed);
   }
+  
 }

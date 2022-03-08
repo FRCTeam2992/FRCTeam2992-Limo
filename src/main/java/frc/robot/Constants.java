@@ -21,50 +21,54 @@ import edu.wpi.first.math.geometry.Translation2d;
 public class Constants {
 
   // Shooter Constants
-  public static final int defaultMainShooterSpeed = 1700;
-  public static final int defaultSecondaryShooterSpeed = 2300;
+  public static final double defaultMainShooterSpeed = 2700;
+  public static final double defaultSecondaryShooterSpeed = 3300;
   public static final int shooterEncoderPulses = 2048;
-
-  // Intake Constant
-  public static final double defaultInatkeSpeed = 0.5;
+  public static final double shooterSpeedTolerance = 100;
 
   // Turret Constants
-  public static final double turretP = 0.062;
-  public static final double turretI = 0.0;
-  public static final double turretD = 0.003;
-  public static final double turretTolerance = 0.5;
-  public static final int turretOffset = 2074;
+  public static final double turretP = 0.04;
+  public static final double turretI = 0.04;
+  public static final double turretD = 0.0015;
+  public static final double turretTolerance = 2.0;
+  public static final int turretEncoderOffset = -1640;
+  public static final double turretRobotOffset = 320;
   public static final int turretMinEnd = 20;
   public static final int turretMaxEnd = 340;
   public static final int turretMaxSlowZone = 300;
   public static final int turretMinSlowZone = 60;
-  public static final double turretJoystickDeadband = .15;
+  public static final double turretJoystickDeadband = .75;
+  public static final double turretDefaultAngle = 180;
 
   // Vision Constants
 
-  // the tooth to tooth of the hood
-  public static final double hoodAngleRatio = 34.000 / 536.000;
-  // the max and min of the hood angle not the encoder values
-  public static final double minHoodPosition = -160.0;
-  public static final double minHoodPZone = -125.0;
+  // the tooth to tooth of the hood 
+  public static final double hoodAngleRatio = 38.000 / 520.000;
+  public static final double hoodEncoderAngleRatio = 520.000 / 38.000;
+  // the max and min of the encoder values not the hood angles
+  public static final double minHoodPosition = -153.0;
+  public static final double minHoodPZone = -100.0;
 
-  public static final double maxHoodPosition = 165.0;
-  public static final double maxHoodPZone = 130.0;
+  public static final double maxHoodPosition = 153.0;
+  public static final double maxHoodPZone = 100.0;
 
-  public static final double hoodPValueBottom = 0.012;
-  public static final double hoodPValueTop = 0.01515;
-  public static final double hoodEncoderOffset = -(-100.7 + 170);
+  public static final double hoodPValueBottom = 0.0045;
+  public static final double hoodPValueTop = 0.0072;
+  public static final double hoodEncoderOffset = -28.9 + 180;
 
   public static final double cameraHeight = 44.5;
   public static final double goalHeight = 103.12;
   public static final double distanceTest = 120;
-  public static final double cameraAngle = 0;
+  public static final double cameraAngle = 35.8;
 
-  public static final double hoodP = 0;
-  public static final double hoodI = 0;
-  public static final double hoodD = 0;
+  public static final double hoodP = .007;
+  public static final double hoodI = 0.05; 
+  public static final double hoodD = 0.0002; 
+  public static final double hoodF = 0.02; 
 
-  public static final double hoodTolerance = 0;
+  public static final double hoodTolerance = 2;
+
+  public static final double defaultHoodPosition = 0;
 
   // Drive Variables
   public static final boolean isFieldCentric = true;
@@ -80,18 +84,18 @@ public class Constants {
   public static final double swerveLength = 0.654;
 
   // Max Swerve Speed (Velocity Control)
-  public static final double swerveMaxSpeed = 5; // (Meters per Second)
+  public static final double swerveMaxSpeed = 4; // (Meters per Second)
 
   // Swerve Wheels and Gear Ratio
   public static final double driveGearRatio = 6.75;// 6.75:1
-  public static final double driveWheelDiameter = 0.1016;
+  public static final double driveWheelDiameter = 0.098552;
 
   // Analog Encoder Offsets (Degrees) - Opposite of Raw Reading - Bevel Gear to
   // Right
-  public static final double frontLeftOffset = 147.2;
-  public static final double frontRightOffset = -144.8;
-  public static final double rearLeftOffset = 101.3;
-  public static final double rearRightOffset = -24.2;
+  public static final double frontLeftOffset = 147.57;
+  public static final double frontRightOffset = -144.23;
+  public static final double rearLeftOffset = 100.00;
+  public static final double rearRightOffset = -24.35;
 
   // Swerve Drive PID (Velocity Control)
   public static final double driveP = 0.05;
@@ -114,7 +118,7 @@ public class Constants {
   public static final Translation2d rearRightLocation = new Translation2d(-0.2955, -0.327);
 
   // Swerve X Axis Correction PID (Path Following)
-  public static final double xCorrectionP = 5.0;
+  public static final double xCorrectionP = 6.0;
   public static final double xCorrectionI = 0.0;
   public static final double xCorrectionD = 0.0;
 

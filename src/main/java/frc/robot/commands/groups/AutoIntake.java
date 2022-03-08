@@ -5,13 +5,12 @@
 package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.commands.DeployIntake;
-import frc.robot.commands.SpinBottomLiftSenor;
-import frc.robot.commands.SpinCargoFunnel;
-import frc.robot.commands.SpinIntake;
+import frc.robot.commands.SpinBottomLiftSensor;
+import frc.robot.commands.SpinCargoFunnelSensor;
+import frc.robot.commands.SpinTopLift;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.TopLift;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -19,14 +18,14 @@ import frc.robot.subsystems.Intake;
 public class AutoIntake extends ParallelCommandGroup {
 
   /** Creates a new AutoIntake. */
-  public AutoIntake(Intake mIntake, CargoFunnel mCargoFunnel, BottomLift mBottomLift) {
+  public AutoIntake(CargoFunnel mCargoFunnel, BottomLift mBottomLift, TopLift mTopLift) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new DeployIntake(mIntake, true),
-      new SpinIntake(mIntake, .75),
-      new SpinCargoFunnel(mCargoFunnel, .5),
-      new SpinBottomLiftSenor(mBottomLift, .5)
+      // TODO: new DeployIntake(idk what goes here);
+      new SpinCargoFunnelSensor(mCargoFunnel, mBottomLift, .7, .5),
+      new SpinBottomLiftSensor(mBottomLift, .5),
+      new SpinTopLift(mTopLift, -.1)
     );
   }
 }

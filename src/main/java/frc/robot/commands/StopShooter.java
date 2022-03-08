@@ -32,8 +32,8 @@ public class StopShooter extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mShooter.setMainShooterSpeed(0.0);
-    mShooter.setSecondaryShooterSpeed(0.0);
+    mShooter.setMainShooterPower(0.0);
+    mShooter.setSecondaryShooterPower(0.0);
   }
 
   // Called once the command ends or is interrupted.
@@ -45,6 +45,6 @@ public class StopShooter extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

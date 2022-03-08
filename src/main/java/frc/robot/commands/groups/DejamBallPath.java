@@ -6,7 +6,6 @@ package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import frc.robot.commands.DeployIntake;
 import frc.robot.commands.SpinBottomLift;
 import frc.robot.commands.SpinCargoFunnel;
 import frc.robot.commands.SpinIntake;
@@ -23,12 +22,12 @@ public class DejamBallPath extends SequentialCommandGroup {
   /** Creates a new DejamBallPath. */
   public DejamBallPath(Intake mIntake, CargoFunnel mCargoFunnel, BottomLift mBottomLift, TopLift mTopLift) {
     addCommands(
-      new DeployIntake(mIntake, true),
+      //new DeployIntake(mIntake, true),
       new ParallelCommandGroup(
         new SpinTopLift(mTopLift, -1),
         new SpinBottomLift(mBottomLift, -1),
-        new SpinCargoFunnel(mCargoFunnel, -1),
-        new SpinIntake(mIntake, -1)
+        new SpinCargoFunnel(mCargoFunnel, -.75),
+        new SpinIntake(mIntake, -.75)
       )
     );
   }

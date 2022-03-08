@@ -5,30 +5,31 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Intake;
 
-public class StopTurret extends CommandBase {
+public class SetIntakeCommanded extends CommandBase {
 
-  private Turret mTurret;
+  private Intake mIntake;
+  private boolean mCommanded;
+  private double mSpeed;
 
-  /** Creates a new StopTurret. */
-  public StopTurret(Turret subsystem) {
+  public SetIntakeCommanded(Intake subsystem, boolean commanded, double speed) {
+    mIntake = subsystem;
+    mCommanded = commanded;
+    mSpeed = speed;
 
-    mTurret = subsystem;
-
-    addRequirements(mTurret);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    mIntake.setIntakeCommanded(mCommanded);
+    mIntake.setIntakeSpeed(mSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mTurret.setTurretSpeed(0.0);
   }
 
   // Called once the command ends or is interrupted.

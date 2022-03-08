@@ -37,9 +37,8 @@ public class CargoBallInterpolator {
      * @param distance the distance value.
      * @return the desired value for at the distance.
      */
-    public int calcMainShooterSpeed(double distance) {
-        int tempMainSpeed = 0;
-
+    public double calcMainShooterSpeed(double distance) {
+        double tempMainSpeed = 0;
         if (dataPointList.size() == 1) {
             tempMainSpeed = dataPointList.get(0).getMainShooterSpeed();
         } else if (dataPointList.size() > 1) {
@@ -60,21 +59,21 @@ public class CargoBallInterpolator {
             } else if (upperDataPoint.getDistance() == -1.0) {
                 tempMainSpeed = lowerDataPoint.getMainShooterSpeed();
             } else {
-                int upperMainSpeed = upperDataPoint.getMainShooterSpeed();
-                int lowerMainSpeed = lowerDataPoint.getMainShooterSpeed();
+                double upperMainSpeed = upperDataPoint.getMainShooterSpeed();
+                double lowerMainSpeed = lowerDataPoint.getMainShooterSpeed();
 
                 tempMainSpeed = lerp(lowerMainSpeed, upperMainSpeed, (distance - lowerDataPoint.getDistance())
                         / (upperDataPoint.getDistance() - lowerDataPoint.getDistance()));
             }
         }
 
-        SmartDashboard.putNumber("Main Shooter Speed", tempMainSpeed);
+        // SmartDashboard.putNumber("Main Shooter Speed", tempMainSpeed);
 
         return tempMainSpeed;
     }
 
-    public int calcSecondShooterSpeed(double distance) {
-        int tempSecondSpeed = 0;
+    public double calcSecondShooterSpeed(double distance) {
+        double tempSecondSpeed = 0;
 
         if (dataPointList.size() == 1) {
             tempSecondSpeed = dataPointList.get(0).getSecondShooterSpeed();
@@ -96,15 +95,15 @@ public class CargoBallInterpolator {
             } else if (upperDataPoint.getDistance() == -1.0) {
                 tempSecondSpeed = lowerDataPoint.getSecondShooterSpeed();
             } else {
-                int upperSecondSpeed = upperDataPoint.getSecondShooterSpeed();
-                int lowerSecondSpeed = lowerDataPoint.getSecondShooterSpeed();
+                double upperSecondSpeed = upperDataPoint.getSecondShooterSpeed();
+                double lowerSecondSpeed = lowerDataPoint.getSecondShooterSpeed();
 
                 tempSecondSpeed = lerp(lowerSecondSpeed, upperSecondSpeed, (distance - lowerDataPoint.getDistance())
                         / (upperDataPoint.getDistance() - lowerDataPoint.getDistance()));
             }
         }
 
-        SmartDashboard.putNumber("Second Shooter Speed", tempSecondSpeed);
+        // SmartDashboard.putNumber("Second Shooter Speed", tempSecondSpeed);
 
         return tempSecondSpeed;
     }
@@ -140,7 +139,7 @@ public class CargoBallInterpolator {
             }
         }
 
-        SmartDashboard.putNumber("Hood Position", tempHoodPosition);
+        // SmartDashboard.putNumber("Hood Position", tempHoodPosition);
 
         return tempHoodPosition;
     }
@@ -149,7 +148,7 @@ public class CargoBallInterpolator {
         return start + (count * (end - start));
     }
 
-    private int lerp(int start, int end, double count) {
-        return (int) Math.round(start + (count * (end - start)));
-    }
+    // private int lerp(int start, int end, double count) {
+    //     return (int) Math.round(start + (count * (end - start)));
+    // }
 }

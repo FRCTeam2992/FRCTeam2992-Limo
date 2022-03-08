@@ -8,9 +8,9 @@ public class TriggerButton extends Trigger {
     // Variables
     private XboxController controller;
     private double threshhold;
-    private String hand;
+    private char hand;
 
-    public TriggerButton(XboxController controller, double threshhold, String hand) {
+    public TriggerButton(XboxController controller, double threshhold, char hand) {
         // Variables
         this.controller = controller;
         this.threshhold = threshhold;
@@ -19,10 +19,12 @@ public class TriggerButton extends Trigger {
 
     @Override
     public boolean get() {
-        if (hand == "left") {
+        if (hand == 'l') {
             return Math.abs(controller.getLeftTriggerAxis()) >= threshhold;
-        } else {
+        } else if(hand == 'r'){
             return Math.abs(controller.getRightTriggerAxis()) >= threshhold;
+        } else {
+            return false;
         }
     }
 

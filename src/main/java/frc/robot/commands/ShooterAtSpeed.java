@@ -5,40 +5,31 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Shooter;
 
-public class StopTurret extends CommandBase {
-
-  private Turret mTurret;
-
-  /** Creates a new StopTurret. */
-  public StopTurret(Turret subsystem) {
-
-    mTurret = subsystem;
-
-    addRequirements(mTurret);
+public class ShooterAtSpeed extends CommandBase {
+  /** Creates a new ShooterAtSpeed. */
+  private Shooter mShooter;
+  public ShooterAtSpeed(Shooter subsystem) {
+    mShooter = subsystem;
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    mTurret.setTurretSpeed(0.0);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return (mShooter.atShooterRPM());
   }
 }

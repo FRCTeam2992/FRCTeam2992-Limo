@@ -10,7 +10,7 @@ public class AutoTurretAim extends CommandBase {
 
     private Turret mTurret;
 
-    private double turretSetAngle = Turret.getTurretAngle();
+    private double turretSetAngle = Turret.getTurretAngleRaw();
 
     public AutoTurretAim(Turret subsystem) {
         addRequirements(subsystem);
@@ -22,6 +22,7 @@ public class AutoTurretAim extends CommandBase {
     @Override
     public void initialize() {
         mTurret.limeLightCamera.resetMedianFilters();
+        mTurret.setAutoAiming(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -48,7 +49,7 @@ public class AutoTurretAim extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         mTurret.stopTurret();
-
+        mTurret.setAutoAiming(false);
         mTurret.limeLightCamera.setLedMode(LedMode.Off);
     }
 

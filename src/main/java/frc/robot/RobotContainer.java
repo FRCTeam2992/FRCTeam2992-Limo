@@ -94,15 +94,15 @@ public class RobotContainer {
     mShooter = new Shooter();
     mShooter.setDefaultCommand(new DefaultShooter(mShooter));
     
-    mCargoFunnel = new CargoFunnel();
-    mCargoFunnel.setDefaultCommand(new StopCargoFunnel(mCargoFunnel));
-    
     mTopLift = new TopLift();
-    mTopLift.setDefaultCommand(new StopTopLift(mTopLift));
+    mTopLift.setDefaultCommand(new DefaultTopLift(mTopLift));
     
     mBottomLift = new BottomLift();
     mBottomLift.setDefaultCommand(new StopBottomLift(mBottomLift));
 
+    mCargoFunnel = new CargoFunnel(mBottomLift);
+    mCargoFunnel.setDefaultCommand(new StopCargoFunnel(mCargoFunnel));
+    
     mIntake = new Intake();
     mIntake.setDefaultCommand(new DefaultIntake(mIntake));
     

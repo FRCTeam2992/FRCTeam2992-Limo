@@ -5,37 +5,34 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.TopLift;
 
-public class DefaultIntake extends CommandBase {
-  /** Creates a new StopIntake. */
-  private Intake mIntake;
-  
-  public DefaultIntake(Intake intake) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    mIntake = intake;
-    addRequirements(mIntake);
+public class SetTopLiftCommanded extends CommandBase {
+
+  private TopLift mTopLift;
+  private boolean mCommanded;
+  private double mSpeed;
+
+  public SetTopLiftCommanded(TopLift subsystem, boolean commanded, double speed) {
+    mTopLift = subsystem;
+    mCommanded = commanded;
+    mSpeed = speed;
+
   }
 
   // Called when the command is initially scheduled.
   @Override
-
   public void initialize() {
-   
+    mTopLift.setCommanded(mCommanded);
+    mTopLift.setCommandedSpeed(mSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (mIntake.getIntakeCommanded()) {
-      // Intake was last commanded on so spin the Intake
-      mIntake.setIntakeSpeed(mIntake.getSpeedCommanded());
-    } else {
-      mIntake.setIntakeSpeed(0.0);
-    }
   }
 
-  // Called once the command ends or is interrupted
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
   }
@@ -43,6 +40,6 @@ public class DefaultIntake extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

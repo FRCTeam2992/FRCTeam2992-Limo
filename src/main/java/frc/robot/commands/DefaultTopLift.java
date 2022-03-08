@@ -5,34 +5,43 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.TopLift;
 
-public class DriveTrainStopped extends CommandBase {
-  /** Creates a new DriveTrainAtSpeed. */
-  private Drivetrain mDrivetrain;
+public class DefaultTopLift extends CommandBase {
+  /** Creates a new Default Top Lift. */
+  private TopLift mTopLift;
 
-  public DriveTrainStopped(Drivetrain drivetrain) {
-    mDrivetrain = drivetrain;
+  public DefaultTopLift(TopLift subsystem) {
+    mTopLift = subsystem;
+    
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(mTopLift);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    if(mTopLift.isCommanded()) {
+      mTopLift.setTopLiftSpeed(mTopLift.getCommandedSpeed());
+    } else {
+      mTopLift.setTopLiftSpeed(0.0);
+    }
+
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (((mDrivetrain.getDistanceTraveled() / Constants.robotPeriod) < Constants.maxSpeedToX) &&
-        ((mDrivetrain.getAngleTurned() / Constants.robotPeriod) < Constants.maxTurnToX));
-  } 
+    return false;
+  }
 }

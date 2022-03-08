@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.DriveTrainStopped;
 import frc.robot.commands.HoodAtAngle;
 import frc.robot.commands.SetShooterCommanded;
-import frc.robot.commands.SetSwerveAngleSafe;
 import frc.robot.commands.ShooterAtSpeed;
 import frc.robot.commands.SpinBottomLift;
 import frc.robot.commands.SpinCargoFunnel;

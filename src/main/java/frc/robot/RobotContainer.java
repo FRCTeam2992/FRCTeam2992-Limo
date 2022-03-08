@@ -234,7 +234,6 @@ public class RobotContainer {
       autoIntakeButton.whenPressed(new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
 
       JoystickButton stopAutoIntakeButton = new JoystickButton(controller1, XboxController.Button.kB.value);
-      stopAutoIntakeButton.whenPressed(new SetIntakeCommanded(mIntake, false, 0));
       stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
 
 

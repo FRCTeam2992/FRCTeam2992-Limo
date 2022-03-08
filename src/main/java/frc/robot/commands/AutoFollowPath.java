@@ -34,9 +34,13 @@ public class AutoFollowPath extends CommandBase {
   // Timer
   private Timer elapsedTimer;
 
-  public AutoFollowPath(Drivetrain subsystem, SwerveTrajectory swerveTrajectory) {
+  //Gyro Offset
+  private double mGyroOffset;
+
+  public AutoFollowPath(Drivetrain subsystem, SwerveTrajectory swerveTrajectory, double gyroOffset) {
     // Subsystem Instance
     mDriveTrain = subsystem;
+    mGyroOffset = gyroOffset;
 
     // Set the Subsystem Requirement
     addRequirements(mDriveTrain);
@@ -68,11 +72,12 @@ public class AutoFollowPath extends CommandBase {
   @Override
   public void initialize() {
     // Get the Trajectory Start Pose
+    mDriveTrain.gyroOffset = mGyroOffset;
     Pose2d trajectoryStartPose = mTrajectory.getInitialPose();
 
     // Set the Odometry Position to the Trajectory Start Position
     mDriveTrain.setOdometryPosition(new Pose2d(trajectoryStartPose.getX(), trajectoryStartPose.getY(),
-        Rotation2d.fromDegrees(-mDriveTrain.navx.getYaw())));
+        Rotation2d.fromDegrees(-mDriveTrain.getGyroYaw())));
 
     // Reset and Start the Elapsed Timer
     elapsedTimer.reset();

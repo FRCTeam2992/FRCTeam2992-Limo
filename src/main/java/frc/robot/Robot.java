@@ -19,7 +19,6 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -32,7 +31,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
 
-    private Command m_autonomousCommand;
+    private Command autoCommand;
 
     public static RobotContainer mRobotContainer;
 
@@ -47,6 +46,7 @@ public class Robot extends TimedRobot {
         // autonomous chooser on the dashboard.
         mRobotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
+        mRobotContainer.mDrivetrain.navx.zeroYaw();
     }
 
     /**
@@ -88,22 +88,32 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void autonomousInit() {
-        m_autonomousCommand = mRobotContainer.getAutonomousCommand();
+        // m_autonomousCommand = mRobotContainer.getAutonomousCommand();
 
-        // schedule the autonomous command (example)
-        if (m_autonomousCommand != null) {
-            m_autonomousCommand.schedule();
-        }
+        // // schedule the autonomous command (example)
+        
 
         // Set the Drive Train to Brake
-    mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
-    mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
+        mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
+        mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
 
-    // Set the Drive Motors Current Limit
-    mRobotContainer.mDrivetrain.setDriveCurrentLimit(60.0, 60.0);
+        // Set the Drive Motors Current Limit
+        mRobotContainer.mDrivetrain.setDriveCurrentLimit(60.0, 60.0);
 
-    // Set the Drive Motors Ramp Rate
-    mRobotContainer.mDrivetrain.setDriveRampRate(0.0);
+        // Set the Drive Motors Ramp Rate
+        mRobotContainer.mDrivetrain.setDriveRampRate(0.0);
+
+        mRobotContainer.mDrivetrain.resetOdometry();
+        mRobotContainer.mDrivetrain.navx.zeroYaw();
+
+
+        // Get the Autonomous Command
+        autoCommand = mRobotContainer.getAutoCommand();
+
+        // Run the Auto Command
+        if (autoCommand != null) {
+            autoCommand.schedule();
+        }
     }
 
     /**
@@ -119,15 +129,19 @@ public class Robot extends TimedRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (m_autonomousCommand != null) {
-            m_autonomousCommand.cancel();
-        }
+        
+        if (autoCommand != null) {
+            autoCommand.cancel();
+          }
+
 
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
 
         mRobotContainer.mDrivetrain.setDriveCurrentLimit(40.0, 40.0);
         mRobotContainer.mDrivetrain.setDriveRampRate(0.25);
+
+        mRobotContainer.mDrivetrain.resetOdometry();
     }
 
     /**

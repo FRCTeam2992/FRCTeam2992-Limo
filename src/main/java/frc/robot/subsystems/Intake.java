@@ -12,17 +12,11 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.Constants;
-import frc.robot.commands.*;
-
-import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
-import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 /**
@@ -30,14 +24,15 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
  */
 public class Intake extends SubsystemBase {
 
-    public double intakeSetSpeed = Constants.defaultInatkeSpeed;
 
     private WPI_TalonFX intakeMotor;
-    private Solenoid intakeSolenoid;
-
+   
     private boolean intakeDeployed = false;
 
     private int dashboardCounter = 0;
+
+    private boolean intakeCommanded = false;                 // Did driver request intake running
+    private double speedCommanded = 0;                       // Requested speed
 
     public Intake() {
 
@@ -45,10 +40,6 @@ public class Intake extends SubsystemBase {
         intakeMotor.setNeutralMode(NeutralMode.Brake);
         intakeMotor.setInverted(false);
         addChild("Intake Motor", intakeMotor);
-
-        intakeSolenoid = new Solenoid(PneumaticsModuleType.REVPH, 0);
-        addChild("Intake Solenoid", intakeSolenoid);
-
     }
 
     @Override
@@ -69,16 +60,31 @@ public class Intake extends SubsystemBase {
 
     // Put methods for controlling this subsystem
     public void deployIntake(boolean toggle) {
-        intakeSolenoid.set(toggle);
+        // TODO:  Figure out code to deploy/retract intake
         intakeDeployed = toggle;
     }
 
-    public boolean getIntakeSloenoid() {
-        return intakeSolenoid.get();
+    public boolean getIntakePosition() {
+        return intakeDeployed;
     }
 
     public void setIntakeSpeed(double speed) {
         intakeMotor.set(ControlMode.PercentOutput, speed);
     }
 
+    public void setIntakeCommanded (boolean commanded) {
+        intakeCommanded = commanded;
+    }
+
+    public boolean getIntakeCommanded () {
+        return intakeCommanded;
+    }
+
+    public double getSpeedCommanded() {
+        return speedCommanded;
+    }
+
+    public void setSpeedCommanded(double speedCommanded) {
+        this.speedCommanded = speedCommanded;
+    }
 }

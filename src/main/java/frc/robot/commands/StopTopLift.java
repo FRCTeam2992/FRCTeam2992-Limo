@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.TopLift;
 
 public class StopTopLift extends CommandBase {

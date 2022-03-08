@@ -8,49 +8,43 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterHood;
 
-public class ChangeMainShooterSpeed extends CommandBase {
+public class StartHood extends CommandBase {
 
+  // cheating for a change
   // Subsystem Instance
-  private Shooter mShooter;
+  private ShooterHood mShooterHood;
 
-  // Saved Variables
-  private int mChangeSpeed;
-
-  public ChangeMainShooterSpeed(Shooter subsystem, int changeSpeed) {
+  public StartHood(ShooterHood subsystem) {
     // Subsystem Instance
-    mShooter = subsystem;
+    mShooterHood = subsystem;
 
-    // Saved Variables
-    mChangeSpeed = changeSpeed;
+    // Set the Subsystem Requirement
+    addRequirements(mShooterHood);
   }
 
   // Called when the command is initially scheduled.
   @Override
+  
   public void initialize() {
-
-  }
+}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double changeSpeed = mShooter.getMainShooterTargetRPM() + mChangeSpeed;
-
-    changeSpeed = Math.max(0, changeSpeed);
-
-    mShooter.setMainShooterTargetRPM(changeSpeed);
+   mShooterHood.setToTarget();    
   }
 
-  // Called once the command ends or is interrupted.
   @Override
+  // Called once the command ends or is interrupted.
   public void end(boolean interrupted) {
-
+    mShooterHood.setHoodSpeed(0.0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

@@ -4,11 +4,11 @@ public class CargoBallDataPoint implements Comparable<CargoBallDataPoint> {
 
     // Variables
     private double distance;
-    private int mainShooterSpeed;
-    private int secondShooterSpeed;
+    private double mainShooterSpeed;
+    private double secondShooterSpeed;
     private double hoodPosition;
 
-    public CargoBallDataPoint(double distance, int mainShooterSpeed, int secondSooterSpeed, double hoodPosition) {
+    public CargoBallDataPoint(double distance, double mainShooterSpeed, double secondShooterSpeed, double hoodPosition) {
         // Save the Variables
         this.distance = distance;
         this.mainShooterSpeed = mainShooterSpeed;
@@ -17,7 +17,7 @@ public class CargoBallDataPoint implements Comparable<CargoBallDataPoint> {
     }
 
     public CargoBallDataPoint() {
-        this(0.0, 0, 0, 0.0);
+        this(0.0, 0.0, 0.0, 0.0);
     }
 
     public void setDistance(double distance) {
@@ -32,7 +32,7 @@ public class CargoBallDataPoint implements Comparable<CargoBallDataPoint> {
         this.mainShooterSpeed = speed;
     }
 
-    public int getMainShooterSpeed() {
+    public double getMainShooterSpeed() {
         return mainShooterSpeed;
     }
 
@@ -40,7 +40,7 @@ public class CargoBallDataPoint implements Comparable<CargoBallDataPoint> {
         this.secondShooterSpeed = speed;
     }
 
-    public int getSecondShooterSpeed() {
+    public double getSecondShooterSpeed() {
         return secondShooterSpeed;
     }
 

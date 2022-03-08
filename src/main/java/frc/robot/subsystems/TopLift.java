@@ -8,7 +8,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class TopLift extends SubsystemBase {
@@ -17,8 +16,8 @@ public class TopLift extends SubsystemBase {
 
   public TopLift() {
     topLiftMotor = new WPI_VictorSPX(24);
-    topLiftMotor.setInverted(false);
-    topLiftMotor.setNeutralMode(NeutralMode.Coast);
+    topLiftMotor.setInverted(true);
+    topLiftMotor.setNeutralMode(NeutralMode.Brake);
 
     addChild("topLiftMotor", topLiftMotor);
 

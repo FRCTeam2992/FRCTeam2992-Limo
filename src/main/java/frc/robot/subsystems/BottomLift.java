@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BottomLift extends SubsystemBase {
@@ -21,14 +22,21 @@ public class BottomLift extends SubsystemBase {
   public BottomLift() {
     bottomLiftMotor = new WPI_VictorSPX(23);
     bottomLiftMotor.setInverted(false);
-    bottomLiftMotor.setNeutralMode(NeutralMode.Coast);
+    bottomLiftMotor.setNeutralMode(NeutralMode.Brake);
 
     addChild("bottomLiftMotor", bottomLiftMotor);
+
+    liftSensor1 = new DigitalInput(0);
+    liftSensor2 = new DigitalInput(1);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    // SmartDashboard.putBoolean("sensor 1", getSensor1State());
+    // SmartDashboard.putBoolean("sensor 2", getSensor2State());
+
+
   }
 
   public void setBottomLiftSpeed(double speed) {

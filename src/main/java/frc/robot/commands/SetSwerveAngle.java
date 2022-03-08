@@ -34,9 +34,13 @@ public class SetSwerveAngle extends CommandBase {
   @Override
   public void execute() {
     mDrivetrain.frontLeftModule.setTurnAngle(mFLAngle);
+    mDrivetrain.frontLeftModule.setDriveSpeed(0.0);
     mDrivetrain.frontRightModule.setTurnAngle(mFRAngle);
+    mDrivetrain.frontRightModule.setDriveSpeed(0.0);
     mDrivetrain.rearLeftModule.setTurnAngle(mRLAngle);
+    mDrivetrain.rearLeftModule.setDriveSpeed(0.0);
     mDrivetrain.rearRightModule.setTurnAngle(mRRAngle);
+    mDrivetrain.rearRightModule.setDriveSpeed(0.0);
   }
 
   // Called once the command ends or is interrupted.

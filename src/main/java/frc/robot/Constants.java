@@ -20,6 +20,9 @@ import edu.wpi.first.math.geometry.Translation2d;
 
 public class Constants {
 
+  // Robot Period
+  public static final double robotPeriod = 0.020;     // 20ms cycles
+
   // Shooter Constants
   public static final double defaultMainShooterSpeed = 2700;
   public static final double defaultSecondaryShooterSpeed = 3300;
@@ -140,4 +143,8 @@ public class Constants {
   public static final double maxThetaVelocity = 6.28; // (Radians per Second)
   public static final double maxThetaAcceleration = 6.28; // (Radians per Second Squared)
 
+
+  // Max speeds where its safe to X wheels
+  public static final double maxSpeedToX = 0.1; // m/sec
+  public static final double maxTurnToX = 5.0;  // degrees/sec
 }

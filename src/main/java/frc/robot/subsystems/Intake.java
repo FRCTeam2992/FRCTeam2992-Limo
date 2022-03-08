@@ -32,6 +32,7 @@ public class Intake extends SubsystemBase {
     private int dashboardCounter = 0;
 
     private boolean intakeCommanded = false;                 // Did driver request intake running
+    private double speedCommanded = 0;                       // Requested speed
 
     public Intake() {
 
@@ -79,4 +80,11 @@ public class Intake extends SubsystemBase {
         return intakeCommanded;
     }
 
+    public double getSpeedCommanded() {
+        return speedCommanded;
+    }
+
+    public void setSpeedCommanded(double speedCommanded) {
+        this.speedCommanded = speedCommanded;
+    }
 }

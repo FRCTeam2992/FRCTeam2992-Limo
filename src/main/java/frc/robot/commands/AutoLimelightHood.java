@@ -29,7 +29,7 @@ public class AutoLimelightHood extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-  
+    mShooterHood.setAiming(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -42,7 +42,7 @@ public class AutoLimelightHood extends CommandBase {
 
       double targetAngle = mInterpolator.calcHoodPosition(currentDistance);
 
-      SmartDashboard.putNumber("Hood Target Angle", targetAngle);
+      // SmartDashboard.putNumber("Hood Target Angle", targetAngle);
       mShooterHood.setHoodTarget(targetAngle);
     } 
     
@@ -51,6 +51,7 @@ public class AutoLimelightHood extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    mShooterHood.setAiming(false);
   }
 
   // Returns true when the command should end.

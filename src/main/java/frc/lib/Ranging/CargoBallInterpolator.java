@@ -67,7 +67,7 @@ public class CargoBallInterpolator {
             }
         }
 
-        SmartDashboard.putNumber("Main Shooter Speed", tempMainSpeed);
+        // SmartDashboard.putNumber("Main Shooter Speed", tempMainSpeed);
 
         return tempMainSpeed;
     }
@@ -103,7 +103,7 @@ public class CargoBallInterpolator {
             }
         }
 
-        SmartDashboard.putNumber("Second Shooter Speed", tempSecondSpeed);
+        // SmartDashboard.putNumber("Second Shooter Speed", tempSecondSpeed);
 
         return tempSecondSpeed;
     }
@@ -139,7 +139,7 @@ public class CargoBallInterpolator {
             }
         }
 
-        SmartDashboard.putNumber("Hood Position", tempHoodPosition);
+        // SmartDashboard.putNumber("Hood Position", tempHoodPosition);
 
         return tempHoodPosition;
     }

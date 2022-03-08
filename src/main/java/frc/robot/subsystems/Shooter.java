@@ -81,11 +81,10 @@ public class Shooter extends SubsystemBase {
       SmartDashboard.putNumber("Secondary Shooter Set Speed", secondaryShooterSetRPM);
       SmartDashboard.putNumber("Secondary Shooter Current RPM", getSecondaryShooterRPM());
 
-      if (getMainShooterRPM() > 500) {
-        SmartDashboard.putBoolean("Shooter State", true);
-      } else {
-        SmartDashboard.putBoolean("Shooter State", false);
-      }
+      SmartDashboard.putBoolean("Main Shooter At Speed", atMainShooterRPM());
+      SmartDashboard.putBoolean("Secondary Shooter At Speed", atSecondaryShooterRPM());
+      SmartDashboard.putBoolean("Shooters at Speed", atShooterRPM());
+
       dashboardCounter = 0;
     }
   }

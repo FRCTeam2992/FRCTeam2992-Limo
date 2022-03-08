@@ -33,7 +33,7 @@ public class AutoShoot extends SequentialCommandGroup {
   addCommands(
     new ParallelCommandGroup(                       // Preshoot checks must be completed first
       new SetShooterCommanded(mShooter, true),      // Make sure shooter is running
-      new ShooterAtSpeed(mShooter).withTimeout(0.75),
+      new ShooterAtSpeed(mShooter).withTimeout(0.5),
       new HoodAtAngle(mHood).withTimeout(0.5),
       new TurretOnTarget(mTurret).withTimeout(0.5)
       ),      

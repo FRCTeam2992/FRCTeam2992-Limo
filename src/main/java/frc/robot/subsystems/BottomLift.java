@@ -33,8 +33,8 @@ public class BottomLift extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-SmartDashboard.putBoolean("sensor 1", getSensor1State());
-SmartDashboard.putBoolean("sensor 2", getSensor2State());
+    // SmartDashboard.putBoolean("sensor 1", getSensor1State());
+    // SmartDashboard.putBoolean("sensor 2", getSensor2State());
 
 
   }

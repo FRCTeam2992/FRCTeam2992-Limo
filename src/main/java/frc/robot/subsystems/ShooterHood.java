@@ -23,10 +23,13 @@ public class ShooterHood extends SubsystemBase {
   private CANCoder hoodEncoder;
 
   private double hoodPosition = Constants.defaultHoodPosition;
+  private boolean isAiming = false;       // Are we doing auto aiming right now
 
   public PIDController hoodPID;
 
   public MedianFilter hoodMedianFilter;
+
+  int dashboardCounter = 0;
 
   public ShooterHood() {
     hoodMotor = new WPI_TalonSRX(33);
@@ -54,7 +57,13 @@ public class ShooterHood extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    SmartDashboard.putNumber("Hood Encoder Angle", getEncoderAngle());
+    if (++dashboardCounter >= 5) {
+      SmartDashboard.putNumber("Hood Encoder Angle", getEncoderAngle());
+      SmartDashboard.putNumber("Hood Target", hoodPosition);
+      SmartDashboard.putBoolean("Hood Aiming", isAiming());
+      SmartDashboard.putBoolean("Hood On Target", atTarget());
+      dashboardCounter = 0;
+    }
   }
 
   public void setHoodSpeed(double speed) {
@@ -105,6 +114,17 @@ public class ShooterHood extends SubsystemBase {
   }
 
   public boolean atTarget() {
-    return (Math.abs(getHoodAngle() - hoodPosition) < Constants.hoodTolerance);
+    return (Math.abs(getEncoderAngle() - hoodPosition) < Constants.hoodTolerance);
   }
+
+  public boolean isAiming() {
+    return isAiming;
+  }
+
+  public void setAiming(boolean isAiming) {
+    this.isAiming = isAiming;
+  }
+
+  
+
 }

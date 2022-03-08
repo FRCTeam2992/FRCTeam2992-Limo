@@ -27,8 +27,11 @@ public class Turret extends SubsystemBase {
     public final LimeLight limeLightCamera;
 
     private double turretTargetAngle = Constants.turretDefaultAngle;              // Angle the turret was last targeted to turn to
+    private boolean autoAiming = false;
 
     public Drivetrain mDrivetrain;
+
+    private int dashboardCounter = 0;
 
     public Turret(Drivetrain drivetrain) {
         // Turret Motors
@@ -55,27 +58,25 @@ public class Turret extends SubsystemBase {
     public void periodic() {
         // Put code here to be run every loop
 
+        if (++dashboardCounter >= 5) {
+
         // Update Dashboard
-        SmartDashboard.putNumber("Turret Encoder", getTurretEncoder());
+        // SmartDashboard.putNumber("Turret Encoder", getTurretEncoder());
         SmartDashboard.putNumber("Turret Angle", angleOverlap(getTurretAngle()));
-        SmartDashboard.putNumber("Camera Angle", limeLightCamera.getCameraAngle(Constants.distanceTest,
-                Constants.cameraHeight, Constants.goalHeight));
-        SmartDashboard.putNumber("Y-Offset", limeLightCamera.getTargetYOffset());
+        SmartDashboard.putNumber("Turret Target", turretTargetAngle);
+        // SmartDashboard.putNumber("Camera Angle", limeLightCamera.getCameraAngle(Constants.distanceTest,
+        //         Constants.cameraHeight, Constants.goalHeight));
+        // SmartDashboard.putNumber("Y-Offset", limeLightCamera.getTargetYOffset());
         SmartDashboard.putNumber("Distance", limeLightCamera.getDistanceToTarget(Constants.cameraAngle, Constants.cameraHeight, Constants.goalHeight));
         SmartDashboard.putNumber("x-Offset", limeLightCamera.getTargetXOffset());
 
+        SmartDashboard.putBoolean("LL Has Target", limeLightCamera.hasTarget());
+        SmartDashboard.putBoolean("Turret OnTarget", onTarget());
+        SmartDashboard.putBoolean("Turret AutoAim", isAutoAiming());
+        SmartDashboard.putBoolean("Turret Ready", readyToShoot());
 
-
-        // double x = -Robot.m_robotContainer.controller0.getLeftX();
-        // double y = -Robot.m_robotContainer.controller0.getLeftY();
-        // double xyAngle = (Math.toDegrees(Math.atan2(y, x)) - 90);
-        // SmartDashboard.putNumber("Gyro Yaw", getGyroYaw());
-        // SmartDashboard.putNumber("Joystick X",
-        // -Robot.m_robotContainer.controller0.getLeftX());
-        // SmartDashboard.putNumber("Joystick Y",
-        // -Robot.m_robotContainer.controller0.getLeftY());
-        // SmartDashboard.putNumber("Joystick Angle", (angleOverlap(xyAngle)));
-
+        dashboardCounter = 0;
+        }
     }
 
     // Put methods for controlling this subsystem
@@ -105,12 +106,13 @@ public class Turret extends SubsystemBase {
     }
 
     public void goToAngle(double angle) {
-        SmartDashboard.putNumber("TurretToAngle Angle", angle);
+        turretTargetAngle = angle;          // Save the angle that was last targeted
+
+        // SmartDashboard.putNumber("TurretToAngle Angle", angle);
         angle = angleOverlap(angle + Constants.turretRobotOffset);
         angle = Math.min(angle, Constants.turretMaxEnd);
         angle = Math.max(angle, Constants.turretMinEnd);
         
-        turretTargetAngle = angle;          // Save the angle that was last targeted
         
         if (Math.abs(angle - getTurretAngleRaw()) > Constants.turretTolerance) {
             turretRotate.setSetpoint(angle);
@@ -123,7 +125,7 @@ public class Turret extends SubsystemBase {
         double power = turretRotate.calculate(getTurretAngleRaw());
         power = MathUtil.clamp(power, -1, 1);
         
-        SmartDashboard.putNumber("TurretToAngle Speed", power);
+        // SmartDashboard.putNumber("TurretToAngle Speed", power);
         
         setTurretSpeed(power);
     }
@@ -166,4 +168,18 @@ public class Turret extends SubsystemBase {
     public boolean onTarget(){
         return (Math.abs(turretTargetAngle - getTurretAngle()) < Constants.turretTolerance);
     }
+
+    public boolean isAutoAiming() {
+        return autoAiming;
+    }
+
+    public void setAutoAiming(boolean autoAiming) {
+        this.autoAiming = autoAiming;
+    }
+
+    public boolean readyToShoot() {
+        return (onTarget() || !isAutoAiming());
+    } 
+
+
 }

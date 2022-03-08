@@ -30,9 +30,9 @@ public class DefaultIntake extends CommandBase {
   public void execute() {
     if (mIntake.getIntakeCommanded()) {
       // Intake was last commanded on so spin the Intake
-      CommandScheduler.getInstance().schedule(new SpinIntake(mIntake, 0.5));
+      mIntake.setIntakeSpeed(mIntake.getSpeedCommanded());
     } else {
-      CommandScheduler.getInstance().schedule(new StopIntake(mIntake));
+      mIntake.setIntakeSpeed(0.0);
     }
   }
 

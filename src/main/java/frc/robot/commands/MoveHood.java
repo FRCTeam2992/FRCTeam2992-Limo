@@ -48,10 +48,10 @@ public class MoveHood extends CommandBase {
 
     mShooterHood.setHoodSpeed(tempHoodSpeed);
 
-    SmartDashboard.putBoolean("In Max P-Zone", inMaxPZone());
-    SmartDashboard.putBoolean("In Min P-Zone", inMinPZone());
-    SmartDashboard.putBoolean("In Dead-Zone", inDeadZone());
-    SmartDashboard.putNumber("Temp Hood Speed", tempHoodSpeed);
+    // SmartDashboard.putBoolean("In Max P-Zone", inMaxPZone());
+    // SmartDashboard.putBoolean("In Min P-Zone", inMinPZone());
+    // SmartDashboard.putBoolean("In Dead-Zone", inDeadZone());
+    // SmartDashboard.putNumber("Temp Hood Speed", tempHoodSpeed);
   }
 
   // Called once the command ends or is interrupted.

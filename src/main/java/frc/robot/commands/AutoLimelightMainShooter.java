@@ -42,7 +42,7 @@ public class AutoLimelightMainShooter extends CommandBase {
 
       double targetSpeed = mInterpolator.calcMainShooterSpeed(currentDistance);
 
-      SmartDashboard.putNumber("Main Target Speed", targetSpeed);
+      // SmartDashboard.putNumber("Main Target Speed", targetSpeed);
       mShooter.setMainShooterTargetRPM(targetSpeed);
     } 
   }

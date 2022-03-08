@@ -30,9 +30,13 @@ public class DefaultShooter extends CommandBase {
   public void execute() {
     if (mShooter.isShooterCommanded()) {
       // Shooterwas last commanded on so spin it
-      CommandScheduler.getInstance().schedule(new StartShooter(mShooter));
+      // CommandScheduler.getInstance().schedule(new StartShooter(mShooter));
+      mShooter.setMainShooterToTargetRPM();
+      mShooter.setSecondaryShooterToTargetRPM();
     } else {
-      CommandScheduler.getInstance().schedule(new StopShooter(mShooter));
+      //CommandScheduler.getInstance().schedule(new StopShooter(mShooter));
+      mShooter.setMainShooterPower(0.0);
+      mShooter.setSecondaryShooterPower(0.0);
     }
   }
 

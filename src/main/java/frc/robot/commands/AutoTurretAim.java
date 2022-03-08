@@ -22,6 +22,7 @@ public class AutoTurretAim extends CommandBase {
     @Override
     public void initialize() {
         mTurret.limeLightCamera.resetMedianFilters();
+        mTurret.setAutoAiming(true);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -48,7 +49,7 @@ public class AutoTurretAim extends CommandBase {
     @Override
     public void end(boolean interrupted) {
         mTurret.stopTurret();
-
+        mTurret.setAutoAiming(false);
         mTurret.limeLightCamera.setLedMode(LedMode.Off);
     }
 

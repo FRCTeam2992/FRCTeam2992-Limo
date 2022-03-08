@@ -115,8 +115,6 @@ public class RobotContainer {
     // limeLightCamera = new LimeLight();
 
     // Smartdashboard Subsystems
-    // sSmartDashboard.putData(mIntake);
-
     SmartDashboard.putData(mShooter);
     SmartDashboard.putData(mShooterHood);
     SmartDashboard.putData(mTurret);
@@ -231,11 +229,11 @@ public class RobotContainer {
       startShooterButton.whenPressed(new SetShooterCommanded(mShooter, true), true);
 
       JoystickButton autoIntakeButton = new JoystickButton(controller1, XboxController.Button.kA.value);
-      autoIntakeButton.whenPressed(new SetIntakeCommanded(mIntake, true));
+      autoIntakeButton.whenPressed(new SetIntakeCommanded(mIntake, true, 0.5));
       autoIntakeButton.whenPressed(new AutoIntake(mCargoFunnel, mBottomLift, mTopLift), true);
 
       JoystickButton stopAutoIntakeButton = new JoystickButton(controller1, XboxController.Button.kB.value);
-      stopAutoIntakeButton.whenPressed(new SetIntakeCommanded(mIntake, false));
+      stopAutoIntakeButton.whenPressed(new SetIntakeCommanded(mIntake, false, 0));
       stopAutoIntakeButton.whenPressed(new StopAutoIntake(mCargoFunnel, mBottomLift, mTopLift), true);
 
 

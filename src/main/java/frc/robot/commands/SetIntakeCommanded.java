@@ -11,18 +11,20 @@ public class SetIntakeCommanded extends CommandBase {
 
   private Intake mIntake;
   private boolean mCommanded;
+  private double mSpeed;
 
-  public SetIntakeCommanded(Intake subsystem, boolean commanded) {
+  public SetIntakeCommanded(Intake subsystem, boolean commanded, double speed) {
     mIntake = subsystem;
     mCommanded = commanded;
+    mSpeed = speed;
 
-    addRequirements(mIntake);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     mIntake.setIntakeCommanded(mCommanded);
+    mIntake.setIntakeSpeed(mSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

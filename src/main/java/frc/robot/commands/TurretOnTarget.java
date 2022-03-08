@@ -30,6 +30,6 @@ public class TurretOnTarget extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return mTurret.onTarget();
+    return mTurret.readyToShoot();
   }
 }

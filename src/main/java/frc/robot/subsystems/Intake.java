@@ -40,15 +40,15 @@ public class Intake extends SubsystemBase {
         intakeMotor.setNeutralMode(NeutralMode.Brake);
         intakeMotor.setInverted(false);
         intakeMotor.setStatusFramePeriod(1, 255);
-        intakeMotor.setStatusFramePeriod(2, 255);
-        intakeMotor.setStatusFramePeriod(3, 255);
-        intakeMotor.setStatusFramePeriod(4, 255);
-        intakeMotor.setStatusFramePeriod(8, 255);
-        intakeMotor.setStatusFramePeriod(10, 255);
-        intakeMotor.setStatusFramePeriod(12, 255);
-        intakeMotor.setStatusFramePeriod(13, 255);
-        intakeMotor.setStatusFramePeriod(14, 255);
-        intakeMotor.setStatusFramePeriod(21, 255);
+        intakeMotor.setStatusFramePeriod(2, 254);
+        intakeMotor.setStatusFramePeriod(3, 253);
+        intakeMotor.setStatusFramePeriod(4, 252);
+        intakeMotor.setStatusFramePeriod(8, 251);
+        intakeMotor.setStatusFramePeriod(10, 250);
+        intakeMotor.setStatusFramePeriod(12, 249);
+        intakeMotor.setStatusFramePeriod(13, 248);
+        intakeMotor.setStatusFramePeriod(14, 247);
+        intakeMotor.setStatusFramePeriod(21, 246);
         addChild("Intake Motor", intakeMotor);
     }
 

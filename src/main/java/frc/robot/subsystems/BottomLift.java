@@ -24,15 +24,15 @@ public class BottomLift extends SubsystemBase {
     bottomLiftMotor.setInverted(false);
     bottomLiftMotor.setNeutralMode(NeutralMode.Brake);
     bottomLiftMotor.setStatusFramePeriod(1, 255);
-    bottomLiftMotor.setStatusFramePeriod(2, 255);
-    bottomLiftMotor.setStatusFramePeriod(3, 255);
-    bottomLiftMotor.setStatusFramePeriod(4, 255);
-    bottomLiftMotor.setStatusFramePeriod(8, 255);
-    bottomLiftMotor.setStatusFramePeriod(10, 255);
-    bottomLiftMotor.setStatusFramePeriod(12, 255);
-    bottomLiftMotor.setStatusFramePeriod(13, 255);
-    bottomLiftMotor.setStatusFramePeriod(14, 255);
-    bottomLiftMotor.setStatusFramePeriod(21, 255);
+    bottomLiftMotor.setStatusFramePeriod(2, 254);
+    bottomLiftMotor.setStatusFramePeriod(3, 253);
+    bottomLiftMotor.setStatusFramePeriod(4, 252);
+    bottomLiftMotor.setStatusFramePeriod(8, 251);
+    bottomLiftMotor.setStatusFramePeriod(10, 250);
+    bottomLiftMotor.setStatusFramePeriod(12, 249);
+    bottomLiftMotor.setStatusFramePeriod(13, 248);
+    bottomLiftMotor.setStatusFramePeriod(14, 247);
+    bottomLiftMotor.setStatusFramePeriod(21, 246);
 
     addChild("bottomLiftMotor", bottomLiftMotor);
 

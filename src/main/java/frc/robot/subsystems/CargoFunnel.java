@@ -22,15 +22,15 @@ public class CargoFunnel extends SubsystemBase {
     funnelMotor.setInverted(true);
     funnelMotor.setNeutralMode(NeutralMode.Coast);    
     funnelMotor.setStatusFramePeriod(1, 255);
-    funnelMotor.setStatusFramePeriod(2, 255);
-    funnelMotor.setStatusFramePeriod(3, 255);
-    funnelMotor.setStatusFramePeriod(4, 255);
-    funnelMotor.setStatusFramePeriod(8, 255);
-    funnelMotor.setStatusFramePeriod(10, 255);
-    funnelMotor.setStatusFramePeriod(12, 255);
-    funnelMotor.setStatusFramePeriod(13, 255);
-    funnelMotor.setStatusFramePeriod(14, 255);
-    funnelMotor.setStatusFramePeriod(21, 255);
+    funnelMotor.setStatusFramePeriod(2, 254);
+    funnelMotor.setStatusFramePeriod(3, 253);
+    funnelMotor.setStatusFramePeriod(4, 252);
+    funnelMotor.setStatusFramePeriod(8, 251);
+    funnelMotor.setStatusFramePeriod(10, 250);
+    funnelMotor.setStatusFramePeriod(12, 249);
+    funnelMotor.setStatusFramePeriod(13, 248);
+    funnelMotor.setStatusFramePeriod(14, 247);
+    funnelMotor.setStatusFramePeriod(21, 246);
 
     addChild("funnelMotor", funnelMotor);
 

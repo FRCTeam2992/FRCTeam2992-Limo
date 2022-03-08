@@ -19,15 +19,15 @@ public class TopLift extends SubsystemBase {
     topLiftMotor.setInverted(true);
     topLiftMotor.setNeutralMode(NeutralMode.Brake);   
     topLiftMotor.setStatusFramePeriod(1, 255);
-    topLiftMotor.setStatusFramePeriod(2, 255);
-    topLiftMotor.setStatusFramePeriod(3, 255);
-    topLiftMotor.setStatusFramePeriod(4, 255);
-    topLiftMotor.setStatusFramePeriod(8, 255);
-    topLiftMotor.setStatusFramePeriod(10, 255);
-    topLiftMotor.setStatusFramePeriod(12, 255);
-    topLiftMotor.setStatusFramePeriod(13, 255);
-    topLiftMotor.setStatusFramePeriod(14, 255);
-    topLiftMotor.setStatusFramePeriod(21, 255);
+    topLiftMotor.setStatusFramePeriod(2, 254);
+    topLiftMotor.setStatusFramePeriod(3, 253);
+    topLiftMotor.setStatusFramePeriod(4, 252);
+    topLiftMotor.setStatusFramePeriod(8, 251);
+    topLiftMotor.setStatusFramePeriod(10, 250);
+    topLiftMotor.setStatusFramePeriod(12, 249);
+    topLiftMotor.setStatusFramePeriod(13, 248);
+    topLiftMotor.setStatusFramePeriod(14, 247);
+    topLiftMotor.setStatusFramePeriod(21, 246);
 
     addChild("topLiftMotor", topLiftMotor);
 

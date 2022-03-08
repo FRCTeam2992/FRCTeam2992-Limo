@@ -92,34 +92,42 @@ public class Drivetrain extends SubsystemBase {
     // Drive Motors
     frontRightDrive = new WPI_TalonFX(2);
     frontRightDrive.setInverted(false);
+    setMotorCANPeriods(frontRightDrive);
     addChild("frontRightDrive", frontRightDrive);
 
     frontRightTurn = new WPI_TalonFX(3);
     frontRightTurn.setInverted(true);
+    setMotorCANPeriods(frontRightTurn);
     addChild("frontRightTurn", frontRightTurn);
 
     frontLeftDrive = new WPI_TalonFX(4);
     frontLeftDrive.setInverted(false);
+    setMotorCANPeriods(frontLeftDrive);
     addChild("frontLeftDrive", frontLeftDrive);
 
     frontLeftTurn = new WPI_TalonFX(5);
     frontLeftTurn.setInverted(true);
+    setMotorCANPeriods(frontLeftTurn);
     addChild("frontLeftTurn", frontLeftTurn);
 
     rearRightDrive = new WPI_TalonFX(6);
     rearRightDrive.setInverted(false);
+    setMotorCANPeriods(rearRightDrive);
     addChild("rearRightDrive", rearRightDrive);
 
     rearRightTurn = new WPI_TalonFX(7);
     rearRightTurn.setInverted(true);
+    setMotorCANPeriods(rearRightTurn);
     addChild("rearRightTurn", rearRightTurn);
 
     rearLeftDrive = new WPI_TalonFX(8);
     rearLeftDrive.setInverted(false);
+    setMotorCANPeriods(rearLeftDrive);
     addChild("rearLeftDrive", rearLeftDrive);
 
     rearLeftTurn = new WPI_TalonFX(9);
     rearLeftTurn.setInverted(true);
+    setMotorCANPeriods(rearLeftTurn);
     addChild("rearLeftTurn", rearLeftTurn);
 
     // Set motor states
@@ -363,4 +371,11 @@ public class Drivetrain extends SubsystemBase {
 
   }
 
+  private void setMotorCANPeriods(WPI_TalonFX motor) {
+    motor.setStatusFramePeriod(1, 100);       // Applied Motor Output
+    // Don't change frame type 2 -- Selected Sensor position needed for Odometry
+    // Don't change frame type 3 -- Quadrature info -- is needed?
+    motor.setStatusFramePeriod(4, 255);     // Analog and battery voltage info
+    motor.setStatusFramePeriod(8, 254);     // PWM Info not used
+  }
 }

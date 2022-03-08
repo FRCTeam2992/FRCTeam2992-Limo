@@ -39,6 +39,13 @@ public class Turret extends SubsystemBase {
         turretTalon.setNeutralMode(NeutralMode.Brake);
         turretTalon.setInverted(true);
         turretTalon.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
+        turretTalon.setStatusFramePeriod(3, 255);
+        turretTalon.setStatusFramePeriod(4, 254);
+        turretTalon.setStatusFramePeriod(8, 253);
+        turretTalon.setStatusFramePeriod(10, 252);
+        turretTalon.setStatusFramePeriod(12, 251);
+        turretTalon.setStatusFramePeriod(13, 250);
+        turretTalon.setStatusFramePeriod(14, 249);
         addChild("Turret Motor", turretTalon);
 
         // Turret PID Controller

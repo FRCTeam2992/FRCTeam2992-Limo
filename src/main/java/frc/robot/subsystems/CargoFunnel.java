@@ -61,7 +61,7 @@ public class CargoFunnel extends SubsystemBase {
     funnelMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void setFunnelSpeedCommanded() {
+  public void setFunnelSpeedUsingCommandedSensors() {
     if (isCommanded()) {
       // We should be running in default command mode
       if ((!mBottomLift.getSensor1State() && !mBottomLift.getSensor2State()) || (sensorTimer.get() < sensorDelay)) {

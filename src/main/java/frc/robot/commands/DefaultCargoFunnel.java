@@ -5,31 +5,28 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.CargoFunnel;
 
-public class SetIntakeCommanded extends CommandBase {
+public class DefaultCargoFunnel extends CommandBase {
+  /** Creates a new Default Cargo Funnel. */
+  private CargoFunnel mCargoFunnel;
 
-  private Intake mIntake;
-  private boolean mCommanded;
-  private double mSpeed;
-
-  public SetIntakeCommanded(Intake subsystem, boolean commanded, double speed) {
-    mIntake = subsystem;
-    mCommanded = commanded;
-    mSpeed = speed;
-
+  public DefaultCargoFunnel(CargoFunnel subsystem) {
+    mCargoFunnel = subsystem;
+    
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(mCargoFunnel);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mIntake.setIntakeCommanded(mCommanded);
-    mIntake.setSpeedCommanded(mSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    mCargoFunnel.setFunnelSpeedUsingCommandedSensors();         // This method does all the sensor logic
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +37,6 @@ public class SetIntakeCommanded extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

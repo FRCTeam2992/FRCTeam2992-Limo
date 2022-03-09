@@ -6,6 +6,7 @@ package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.DriveTrainStopped;
 import frc.robot.commands.HoodAtAngle;
 import frc.robot.commands.SetShooterCommanded;
 import frc.robot.commands.ShooterAtSpeed;
@@ -15,6 +16,7 @@ import frc.robot.commands.SpinTopLift;
 import frc.robot.commands.TurretOnTarget;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterHood;
 import frc.robot.subsystems.TopLift;
@@ -27,7 +29,7 @@ public class AutoShoot extends SequentialCommandGroup {
 
   /** Creates a new AutoShoot. */
   public AutoShoot(CargoFunnel mCargoFunnel, TopLift mTopLift, BottomLift mBottomLift,
-        Shooter mShooter, ShooterHood mHood, Turret mTurret) {
+        Shooter mShooter, ShooterHood mHood, Turret mTurret, Drivetrain mDrivetrain) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
   addCommands(
@@ -35,7 +37,8 @@ public class AutoShoot extends SequentialCommandGroup {
       new SetShooterCommanded(mShooter, true),      // Make sure shooter is running
       new ShooterAtSpeed(mShooter).withTimeout(0.5),
       new HoodAtAngle(mHood).withTimeout(0.5),
-      new TurretOnTarget(mTurret).withTimeout(0.5)
+      new TurretOnTarget(mTurret).withTimeout(0.5),
+      new DriveTrainStopped(mDrivetrain).withTimeout(0.5)
       ),      
     new ParallelCommandGroup(                       // OK TO shoot
       new SpinCargoFunnel(mCargoFunnel, 0.7),

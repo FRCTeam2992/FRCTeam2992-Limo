@@ -14,6 +14,9 @@ public class TopLift extends SubsystemBase {
   /** Creates a new TopLift. */
   private WPI_VictorSPX topLiftMotor;
 
+  private boolean isCommanded = false;               // Is Top Lift commanded to run in default command mode
+  private double commandedSpeed = 0.0;             // Speed to run if its commanded on during default command
+
   public TopLift() {
     topLiftMotor = new WPI_VictorSPX(24);
     topLiftMotor.setInverted(true);
@@ -40,6 +43,22 @@ public class TopLift extends SubsystemBase {
 
   public void setTopLiftSpeed(double speed) {
     topLiftMotor.set(ControlMode.PercentOutput, speed);
+  }
+
+  public boolean isCommanded() {
+    return isCommanded;
+  }
+
+  public void setCommanded(boolean isCommanded) {
+    this.isCommanded = isCommanded;
+  }
+
+  public double getCommandedSpeed() {
+    return commandedSpeed;
+  }
+
+  public void setCommandedSpeed(double commandedSpeed) {
+    this.commandedSpeed = commandedSpeed;
   }
 
   

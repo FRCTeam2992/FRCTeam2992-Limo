@@ -5,16 +5,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.TopLift;
 
-public class SetIntakeCommanded extends CommandBase {
+public class SetTopLiftCommanded extends CommandBase {
 
-  private Intake mIntake;
+  private TopLift mTopLift;
   private boolean mCommanded;
   private double mSpeed;
 
-  public SetIntakeCommanded(Intake subsystem, boolean commanded, double speed) {
-    mIntake = subsystem;
+  public SetTopLiftCommanded(TopLift subsystem, boolean commanded, double speed) {
+    mTopLift = subsystem;
     mCommanded = commanded;
     mSpeed = speed;
 
@@ -23,8 +23,8 @@ public class SetIntakeCommanded extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    mIntake.setIntakeCommanded(mCommanded);
-    mIntake.setSpeedCommanded(mSpeed);
+    mTopLift.setCommanded(mCommanded);
+    mTopLift.setCommandedSpeed(mSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

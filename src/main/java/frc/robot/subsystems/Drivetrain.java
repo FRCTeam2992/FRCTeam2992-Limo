@@ -17,6 +17,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.trajectory.Trajectory;
@@ -72,7 +73,10 @@ public class Drivetrain extends SubsystemBase {
   public AHRS navx;
   public double gyroOffset = 0.0;
 
-  public Pose2d latestSwervePose;
+  public Pose2d latestSwervePose = new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0));
+    public Pose2d priorSwervePose;              // The pose from prior cycle
+  private double distanceTraveled;             // How far we moved this cycle (meters)
+  private double angleTurned;                  // How much did we rotate this cycle (degrees)
 
   // Swerve Drive Kinematics
   public final SwerveDriveKinematics swerveDriveKinematics;
@@ -271,8 +275,13 @@ public class Drivetrain extends SubsystemBase {
     }
 
     // Update the Odometry
+    priorSwervePose = latestSwervePose;
     latestSwervePose = swerveDriveOdometry.update(Rotation2d.fromDegrees(-getGyroYaw()), frontLeftModule.getState(),
         frontRightModule.getState(), rearLeftModule.getState(), rearRightModule.getState());
+
+    Transform2d moved = latestSwervePose.minus(priorSwervePose);
+    distanceTraveled = Math.sqrt(moved.getX() * moved.getX() + moved.getY() * moved.getY());
+    angleTurned = Math.abs(moved.getRotation().getDegrees());
 
     // Display Odometry
     // SmartDashboard.putNumber("Odometry Rotation",
@@ -378,4 +387,13 @@ public class Drivetrain extends SubsystemBase {
     motor.setStatusFramePeriod(4, 255);     // Analog and battery voltage info
     motor.setStatusFramePeriod(8, 254);     // PWM Info not used
   }
+  
+  public double getDistanceTraveled() {
+    return distanceTraveled;
+  }
+
+  public double getAngleTurned() {
+    return angleTurned;
+  }
+
 }

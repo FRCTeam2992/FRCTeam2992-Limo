@@ -171,7 +171,7 @@ public class RobotContainer {
       autoShootButton.whileActiveContinuous(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift,
             mShooter, mShooterHood, mTurret, mDrivetrain), true);
       // X the wheels while shooting if not moving
-      autoShootButton.whileActiveContinuous(new SetSwerveAngleSafe(mDrivetrain, -45, -45, -45, -45));
+      autoShootButton.whileActiveContinuous(new SetSwerveAngleSafe(mDrivetrain, 45, -45, -45, 45));
 
     //-D-Pad
       POVButton xPatternButtonUp = new POVButton(controller0, 0);

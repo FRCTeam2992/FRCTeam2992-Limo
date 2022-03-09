@@ -73,8 +73,8 @@ public class Drivetrain extends SubsystemBase {
   public AHRS navx;
   public double gyroOffset = 0.0;
 
-  public Pose2d latestSwervePose;             // The swerve pose current cycle
-  public Pose2d priorSwervePose;              // The pose from prior cycle
+  public Pose2d latestSwervePose = new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0));
+    public Pose2d priorSwervePose;              // The pose from prior cycle
   private double distanceTraveled;             // How far we moved this cycle (meters)
   private double angleTurned;                  // How much did we rotate this cycle (degrees)
 

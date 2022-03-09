@@ -12,6 +12,7 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
@@ -56,7 +57,8 @@ public class Intake extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         if (++dashboardCounter >= 5) {
-            // SmartDashboard.putNumber("Intake Motor Speed", intakeSetSpeed);
+            // SmartDashboard.putNumber("Intake Motor Speed", speedCommanded);
+            // SmartDashboard.putBoolean("Intake Commanded", intakeCommanded);
             dashboardCounter = 0;
         }
 

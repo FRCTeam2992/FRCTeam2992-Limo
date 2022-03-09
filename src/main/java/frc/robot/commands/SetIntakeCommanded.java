@@ -24,7 +24,7 @@ public class SetIntakeCommanded extends CommandBase {
   @Override
   public void initialize() {
     mIntake.setIntakeCommanded(mCommanded);
-    mIntake.setIntakeSpeed(mSpeed);
+    mIntake.setSpeedCommanded(mSpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

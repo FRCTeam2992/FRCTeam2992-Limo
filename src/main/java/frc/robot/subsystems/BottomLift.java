@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class BottomLift extends SubsystemBase {
@@ -59,6 +60,7 @@ public class BottomLift extends SubsystemBase {
     if (!getSensor1State() && !getSensor2State()) {
       // Neither sensor sees a ball -- cargo lift is empty to reset timer
       sensorTimer.reset();
+      SmartDashboard.putNumber("Lift Timer", sensorTimer.get());
     }
 
   }
@@ -67,10 +69,11 @@ public class BottomLift extends SubsystemBase {
     bottomLiftMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void setBottomListSpeedAsCommandedSensor() {
+  public void setBottomLiftSpeedAsCommandedSensor() {
     if (isCommanded()) {
-      // We should be running in default command mode
-      if ((!getSensor1State() && !getSensor2State()) || (sensorTimer.get() < sensorDelay)) {
+      // We should be running in default command 
+      sensorTimer.start();
+      if ((!getSensor1State() && !getSensor2State()) || (sensorTimer.get() < getSensorDelay())) {
         // No ball is seen so run at higher speed
         bottomLiftMotor.set(ControlMode.PercentOutput, noBallSpeed);
       } else {

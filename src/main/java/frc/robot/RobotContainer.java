@@ -274,8 +274,8 @@ public class RobotContainer {
   private void setupAutoSelector() {
     // Auto Commands
 
-    Command driveStraightNoShootAuto = new AutoFollowPath(mDrivetrain, new StraightPath().generateSwerveTrajectory(), 0.0);
-    Command testPathAuto = new AutoFollowPath(mDrivetrain, new TestPath(mDrivetrain).generateSwerveTrajectory(), 90.0);
+    Command driveStraightNoShootAuto = new AutoFollowPath(mDrivetrain, new StraightPath(2.0).generateSwerveTrajectory(), true, false, 0.0);
+    Command testPathAuto = new AutoFollowPath(mDrivetrain, new TestPath(mDrivetrain, 90.0).generateSwerveTrajectory(), true, true, 90.0);
 
     autoChooser = new SendableChooser<>();
 

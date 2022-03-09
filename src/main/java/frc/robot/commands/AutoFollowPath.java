@@ -34,12 +34,19 @@ public class AutoFollowPath extends CommandBase {
   // Timer
   private Timer elapsedTimer;
 
+  // Reset Odometry
+  private boolean mResetOdometry;
+
   //Gyro Offset
+  private boolean mSetGyroOffset;
   private double mGyroOffset;
 
-  public AutoFollowPath(Drivetrain subsystem, SwerveTrajectory swerveTrajectory, double gyroOffset) {
+  public AutoFollowPath(Drivetrain subsystem, SwerveTrajectory swerveTrajectory, boolean resetOdometry,
+        boolean setGyroOffset, double gyroOffset) {
     // Subsystem Instance
     mDriveTrain = subsystem;
+    mResetOdometry = resetOdometry;
+    mSetGyroOffset = setGyroOffset;
     mGyroOffset = gyroOffset;
 
     // Set the Subsystem Requirement
@@ -72,12 +79,18 @@ public class AutoFollowPath extends CommandBase {
   @Override
   public void initialize() {
     // Get the Trajectory Start Pose
-    mDriveTrain.gyroOffset = mGyroOffset;
     Pose2d trajectoryStartPose = mTrajectory.getInitialPose();
 
+    // Do we need to reset gyro offset for defined starting position
+    if (mSetGyroOffset) {
+      mDriveTrain.gyroOffset = mGyroOffset;
+    }
+
     // Set the Odometry Position to the Trajectory Start Position
-    mDriveTrain.setOdometryPosition(new Pose2d(trajectoryStartPose.getX(), trajectoryStartPose.getY(),
-        Rotation2d.fromDegrees(-mDriveTrain.getGyroYaw())));
+    if (mResetOdometry) {
+      mDriveTrain.setOdometryPosition(new Pose2d(trajectoryStartPose.getX(), trajectoryStartPose.getY(),
+      Rotation2d.fromDegrees(-mDriveTrain.getGyroYaw())));
+    }
 
     // Reset and Start the Elapsed Timer
     elapsedTimer.reset();

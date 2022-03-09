@@ -5,14 +5,14 @@ import frc.robot.subsystems.Drivetrain;
 
 public class TestPath extends SwerveTrajectoryGenerator {
 
-    public TestPath(Drivetrain subsystem){
+    public TestPath(Drivetrain subsystem, double startRotation){
         // Setup
         super(subsystem.testPathTrajectory);
 
         // Set the Start Rotation
-        setStartRotation(90.0);
+        setStartRotation(startRotation);
     
-        addHeadingWaypoint(0.1, 90.0);
-        addTimedHeadingWaypoint(1.0, 2.0, 135.0);
+        addHeadingWaypoint(0.1, startRotation);
+        addHeadingWaypoint(2.0, 135.0);
     }
 }

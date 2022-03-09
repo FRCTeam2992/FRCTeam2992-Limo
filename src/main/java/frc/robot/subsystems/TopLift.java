@@ -61,5 +61,9 @@ public class TopLift extends SubsystemBase {
     this.commandedSpeed = commandedSpeed;
   }
 
+  public void reset() {
+    setCommanded(false);
+    setCommandedSpeed(0.0);
+  }
   
 }

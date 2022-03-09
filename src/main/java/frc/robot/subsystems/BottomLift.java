@@ -134,5 +134,11 @@ public class BottomLift extends SubsystemBase {
     this.sensorDelay = sensorDelay;
   }
 
-  
+  public void reset() {
+    setCommanded(false);
+    setCheckSensor(false);
+    setNoBallSpeed(0.0);
+    setWithBallSpeed(0.0);
+    setSensorDelay(0.0);
+  }
 }

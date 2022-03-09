@@ -99,4 +99,9 @@ public class Intake extends SubsystemBase {
     public void setSpeedCommanded(double speedCommanded) {
         this.speedCommanded = speedCommanded;
     }
+
+    public void reset() {
+        setIntakeCommanded(false);
+        setSpeedCommanded(0.0);
+    }
 }

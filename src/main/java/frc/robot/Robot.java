@@ -106,6 +106,7 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.resetOdometry();
         mRobotContainer.mDrivetrain.navx.zeroYaw();
 
+        resetSubsystems();
 
         // Get the Autonomous Command
         autoCommand = mRobotContainer.getAutoCommand();
@@ -142,6 +143,7 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveRampRate(0.25);
 
         mRobotContainer.mDrivetrain.resetOdometry();
+        resetSubsystems();
     }
 
     /**
@@ -164,4 +166,14 @@ public class Robot extends TimedRobot {
     public void testPeriodic() {
     }
 
+    /**
+     * Reset all subsystem states to stopped
+     */
+    private void resetSubsystems() {
+        mRobotContainer.mBottomLift.reset();
+        mRobotContainer.mCargoFunnel.reset();
+        mRobotContainer.mIntake.reset();
+        mRobotContainer.mShooter.reset();
+        mRobotContainer.mTopLift.reset();
+    }
 }

@@ -26,7 +26,7 @@ public class Turret extends SubsystemBase {
     // Limelight Camera
     public final LimeLight limeLightCamera;
 
-    private double turretTargetAngle = Constants.turretDefaultAngle;              // Angle the turret was last targeted to turn to
+    public double turretTargetAngle = Constants.turretDefaultAngle;              // Angle the turret was last targeted to turn to
     private boolean autoAiming = false;
 
     public Drivetrain mDrivetrain;

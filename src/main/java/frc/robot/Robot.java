@@ -19,6 +19,7 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -35,6 +36,8 @@ public class Robot extends TimedRobot {
 
     public static RobotContainer mRobotContainer;
 
+    private int vibrateCounter = 0;
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -162,6 +165,33 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void testPeriodic() {
+    }
+
+    public void vibrateControllers() {
+        if (vibrateCounter >= 10) {
+
+            if (mRobotContainer.mTurret.getTurretAngleRaw()< 25 || mRobotContainer.mTurret.getTurretAngleRaw() > 335
+                    || mRobotContainer.mTurret.getTurretAngleRaw() < 25
+                    || mRobotContainer.mTurret.getTurretAngleRaw() > 335) {
+                mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble,
+                        mRobotContainer.controller0.getRightTriggerAxis());
+                mRobotContainer.controller0.setRumble(RumbleType.kRightRumble,
+                        mRobotContainer.controller0.getRightTriggerAxis());
+                mRobotContainer.controller1.setRumble(RumbleType.kLeftRumble,
+                        mRobotContainer.controller0.getRightTriggerAxis());
+                mRobotContainer.controller1.setRumble(RumbleType.kRightRumble,
+                        mRobotContainer.controller0.getRightTriggerAxis());
+            } else {
+                mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 0.0);
+                mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 0.0);
+                mRobotContainer.controller1.setRumble(RumbleType.kLeftRumble, 0.0);
+                mRobotContainer.controller1.setRumble(RumbleType.kRightRumble, 0.0);
+            }
+
+            vibrateCounter = 0;
+        } else {
+            vibrateCounter++;
+        }
     }
 
 }

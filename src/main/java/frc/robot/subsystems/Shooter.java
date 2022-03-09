@@ -164,5 +164,8 @@ public class Shooter extends SubsystemBase {
     this.shooterCommanded = shooterCommanded;
   }
 
+  public void reset() {
+    setShooterCommanded(false);
+  }
   
 }

@@ -143,6 +143,7 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveRampRate(0.25);
 
         mRobotContainer.mDrivetrain.resetOdometry();
+        resetSubsystems();
     }
 
     /**
@@ -194,4 +195,14 @@ public class Robot extends TimedRobot {
             mRobotContainer.controller1.setRumble(RumbleType.kRightRumble, 0.0);
     }
 
+    /**
+     * Reset all subsystem states to stopped
+     */
+    private void resetSubsystems() {
+        mRobotContainer.mBottomLift.reset();
+        mRobotContainer.mCargoFunnel.reset();
+        mRobotContainer.mIntake.reset();
+        mRobotContainer.mShooter.reset();
+        mRobotContainer.mTopLift.reset();
+    }
 }

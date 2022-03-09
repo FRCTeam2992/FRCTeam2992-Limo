@@ -15,7 +15,6 @@ package frc.robot;
 import frc.lib.Ranging.CargoBallDataPoint;
 import frc.lib.Ranging.CargoBallInterpolator;
 import frc.robot.commands.*;
-import frc.robot.commands.Deprecated.HoldHoodAngle;
 import frc.lib.oi.controller.TriggerButton;
 import frc.robot.commands.groups.AutoIntake;
 import frc.robot.commands.groups.AutoShoot;
@@ -89,7 +88,7 @@ public class RobotContainer {
     mTurret.setDefaultCommand(new TurretSticks(mTurret));
     
     mShooterHood = new ShooterHood();
-    mShooterHood.setDefaultCommand(new HoldHoodAngle(mShooterHood));
+    mShooterHood.setDefaultCommand(new StartHood(mShooterHood));
     
     mShooter = new Shooter();
     mShooter.setDefaultCommand(new DefaultShooter(mShooter));

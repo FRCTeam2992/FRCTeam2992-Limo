@@ -88,7 +88,7 @@ public class RobotContainer {
     mTurret.setDefaultCommand(new TurretSticks(mTurret));
     
     mShooterHood = new ShooterHood();
-    mShooterHood.setDefaultCommand(new StartHood(mShooterHood));
+    mShooterHood.setDefaultCommand(new HoldHoodAngle(mShooterHood));
     
     mShooter = new Shooter();
     mShooter.setDefaultCommand(new DefaultShooter(mShooter));
@@ -174,13 +174,13 @@ public class RobotContainer {
 
     //-D-Pad
       POVButton xPatternButtonUp = new POVButton(controller0, 0);
-      xPatternButtonUp.whenHeld(new SetSwerveAngle(mDrivetrain, 45, -45, -45, 45));
+      xPatternButtonUp.whenHeld(new SetSwerveAngleSafe(mDrivetrain, 45, -45, -45, 45));
       POVButton xPatternButtonRight = new POVButton(controller0, 90);
-      xPatternButtonRight.whenHeld(new SetSwerveAngle(mDrivetrain, 45, -45, -45, 45));
+      xPatternButtonRight.whenHeld(new SetSwerveAngleSafe(mDrivetrain, 45, -45, -45, 45));
       POVButton xPatternButtonDown = new POVButton(controller0, 180);
-      xPatternButtonDown.whenHeld(new SetSwerveAngle(mDrivetrain, 45, -45, -45, 45));
+      xPatternButtonDown.whenHeld(new SetSwerveAngleSafe(mDrivetrain, 45, -45, -45, 45));
       POVButton xPatternButtonLeft = new POVButton(controller0, 270);
-      xPatternButtonLeft.whenHeld(new SetSwerveAngle(mDrivetrain, 45, -45, -45, 45));
+      xPatternButtonLeft.whenHeld(new SetSwerveAngleSafe(mDrivetrain, 45, -45, -45, 45));
 
     //-ABXY
       JoystickButton increaseMainShooterSpeed = new JoystickButton(controller0, XboxController.Button.kY.value);
@@ -249,7 +249,7 @@ public class RobotContainer {
   /*
   SmartDashBoard Buttons
   */
-      SmartDashboard.putData("0 Wheels", new SetSwerveAngle(mDrivetrain, 0, 0, 0, 0));
+      SmartDashboard.putData("0 Wheels", new SetSwerveAngleSafe(mDrivetrain, 0, 0, 0, 0));
 
     
     /*

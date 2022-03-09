@@ -37,7 +37,7 @@ public class Robot extends TimedRobot {
     public static RobotContainer mRobotContainer;
 
     private int vibrateCounter = 0;
-    
+
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -79,6 +79,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
+        stopVibrate();
     }
 
     @Override
@@ -94,7 +95,6 @@ public class Robot extends TimedRobot {
         // m_autonomousCommand = mRobotContainer.getAutonomousCommand();
 
         // // schedule the autonomous command (example)
-        
 
         // Set the Drive Train to Brake
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
@@ -108,7 +108,6 @@ public class Robot extends TimedRobot {
 
         mRobotContainer.mDrivetrain.resetOdometry();
         mRobotContainer.mDrivetrain.navx.zeroYaw();
-
 
         // Get the Autonomous Command
         autoCommand = mRobotContainer.getAutoCommand();
@@ -132,11 +131,10 @@ public class Robot extends TimedRobot {
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        
+
         if (autoCommand != null) {
             autoCommand.cancel();
-          }
-
+        }
 
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
@@ -152,6 +150,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void teleopPeriodic() {
+        vibrateControllers();
     }
 
     @Override
@@ -168,30 +167,31 @@ public class Robot extends TimedRobot {
     }
 
     public void vibrateControllers() {
-        if (vibrateCounter >= 10) {
+        if (++vibrateCounter >= 10) {
 
-            if (mRobotContainer.mTurret.turretTargetAngle < 25 || mRobotContainer.mTurret.turretTargetAngle > 335
-                    || mRobotContainer.mTurret.getTurretAngleRaw() < 25
-                    || mRobotContainer.mTurret.getTurretAngleRaw() > 335) {
-                mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble,
-                        mRobotContainer.controller0.getRightTriggerAxis());
-                mRobotContainer.controller0.setRumble(RumbleType.kRightRumble,
-                        mRobotContainer.controller0.getRightTriggerAxis());
-                mRobotContainer.controller1.setRumble(RumbleType.kLeftRumble,
-                        mRobotContainer.controller0.getRightTriggerAxis());
-                mRobotContainer.controller1.setRumble(RumbleType.kRightRumble,
-                        mRobotContainer.controller0.getRightTriggerAxis());
+            if ((mRobotContainer.mTurret.getTurretAngleRaw() < 30)
+                    || (mRobotContainer.mTurret.getTurretAngleRaw() > 330)) {
+                mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 1);
+                mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 1);
+                mRobotContainer.controller1.setRumble(RumbleType.kLeftRumble, 1);
+                mRobotContainer.controller1.setRumble(RumbleType.kRightRumble, 1);
             } else {
                 mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 0.0);
                 mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 0.0);
                 mRobotContainer.controller1.setRumble(RumbleType.kLeftRumble, 0.0);
                 mRobotContainer.controller1.setRumble(RumbleType.kRightRumble, 0.0);
             }
-
             vibrateCounter = 0;
-        } else {
-            vibrateCounter++;
         }
+
+    }
+
+    public void stopVibrate() {
+
+            mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 0.0);
+            mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 0.0);
+            mRobotContainer.controller1.setRumble(RumbleType.kLeftRumble, 0.0);
+            mRobotContainer.controller1.setRumble(RumbleType.kRightRumble, 0.0);
     }
 
 }

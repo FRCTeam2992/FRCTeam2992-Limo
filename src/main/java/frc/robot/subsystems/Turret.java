@@ -82,6 +82,8 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putBoolean("Turret AutoAim", isAutoAiming());
         SmartDashboard.putBoolean("Turret Ready", readyToShoot());
 
+        SmartDashboard.putNumber("Turret Raw", getTurretAngleRaw());
+
         dashboardCounter = 0;
         }
     }

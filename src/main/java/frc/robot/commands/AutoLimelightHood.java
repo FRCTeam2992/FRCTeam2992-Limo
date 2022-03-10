@@ -30,13 +30,14 @@ public class AutoLimelightHood extends CommandBase {
   @Override
   public void initialize() {
     mShooterHood.setAiming(true);
+    mShooterHood.setTargetAcquired(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (mTurret.limeLightCamera.hasTarget()) {
-
+      mShooterHood.setTargetAcquired(true);
       double currentDistance = mTurret.limeLightCamera.getDistanceToTarget(Constants.cameraAngle,
           Constants.cameraHeight, Constants.goalHeight);
 
@@ -44,7 +45,9 @@ public class AutoLimelightHood extends CommandBase {
 
       // SmartDashboard.putNumber("Hood Target Angle", targetAngle);
       mShooterHood.setHoodTarget(targetAngle);
-    } 
+    } else {
+      mShooterHood.setTargetAcquired(false);
+    }
     
   }
 
@@ -52,6 +55,7 @@ public class AutoLimelightHood extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     mShooterHood.setAiming(false);
+    mShooterHood.setTargetAcquired(false);
   }
 
   // Returns true when the command should end.

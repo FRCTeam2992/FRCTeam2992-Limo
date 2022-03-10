@@ -24,6 +24,7 @@ public class ShooterHood extends SubsystemBase {
 
   private double hoodPosition = Constants.defaultHoodPosition;
   private boolean isAiming = false;       // Are we doing auto aiming right now
+  private boolean targetAcquired = false;
 
   public PIDController hoodPID;
 
@@ -114,7 +115,8 @@ public class ShooterHood extends SubsystemBase {
   }
 
   public boolean atTarget() {
-    return (Math.abs(getEncoderAngle() - hoodPosition) < Constants.hoodTolerance);
+    return ((Math.abs(getEncoderAngle() - hoodPosition) < Constants.hoodTolerance) &&
+          !(isAiming() && !targetAcquired));
   }
 
   public boolean isAiming() {
@@ -123,6 +125,14 @@ public class ShooterHood extends SubsystemBase {
 
   public void setAiming(boolean isAiming) {
     this.isAiming = isAiming;
+  }
+
+  public boolean isTargetAcquired() {
+    return targetAcquired;
+  }
+
+  public void setTargetAcquired(boolean targetAcquired) {
+    this.targetAcquired = targetAcquired;
   }
 
   

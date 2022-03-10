@@ -65,11 +65,11 @@ public class Constants {
   public static final double cameraAngle = 35.8;
 
   public static final double hoodP = .007;
-  public static final double hoodI = 0.05; 
+  public static final double hoodI = 0.02; 
   public static final double hoodD = 0.0002; 
   public static final double hoodF = 0.02; 
 
-  public static final double hoodTolerance = 2;
+  public static final double hoodTolerance = 4;
 
   public static final double defaultHoodPosition = 0;
 

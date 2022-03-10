@@ -79,7 +79,7 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
-        mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Coast);
+        mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
         stopVibrate();
     }

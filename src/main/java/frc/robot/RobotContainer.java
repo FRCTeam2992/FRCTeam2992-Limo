@@ -16,6 +16,7 @@ import frc.lib.Ranging.CargoBallDataPoint;
 import frc.lib.Ranging.CargoBallInterpolator;
 import frc.robot.commands.*;
 import frc.robot.commands.Autonomous.AutoP3S1M;
+import frc.robot.commands.Autonomous.ThreeBallAuto;
 import frc.lib.oi.controller.TriggerButton;
 import frc.robot.commands.groups.AutoIntake;
 import frc.robot.commands.groups.AutoShoot;
@@ -279,12 +280,15 @@ public class RobotContainer {
     Command testPathAuto = new AutoFollowPath(mDrivetrain, new TestPath(mDrivetrain, 90.0).generateSwerveTrajectory(), true, true, 90.0);
     Command p3s1mAuto = new AutoP3S1M(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift,
       mDrivetrain, mIntake);
+    Command threeBallAuto = new ThreeBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift, mDrivetrain, mIntake);
     autoChooser = new SendableChooser<>();
 
     autoChooser.setDefaultOption("Do Nothing", null);
     autoChooser.addOption("Drive Straight (No Shoot)", driveStraightNoShootAuto);
     autoChooser.addOption("Test Path", testPathAuto);
     autoChooser.addOption("P3 Shoot1 Move", p3s1mAuto);
+    autoChooser.addOption("3 Ball Auto", threeBallAuto);
+
 
 
     SmartDashboard.putData("Auto Selector", autoChooser);

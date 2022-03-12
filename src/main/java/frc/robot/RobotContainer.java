@@ -65,6 +65,7 @@ public class RobotContainer {
   public final CargoFunnel mCargoFunnel;
   public final TopLift mTopLift;
   public final BottomLift mBottomLift;
+  public final IntakeDeploy mIntakeDeploy;
 
   // Joysticks
   public XboxController controller0;
@@ -106,6 +107,9 @@ public class RobotContainer {
     
     mIntake = new Intake();
     mIntake.setDefaultCommand(new DefaultIntake(mIntake));
+
+    mIntakeDeploy = new IntakeDeploy();
+    mIntakeDeploy.setDefaultCommand(new DefaultIntakeDeploy(mIntakeDeploy));
     
     controller0 = new XboxController(0);
     controller1 = new XboxController(1);
@@ -188,13 +192,13 @@ public class RobotContainer {
       JoystickButton increaseMainShooterSpeed = new JoystickButton(controller0, XboxController.Button.kY.value);
       increaseMainShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, 50));
 
-      JoystickButton decreaseMainShooterSpeed = new JoystickButton(controller0, XboxController.Button.kX.value);
+      JoystickButton decreaseMainShooterSpeed = new JoystickButton(controller0, XboxController.Button.kB.value);
       decreaseMainShooterSpeed.whenPressed(new ChangeMainShooterSpeed(mShooter, -50));
 
-      JoystickButton increaseSecondShooterSpeed = new JoystickButton(controller0, XboxController.Button.kB.value);
+      JoystickButton increaseSecondShooterSpeed = new JoystickButton(controller0, XboxController.Button.kX.value);
       increaseSecondShooterSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter, 50));
 
-      JoystickButton decreaseSecondShooterSpeed = new JoystickButton(controller0, XboxController.Button.kY.value);
+      JoystickButton decreaseSecondShooterSpeed = new JoystickButton(controller0, XboxController.Button.kA.value);
       decreaseSecondShooterSpeed.whenPressed(new ChangeSecondaryShooterSpeed(mShooter, -50));
 
     //-Other Buttons
@@ -237,8 +241,11 @@ public class RobotContainer {
       JoystickButton stopAutoIntakeButton = new JoystickButton(controller1, XboxController.Button.kB.value);
       stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
 
-
-    //-Other Buttons
+      JoystickButton lowGoalShotButton = new JoystickButton(controller1, XboxController.Button.kY.value);
+      lowGoalShotButton.whenPressed(new NewHoodTarget(mShooterHood, 152), true);
+      lowGoalShotButton.whenPressed(new SetShooterSpeedTargets(mShooter, 1200, 0), true);
+    
+      //-Other Buttons
       
       JoystickButton stopShooterButton = new JoystickButton(controller1, XboxController.Button.kBack.value);
       stopShooterButton.whenPressed(new SetShooterCommanded(mShooter, false), true);
@@ -252,6 +259,8 @@ public class RobotContainer {
   SmartDashBoard Buttons
   */
       SmartDashboard.putData("0 Wheels", new SetSwerveAngleSafe(mDrivetrain, 0, 0, 0, 0));
+      SmartDashboard.putData("Up 1 Angle", new NewHoodTarget(mShooterHood, Math.floor(mShooterHood.getHoodTarget() + 1)));
+      SmartDashboard.putData("Down 1 Angle", new NewHoodTarget(mShooterHood, Math.floor(mShooterHood.getHoodTarget() + -1)));
 
     
     /*
@@ -322,16 +331,28 @@ public class RobotContainer {
     // Example adding point
     // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(distance, Main,
     // Backspin, Hood));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(35.5, 1750, 2650, -152));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(48, 1800, 2750, -125));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(69, 1900, 2900, -98));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(90.5, 2050, 3150, -36));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(113.5, 2300, 3150, 31));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(136.8, 2300, 3500, 89.4));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(160, 2400, 3600, 130));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(205, 2750, 3700, 146));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(255, 3100, 4250, 141));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(283, 3350, 4600, 136.7));
+    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(35.5, 1750, 2650, -152));
+    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(48, 1800, 2750, -125));
+    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(69, 1900, 2900, -98));
+    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(90.5, 2050, 3150, -36));
+    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(113.5, 2300, 3150, 31));
+    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(136.8, 2300, 3500, 89.4));
+    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(160, 2400, 3600, 130));
+    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(205, 2750, 3700, 146));
+    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(255, 3100, 4250, 141));
+    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(283, 3350, 4600, 136.7));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(37.7, 1750, 2650, -152));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(47.6, 1700, 2550, -125));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(71.6, 1900, 2800, -78.5));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(95.7, 1800, 3050, 2));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(119.4, 2100, 2750, 102));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(141.5, 2250, 2800, 112.6));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(165, 2400, 3000, 148.5));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(188.9, 2600, 3400, 148.5));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(213, 2900, 3550, 148.5));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(236, 3200, 3450, 148.5));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(265, 3300, 3850, 148.5));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(280, 3450, 4700, 138));
   }
 
 }

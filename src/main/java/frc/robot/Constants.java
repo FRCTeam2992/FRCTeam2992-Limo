@@ -23,6 +23,16 @@ public class Constants {
   // Robot Period
   public static final double robotPeriod = 0.020;     // 20ms cycles
 
+  //Intake Deploy Constants
+  public static final double maxIntakeEncoderAngle = 0;
+  public static final double minIntakeEncoderAngle = 0;
+  
+  public static final double intakeP = 0;
+  public static final double intakeI = 0;
+  public static final double intakeD = 0;
+  public static final double intakeF = 0;
+
+
   // Shooter Constants
   public static final double defaultMainShooterSpeed = 2700;
   public static final double defaultSecondaryShooterSpeed = 3300;
@@ -59,10 +69,10 @@ public class Constants {
   public static final double hoodPValueTop = 0.0072;
   public static final double hoodEncoderOffset = -28.9 + 180;
 
-  public static final double cameraHeight = 44.5;
-  public static final double goalHeight = 103.12;
+  public static final double cameraHeight = 41.25;
+  public static final double goalHeight = 102;
   public static final double distanceTest = 120;
-  public static final double cameraAngle = 35.8;
+  public static final double cameraAngle = 35;
 
   public static final double hoodP = .007;
   public static final double hoodI = 0.02; 

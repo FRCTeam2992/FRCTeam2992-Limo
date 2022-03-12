@@ -21,12 +21,10 @@ import frc.robot.commands.SetShooterCommanded;
 import frc.robot.commands.SetShooterSpeedTargets;
 import frc.robot.commands.SetTopLiftCommanded;
 import frc.robot.commands.StartHood;
-import frc.robot.commands.StopTopLift;
 import frc.robot.commands.groups.AutoIntake;
 import frc.robot.commands.groups.AutoLimelightRange;
 import frc.robot.commands.groups.AutoShoot;
-import frc.robot.commands.groups.AutoShootAutonomous;
-import frc.robot.commands.groups.StopAutoIntake;
+import frc.robot.paths.FiveBallPath;
 import frc.robot.paths.StraightPath;
 import frc.robot.paths.ThreeBallPath;
 import frc.robot.subsystems.BottomLift;
@@ -41,10 +39,10 @@ import frc.robot.subsystems.Turret;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class ThreeBallAuto extends ParallelCommandGroup {
+public class FiveBallAuto extends ParallelCommandGroup {
 
   /** Creates a new AutoIntake. */
-  public ThreeBallAuto(ShooterHood mShooterHood, Shooter mShooter, Turret mTurret, 
+  public FiveBallAuto(ShooterHood mShooterHood, Shooter mShooter, Turret mTurret, 
       CargoBallInterpolator mInterpolator, CargoFunnel mCargoFunnel, TopLift mTopLift,
       BottomLift mBottomLift, Drivetrain mDrivetrain, Intake mIntake) {
     // Add your commands in the addCommands() call, e.g.
@@ -61,12 +59,13 @@ public class ThreeBallAuto extends ParallelCommandGroup {
       new AutoLimelightSecondShooter(mTurret, mShooter, mInterpolator),
       new SequentialCommandGroup(
         // new WaitCommand(0.040),
-        new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
+        new AutoShoot(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
         new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift),
         new AutoFollowPath(mDrivetrain, new ThreeBallPath(mDrivetrain, 88.5).generateSwerveTrajectory(), true, true, 88.5).withTimeout(5),
-        new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3),
-        new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift),
-        new SetShooterCommanded(mShooter, false)
+        new AutoShoot(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3),
+        new AutoFollowPath(mDrivetrain, new FiveBallPath(mDrivetrain, 208.5).generateSwerveTrajectory(), false, false, 208.5).withTimeout(7.5),
+        new WaitCommand(1.5),
+        new AutoShoot(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain)
       )
     );
   }

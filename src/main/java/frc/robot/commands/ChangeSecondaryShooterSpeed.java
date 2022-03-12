@@ -31,7 +31,7 @@ public class ChangeSecondaryShooterSpeed extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double changeSpeed = mShooter.getSecondaryShooterTargetRPM() + mChangeSpeed;
+    double changeSpeed = Math.floor((mShooter.getSecondaryShooterTargetRPM() + mChangeSpeed) / mChangeSpeed) * mChangeSpeed ;
 
     changeSpeed = Math.max(0, changeSpeed);
 

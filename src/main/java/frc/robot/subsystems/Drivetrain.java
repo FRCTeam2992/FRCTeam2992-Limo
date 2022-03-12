@@ -89,6 +89,7 @@ public class Drivetrain extends SubsystemBase {
   // Motion Trajectories
   public Trajectory testPathTrajectory;
   public Trajectory threeBallTrajectory;
+  public Trajectory fiveBallTrajectory;
 
   // DriveTrain Dashboard Update Counter
   private int dashboardCounter = 0;
@@ -370,11 +371,13 @@ public class Drivetrain extends SubsystemBase {
     // Trajectory Paths
     Path testPath = Filesystem.getDeployDirectory().toPath().resolve("output/TestPath.wpilib.json");
     Path threeBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/ThreeBallPath.wpilib.json");
+    Path fiveBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/FiveBallPath.wpilib.json");
     
 
     try {
       testPathTrajectory = TrajectoryUtil.fromPathweaverJson(testPath);
       threeBallTrajectory = TrajectoryUtil.fromPathweaverJson(threeBallPath);
+      fiveBallTrajectory = TrajectoryUtil.fromPathweaverJson(fiveBallPath);
     } catch (IOException e) {
       DriverStation.reportError("Unable to load motion trajectories!", e.getStackTrace());
       e.printStackTrace();

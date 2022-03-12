@@ -6,9 +6,14 @@ package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.DriveTrainStopped;
 import frc.robot.commands.HoodAtAngle;
+import frc.robot.commands.SetBottomLiftCommanded;
+import frc.robot.commands.SetCargoFunnelCommanded;
+import frc.robot.commands.SetIntakeCommanded;
 import frc.robot.commands.SetShooterCommanded;
+import frc.robot.commands.SetTopLiftCommanded;
 import frc.robot.commands.ShooterAtSpeed;
 import frc.robot.commands.SpinBottomLift;
 import frc.robot.commands.SpinCargoFunnel;
@@ -25,10 +30,10 @@ import frc.robot.subsystems.Turret;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoShoot extends SequentialCommandGroup {
+public class AutoShootAutonomous extends SequentialCommandGroup {
 
   /** Creates a new AutoShoot. */
-  public AutoShoot(CargoFunnel mCargoFunnel, TopLift mTopLift, BottomLift mBottomLift,
+  public AutoShootAutonomous(CargoFunnel mCargoFunnel, TopLift mTopLift, BottomLift mBottomLift,
         Shooter mShooter, ShooterHood mShooterHood, Turret mTurret, Drivetrain mDrivetrain) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -41,10 +46,11 @@ public class AutoShoot extends SequentialCommandGroup {
       new DriveTrainStopped(mDrivetrain).withTimeout(0.5)
       ),      
     new ParallelCommandGroup(                       // OK TO shoot
-      new SpinCargoFunnel(mCargoFunnel, 0.55),
-      new SpinTopLift(mTopLift, 0.9),
-      new SpinBottomLift(mBottomLift, .5)
-      )
+      new SetCargoFunnelCommanded(mCargoFunnel, true, false, 0.7, 0.7, 0.0),
+      new SetTopLiftCommanded(mTopLift, true, 1.0),
+      new SetBottomLiftCommanded(mBottomLift, true, false, 1.0, 1.0, 0.0),
+      new WaitCommand(5.0)
+    )
     );
   }
 }

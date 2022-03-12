@@ -5,40 +5,41 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeDeploy;
 
-public class DeployIntake extends CommandBase {
+public class ChangeIntakeState extends CommandBase {
+  /** Creates a new DeployIntake. */
+  private IntakeDeploy mIntakeDeploy;
 
-  private Intake mIntake;
+  private boolean mIntakeDeployedState;
 
-  private boolean mToggle;
 
-  public DeployIntake(Intake subsystem, boolean toggle) {
+  public ChangeIntakeState(IntakeDeploy subsystem, boolean intakeDeployedState) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    mIntakeDeploy = subsystem;
 
-    mIntake = subsystem;
-
-    mToggle = toggle;
+    mIntakeDeployedState = intakeDeployedState;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    mIntakeDeploy.setIntakeDeployedState(mIntakeDeployedState);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mIntake.deployIntake(mToggle);
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
 }

@@ -16,11 +16,13 @@ import frc.lib.Ranging.CargoBallDataPoint;
 import frc.lib.Ranging.CargoBallInterpolator;
 import frc.robot.commands.*;
 import frc.robot.commands.Autonomous.AutoP3S1M;
+import frc.robot.commands.Autonomous.FiveBallAuto;
 import frc.robot.commands.Autonomous.ThreeBallAuto;
 import frc.lib.oi.controller.TriggerButton;
 import frc.robot.commands.groups.AutoIntake;
 import frc.robot.commands.groups.AutoShoot;
 import frc.robot.commands.groups.DejamBallPath;
+import frc.robot.commands.groups.PanicIntake;
 import frc.robot.commands.groups.StopAutoIntake;
 import frc.robot.paths.StraightPath;
 import frc.robot.paths.TestPath;
@@ -175,6 +177,10 @@ public class RobotContainer {
       TriggerButton autoShootButton = new TriggerButton(controller0, .4, 'r');
       autoShootButton.whileActiveContinuous(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift,
             mShooter, mShooterHood, mTurret, mDrivetrain), true);
+
+      JoystickButton panicIntakeButton = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
+      panicIntakeButton.whileActiveContinuous(new PanicIntake(mIntake, mIntakeDeploy));
+
       // X the wheels while shooting if not moving
       autoShootButton.whileActiveContinuous(new SetSwerveAngleSafe(mDrivetrain, 45, -45, -45, 45));
 
@@ -236,10 +242,10 @@ public class RobotContainer {
       startShooterButton.whenPressed(new SetShooterCommanded(mShooter, true), true);
 
       JoystickButton autoIntakeButton = new JoystickButton(controller1, XboxController.Button.kA.value);
-      autoIntakeButton.whenPressed(new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
+      autoIntakeButton.whenPressed(new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
 
       JoystickButton stopAutoIntakeButton = new JoystickButton(controller1, XboxController.Button.kB.value);
-      stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
+      stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
 
       JoystickButton lowGoalShotButton = new JoystickButton(controller1, XboxController.Button.kY.value);
       lowGoalShotButton.whenPressed(new NewHoodTarget(mShooterHood, 152), true);
@@ -288,8 +294,10 @@ public class RobotContainer {
     Command driveStraightNoShootAuto = new AutoFollowPath(mDrivetrain, new StraightPath(2.0).generateSwerveTrajectory(), true, false, 0.0);
     Command testPathAuto = new AutoFollowPath(mDrivetrain, new TestPath(mDrivetrain, 90.0).generateSwerveTrajectory(), true, true, 90.0);
     Command p3s1mAuto = new AutoP3S1M(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift,
-      mDrivetrain, mIntake);
-    Command threeBallAuto = new ThreeBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift, mDrivetrain, mIntake);
+      mDrivetrain, mIntake, mIntakeDeploy);
+    Command threeBallAuto = new ThreeBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift, mDrivetrain, mIntake, mIntakeDeploy);
+    autoChooser = new SendableChooser<>();
+    Command fiveBallAuto = new FiveBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift, mDrivetrain, mIntake, mIntakeDeploy);
     autoChooser = new SendableChooser<>();
 
     autoChooser.setDefaultOption("Do Nothing", null);
@@ -297,6 +305,8 @@ public class RobotContainer {
     autoChooser.addOption("Test Path", testPathAuto);
     autoChooser.addOption("P3 Shoot1 Move", p3s1mAuto);
     autoChooser.addOption("3 Ball Auto", threeBallAuto);
+    autoChooser.addOption("5 Ball Auto", fiveBallAuto);
+
 
 
 

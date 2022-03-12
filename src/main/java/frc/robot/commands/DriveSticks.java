@@ -199,7 +199,7 @@ public class DriveSticks extends CommandBase {
       double[] swerveStates;
 
       // Check for Field Centric Enabled
-      if (Constants.isFieldCentric) {
+      if (Constants.isFieldCentric && !Robot.mRobotContainer.controller0.getLeftBumperPressed()) {
         swerveStates = mDriveTrain.swerveController.calculate(x1, y1, x2, gyroValue);
       } else {
         swerveStates = mDriveTrain.swerveController.calculate(x1, y1, x2);

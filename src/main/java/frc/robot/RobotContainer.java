@@ -190,7 +190,7 @@ public class RobotContainer {
             mShooter, mShooterHood, mTurret, mDrivetrain), true);
 
       JoystickButton panicIntakeButton = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
-      panicIntakeButton.whileActiveContinuous(new PanicIntake(mIntake, mIntakeDeploy));
+      panicIntakeButton.whileHeld(new PanicIntake(mIntake, mIntakeDeploy));
 
       JoystickButton intakeOrientCameraButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
 
@@ -226,7 +226,6 @@ public class RobotContainer {
 
       //TODO: Remove Field Orient
     
-      //TODO: Saftey Button
 
 
   /*
@@ -234,7 +233,7 @@ public class RobotContainer {
   */
     //-Triggers
       TriggerButton dejamButton = new TriggerButton(controller1, .3, 'r');
-      dejamButton.whileActiveContinuous(new DejamBallPath(mIntake, mCargoFunnel, mBottomLift, mTopLift), true);
+      dejamButton.whileActiveContinuous(new DejamBallPath(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
 
     //-D-Pad
       POVButton moveHoodUpButton = new POVButton(controller1, 0);
@@ -256,6 +255,7 @@ public class RobotContainer {
 
       JoystickButton autoIntakeButton = new JoystickButton(controller1, XboxController.Button.kA.value);
       autoIntakeButton.whenPressed(new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
+      // autoIntakeButton.whenPressed(new ChangeIntakeState(mIntakeDeploy, true), true);
 
       JoystickButton stopAutoIntakeButton = new JoystickButton(controller1, XboxController.Button.kB.value);
       stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
@@ -353,12 +353,12 @@ public class RobotContainer {
   }
 
   private void initCamera() {
-    intakeCamera = CameraServer.getInstance().startAutomaticCapture("Intake Camera", 2);
+    intakeCamera = CameraServer.startAutomaticCapture("Intake Camera", 2);
     intakeCamera.setConnectionStrategy(ConnectionStrategy.kAutoManage);
-    intakeCamera.setFPS(30);
+    intakeCamera.setFPS(20);
     intakeCamera.setResolution(160, 90);
 
-    virtualCamera = CameraServer.getInstance().addSwitchedCamera("Drive Camera");
+    virtualCamera = CameraServer.addSwitchedCamera("Drive Camera");
     virtualCamera.setSource(intakeCamera);
   }
 

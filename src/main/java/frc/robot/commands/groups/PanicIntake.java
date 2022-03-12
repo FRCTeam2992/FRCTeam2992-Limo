@@ -5,7 +5,7 @@
 package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.robot.commands.PanicIntakeRetract;
+import frc.robot.commands.RetractIntake;
 import frc.robot.commands.SpinIntake;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeDeploy;
@@ -20,7 +20,7 @@ public class PanicIntake extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new SpinIntake(mIntake, 0.0),
-      new PanicIntakeRetract(mIntakeDeploy)
+      new RetractIntake(mIntakeDeploy)
     );
   }
 }

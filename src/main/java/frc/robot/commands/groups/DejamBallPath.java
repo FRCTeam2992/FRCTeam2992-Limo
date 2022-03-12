@@ -6,6 +6,7 @@ package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.commands.DeployIntake;
 import frc.robot.commands.SpinBottomLift;
 import frc.robot.commands.SpinCargoFunnel;
 import frc.robot.commands.SpinIntake;
@@ -13,6 +14,7 @@ import frc.robot.commands.SpinTopLift;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeDeploy;
 import frc.robot.subsystems.TopLift;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -20,10 +22,11 @@ import frc.robot.subsystems.TopLift;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DejamBallPath extends SequentialCommandGroup {
   /** Creates a new DejamBallPath. */
-  public DejamBallPath(Intake mIntake, CargoFunnel mCargoFunnel, BottomLift mBottomLift, TopLift mTopLift) {
+  public DejamBallPath(Intake mIntake, CargoFunnel mCargoFunnel, BottomLift mBottomLift, TopLift mTopLift, IntakeDeploy mIntakeDeploy) {
     addCommands(
       //new DeployIntake(mIntake, true),
       new ParallelCommandGroup(
+        new DeployIntake(mIntakeDeploy),
         new SpinTopLift(mTopLift, -1),
         new SpinBottomLift(mBottomLift, -1),
         new SpinCargoFunnel(mCargoFunnel, -.75),

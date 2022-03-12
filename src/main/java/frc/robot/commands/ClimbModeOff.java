@@ -28,8 +28,8 @@ public class ClimbModeOff extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mClimb.toggleClimbMode = !mClimb.toggleClimbMode;
-    mIntake.deployIntake(mClimb.toggleClimbMode);
+    // mClimb.toggleClimbMode = !mClimb.toggleClimbMode;
+    // mIntake.deployIntake(mClimb.toggleClimbMode);
   }
 
   // Called once the command ends or is interrupted.

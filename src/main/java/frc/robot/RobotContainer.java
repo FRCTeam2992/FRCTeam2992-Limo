@@ -130,6 +130,7 @@ public class RobotContainer {
     SmartDashboard.putData(mDrivetrain);
     SmartDashboard.putData(mBottomLift);
     SmartDashboard.putData(mTopLift);
+    SmartDashboard.putData(mIntakeDeploy);
 
     // SmartDashboard Buttons
     // SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
@@ -265,8 +266,12 @@ public class RobotContainer {
   SmartDashBoard Buttons
   */
       SmartDashboard.putData("0 Wheels", new SetSwerveAngleSafe(mDrivetrain, 0, 0, 0, 0));
+
       SmartDashboard.putData("Up 1 Angle", new NewHoodTarget(mShooterHood, Math.floor(mShooterHood.getHoodTarget() + 1)));
       SmartDashboard.putData("Down 1 Angle", new NewHoodTarget(mShooterHood, Math.floor(mShooterHood.getHoodTarget() + -1)));
+
+      SmartDashboard.putData("Deploy Intake", new ChangeIntakeState(mIntakeDeploy, true));
+      SmartDashboard.putData("Retract Intake", new ChangeIntakeState(mIntakeDeploy, false));
 
     
     /*

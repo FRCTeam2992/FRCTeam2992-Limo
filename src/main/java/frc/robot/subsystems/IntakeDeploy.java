@@ -14,6 +14,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -25,6 +26,8 @@ public class IntakeDeploy extends SubsystemBase {
 
   private boolean intakeDeployedState = false;
 
+  private int dashboardCounter = 0;
+
   public IntakeDeploy() {
     intakeDeployMotor = new CANSparkMax(25, MotorType.kBrushless);
     intakeDeployMotor.setIdleMode(IdleMode.kBrake);
@@ -33,7 +36,7 @@ public class IntakeDeploy extends SubsystemBase {
     intakeLimitSwitch = new DigitalInput(2);
 
     SparkMaxPIDController intakeController = intakeDeployMotor.getPIDController();
-    intakeController.setOutputRange(.2, -.2);
+    intakeController.setOutputRange(.05, -.05);
     intakeController.setP(Constants.intakeP);
     intakeController.setI(Constants.intakeI);
     intakeController.setD(Constants.intakeD);
@@ -42,6 +45,17 @@ public class IntakeDeploy extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    if (++dashboardCounter >= 5) {
+      SmartDashboard.putNumber("Intake Deploy Motor Encoder", getEncoderAngle());
+      SmartDashboard.putBoolean("Intake Deploy Limit Switch", getLimitSwitch());
+
+      dashboardCounter = 0;
+    }
+
+    // if (getLimitSwitch()) {
+    // zeroIntakeDeployMotor();
+    // }
+
   }
 
   public boolean getLimitSwitch() {
@@ -49,15 +63,15 @@ public class IntakeDeploy extends SubsystemBase {
   }
 
   public double getEncoderAngle() {
-    return intakeDeployMotor.get();
+    return intakeDeployMotor.getEncoder().getPosition();
   }
 
   public void deployIntake() {
-      intakeDeployMotor.getPIDController().setReference(Constants.maxIntakeEncoderAngle, ControlType.kPosition);
-    }
+    intakeDeployMotor.getPIDController().setReference(Constants.maxIntakeEncoderAngle, ControlType.kPosition);
+  }
 
   public void retractIntake() {
-    intakeDeployMotor.getPIDController().setReference(Constants.minIntakeEncoderAngle, ControlType.kPosition); 
+    intakeDeployMotor.getPIDController().setReference(Constants.minIntakeEncoderAngle, ControlType.kPosition);
   }
 
   public boolean getIntakeDeployedState() {
@@ -71,6 +85,5 @@ public class IntakeDeploy extends SubsystemBase {
   public void zeroIntakeDeployMotor() {
     intakeDeployMotor.getEncoder().setPosition(0.0);
   }
-  
-  
+
 }

@@ -26,6 +26,8 @@ public class IntakeDeploy extends SubsystemBase {
 
   private boolean intakeDeployedState = false;
 
+  private PIDController intakeContorller;
+
   private int dashboardCounter = 0;
 
   public IntakeDeploy() {
@@ -35,11 +37,10 @@ public class IntakeDeploy extends SubsystemBase {
 
     intakeLimitSwitch = new DigitalInput(2);
 
-    SparkMaxPIDController intakeController = intakeDeployMotor.getPIDController();
-    intakeController.setOutputRange(.05, -.05);
-    intakeController.setP(Constants.intakeP);
-    intakeController.setI(Constants.intakeI);
-    intakeController.setD(Constants.intakeD);
+    intakeContorller = new PIDController(Constants.intakeP, Constants.intakeI, Constants.intakeD);
+    intakeContorller.setTolerance(Constants.hoodTolerance);
+    intakeContorller.disableContinuousInput();
+    intakeContorller.setIntegratorRange(-0.2, 0.2);
   }
 
   @Override
@@ -48,6 +49,7 @@ public class IntakeDeploy extends SubsystemBase {
     if (++dashboardCounter >= 5) {
       SmartDashboard.putNumber("Intake Deploy Motor Encoder", getEncoderAngle());
       SmartDashboard.putBoolean("Intake Deploy Limit Switch", getLimitSwitch());
+      SmartDashboard.putBoolean("Intake State", getIntakeDeployedState());
 
       dashboardCounter = 0;
     }
@@ -67,11 +69,26 @@ public class IntakeDeploy extends SubsystemBase {
   }
 
   public void deployIntake() {
-    intakeDeployMotor.getPIDController().setReference(Constants.maxIntakeEncoderAngle, ControlType.kPosition);
+
+    double power = intakeContorller.calculate(getEncoderAngle(), Constants.maxIntakeEncoderAngle);
+    power = MathUtil.clamp(power, -.5, .5);
+    if ((Math.abs(getEncoderAngle() - Constants.maxIntakeEncoderAngle) < Constants.intakeTolerance)) {
+      power = 0;
+    }
+
+    intakeDeployMotor.set(power);
+    SmartDashboard.putNumber("deploy power", power);
   }
 
   public void retractIntake() {
-    intakeDeployMotor.getPIDController().setReference(Constants.minIntakeEncoderAngle, ControlType.kPosition);
+    double power = intakeContorller.calculate(getEncoderAngle(), Constants.minIntakeEncoderAngle);
+    power = MathUtil.clamp(power, -.7, .3);
+    if ((Math.abs(getEncoderAngle() - Constants.minIntakeEncoderAngle) < Constants.intakeTolerance)) {
+      power = Constants.intakeF;
+    }
+    intakeDeployMotor.set(power);
+    SmartDashboard.putNumber("retract power", power);
+  
   }
 
   public boolean getIntakeDeployedState() {
@@ -86,4 +103,7 @@ public class IntakeDeploy extends SubsystemBase {
     intakeDeployMotor.getEncoder().setPosition(0.0);
   }
 
+  public void setIntakeDeployedSpeed(double speed){
+    intakeDeployMotor.set(speed);
+  }
 }

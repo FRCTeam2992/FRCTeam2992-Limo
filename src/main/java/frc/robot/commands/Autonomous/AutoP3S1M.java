@@ -29,6 +29,7 @@ import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeDeploy;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterHood;
 import frc.robot.subsystems.TopLift;
@@ -42,7 +43,7 @@ public class AutoP3S1M extends ParallelCommandGroup {
   /** Creates a new AutoIntake. */
   public AutoP3S1M(ShooterHood mShooterHood, Shooter mShooter, Turret mTurret, 
       CargoBallInterpolator mInterpolator, CargoFunnel mCargoFunnel, TopLift mTopLift,
-      BottomLift mBottomLift, Drivetrain mDrivetrain, Intake mIntake) {
+      BottomLift mBottomLift, Drivetrain mDrivetrain, Intake mIntake, IntakeDeploy mIntakeDeploy) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -58,7 +59,7 @@ public class AutoP3S1M extends ParallelCommandGroup {
       new SequentialCommandGroup(
         // new WaitCommand(0.040),
         new AutoShoot(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
-        new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift),
+        new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
         new AutoFollowPath(mDrivetrain, new StraightPath(2.0).generateSwerveTrajectory(), false, false, 0)
       )
     );

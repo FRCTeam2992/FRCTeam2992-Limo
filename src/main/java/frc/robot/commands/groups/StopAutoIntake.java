@@ -5,6 +5,7 @@
 package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import frc.robot.commands.ChangeIntakeState;
 import frc.robot.commands.SetBottomLiftCommanded;
 import frc.robot.commands.SetCargoFunnelCommanded;
 import frc.robot.commands.SetIntakeCommanded;
@@ -13,6 +14,7 @@ import frc.robot.commands.StopBottomLift;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakeDeploy;
 import frc.robot.subsystems.TopLift;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -21,9 +23,9 @@ import frc.robot.subsystems.TopLift;
 public class StopAutoIntake extends ParallelCommandGroup {
 
   /** Creates a new AutoIntake. */
-  public StopAutoIntake(Intake mIntake, CargoFunnel mCargoFunnel, BottomLift mBottomLift, TopLift mTopLift) {
+  public StopAutoIntake(Intake mIntake, CargoFunnel mCargoFunnel, BottomLift mBottomLift, TopLift mTopLift, IntakeDeploy mIntakeDeploy) {
     addCommands(
-      // TODO:  Figure out deploy intake new DeployIntake(mIntake, false),
+      new ChangeIntakeState(mIntakeDeploy, false),
       new SetIntakeCommanded(mIntake, false, 0.0),
       new SetCargoFunnelCommanded(mCargoFunnel, false, false, 0.0, 0.0, 0.0),
       new SetBottomLiftCommanded(mBottomLift, false, false, 0.0, 0.0, 0.0),

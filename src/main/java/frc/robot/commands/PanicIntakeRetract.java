@@ -7,11 +7,14 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.IntakeDeploy;
 
-public class DefaultIntakeDeploy extends CommandBase {
-  /** Creates a new DefaultIntakeDeployComand. */
+public class PanicIntakeRetract extends CommandBase {
+  /** Creates a new DeployIntake. */
   private IntakeDeploy mIntakeDeploy;
 
-  public DefaultIntakeDeploy(IntakeDeploy subsystem) {
+  private boolean mIntakeDeployedState;
+
+
+  public PanicIntakeRetract(IntakeDeploy subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     mIntakeDeploy = subsystem;
 
@@ -21,19 +24,15 @@ public class DefaultIntakeDeploy extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    mIntakeDeploy.retractIntake();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(mIntakeDeploy.getIntakeDeployedState()){
-       mIntakeDeploy.deployIntake();
-    } else {
-     mIntakeDeploy.retractIntake();
-    }
+
   }
 
-  
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}

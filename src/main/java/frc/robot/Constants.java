@@ -48,8 +48,8 @@ public class Constants {
   public static final double turretRobotOffset = 320;
   public static final int turretMinEnd = 20;
   public static final int turretMaxEnd = 340;
-  public static final int turretMaxSlowZone = 300;
-  public static final int turretMinSlowZone = 60;
+  public static final int turretMaxSlowZone = 315;
+  public static final int turretMinSlowZone = 45;
   public static final double turretJoystickDeadband = .75;
   public static final double turretDefaultAngle = 180;
 

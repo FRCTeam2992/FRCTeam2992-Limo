@@ -18,6 +18,7 @@ import frc.robot.commands.*;
 import frc.robot.commands.Autonomous.AutoP3S1M;
 import frc.robot.commands.Autonomous.FiveBallAuto;
 import frc.robot.commands.Autonomous.ThreeBallAuto;
+import frc.robot.commands.Autonomous.TwoBallAuto;
 import frc.lib.oi.controller.TriggerButton;
 import frc.robot.commands.groups.AutoIntake;
 import frc.robot.commands.groups.AutoShoot;
@@ -188,14 +189,13 @@ public class RobotContainer {
       TriggerButton autoShootButton = new TriggerButton(controller0, .4, 'r');
       autoShootButton.whileActiveContinuous(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift,
             mShooter, mShooterHood, mTurret, mDrivetrain), true);
+      autoShootButton.whileActiveContinuous(new SetSwerveAngleSafe(mDrivetrain, 45, -45, -45, 45));
 
-      JoystickButton panicIntakeButton = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
-      panicIntakeButton.whileHeld(new PanicIntake(mIntake, mIntakeDeploy));
+
+      JoystickButton panicIntakeButton1 = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
+      panicIntakeButton1.whileHeld(new PanicIntake(mIntake, mIntakeDeploy));
 
       JoystickButton intakeOrientCameraButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
-
-      // X the wheels while shooting if not moving
-      autoShootButton.whileActiveContinuous(new SetSwerveAngleSafe(mDrivetrain, 45, -45, -45, 45));
 
     //-D-Pad
       POVButton xPatternButtonUp = new POVButton(controller0, 0);
@@ -231,9 +231,13 @@ public class RobotContainer {
   /*
   controller1 Buttons
   */
-    //-Triggers
+    //-Triggers and Bumpers
       TriggerButton dejamButton = new TriggerButton(controller1, .3, 'r');
       dejamButton.whileActiveContinuous(new DejamBallPath(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
+
+      JoystickButton panicIntakeButton2 = new JoystickButton(controller1, XboxController.Button.kRightBumper.value);
+      panicIntakeButton2.whileHeld(new PanicIntake(mIntake, mIntakeDeploy));
+
 
     //-D-Pad
       POVButton moveHoodUpButton = new POVButton(controller1, 0);
@@ -269,7 +273,9 @@ public class RobotContainer {
       JoystickButton stopShooterButton = new JoystickButton(controller1, XboxController.Button.kBack.value);
       stopShooterButton.whenPressed(new SetShooterCommanded(mShooter, false), true);
 
-      //TODO: Start Climb Button left bumper
+      //TODO: Start Climb Button left bumper climb mode only
+
+      //TODO: panic button for b driver left bumper out of climb mode ^^^
 
 
       //TODO JoystickButton AutoClimb
@@ -308,14 +314,15 @@ public class RobotContainer {
   private void setupAutoSelector() {
     // Auto Commands
 
-    Command driveStraightNoShootAuto = new AutoFollowPath(mDrivetrain, new StraightPath(2.0).generateSwerveTrajectory(), true, false, 0.0);
+    Command driveStraightNoShootAuto = new AutoFollowPath(mDrivetrain, new StraightPath(2.0, 0).generateSwerveTrajectory(), true, false, 0.0);
     Command testPathAuto = new AutoFollowPath(mDrivetrain, new TestPath(mDrivetrain, 90.0).generateSwerveTrajectory(), true, true, 90.0);
     Command p3s1mAuto = new AutoP3S1M(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift,
       mDrivetrain, mIntake, mIntakeDeploy);
     Command threeBallAuto = new ThreeBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift, mDrivetrain, mIntake, mIntakeDeploy);
-    autoChooser = new SendableChooser<>();
+    Command twoBallAuto = new TwoBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift, mDrivetrain, mIntake, mIntakeDeploy);
     Command fiveBallAuto = new FiveBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift, mDrivetrain, mIntake, mIntakeDeploy);
     autoChooser = new SendableChooser<>();
+
 
     autoChooser.setDefaultOption("Do Nothing", null);
     autoChooser.addOption("Drive Straight (No Shoot)", driveStraightNoShootAuto);
@@ -323,6 +330,7 @@ public class RobotContainer {
     autoChooser.addOption("P3 Shoot1 Move", p3s1mAuto);
     autoChooser.addOption("3 Ball Auto", threeBallAuto);
     autoChooser.addOption("5 Ball Auto", fiveBallAuto);
+    autoChooser.addOption("2 Ball Auto Straight", twoBallAuto);
 
 
 

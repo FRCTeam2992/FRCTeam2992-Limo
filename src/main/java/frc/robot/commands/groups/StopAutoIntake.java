@@ -10,7 +10,6 @@ import frc.robot.commands.SetBottomLiftCommanded;
 import frc.robot.commands.SetCargoFunnelCommanded;
 import frc.robot.commands.SetIntakeCommanded;
 import frc.robot.commands.SetTopLiftCommanded;
-import frc.robot.commands.StopBottomLift;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;
 import frc.robot.subsystems.Intake;

@@ -90,6 +90,7 @@ public class Drivetrain extends SubsystemBase {
   public Trajectory testPathTrajectory;
   public Trajectory threeBallTrajectory;
   public Trajectory fiveBallTrajectory;
+  public Trajectory twoBallTrajectory;
 
   // DriveTrain Dashboard Update Counter
   private int dashboardCounter = 0;
@@ -140,7 +141,6 @@ public class Drivetrain extends SubsystemBase {
     setDriveNeutralMode(NeutralMode.Coast);
     setTurnNeutralMode(NeutralMode.Brake);
 
-    // TODO: figure out current values
     setDriveCurrentLimit(40.0, 40.0);
     setTurnCurrentLimit(60.0); // potentially unused
 
@@ -372,12 +372,14 @@ public class Drivetrain extends SubsystemBase {
     Path testPath = Filesystem.getDeployDirectory().toPath().resolve("output/TestPath.wpilib.json");
     Path threeBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/ThreeBallPath.wpilib.json");
     Path fiveBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/FiveBallPath.wpilib.json");
+    Path twoBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/TwoBallPath.wpilib.json");
     
 
     try {
       testPathTrajectory = TrajectoryUtil.fromPathweaverJson(testPath);
       threeBallTrajectory = TrajectoryUtil.fromPathweaverJson(threeBallPath);
       fiveBallTrajectory = TrajectoryUtil.fromPathweaverJson(fiveBallPath);
+      twoBallTrajectory = TrajectoryUtil.fromPathweaverJson(twoBallPath);
     } catch (IOException e) {
       DriverStation.reportError("Unable to load motion trajectories!", e.getStackTrace());
       e.printStackTrace();

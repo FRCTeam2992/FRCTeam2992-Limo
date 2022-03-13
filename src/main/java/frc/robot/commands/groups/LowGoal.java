@@ -6,14 +6,15 @@ package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.DriveTrainStopped;
 import frc.robot.commands.HoodAtAngle;
-import frc.robot.commands.SetBottomLiftCommanded;
-import frc.robot.commands.SetCargoFunnelCommanded;
+import frc.robot.commands.NewHoodTarget;
 import frc.robot.commands.SetShooterCommanded;
-import frc.robot.commands.SetTopLiftCommanded;
+import frc.robot.commands.SetShooterSpeedTargets;
 import frc.robot.commands.ShooterAtSpeed;
+import frc.robot.commands.SpinBottomLift;
+import frc.robot.commands.SpinCargoFunnel;
+import frc.robot.commands.SpinTopLift;
 import frc.robot.commands.TurretOnTarget;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;
@@ -26,27 +27,28 @@ import frc.robot.subsystems.Turret;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoShootAutonomous extends SequentialCommandGroup {
-
-  /** Creates a new AutoShoot. */
-  public AutoShootAutonomous(CargoFunnel mCargoFunnel, TopLift mTopLift, BottomLift mBottomLift,
-        Shooter mShooter, ShooterHood mShooterHood, Turret mTurret, Drivetrain mDrivetrain) {
+public class LowGoal extends SequentialCommandGroup {
+  /** Creates a new LowGoal. */
+  public LowGoal(CargoFunnel mCargoFunnel, TopLift mTopLift, BottomLift mBottomLift,
+  Shooter mShooter, ShooterHood mShooterHood, Turret mTurret, Drivetrain mDrivetrain) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-  addCommands(
-    new ParallelCommandGroup(                       // Preshoot checks must be completed first
+    addCommands(
+      new ParallelCommandGroup(
+        new NewHoodTarget(mShooterHood, 152),
+        new SetShooterSpeedTargets(mShooter, 1200, 0)
+      ),
+      new ParallelCommandGroup(                       // Preshoot checks must be completed first
       new SetShooterCommanded(mShooter, true),      // Make sure shooter is running
       new ShooterAtSpeed(mShooter).withTimeout(0.5),
       new HoodAtAngle(mShooterHood).withTimeout(2),
-      new TurretOnTarget(mTurret).withTimeout(0.5),
       new DriveTrainStopped(mDrivetrain).withTimeout(0.5)
       ),      
     new ParallelCommandGroup(                       // OK TO shoot
-      new SetCargoFunnelCommanded(mCargoFunnel, true, false, 0.7, 0.7, 0.0),
-      new SetTopLiftCommanded(mTopLift, true, 1.0),
-      new SetBottomLiftCommanded(mBottomLift, true, false, 1.0, 1.0, 0.0),
-      new WaitCommand(5.0)
-    )
+      new SpinCargoFunnel(mCargoFunnel, 0.55),
+      new SpinTopLift(mTopLift, 0.9),
+      new SpinBottomLift(mBottomLift, .5)
+      )
     );
   }
 }

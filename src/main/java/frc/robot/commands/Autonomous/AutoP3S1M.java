@@ -4,25 +4,17 @@
 
 package frc.robot.commands.Autonomous;
 
-import com.fasterxml.jackson.databind.ser.std.NumberSerializers.ShortSerializer;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.Ranging.CargoBallInterpolator;
 import frc.robot.commands.AutoFollowPath;
 import frc.robot.commands.AutoLimelightHood;
 import frc.robot.commands.AutoLimelightMainShooter;
 import frc.robot.commands.AutoLimelightSecondShooter;
 import frc.robot.commands.AutoTurretAim;
-import frc.robot.commands.MoveTurretToAngle;
-import frc.robot.commands.NewHoodTarget;
 import frc.robot.commands.SetShooterCommanded;
-import frc.robot.commands.SetShooterSpeedTargets;
-import frc.robot.commands.SetTopLiftCommanded;
-import frc.robot.commands.StartHood;
 import frc.robot.commands.groups.AutoIntake;
-import frc.robot.commands.groups.AutoLimelightRange;
 import frc.robot.commands.groups.AutoShoot;
 import frc.robot.paths.StraightPath;
 import frc.robot.subsystems.BottomLift;
@@ -47,7 +39,6 @@ public class AutoP3S1M extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      // TODO: new DeployIntake(idk what goes here);
       //new NewHoodTarget(mShooterHood, 0.0),
       //new StartHood(mShooterHood),
       //new SetShooterSpeedTargets(mShooter, 1500, 2000),
@@ -60,7 +51,7 @@ public class AutoP3S1M extends ParallelCommandGroup {
         // new WaitCommand(0.040),
         new AutoShoot(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
         new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
-        new AutoFollowPath(mDrivetrain, new StraightPath(2.0).generateSwerveTrajectory(), false, false, 0)
+        new AutoFollowPath(mDrivetrain, new StraightPath(2.0, 0).generateSwerveTrajectory(), false, false, 0)
       )
     );
   }

@@ -4,30 +4,20 @@
 
 package frc.robot.commands.Autonomous;
 
-import com.fasterxml.jackson.databind.ser.std.NumberSerializers.ShortSerializer;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.Ranging.CargoBallInterpolator;
 import frc.robot.commands.AutoFollowPath;
 import frc.robot.commands.AutoLimelightHood;
 import frc.robot.commands.AutoLimelightMainShooter;
 import frc.robot.commands.AutoLimelightSecondShooter;
 import frc.robot.commands.AutoTurretAim;
-import frc.robot.commands.MoveTurretToAngle;
-import frc.robot.commands.NewHoodTarget;
+import frc.robot.commands.ChangeIntakeState;
 import frc.robot.commands.SetShooterCommanded;
-import frc.robot.commands.SetShooterSpeedTargets;
-import frc.robot.commands.SetTopLiftCommanded;
-import frc.robot.commands.StartHood;
-import frc.robot.commands.StopTopLift;
 import frc.robot.commands.groups.AutoIntake;
-import frc.robot.commands.groups.AutoLimelightRange;
-import frc.robot.commands.groups.AutoShoot;
 import frc.robot.commands.groups.AutoShootAutonomous;
 import frc.robot.commands.groups.StopAutoIntake;
-import frc.robot.paths.StraightPath;
 import frc.robot.paths.ThreeBallPath;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;
@@ -51,7 +41,6 @@ public class ThreeBallAuto extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      // TODO: new DeployIntake(idk what goes here);
       //new NewHoodTarget(mShooterHood, 0.0),
       //new StartHood(mShooterHood),
       //new SetShooterSpeedTargets(mShooter, 1500, 2000),
@@ -63,6 +52,7 @@ public class ThreeBallAuto extends ParallelCommandGroup {
       new SequentialCommandGroup(
         // new WaitCommand(0.040),
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
+        new ChangeIntakeState(mIntakeDeploy, true),
         new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
         new AutoFollowPath(mDrivetrain, new ThreeBallPath(mDrivetrain, 88.5).generateSwerveTrajectory(), true, true, 88.5).withTimeout(5),
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3),

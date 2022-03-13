@@ -71,11 +71,6 @@ public class Intake extends SubsystemBase {
     }
 
     // Put methods for controlling this subsystem
-    public void deployIntake(boolean toggle) {
-        // TODO:  Figure out code to deploy/retract intake
-        intakeDeployed = toggle;
-    }
-
     public boolean getIntakePosition() {
         return intakeDeployed;
     }

@@ -25,10 +25,10 @@ public class AutoLimelightRange extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new AutoTurretAim(mTurret),
-      new StartHood(mShooterHood)//,
-      // new AutoLimelightHood(mTurret, mShooterHood, mInterpolator),
-      // new AutoLimelightMainShooter(mTurret, mShooter, mInterpolator),
-      // new AutoLimelightSecondShooter(mTurret, mShooter, mInterpolator)
+      new StartHood(mShooterHood),
+      new AutoLimelightHood(mTurret, mShooterHood, mInterpolator),
+      new AutoLimelightMainShooter(mTurret, mShooter, mInterpolator),
+      new AutoLimelightSecondShooter(mTurret, mShooter, mInterpolator)
     );
   }
 }

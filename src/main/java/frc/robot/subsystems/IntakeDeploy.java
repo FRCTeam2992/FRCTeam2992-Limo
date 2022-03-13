@@ -30,7 +30,7 @@ public class IntakeDeploy extends SubsystemBase {
   public IntakeDeploy() {
     intakeDeployMotor = new CANSparkMax(25, MotorType.kBrushless);
     intakeDeployMotor.setIdleMode(IdleMode.kBrake);
-    intakeDeployMotor.setInverted(false);
+    intakeDeployMotor.setInverted(true);
 
     intakeLimitSwitch = new DigitalInput(2);
 

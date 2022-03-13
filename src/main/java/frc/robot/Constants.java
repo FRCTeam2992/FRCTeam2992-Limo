@@ -31,7 +31,7 @@ public class Constants {
   public static final double intakeI = 0;
   public static final double intakeD = 0;
   public static final double intakeF = 0.005;
-  public static final double intakeTolerance = 1;
+  public static final double intakeTolerance = 2;
 
   // Shooter Constants
   public static final double defaultMainShooterSpeed = 2700;

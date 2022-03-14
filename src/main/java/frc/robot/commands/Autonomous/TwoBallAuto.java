@@ -12,6 +12,7 @@ import frc.robot.commands.AutoLimelightHood;
 import frc.robot.commands.AutoLimelightMainShooter;
 import frc.robot.commands.AutoLimelightSecondShooter;
 import frc.robot.commands.AutoTurretAim;
+import frc.robot.commands.AutoTurretAimAutonomous;
 import frc.robot.commands.SetShooterCommanded;
 import frc.robot.commands.groups.AutoIntake;
 import frc.robot.commands.groups.AutoShootAutonomous;
@@ -42,7 +43,7 @@ public class TwoBallAuto extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new SetShooterCommanded(mShooter, true),
-      new AutoTurretAim(mTurret),
+      new AutoTurretAimAutonomous(mTurret, false, 0),
       new AutoLimelightHood(mTurret, mShooterHood, mInterpolator),
       new AutoLimelightMainShooter(mTurret, mShooter, mInterpolator),
       new AutoLimelightSecondShooter(mTurret, mShooter, mInterpolator),

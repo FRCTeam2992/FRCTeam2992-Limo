@@ -1,21 +1,27 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.vision.LimeLight.LedMode;
 
 import frc.robot.subsystems.Turret;
 
-public class AutoTurretAim extends CommandBase {
+public class AutoTurretAimAutonomous extends CommandBase {
 
     private Turret mTurret;
+    private boolean mSetTarget;
+    private double mNewTarget;
 
-    private double turretSetAngle = 0.0;
+    private double turretSetAngle = 0;
+    private Timer   lostTargetTime = new Timer();
 
-    public AutoTurretAim(Turret subsystem) {
+    public AutoTurretAimAutonomous(Turret subsystem, boolean setTarget, double newTarget) {
         addRequirements(subsystem);
 
         mTurret = subsystem;
+        mSetTarget = setTarget;
+        mNewTarget = newTarget;
     }
 
     // Called just before this Command runs the first time
@@ -23,15 +29,23 @@ public class AutoTurretAim extends CommandBase {
     public void initialize() {
         mTurret.limeLightCamera.resetMedianFilters();
         mTurret.setAutoAiming(true);
+        if (mSetTarget) {
+            turretSetAngle = mNewTarget;
+            mTurret.turretTarget = turretSetAngle;
+        }
+        lostTargetTime.reset();
+        lostTargetTime.start();
+        
     }
 
     // Called repeatedly when this Command is scheduled to run
     @Override
     public void execute() {
-
+        turretSetAngle = mTurret.turretTarget;
         mTurret.limeLightCamera.setLedMode(LedMode.On);
 
         if (mTurret.limeLightCamera.hasTarget()) {
+            lostTargetTime.reset();
             double xOffset = mTurret.limeLightCamera.getTargetXOffset();
 
             if (Math.abs(xOffset) > 0.5) {
@@ -41,7 +55,11 @@ public class AutoTurretAim extends CommandBase {
         }
 
         else {
-            mTurret.setTurretSpeed(0);
+            if (lostTargetTime.get() > 0.25) {
+                mTurret.goToAngle(turretSetAngle);
+            } else {
+                mTurret.setTurretSpeed(0);
+            }
         }
     }
 

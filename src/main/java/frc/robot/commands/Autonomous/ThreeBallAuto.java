@@ -7,14 +7,22 @@ package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.lib.Ranging.CargoBallInterpolator;
 import frc.robot.commands.AutoFollowPath;
 import frc.robot.commands.AutoLimelightHood;
 import frc.robot.commands.AutoLimelightMainShooter;
 import frc.robot.commands.AutoLimelightSecondShooter;
 import frc.robot.commands.AutoTurretAim;
+import frc.robot.commands.AutoTurretAimAutonomous;
 import frc.robot.commands.ChangeIntakeState;
+import frc.robot.commands.MoveTurretToAngle;
+import frc.robot.commands.NewHoodTarget;
 import frc.robot.commands.SetShooterCommanded;
+import frc.robot.commands.SetShooterSpeedTargets;
+import frc.robot.commands.SetTurretTargetAngleAuto;
+import frc.robot.commands.StartHood;
+import frc.robot.commands.Deprecated.MoveHoodToAngle;
 import frc.robot.commands.groups.AutoIntake;
 import frc.robot.commands.groups.AutoShootAutonomous;
 import frc.robot.commands.groups.StopAutoIntake;
@@ -41,11 +49,11 @@ public class ThreeBallAuto extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      //new NewHoodTarget(mShooterHood, 0.0),
-      //new StartHood(mShooterHood),
-      //new SetShooterSpeedTargets(mShooter, 1500, 2000),
+      new NewHoodTarget(mShooterHood, -67.5),
+      new StartHood(mShooterHood),
+      new SetShooterSpeedTargets(mShooter, 1700, 2700),
       new SetShooterCommanded(mShooter, true),
-      new AutoTurretAim(mTurret),
+      new AutoTurretAimAutonomous(mTurret, true, 194),
       new AutoLimelightHood(mTurret, mShooterHood, mInterpolator),
       new AutoLimelightMainShooter(mTurret, mShooter, mInterpolator),
       new AutoLimelightSecondShooter(mTurret, mShooter, mInterpolator),
@@ -54,7 +62,11 @@ public class ThreeBallAuto extends ParallelCommandGroup {
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
         new ChangeIntakeState(mIntakeDeploy, true),
         new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
+        new NewHoodTarget(mShooterHood, 112),
+        new SetTurretTargetAngleAuto(mTurret, true, 109),
+        new SetShooterSpeedTargets(mShooter, 2200, 2750),
         new AutoFollowPath(mDrivetrain, new ThreeBallPath(mDrivetrain, 88.5).generateSwerveTrajectory(), true, true, 88.5).withTimeout(5),
+        new WaitCommand(0.25),
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3),
         new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
         new SetShooterCommanded(mShooter, false)

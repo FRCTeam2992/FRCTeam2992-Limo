@@ -32,6 +32,7 @@ public class Turret extends SubsystemBase {
     public Drivetrain mDrivetrain;
 
     private int dashboardCounter = 0;
+    public double turretTarget = 180.0;
 
     public Turret(Drivetrain drivetrain) {
         // Turret Motors
@@ -156,7 +157,7 @@ public class Turret extends SubsystemBase {
         return getTurretEncoder() * (360.0 / 4096.0);
     }
     
-    public static double getTurretAngle() {
+    public double getTurretAngle() {
         return angleOverlap(getTurretAngleRaw() - Constants.turretRobotOffset);
     }
 

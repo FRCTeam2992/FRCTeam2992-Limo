@@ -82,6 +82,11 @@ public class Robot extends TimedRobot {
     public void disabledInit() {
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
+        mRobotContainer.mBottomLift.setCommanded(false);
+        mRobotContainer.mTopLift.setCommanded(false);
+        mRobotContainer.mShooter.setShooterCommanded(false);
+        mRobotContainer.mIntake.setIntakeCommanded(false);
+        mRobotContainer.mIntakeDeploy.setIntakeDeployedState(false);
         stopVibrate();
     }
 

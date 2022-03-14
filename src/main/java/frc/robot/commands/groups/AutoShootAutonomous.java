@@ -37,14 +37,15 @@ public class AutoShootAutonomous extends SequentialCommandGroup {
     new ParallelCommandGroup(                       // Preshoot checks must be completed first
       new SetShooterCommanded(mShooter, true),      // Make sure shooter is running
       new ShooterAtSpeed(mShooter).withTimeout(0.5),
-      new HoodAtAngle(mShooterHood).withTimeout(2),
-      new TurretOnTarget(mTurret).withTimeout(0.5),
-      new DriveTrainStopped(mDrivetrain).withTimeout(0.5)
+      new HoodAtAngle(mShooterHood).withTimeout(0.25),
+      new TurretOnTarget(mTurret).withTimeout(0.25),
+      new DriveTrainStopped(mDrivetrain).withTimeout(0.5),
+      new WaitCommand(0.5)
       ),      
     new ParallelCommandGroup(                       // OK TO shoot
-      new SetCargoFunnelCommanded(mCargoFunnel, true, false, 0.7, 0.7, 0.0),
-      new SetTopLiftCommanded(mTopLift, true, 1.0),
-      new SetBottomLiftCommanded(mBottomLift, true, false, 1.0, 1.0, 0.0),
+      new SetCargoFunnelCommanded(mCargoFunnel, true, false, 0.55, 0.55, 0.0),
+      new SetTopLiftCommanded(mTopLift, true, 0.9),
+      new SetBottomLiftCommanded(mBottomLift, true, false, 0.5, 0.5, 0.0),
       new WaitCommand(5.0)
     )
     );

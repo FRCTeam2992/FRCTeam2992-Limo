@@ -13,7 +13,6 @@ import frc.robot.commands.AutoFollowPath;
 import frc.robot.commands.AutoLimelightHood;
 import frc.robot.commands.AutoLimelightMainShooter;
 import frc.robot.commands.AutoLimelightSecondShooter;
-import frc.robot.commands.AutoTurretAim;
 import frc.robot.commands.AutoTurretAimAutonomous;
 import frc.robot.commands.ChangeIntakeState;
 import frc.robot.commands.SetShooterCommanded;

@@ -218,7 +218,5 @@ public class Robot extends TimedRobot {
         mRobotContainer.mTopLift.reset();
     }
 
-    public void updateCamera(){
-        mRobotContainer.virtualCamera.setSource(mRobotContainer.intakeCamera);
-    }
+   
 }

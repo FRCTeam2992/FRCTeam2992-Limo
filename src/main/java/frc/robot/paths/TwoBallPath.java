@@ -12,6 +12,6 @@ public class TwoBallPath extends SwerveTrajectoryGenerator {
         // Set the Start Rotation
         setStartRotation(startRotation);
     
-        addHeadingWaypoint(0.1, startRotation);
+        //addHeadingWaypoint(0.1, startRotation);
     }
 }

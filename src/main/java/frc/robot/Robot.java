@@ -50,7 +50,7 @@ public class Robot extends TimedRobot {
         mRobotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         mRobotContainer.mDrivetrain.navx.zeroYaw();
-        mRobotContainer.mIntakeDeploy.zeroIntakeDeployMotor();
+        mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-2.0);
     }
 
     /**
@@ -120,7 +120,7 @@ public class Robot extends TimedRobot {
         // Get the Autonomous Command
         autoCommand = mRobotContainer.getAutoCommand();
 
-        mRobotContainer.mIntakeDeploy.zeroIntakeDeployMotor();
+        mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-2.0);
 
         resetSubsystems();
 

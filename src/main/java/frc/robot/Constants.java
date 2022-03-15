@@ -24,8 +24,8 @@ public class Constants {
   public static final double robotPeriod = 0.020;     // 20ms cycles
 
   //Intake Deploy Constants
-  public static final double maxIntakeEncoderAngle = 50;
-  public static final double minIntakeEncoderAngle = 2;
+  public static final double maxIntakeEncoderAngle = 48;
+  public static final double minIntakeEncoderAngle = 0;
   
   public static final double intakeP = 0.1;
   public static final double intakeI = 0;

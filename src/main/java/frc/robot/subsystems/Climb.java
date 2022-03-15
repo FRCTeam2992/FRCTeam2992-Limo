@@ -71,10 +71,38 @@ public class Climb extends SubsystemBase {
 
     // All code from here down only runs if in climb mode and not using override
 
-   
-    
-     // Right Side
-     if (getRighttEncoderAngle() < Constants.topClimbTarget && getRighttEncoderAngle() > 0) {
+    // Left Side
+    if (getLeftEncoderAngle() < Constants.topClimbTarget && getLeftEncoderAngle() > 0) {
+      // We are within the climb range of 0 to topTeleClimbLimit
+      if (getLeftEncoderAngle() > Constants.topClimbSlowZone && speed > 0) {
+        // Nearing the top so slow down if moving up
+        leftClimbMotor.set(ControlMode.PercentOutput, speed * Constants.climbSlowModifier);
+      } else if (getLeftEncoderAngle() < Constants.bottomClimbSlowZone && speed < 0) {
+        // Nearing the bottom so slow down if moving down
+        leftClimbMotor.set(ControlMode.PercentOutput, speed * Constants.climbSlowModifier);
+      } else {
+        // We are not near the top or bottom so full speed is OK
+        leftClimbMotor.set(ControlMode.PercentOutput, speed);
+      }
+    }
+    else {
+      // We are outside the climb range.  Only allow motion in proper direction
+      if (getLeftEncoderAngle() <= 0 && speed > 0) {
+        // We are below the "bottom" of climb range but moving up so its OK
+        leftClimbMotor.set(ControlMode.PercentOutput, speed);
+      }
+      else if (getLeftEncoderAngle() >= Constants.topClimbTarget && speed < 0) {
+        // We are above the "top" of climb range but moving down so its OK
+        leftClimbMotor.set(ControlMode.PercentOutput, speed);
+      }
+      else {
+        // Outside climb range and not moving towards climb range so stop
+        leftClimbMotor.set(ControlMode.PercentOutput, 0);
+      }
+    }
+
+    // Right Side
+    if (getRighttEncoderAngle() < Constants.topClimbTarget && getRighttEncoderAngle() > 0) {
       // We are within the climb range of 0 to topTeleClimbLimit
       if (getRighttEncoderAngle() > Constants.topClimbSlowZone && speed > 0) {
         // Nearing the top so slow down if moving up

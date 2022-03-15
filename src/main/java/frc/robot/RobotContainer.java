@@ -72,6 +72,7 @@ public class RobotContainer {
   public final TopLift mTopLift;
   public final BottomLift mBottomLift;
   public final IntakeDeploy mIntakeDeploy;
+  public final Climb mClimb;
 
   // Joysticks
   public XboxController controller0;
@@ -121,6 +122,9 @@ public class RobotContainer {
     mIntakeDeploy = new IntakeDeploy();
     mIntakeDeploy.setDefaultCommand(new DefaultIntakeDeploy(mIntakeDeploy));
     
+    mClimb = new Climb();
+    mClimb.setDefaultCommand(new ClimbSticks(mClimb));
+
     controller0 = new XboxController(0);
     controller1 = new XboxController(1);
 
@@ -139,6 +143,7 @@ public class RobotContainer {
     SmartDashboard.putData(mBottomLift);
     SmartDashboard.putData(mTopLift);
     SmartDashboard.putData(mIntakeDeploy);
+    SmartDashboard.putData(mClimb);
 
     // SmartDashboard Buttons
     // SmartDashboard.putData("Autonomous Command", new AutonomousCommand());
@@ -276,10 +281,12 @@ public class RobotContainer {
       
       JoystickButton stopShooterButton = new JoystickButton(controller1, XboxController.Button.kBack.value);
       stopShooterButton.whenPressed(new SetShooterCommanded(mShooter, false), true);
+      
+      // Double up stop shooter button as Climb mode off
+      stopShooterButton.whenPressed(new ClimbModeOff(mClimb, mIntake, mDrivetrain));
 
-      //TODO: Start Climb Button left bumper climb mode only
-
-      //TODO: panic button for b driver left bumper out of climb mode ^^^
+      JoystickButton climbModeOnButton = new JoystickButton(controller1, XboxController.Button.kStart.value);
+      climbModeOnButton.whenPressed(new ClimbModeOn(mClimb, mIntakeDeploy, mIntake, mDrivetrain));
 
 
       //TODO JoystickButton AutoClimb

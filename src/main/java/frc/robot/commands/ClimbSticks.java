@@ -4,45 +4,53 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.Climb;
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
 
-public class ClimbModeOff extends CommandBase {
-
+public class ClimbSticks extends CommandBase {
+  //Subsystem
   private Climb mClimb;
-  private Intake mIntake;
-  private Drivetrain mDrivetrain;
 
-  public ClimbModeOff(Climb subsystem, Intake intakeSubsystem, Drivetrain driveSubsystem) {
+  public ClimbSticks(Climb subsystem) {
+
     mClimb = subsystem;
-    mIntake = intakeSubsystem;
-    // addRequirements(intakeSubsystem);
-    mDrivetrain = driveSubsystem;
+    addRequirements(subsystem);
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    mClimb.setClimbMode(false);
-    mDrivetrain.setInSlowMode(false);
+    double climbY;
+   
+    climbY = -Robot.mRobotContainer.controller1.getRightY();
+
+    if (Math.abs(climbY) <= Constants.joystickDeadband*2){
+      climbY = 0.0;
+    }      
+    climbY = climbY * climbY * climbY;
+    
+    climbY = MathUtil.clamp(climbY, -0.2, 0.2);     // Temp clamp for testing
+    
+    mClimb.setClimbSpeed(climbY);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return false;
   }
+
+
 }
+

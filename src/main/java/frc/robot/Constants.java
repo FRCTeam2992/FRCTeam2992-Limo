@@ -157,4 +157,11 @@ public class Constants {
   // Max speeds where its safe to X wheels
   public static final double maxSpeedToX = 0.25; // m/sec
   public static final double maxTurnToX = 20.0;  // degrees/sec
+
+  // Climb Constants
+  public static final double bottomClimbTarget = 0.0;
+  public static final double topClimbTarget = 0.0;
+  public static final double bottomClimbSlowZone = 0.0;
+  public static final double topClimbSlowZone = 0.0;
+  public static final double climbSlowModifier = 0.5; 
 }

@@ -93,9 +93,9 @@ public class DriveSticks extends CommandBase {
       // Smooth the Rotation Axis and Apply Inverse Deadband
       double tempInverseDeadband = Constants.joystickRotationInverseDeadband;
 
-      // if (Robot.m_robotContainer.slowModeButton.get()) {
-      // tempInverseDeadband /= 0.6;
-      // }
+      if (mDriveTrain.isInSlowMode()) {
+        tempInverseDeadband /= 0.6;
+      }
 
       if (x2 >= 0.0) {
         x2 = tempInverseDeadband
@@ -138,11 +138,11 @@ public class DriveSticks extends CommandBase {
       x2 *= (2.0 / 3.0);
 
       // // Check for Slow Mode
-      // if (Robot.m_robotContainer.slowModeButton.get()) {
-      // x1 *= 0.6;
-      // y1 *= 0.6;
-      // x2 *= 0.6;
-      // }
+      if (mDriveTrain.isInSlowMode()) {
+        x1 *= 0.6;
+        y1 *= 0.6;
+        x2 *= 0.6;
+      }
 
       // Gyro Input (-180 to 180)
       double gyroValue = mDriveTrain.getGyroYaw();

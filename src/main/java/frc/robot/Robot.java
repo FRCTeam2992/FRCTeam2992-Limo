@@ -80,8 +80,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
-        mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
-        mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
+        mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Coast);
+        mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Coast);
         mRobotContainer.mBottomLift.setCommanded(false);
         mRobotContainer.mTopLift.setCommanded(false);
         mRobotContainer.mShooter.setShooterCommanded(false);
@@ -107,7 +107,7 @@ public class Robot extends TimedRobot {
         // Set the Drive Train to Brake
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
-
+       
         // Set the Drive Motors Current Limit
         mRobotContainer.mDrivetrain.setDriveCurrentLimit(60.0, 60.0);
 
@@ -121,6 +121,8 @@ public class Robot extends TimedRobot {
         autoCommand = mRobotContainer.getAutoCommand();
 
         mRobotContainer.mIntakeDeploy.zeroIntakeDeployMotor();
+
+        resetSubsystems();
 
         // Run the Auto Command
         if (autoCommand != null) {
@@ -152,7 +154,7 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveCurrentLimit(40.0, 40.0);
         mRobotContainer.mDrivetrain.setDriveRampRate(0.25);
 
-        mRobotContainer.mDrivetrain.resetOdometry();
+         // mRobotContainer.mDrivetrain.resetOdometry();
         resetSubsystems();
     }
 

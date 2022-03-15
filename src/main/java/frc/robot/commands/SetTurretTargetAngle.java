@@ -5,14 +5,14 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Turret;
 
-public class SetTurretTargetAngleAuto extends CommandBase {
+public class SetTurretTargetAngle extends CommandBase {
 
     private Turret mTurret;
 
     private boolean mSetTarget;
     private double mDefaultTarget;
 
-    public SetTurretTargetAngleAuto(Turret subsystem, boolean setTarget, double defaultTarget) {
+    public SetTurretTargetAngle(Turret subsystem, boolean setTarget, double defaultTarget) {
 
         mTurret = subsystem;
         mSetTarget = setTarget;

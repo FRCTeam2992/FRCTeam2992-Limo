@@ -238,10 +238,12 @@ public class RobotContainer {
       TriggerButton lowGoalShotButton = new TriggerButton(controller1, .3, 'l');
       lowGoalShotButton.whileActiveOnce(new NewHoodTarget(mShooterHood, 152), true);
       lowGoalShotButton.whileActiveOnce(new SetShooterSpeedTargets(mShooter, 1200, 0), true);
+      lowGoalShotButton.whileActiveOnce(new SetTurretTargetAngle(mTurret, true, 180));
 
       JoystickButton highGoalShotButton = new JoystickButton(controller1, XboxController.Button.kLeftBumper.value);
       highGoalShotButton.whenHeld(new NewHoodTarget(mShooterHood, -152));
       highGoalShotButton.whenHeld(new SetShooterSpeedTargets(mShooter, 1750, 2650));
+      highGoalShotButton.whenHeld(new SetTurretTargetAngle(mTurret, true, 0.0));
       
     //-D-Pad
       POVButton moveHoodUpButton = new POVButton(controller1, 0);
@@ -292,6 +294,7 @@ public class RobotContainer {
 
       SmartDashboard.putData("Deploy Intake", new ChangeIntakeState(mIntakeDeploy, true));
       SmartDashboard.putData("Retract Intake", new ChangeIntakeState(mIntakeDeploy, false));
+      SmartDashboard.putData("Reset Intake Encoder", new ResetIntakeDeployEncoder(mIntakeDeploy));
 
     
     /*

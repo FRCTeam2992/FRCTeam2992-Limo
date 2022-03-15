@@ -235,10 +235,14 @@ public class RobotContainer {
       TriggerButton dejamButton = new TriggerButton(controller1, .3, 'r');
       dejamButton.whileActiveContinuous(new DejamBallPath(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
 
-      JoystickButton panicIntakeButton2 = new JoystickButton(controller1, XboxController.Button.kRightBumper.value);
-      panicIntakeButton2.whileHeld(new PanicIntake(mIntake, mIntakeDeploy));
+      TriggerButton lowGoalShotButton = new TriggerButton(controller1, .3, 'l');
+      lowGoalShotButton.whileActiveOnce(new NewHoodTarget(mShooterHood, 152), true);
+      lowGoalShotButton.whileActiveOnce(new SetShooterSpeedTargets(mShooter, 1200, 0), true);
 
-
+      JoystickButton highGoalShotButton = new JoystickButton(controller1, XboxController.Button.kLeftBumper.value);
+      highGoalShotButton.whenHeld(new NewHoodTarget(mShooterHood, -152));
+      highGoalShotButton.whenHeld(new SetShooterSpeedTargets(mShooter, 1750, 2650));
+      
     //-D-Pad
       POVButton moveHoodUpButton = new POVButton(controller1, 0);
       moveHoodUpButton.whileHeld(new MoveHood(mShooterHood, .25), true);
@@ -264,9 +268,7 @@ public class RobotContainer {
       JoystickButton stopAutoIntakeButton = new JoystickButton(controller1, XboxController.Button.kB.value);
       stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
 
-      JoystickButton lowGoalShotButton = new JoystickButton(controller1, XboxController.Button.kY.value);
-      lowGoalShotButton.whenPressed(new NewHoodTarget(mShooterHood, 152), true);
-      lowGoalShotButton.whenPressed(new SetShooterSpeedTargets(mShooter, 1200, 0), true);
+
     
       //-Other Buttons
       
@@ -317,10 +319,10 @@ public class RobotContainer {
   private void setupAutoSelector() {
     // Auto Commands
 
-    Command driveStraightNoShootAuto = new AutoFollowPath(mDrivetrain, new StraightPath(2.0, 0).generateSwerveTrajectory(), true, false, 0.0);
-    Command testPathAuto = new AutoFollowPath(mDrivetrain, new TestPath(mDrivetrain, 90.0).generateSwerveTrajectory(), true, true, 90.0);
-    Command p3s1mAuto = new AutoP3S1M(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift,
-      mDrivetrain, mIntake, mIntakeDeploy);
+    //Command driveStraightNoShootAuto = new AutoFollowPath(mDrivetrain, new StraightPath(2.0, 0).generateSwerveTrajectory(), true, false, 0.0);
+    //Command testPathAuto = new AutoFollowPath(mDrivetrain, new TestPath(mDrivetrain, 90.0).generateSwerveTrajectory(), true, true, 90.0);
+    //Command p3s1mAuto = new AutoP3S1M(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift,
+    //  mDrivetrain, mIntake, mIntakeDeploy);
     Command threeBallAuto = new ThreeBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift, mDrivetrain, mIntake, mIntakeDeploy);
     Command twoBallAuto = new TwoBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift, mDrivetrain, mIntake, mIntakeDeploy);
     Command fiveBallAuto = new FiveBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift, mDrivetrain, mIntake, mIntakeDeploy);
@@ -328,9 +330,9 @@ public class RobotContainer {
 
 
     autoChooser.setDefaultOption("Do Nothing", null);
-    autoChooser.addOption("Drive Straight (No Shoot)", driveStraightNoShootAuto);
-    autoChooser.addOption("Test Path", testPathAuto);
-    autoChooser.addOption("P3 Shoot1 Move", p3s1mAuto);
+    //autoChooser.addOption("Drive Straight (No Shoot)", driveStraightNoShootAuto);
+    //autoChooser.addOption("Test Path", testPathAuto);
+    //autoChooser.addOption("P3 Shoot1 Move", p3s1mAuto);
     autoChooser.addOption("3 Ball Auto", threeBallAuto);
     autoChooser.addOption("5 Ball Auto", fiveBallAuto);
     autoChooser.addOption("2 Ball Auto Straight", twoBallAuto);
@@ -364,13 +366,13 @@ public class RobotContainer {
   }
 
   private void initCamera() {
-    intakeCamera = CameraServer.startAutomaticCapture("Intake Camera", 2);
+    intakeCamera = CameraServer.startAutomaticCapture();
     intakeCamera.setConnectionStrategy(ConnectionStrategy.kAutoManage);
     intakeCamera.setFPS(20);
     intakeCamera.setResolution(160, 90);
 
-    virtualCamera = CameraServer.addSwitchedCamera("Drive Camera");
-    virtualCamera.setSource(intakeCamera);
+    //virtualCamera = CameraServer.addSwitchedCamera("Drive Camera");
+    //virtualCamera.setSource(intakeCamera);
   }
 
   public void initInterpolator() {

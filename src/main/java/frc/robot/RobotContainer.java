@@ -240,6 +240,9 @@ public class RobotContainer {
       TriggerButton dejamButton = new TriggerButton(controller1, .3, 'r');
       dejamButton.whileActiveContinuous(new DejamBallPath(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
 
+      JoystickButton driverBPanicButton = new JoystickButton(controller1, XboxController.Button.kRightBumper.value);
+      driverBPanicButton.whileHeld(new PanicIntake(mIntake, mIntakeDeploy));
+
       TriggerButton lowGoalShotButton = new TriggerButton(controller1, .3, 'l');
       lowGoalShotButton.whileActiveOnce(new NewHoodTarget(mShooterHood, 152), true);
       lowGoalShotButton.whileActiveOnce(new SetShooterSpeedTargets(mShooter, 1200, 0), true);
@@ -275,18 +278,19 @@ public class RobotContainer {
       JoystickButton stopAutoIntakeButton = new JoystickButton(controller1, XboxController.Button.kB.value);
       stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
 
+      JoystickButton stopShooterButton = new JoystickButton(controller1, XboxController.Button.kY.value);
+      stopShooterButton.whenPressed(new StopShooter(mShooter), true);
+
 
     
       //-Other Buttons
       
-      JoystickButton stopShooterButton = new JoystickButton(controller1, XboxController.Button.kBack.value);
-      stopShooterButton.whenPressed(new SetShooterCommanded(mShooter, false), true);
-      
-      // Double up stop shooter button as Climb mode off
-      stopShooterButton.whenPressed(new ClimbModeOff(mClimb, mIntake, mDrivetrain));
+      JoystickButton climbModeOffButton = new JoystickButton(controller1, XboxController.Button.kBack.value);      
+      climbModeOffButton.whenPressed(new ClimbModeOff(mClimb, mIntake, mDrivetrain));
 
       JoystickButton climbModeOnButton = new JoystickButton(controller1, XboxController.Button.kStart.value);
       climbModeOnButton.whenPressed(new ClimbModeOn(mClimb, mIntakeDeploy, mIntake, mDrivetrain));
+      climbModeOnButton.whenPressed(new MoveTurretToAngle(mTurret, 180));
 
 
       //TODO JoystickButton AutoClimb

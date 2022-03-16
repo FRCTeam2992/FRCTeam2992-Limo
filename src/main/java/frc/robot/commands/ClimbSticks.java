@@ -36,9 +36,9 @@ public class ClimbSticks extends CommandBase {
     }      
     climbY = climbY * climbY * climbY;
     
-    climbY = MathUtil.clamp(climbY, -0.2, 0.2);     // Temp clamp for testing
+    climbY = MathUtil.clamp(climbY, -1.0, 1.0);     // Temp clamp for testing
     
-    mClimb.setClimbSpeed(climbY);
+    mClimb.setClimbSpeedSmart(climbY);
   }
 
   // Called once the command ends or is interrupted.

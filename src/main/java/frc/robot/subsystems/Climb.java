@@ -72,7 +72,7 @@ public class Climb extends SubsystemBase {
     // All code from here down only runs if in climb mode and not using override
 
     // Left Side
-    if (getLeftEncoderAngle() < Constants.topClimbTarget && getLeftEncoderAngle() > 0) {
+    if (getLeftEncoderAngle() < Constants.topClimbTarget && getLeftEncoderAngle() > Constants.bottomClimbTarget) {
       // We are within the climb range of 0 to topTeleClimbLimit
       if (getLeftEncoderAngle() > Constants.topClimbSlowZone && speed > 0) {
         // Nearing the top so slow down if moving up
@@ -102,7 +102,7 @@ public class Climb extends SubsystemBase {
     }
 
     // Right Side
-    if (getRighttEncoderAngle() < Constants.topClimbTarget && getRighttEncoderAngle() > 0) {
+    if (getRighttEncoderAngle() < Constants.topClimbTarget && getRighttEncoderAngle() > Constants.bottomClimbTarget) {
       // We are within the climb range of 0 to topTeleClimbLimit
       if (getRighttEncoderAngle() > Constants.topClimbSlowZone && speed > 0) {
         // Nearing the top so slow down if moving up

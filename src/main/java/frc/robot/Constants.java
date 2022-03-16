@@ -161,9 +161,9 @@ public class Constants {
   public static final double maxTurnToX = 20.0;  // degrees/sec
 
   // Climb Constants
-  public static final double bottomClimbTarget = 0.0;
-  public static final double topClimbTarget = 0.0;
-  public static final double bottomClimbSlowZone = 0.0;
-  public static final double topClimbSlowZone = 0.0;
+  public static final double bottomClimbTarget = -200000.0;
+  public static final double topClimbTarget = 325000;
+  public static final double bottomClimbSlowZone = 60000.0;
+  public static final double topClimbSlowZone = 270000.0;
   public static final double climbSlowModifier = 0.5; 
 }

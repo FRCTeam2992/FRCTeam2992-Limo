@@ -24,12 +24,12 @@ public class Climb extends SubsystemBase {
 
   public Climb() {
     leftClimbMotor = new WPI_TalonFX(40);
-    leftClimbMotor.setInverted(false);
+    leftClimbMotor.setInverted(true);
     leftClimbMotor.setNeutralMode(NeutralMode.Brake);
     addChild("leftClimbMotor", leftClimbMotor);
 
     rightClimbMotor = new WPI_TalonFX(41);
-    rightClimbMotor.setInverted(false);
+    rightClimbMotor.setInverted(true);
     rightClimbMotor.setNeutralMode(NeutralMode.Brake);
     addChild("rightClimbMotor", rightClimbMotor);
 

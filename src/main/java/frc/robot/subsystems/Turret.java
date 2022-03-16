@@ -69,7 +69,7 @@ public class Turret extends SubsystemBase {
         if (++dashboardCounter >= 5) {
 
         // Update Dashboard
-        // SmartDashboard.putNumber("Turret Encoder", getTurretEncoder());
+        SmartDashboard.putNumber("Turret Encoder", getTurretEncoder());
         SmartDashboard.putNumber("Turret Angle", angleOverlap(getTurretAngle()));
         SmartDashboard.putNumber("Turret Target", turretTargetAngle);
         // SmartDashboard.putNumber("Camera Angle", limeLightCamera.getCameraAngle(Constants.distanceTest,

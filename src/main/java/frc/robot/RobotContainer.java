@@ -408,9 +408,9 @@ public class RobotContainer {
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(119.4, 2100, 2750, 102));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(141.5, 2250, 2800, 112.6));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(165, 2400, 3000, 148.5));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(188.9, 2600, 3400, 148.5));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(213, 2900, 3550, 148.5));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(236, 3200, 3450, 148.5));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(188.9, 2750, 3450, 148.5));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(213, 3050, 3500, 148.5));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(236, 3250, 3500, 148.5));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(265, 3300, 3850, 148.5));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(280, 3450, 4700, 138));
   }

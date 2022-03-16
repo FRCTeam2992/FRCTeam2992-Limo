@@ -24,7 +24,7 @@ public class Constants {
   public static final double robotPeriod = 0.020;     // 20ms cycles
 
   //Intake Deploy Constants
-  public static final double maxIntakeEncoderAngle = 48;
+  public static final double maxIntakeEncoderAngle = 39;
   public static final double minIntakeEncoderAngle = 0;
   
   public static final double intakeP = 0.1;
@@ -44,12 +44,14 @@ public class Constants {
   public static final double turretI = 0.04;
   public static final double turretD = 0.002;
   public static final double turretTolerance = 2.0;
-  public static final int turretEncoderOffset = -1640;
-  public static final double turretRobotOffset = 320;
-  public static final int turretMinEnd = 20;
+  //public static final int turretEncoderOffset = -1640;
+  public static final int turretEncoderOffset = 2429;
+  //public static final double turretRobotOffset = 320;
+  public static final int turretRobotOffset = 51;
+  public static final int turretMinEnd = 33;
   public static final int turretMaxEnd = 340;
   public static final int turretMaxSlowZone = 315;
-  public static final int turretMinSlowZone = 45;
+  public static final int turretMinSlowZone = 58;
   public static final double turretJoystickDeadband = .75;
   public static final double turretDefaultAngle = 180;
 

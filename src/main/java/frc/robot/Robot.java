@@ -182,7 +182,7 @@ public class Robot extends TimedRobot {
     public void vibrateControllers() {
         if (++vibrateCounter >= 10) {
 
-            if ((mRobotContainer.mTurret.getTurretAngleRaw() < 30)
+            if ((mRobotContainer.mTurret.getTurretAngleRaw() < 23)
                     || (mRobotContainer.mTurret.getTurretAngleRaw() > 330)) {
                 mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 1);
                 mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 1);

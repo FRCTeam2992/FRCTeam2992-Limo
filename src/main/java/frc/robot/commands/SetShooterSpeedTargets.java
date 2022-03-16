@@ -24,7 +24,7 @@ public class SetShooterSpeedTargets extends CommandBase {
   @Override
   public void initialize() {
     mShooter.setMainShooterTargetRPM(mMainSpeed);
-    mShooter.setSecondaryShooterPower(mSecondarySpeed);
+    mShooter.setSecondaryShooterTargetRPM(mSecondarySpeed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

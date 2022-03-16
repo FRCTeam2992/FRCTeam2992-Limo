@@ -97,9 +97,6 @@ public class RobotContainer {
     // mIntake = new Intake();
     mDrivetrain = new Drivetrain();
     mDrivetrain.setDefaultCommand(new DriveSticks(mDrivetrain));
-
-    mTurret = new Turret(mDrivetrain);
-    mTurret.setDefaultCommand(new TurretSticks(mTurret));
     
     mShooterHood = new ShooterHood();
     mShooterHood.setDefaultCommand(new HoldHoodAngle(mShooterHood));
@@ -124,6 +121,9 @@ public class RobotContainer {
     
     mClimb = new Climb();
     mClimb.setDefaultCommand(new ClimbSticks(mClimb));
+
+    mTurret = new Turret(mDrivetrain);
+    mTurret.setDefaultCommand(new TurretSticks(mTurret, mClimb));
 
     controller0 = new XboxController(0);
     controller1 = new XboxController(1);
@@ -243,12 +243,12 @@ public class RobotContainer {
       TriggerButton lowGoalShotButton = new TriggerButton(controller1, .3, 'l');
       lowGoalShotButton.whileActiveOnce(new NewHoodTarget(mShooterHood, 152), true);
       lowGoalShotButton.whileActiveOnce(new SetShooterSpeedTargets(mShooter, 1200, 0), true);
-      lowGoalShotButton.whileActiveOnce(new SetTurretTargetAngle(mTurret, true, 180));
+      lowGoalShotButton.whileActiveOnce(new MoveTurretToAngle(mTurret, 180));
 
       JoystickButton highGoalShotButton = new JoystickButton(controller1, XboxController.Button.kLeftBumper.value);
       highGoalShotButton.whenHeld(new NewHoodTarget(mShooterHood, -152));
       highGoalShotButton.whenHeld(new SetShooterSpeedTargets(mShooter, 1750, 2650));
-      highGoalShotButton.whenHeld(new SetTurretTargetAngle(mTurret, true, 0.0));
+      highGoalShotButton.whenHeld(new MoveTurretToAngle(mTurret, 0.0));
       
     //-D-Pad
       POVButton moveHoodUpButton = new POVButton(controller1, 0);

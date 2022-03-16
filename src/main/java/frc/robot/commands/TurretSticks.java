@@ -38,7 +38,7 @@ public class TurretSticks extends CommandBase {
     double targetAngle;
     double xyMagnitude = Math.sqrt((x * x) + (y * y));
 
-    if (xyMagnitude >= Constants.turretJoystickDeadband || mClimb.getClimbMode()){
+    if (xyMagnitude >= Constants.turretJoystickDeadband && !mClimb.getClimbMode()){
       if(xyMagnitude > 1){
         x /= xyMagnitude;
         y /= xyMagnitude;

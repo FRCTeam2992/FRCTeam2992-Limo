@@ -15,6 +15,7 @@ import frc.robot.commands.AutoLimelightMainShooter;
 import frc.robot.commands.AutoLimelightSecondShooter;
 import frc.robot.commands.AutoTurretAimAutonomous;
 import frc.robot.commands.ChangeIntakeState;
+import frc.robot.commands.DriveStraightTimed;
 import frc.robot.commands.NewHoodTarget;
 import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetShooterCommanded;
@@ -65,7 +66,8 @@ public class TwoBallAuto extends ParallelCommandGroup {
         new NewHoodTarget(mShooterHood, 69),
         new SetTurretTargetAngle(mTurret, true, 180),
         new SetShooterSpeedTargets(mShooter, 2200, 2750),
-        new AutoFollowPath(mDrivetrain, new TwoBallPath(mDrivetrain, 226.5).generateSwerveTrajectory(), true, true, 226.5).withTimeout(5),
+        //new AutoFollowPath(mDrivetrain, new TwoBallPath(mDrivetrain, 226.5).generateSwerveTrajectory(), true, false, 0.0).withTimeout(5),
+        new DriveStraightTimed(mDrivetrain, 0.0, 0.2).withTimeout(2.0),
         new WaitCommand(0.25),
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3),
         new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),

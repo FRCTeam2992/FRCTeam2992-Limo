@@ -36,9 +36,9 @@ public class AutoShootAutonomous extends SequentialCommandGroup {
   addCommands(
     new ParallelCommandGroup(                       // Preshoot checks must be completed first
       new SetShooterCommanded(mShooter, true),      // Make sure shooter is running
-      new ShooterAtSpeed(mShooter).withTimeout(0.5),
-      new HoodAtAngle(mShooterHood).withTimeout(0.25),
-      new TurretOnTarget(mTurret).withTimeout(0.25),
+      new ShooterAtSpeed(mShooter).withTimeout(2),
+      new HoodAtAngle(mShooterHood).withTimeout(0.5),
+      new TurretOnTarget(mTurret).withTimeout(0.5),
       new DriveTrainStopped(mDrivetrain).withTimeout(0.5),
       new WaitCommand(0.5)
       ),      

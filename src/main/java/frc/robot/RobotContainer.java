@@ -279,7 +279,7 @@ public class RobotContainer {
       stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
 
       JoystickButton stopShooterButton = new JoystickButton(controller1, XboxController.Button.kY.value);
-      stopShooterButton.whenPressed(new StopShooter(mShooter), true);
+      stopShooterButton.whenPressed(new SetShooterCommanded(mShooter, false), true);
 
 
     
@@ -290,7 +290,7 @@ public class RobotContainer {
 
       JoystickButton climbModeOnButton = new JoystickButton(controller1, XboxController.Button.kStart.value);
       climbModeOnButton.whenPressed(new ClimbModeOn(mClimb, mIntakeDeploy, mIntake, mDrivetrain));
-      climbModeOnButton.whenPressed(new MoveTurretToAngle(mTurret, 180));
+      // climbModeOnButton.whenPressed(new MoveTurretToAngle(mTurret, 180));
 
 
       //TODO JoystickButton AutoClimb
@@ -381,7 +381,7 @@ public class RobotContainer {
 
   private void initCamera() {
     intakeCamera = CameraServer.startAutomaticCapture();
-    intakeCamera.setConnectionStrategy(ConnectionStrategy.kAutoManage);
+    //intakeCamera.setConnectionStrategy(ConnectionStrategy.kAutoManage);
     intakeCamera.setFPS(20);
     intakeCamera.setResolution(160, 90);
 

@@ -67,7 +67,7 @@ public class TwoBallAuto extends ParallelCommandGroup {
         new SetTurretTargetAngle(mTurret, true, 180),
         new SetShooterSpeedTargets(mShooter, 2200, 2750),
         //new AutoFollowPath(mDrivetrain, new TwoBallPath(mDrivetrain, 226.5).generateSwerveTrajectory(), true, false, 0.0).withTimeout(5),
-        new DriveStraightTimed(mDrivetrain, 0.0, 0.2).withTimeout(2.0),
+        new DriveStraightTimed(mDrivetrain, 0.0, 0.4).withTimeout(2),
         new WaitCommand(0.25),
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3),
         new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),

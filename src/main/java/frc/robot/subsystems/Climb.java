@@ -148,4 +148,9 @@ public class Climb extends SubsystemBase {
     return rightClimbMotor.getSelectedSensorPosition();
   }
 
+  public void resetClimbMotors(){
+    leftClimbMotor.setSelectedSensorPosition(0.0);
+    rightClimbMotor.setSelectedSensorPosition(0.0);
+    }
+
 }

@@ -51,6 +51,7 @@ public class Robot extends TimedRobot {
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         mRobotContainer.mDrivetrain.navx.zeroYaw();
         mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-11.0);
+        mRobotContainer.mClimb.resetClimbMotors();
     }
 
     /**
@@ -121,6 +122,7 @@ public class Robot extends TimedRobot {
         autoCommand = mRobotContainer.getAutoCommand();
 
         mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-11.0);
+
 
         resetSubsystems();
 

@@ -57,6 +57,7 @@ public class ThreeBallAuto extends ParallelCommandGroup {
       new AutoLimelightMainShooter(mTurret, mShooter, mInterpolator),
       new AutoLimelightSecondShooter(mTurret, mShooter, mInterpolator),
       new SequentialCommandGroup(
+        new WaitCommand(3),
         // new WaitCommand(0.040),
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
         new ChangeIntakeState(mIntakeDeploy, true),
@@ -65,7 +66,7 @@ public class ThreeBallAuto extends ParallelCommandGroup {
         new SetTurretTargetAngle(mTurret, true, 109),
         new SetShooterSpeedTargets(mShooter, 2200, 2750),
         new AutoFollowPath(mDrivetrain, new ThreeBallPath(mDrivetrain, 88.5).generateSwerveTrajectory(), true, false, 0.0).withTimeout(5),
-        new WaitCommand(0.25),
+        new WaitCommand(1),
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3),
         new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
         new SetShooterCommanded(mShooter, false)

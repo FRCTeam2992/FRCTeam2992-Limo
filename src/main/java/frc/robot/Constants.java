@@ -162,7 +162,7 @@ public class Constants {
 
   // Climb Constants
   public static final double bottomClimbTarget = -200000.0;
-  public static final double topClimbTarget = 325000;
+  public static final double topClimbTarget = 325000 + 16000;
   public static final double bottomClimbSlowZone = 60000.0;
   public static final double topClimbSlowZone = 270000.0;
   public static final double climbSlowModifier = 0.5; 

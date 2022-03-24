@@ -272,8 +272,8 @@ public class Drivetrain extends SubsystemBase {
 
       dashboardCounter = 0;
 
-      // SmartDashboard.putNumber("Gyro Pitch", navx.getPitch());
-      // SmartDashboard.putNumber("Gyro Roll", navx.getRoll());
+      SmartDashboard.putNumber("Gyro Pitch", navx.getPitch());
+      SmartDashboard.putNumber("Gyro Roll", navx.getRoll());
       // SmartDashboard.putNumber("Gyro Yaw", getGyroYaw());
       // SmartDashboard.putBoolean("Gyro Ready", navx.isConnected());
       // SmartDashboard.putBoolean("Gyro Calibrating", navx.isCalibrating());

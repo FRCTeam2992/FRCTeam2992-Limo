@@ -120,7 +120,7 @@ public class RobotContainer {
     mIntakeDeploy.setDefaultCommand(new DefaultIntakeDeploy(mIntakeDeploy));
     
     mClimb = new Climb();
-    mClimb.setDefaultCommand(new ClimbSticks(mClimb));
+    mClimb.setDefaultCommand(new ClimbSticks(mClimb, mDrivetrain));
 
     mTurret = new Turret(mDrivetrain);
     mTurret.setDefaultCommand(new TurretSticks(mTurret, mClimb));

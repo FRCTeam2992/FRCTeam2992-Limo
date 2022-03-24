@@ -5,24 +5,44 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.MedianFilter;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.Drivetrain;
 
 public class ClimbSticks extends CommandBase {
   //Subsystem
   private Climb mClimb;
+  private Drivetrain mDrivetrain;
 
-  public ClimbSticks(Climb subsystem) {
+  private boolean traverseLockPressed = false;             // True when traverse lockk button press processed
+  private boolean traverseLocked = false;                  // True when extension being held until at right angle
+  private Debouncer climbOnDebounce;
+  private MedianFilter pitchFilter;
+  private MedianFilter picthChangeFilter;
 
-    mClimb = subsystem;
-    addRequirements(subsystem);
+
+  public ClimbSticks(Climb climb, Drivetrain drivetrain) {
+
+    mClimb = climb;
+    addRequirements(climb);
+    mDrivetrain = drivetrain;
+    climbOnDebounce = new Debouncer(0.05, DebounceType.kBoth);
+    pitchFilter = new MedianFilter(5);
+    picthChangeFilter = new MedianFilter(5);
+
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    pitchFilter.reset();
+    picthChangeFilter.reset();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -38,6 +58,46 @@ public class ClimbSticks extends CommandBase {
     
     climbY = MathUtil.clamp(climbY, -1.0, 1.0);     // Temp clamp for testing
     
+    if (climbOnDebounce.calculate(Robot.mRobotContainer.controller1.getStartButton())) {
+      // Climb mode button pressed -- need to do interlock to time traverse extension
+      if (!traverseLockPressed) {
+        // New button press, so set locked mode
+        traverseLockPressed = true;
+        traverseLocked = true;
+      } else {
+        // Not a new button press so change no state 
+      }
+      
+      // Update the current pitch angle and rate of change using filters
+      double pitch = pitchFilter.calculate(mDrivetrain.getLastPitch());
+      double pitchChange = picthChangeFilter.calculate(mDrivetrain.getPitchChange());
+      
+      // If "locked" and trying to extend climber make sure we are at right part of swing
+      if (traverseLocked && (climbY > 0)) {
+        // We are traverse locked and trying to extend so need to check locks
+        if (((pitchChange < Constants.traversePitchMinDelta) &&  // Note pitchChange must be negative
+                (pitch > Constants.traverseMinPitch) &&
+                (pitch < Constants.traverseMaxPitch)) ||
+              ((mClimb.getLeftEncoderAngle() > Constants.traverseLockMaxEncoder) &&
+                (mClimb.getRighttEncoderAngle() > Constants.traverseLockMaxEncoder))) {
+          // Swinging fast enough in the right direction and right part of swing OR we have already released
+          traverseLocked = false;           // Met criteria so undo the lock
+        } else {
+          // Still locked so zero the power to climb motors
+          climbY = 0.0;
+        }
+        
+      } else {
+        // Change nothing -- Pressing button but already unlocked or not trying to extend so allow
+      }
+    } else {
+      // No longer pressing button so clear all traverse locks
+      traverseLockPressed = false;
+      traverseLocked = false;
+      pitchFilter.reset();
+      picthChangeFilter.reset();
+    }
+
     mClimb.setClimbSpeedSmart(climbY);
   }
 

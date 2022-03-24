@@ -78,6 +78,10 @@ public class Drivetrain extends SubsystemBase {
   private double distanceTraveled;             // How far we moved this cycle (meters)
   private double angleTurned;                  // How much did we rotate this cycle (degrees)
 
+  // NavX Pitch change (used by climb code)
+  double lastPitch = 0.0;                     // Pitch angle from prior cycle
+  double pitchChange = 0.0;                   // Change in pitch angle last cycle
+
   // Swerve Drive Kinematics
   public final SwerveDriveKinematics swerveDriveKinematics;
 
@@ -294,6 +298,10 @@ public class Drivetrain extends SubsystemBase {
     // SmartDashboard.putNumber("Odometry X", (latestSwervePose.getX() * (100 / 2.54)));
     // SmartDashboard.putNumber("Odometry Y", (latestSwervePose.getY() * (100 / 2.54)));
 
+
+    // Update the pitch info
+    pitchChange = navx.getPitch() - lastPitch;
+    lastPitch = navx.getPitch();
   }
 
   public void setDriveNeutralMode(NeutralMode mode) {
@@ -415,4 +423,13 @@ public class Drivetrain extends SubsystemBase {
     this.inSlowMode = inSlowMode;
   }
 
+  public double getLastPitch() {
+    return lastPitch;
+  }
+
+  public double getPitchChange() {
+    return pitchChange;
+  }
+
+ 
 }

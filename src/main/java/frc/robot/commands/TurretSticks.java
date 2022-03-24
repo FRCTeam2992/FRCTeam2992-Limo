@@ -7,18 +7,22 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Turret;
 
 public class TurretSticks extends CommandBase {
 
   private Turret mTurret;
 
-  /** Creates a new TurretSticks. */
-  public TurretSticks(Turret subsystem) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    mTurret = subsystem;
+  private Climb mClimb;
 
-    addRequirements(subsystem);
+  /** Creates a new TurretSticks. */
+  public TurretSticks(Turret turretSubsystem, Climb climbSubsystem) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    mTurret = turretSubsystem;
+    mClimb = climbSubsystem;
+
+    addRequirements(turretSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -34,7 +38,7 @@ public class TurretSticks extends CommandBase {
     double targetAngle;
     double xyMagnitude = Math.sqrt((x * x) + (y * y));
 
-    if (xyMagnitude >= Constants.turretJoystickDeadband) {
+    if (xyMagnitude >= Constants.turretJoystickDeadband && !mClimb.getClimbMode()){
       if(xyMagnitude > 1){
         x /= xyMagnitude;
         y /= xyMagnitude;
@@ -44,7 +48,7 @@ public class TurretSticks extends CommandBase {
       }
       mTurret.goToAngle(Turret.angleOverlap(targetAngle));
       // SmartDashboard.putNumber("TurretStick output", targetAngle);
-    } else {
+    } else{
       mTurret.stopTurret();
     }
   }

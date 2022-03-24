@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climb;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeDeploy;
 
@@ -14,16 +15,20 @@ public class ClimbModeOn extends CommandBase {
   private Climb mClimb;
   private IntakeDeploy mIntakeDeploy;
   private Intake mIntake;
+  private Drivetrain mDrivetrain;
 
-  public ClimbModeOn(Climb climbSubsystem, IntakeDeploy intakeDeploySubsystem, Intake intakeSubsystem) {
+  public ClimbModeOn(Climb climbSubsystem, IntakeDeploy intakeDeploySubsystem, Intake intakeSubsystem, 
+        Drivetrain driveSubsystem) {
     mClimb = climbSubsystem;
     mIntakeDeploy = intakeDeploySubsystem;
     mIntake = intakeSubsystem;
+    mDrivetrain = driveSubsystem;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    mDrivetrain.setInSlowMode(true);
     mClimb.setClimbMode(true);
     mIntakeDeploy.setIntakeDeployedState(false);
     mIntake.setIntakeCommanded(false);

@@ -95,6 +95,9 @@ public class Drivetrain extends SubsystemBase {
   // DriveTrain Dashboard Update Counter
   private int dashboardCounter = 0;
 
+  // Slow mode flag
+  private boolean inSlowMode = false;
+
   public Drivetrain() {
     // Drive Motors
     frontRightDrive = new WPI_TalonFX(2);
@@ -402,6 +405,14 @@ public class Drivetrain extends SubsystemBase {
 
   public double getAngleTurned() {
     return angleTurned;
+  }
+
+  public boolean isInSlowMode() {
+    return inSlowMode;
+  }
+
+  public void setInSlowMode(boolean inSlowMode) {
+    this.inSlowMode = inSlowMode;
   }
 
 }

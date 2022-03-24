@@ -50,7 +50,8 @@ public class Robot extends TimedRobot {
         mRobotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         mRobotContainer.mDrivetrain.navx.zeroYaw();
-        mRobotContainer.mIntakeDeploy.zeroIntakeDeployMotor();
+        mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-11.0);
+        mRobotContainer.mClimb.resetClimbMotors();
     }
 
     /**
@@ -80,8 +81,8 @@ public class Robot extends TimedRobot {
      */
     @Override
     public void disabledInit() {
-        mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
-        mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
+        mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Coast);
+        mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Coast);
         mRobotContainer.mBottomLift.setCommanded(false);
         mRobotContainer.mTopLift.setCommanded(false);
         mRobotContainer.mShooter.setShooterCommanded(false);
@@ -107,7 +108,7 @@ public class Robot extends TimedRobot {
         // Set the Drive Train to Brake
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
-
+       
         // Set the Drive Motors Current Limit
         mRobotContainer.mDrivetrain.setDriveCurrentLimit(60.0, 60.0);
 
@@ -120,7 +121,10 @@ public class Robot extends TimedRobot {
         // Get the Autonomous Command
         autoCommand = mRobotContainer.getAutoCommand();
 
-        mRobotContainer.mIntakeDeploy.zeroIntakeDeployMotor();
+        mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-11.0);
+
+
+        resetSubsystems();
 
         // Run the Auto Command
         if (autoCommand != null) {
@@ -152,7 +156,7 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveCurrentLimit(40.0, 40.0);
         mRobotContainer.mDrivetrain.setDriveRampRate(0.25);
 
-        mRobotContainer.mDrivetrain.resetOdometry();
+         // mRobotContainer.mDrivetrain.resetOdometry();
         resetSubsystems();
     }
 
@@ -180,7 +184,7 @@ public class Robot extends TimedRobot {
     public void vibrateControllers() {
         if (++vibrateCounter >= 10) {
 
-            if ((mRobotContainer.mTurret.getTurretAngleRaw() < 30)
+            if ((mRobotContainer.mTurret.getTurretAngleRaw() < 23)
                     || (mRobotContainer.mTurret.getTurretAngleRaw() > 330)) {
                 mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 1);
                 mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 1);
@@ -216,7 +220,5 @@ public class Robot extends TimedRobot {
         mRobotContainer.mTopLift.reset();
     }
 
-    public void updateCamera(){
-        mRobotContainer.virtualCamera.setSource(mRobotContainer.intakeCamera);
-    }
+   
 }

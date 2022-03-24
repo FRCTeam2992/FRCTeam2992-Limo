@@ -16,9 +16,10 @@ import frc.robot.commands.AutoLimelightSecondShooter;
 import frc.robot.commands.AutoTurretAimAutonomous;
 import frc.robot.commands.ChangeIntakeState;
 import frc.robot.commands.NewHoodTarget;
+import frc.robot.commands.ResetGyro;
 import frc.robot.commands.SetShooterCommanded;
 import frc.robot.commands.SetShooterSpeedTargets;
-import frc.robot.commands.SetTurretTargetAngleAuto;
+import frc.robot.commands.SetTurretTargetAngle;
 import frc.robot.commands.StartHood;
 import frc.robot.commands.groups.AutoIntake;
 import frc.robot.commands.groups.AutoShootAutonomous;
@@ -46,6 +47,7 @@ public class ThreeBallAuto extends ParallelCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
+      new ResetGyro(mDrivetrain, 88.5),
       new NewHoodTarget(mShooterHood, -67.5),
       new StartHood(mShooterHood),
       new SetShooterSpeedTargets(mShooter, 1700, 2700),
@@ -55,15 +57,16 @@ public class ThreeBallAuto extends ParallelCommandGroup {
       new AutoLimelightMainShooter(mTurret, mShooter, mInterpolator),
       new AutoLimelightSecondShooter(mTurret, mShooter, mInterpolator),
       new SequentialCommandGroup(
+        new WaitCommand(3),
         // new WaitCommand(0.040),
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
         new ChangeIntakeState(mIntakeDeploy, true),
         new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
         new NewHoodTarget(mShooterHood, 112),
-        new SetTurretTargetAngleAuto(mTurret, true, 109),
+        new SetTurretTargetAngle(mTurret, true, 109),
         new SetShooterSpeedTargets(mShooter, 2200, 2750),
-        new AutoFollowPath(mDrivetrain, new ThreeBallPath(mDrivetrain, 88.5).generateSwerveTrajectory(), true, true, 88.5).withTimeout(5),
-        new WaitCommand(0.25),
+        new AutoFollowPath(mDrivetrain, new ThreeBallPath(mDrivetrain, 88.5).generateSwerveTrajectory(), true, false, 0.0).withTimeout(5),
+        new WaitCommand(1),
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3),
         new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
         new SetShooterCommanded(mShooter, false)

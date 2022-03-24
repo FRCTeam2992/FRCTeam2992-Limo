@@ -5,36 +5,25 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drivetrain;
+import frc.robot.subsystems.IntakeDeploy;
 
-public class ResetGyro extends CommandBase {
+public class ResetIntakeDeployEncoder extends CommandBase {
 
   // Subsystem Instance
-  private Drivetrain mDriveTrain;
-  private double  mGyroOffset;
+  private IntakeDeploy mIntakeDeploy;
 
-  public ResetGyro(Drivetrain subsystem) {
+  public ResetIntakeDeployEncoder(IntakeDeploy subsystem) {
     // Subsystem Instance
-    mDriveTrain = subsystem;
-    mGyroOffset = 0.0;
+    mIntakeDeploy = subsystem;
 
     // Set the Subsystem Requirement
-  }
+    }
 
-  public ResetGyro(Drivetrain subsystem, double gyroOffset) {
-    mDriveTrain = subsystem;
-    mGyroOffset = gyroOffset;
-  }
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     // Reset the Gyro
-    mDriveTrain.navx.zeroYaw();
-    mDriveTrain.gyroOffset = mGyroOffset;
-
-    // Reset the Odometry
-    // Kill reset of odometry.  We want odometry to stay unchanged until next robot init
-    // mDriveTrain.resetOdometry();
+   mIntakeDeploy.initIntakeDeployMotor(-11.0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -24,8 +24,8 @@ public class Constants {
   public static final double robotPeriod = 0.020;     // 20ms cycles
 
   //Intake Deploy Constants
-  public static final double maxIntakeEncoderAngle = 50;
-  public static final double minIntakeEncoderAngle = 2;
+  public static final double maxIntakeEncoderAngle = 39;
+  public static final double minIntakeEncoderAngle = 0;
   
   public static final double intakeP = 0.1;
   public static final double intakeI = 0;
@@ -44,12 +44,14 @@ public class Constants {
   public static final double turretI = 0.04;
   public static final double turretD = 0.002;
   public static final double turretTolerance = 2.0;
-  public static final int turretEncoderOffset = -1640;
-  public static final double turretRobotOffset = 320;
-  public static final int turretMinEnd = 20;
+  //public static final int turretEncoderOffset = -1640;
+  public static final int turretEncoderOffset = 2429;
+  //public static final double turretRobotOffset = 320;
+  public static final int turretRobotOffset = 51;
+  public static final int turretMinEnd = 33;
   public static final int turretMaxEnd = 340;
   public static final int turretMaxSlowZone = 315;
-  public static final int turretMinSlowZone = 45;
+  public static final int turretMinSlowZone = 58;
   public static final double turretJoystickDeadband = .75;
   public static final double turretDefaultAngle = 180;
 
@@ -157,4 +159,11 @@ public class Constants {
   // Max speeds where its safe to X wheels
   public static final double maxSpeedToX = 0.25; // m/sec
   public static final double maxTurnToX = 20.0;  // degrees/sec
+
+  // Climb Constants
+  public static final double bottomClimbTarget = -200000.0;
+  public static final double topClimbTarget = 325000 + 16000;
+  public static final double bottomClimbSlowZone = 60000.0;
+  public static final double topClimbSlowZone = 270000.0;
+  public static final double climbSlowModifier = 0.5; 
 }

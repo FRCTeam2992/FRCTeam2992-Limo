@@ -52,7 +52,7 @@ public class IntakeDeploy extends SubsystemBase {
     }
 
     // if (getLimitSwitch()) {
-    // zeroIntakeDeployMotor();
+    //   initIntakeDeployMotor(0.0);
     // }
 
   }
@@ -96,8 +96,8 @@ public class IntakeDeploy extends SubsystemBase {
     this.intakeDeployedState = intakeDeployedState;
   }
 
-  public void zeroIntakeDeployMotor() {
-    intakeDeployMotor.getEncoder().setPosition(0.0);
+  public void initIntakeDeployMotor(double position) {
+    intakeDeployMotor.getEncoder().setPosition(position);
   }
 
   public void setIntakeDeployedSpeed(double speed){

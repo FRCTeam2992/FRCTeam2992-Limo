@@ -164,10 +164,12 @@ public class Constants {
   public static final double bottomClimbTarget = -200000.0;
   public static final double topClimbTarget = 325000 + 16000;
   public static final double bottomClimbSlowZone = 60000.0;
-  public static final double topClimbSlowZone = 270000.0;
-  public static final double climbSlowModifier = 0.5; 
-  public static final double traversePitchMinDelta = -20.0/50.0;       // Degrees / 20ms cycle
-  public static final double traverseMaxPitch = -5.0;                  // Degrees
-  public static final double traverseMinPitch = -15.0;                 // Degrees
+  public static final double topClimbSlowZone = 310000.0;
+  public static final double climbSlowModifier = 0.7; 
+  public static final double traversePitchMinDelta = 2.0/50.0;       // Degrees / 20ms cycle
+  public static final double traverseMaxPitch = 30.0;                  // Degrees
+  public static final double traverseMinPitch = -30.0;                 // Degrees
   public static final double traverseLockMaxEncoder = 100000;          // Lock does nothing once past this point
+  public static final double traversalPause = 150000;
+  public static final double traversalFullExtendPitch = -45;
 }

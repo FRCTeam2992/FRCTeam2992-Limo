@@ -58,7 +58,7 @@ public class ClimbSticks extends CommandBase {
     
     climbY = MathUtil.clamp(climbY, -1.0, 1.0);     // Temp clamp for testing
     
-    if (climbOnDebounce.calculate(Robot.mRobotContainer.controller1.getStartButton())) {
+    if (climbOnDebounce.calculate(Robot.mRobotContainer.controller1.getRightStickButton())) {
       // Climb mode button pressed -- need to do interlock to time traverse extension
       if (!traverseLockPressed) {
         // New button press, so set locked mode
@@ -89,6 +89,15 @@ public class ClimbSticks extends CommandBase {
         
       } else {
         // Change nothing -- Pressing button but already unlocked or not trying to extend so allow
+      }
+
+      if ((climbY > 0) && (mClimb.getLeftEncoderAngle() > Constants.traversalPause) && 
+            (mClimb.getRighttEncoderAngle() > Constants.traversalPause) &&
+            (pitch > Constants.traversalFullExtendPitch)) {
+        // Moving up and in pause zone and not yet sloped enough
+         //if (pitchChange < Constants.traversePitchMinDelta) {
+         climbY = 0.0;  
+      
       }
     } else {
       // No longer pressing button so clear all traverse locks

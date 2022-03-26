@@ -29,7 +29,7 @@ public class AutoIntake extends ParallelCommandGroup {
       new ChangeIntakeState(mIntakeDeploy, true),
       new SetIntakeCommanded(mIntake, true, 0.7),
       new SetCargoFunnelCommanded(mCargoFunnel, true, true, .7, .5, 0.0),
-      new SetBottomLiftCommanded(mBottomLift, true, true, 0.5, 0.0, 0.15),
+      new SetBottomLiftCommanded(mBottomLift, true, true, 0.5, 0.0, 0.12),
       new SetTopLiftCommanded(mTopLift, false, 0.0)
     );
   }

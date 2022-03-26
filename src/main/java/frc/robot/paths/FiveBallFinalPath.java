@@ -3,15 +3,16 @@ package frc.robot.paths;
 import frc.lib.drive.swerve.trajectory.SwerveTrajectoryGenerator;
 import frc.robot.subsystems.Drivetrain;
 
-public class FiveBallPath extends SwerveTrajectoryGenerator {
+public class FiveBallFinalPath extends SwerveTrajectoryGenerator {
 
-    public FiveBallPath(Drivetrain subsystem, double startRotation){
+    public FiveBallFinalPath(Drivetrain subsystem, double startRotation){
         // Setup
-        super(subsystem.fiveBallTrajectory);
+        super(subsystem.fiveBallFinalTrajectory);
 
         // Set the Start Rotation
         setStartRotation(startRotation);
     
         addHeadingWaypoint(0.1, startRotation);
+        addHeadingWaypoint(.75, 135);
     }
 }

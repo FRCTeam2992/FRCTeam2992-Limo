@@ -293,7 +293,6 @@ public class RobotContainer {
       // climbModeOnButton.whenPressed(new MoveTurretToAngle(mTurret, 180));
 
 
-      //TODO JoystickButton AutoClimb
 
   /*
   SmartDashBoard Buttons
@@ -350,9 +349,6 @@ public class RobotContainer {
     autoChooser.addOption("3 Ball Auto", threeBallAuto);
     autoChooser.addOption("5 Ball Auto", fiveBallAuto);
     autoChooser.addOption("2 Ball Auto Straight", twoBallAuto);
-
-
-
 
     SmartDashboard.putData("Auto Selector", autoChooser);
   }

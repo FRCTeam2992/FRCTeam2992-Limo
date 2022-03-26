@@ -25,7 +25,7 @@ import frc.robot.commands.StartHood;
 import frc.robot.commands.groups.AutoIntake;
 import frc.robot.commands.groups.AutoShootAutonomous;
 import frc.robot.commands.groups.StopAutoIntake;
-import frc.robot.paths.ThreeBallPath;
+import frc.robot.paths.ThreeBallMainPath;
 import frc.robot.paths.TwoBallPath;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;

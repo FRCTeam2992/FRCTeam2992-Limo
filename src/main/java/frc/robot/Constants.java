@@ -148,8 +148,8 @@ public class Constants {
   public static final double thetaCorrectionD = 0.0;
 
   // Max Path Following Drive Speeds
-  public static final double maxPathFollowingVelocity = 2.0; // (Meters per Second)
-  public static final double maxPathFollowingAcceleration = 0.5; // (Meters per Second Squared)
+  public static final double maxPathFollowingVelocity = 3.0; // (Meters per Second)
+  public static final double maxPathFollowingAcceleration = 2; // (Meters per Second Squared)
 
   // Max Path Following Turn Speeds
   public static final double maxThetaVelocity = 6.28; // (Radians per Second)

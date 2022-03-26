@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -92,9 +93,10 @@ public class Drivetrain extends SubsystemBase {
 
   // Motion Trajectories
   public Trajectory testPathTrajectory;
-  public Trajectory threeBallTrajectory;
-  public Trajectory fiveBallTrajectory;
+  public Trajectory threeBallMainTrajectory;
+  public Trajectory fiveBallFinalTrajectory;
   public Trajectory twoBallTrajectory;
+  public Trajectory threeBallForFiveTrajectory;
 
   // DriveTrain Dashboard Update Counter
   private int dashboardCounter = 0;
@@ -381,16 +383,17 @@ public class Drivetrain extends SubsystemBase {
   private void loadMotionPaths() {
     // Trajectory Paths
     Path testPath = Filesystem.getDeployDirectory().toPath().resolve("output/TestPath.wpilib.json");
-    Path threeBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/ThreeBallPath.wpilib.json");
-    Path fiveBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/FiveBallPath.wpilib.json");
+    Path threeBallPathMain = Filesystem.getDeployDirectory().toPath().resolve("output/ThreeBallPathMain.wpilib.json");
+    Path fiveBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/FiveBallPathFinal.wpilib.json");
     Path twoBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/TwoBallPath.wpilib.json");
-    
+    Path threeBallPathForFive = Filesystem.getDeployDirectory().toPath().resolve("output/ThreeBallPathForFive.wpilib.json");
 
     try {
       testPathTrajectory = TrajectoryUtil.fromPathweaverJson(testPath);
-      threeBallTrajectory = TrajectoryUtil.fromPathweaverJson(threeBallPath);
-      fiveBallTrajectory = TrajectoryUtil.fromPathweaverJson(fiveBallPath);
+      threeBallMainTrajectory = TrajectoryUtil.fromPathweaverJson(threeBallPathMain);
+      fiveBallFinalTrajectory = TrajectoryUtil.fromPathweaverJson(fiveBallPath);
       twoBallTrajectory = TrajectoryUtil.fromPathweaverJson(twoBallPath);
+      threeBallForFiveTrajectory = TrajectoryUtil.fromPathweaverJson(threeBallPathForFive);
     } catch (IOException e) {
       DriverStation.reportError("Unable to load motion trajectories!", e.getStackTrace());
       e.printStackTrace();

@@ -116,7 +116,7 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveRampRate(0.0);
 
         mRobotContainer.mDrivetrain.resetOdometry();
-        mRobotContainer.mDrivetrain.navx.zeroYaw();
+        //mRobotContainer.mDrivetrain.navx.zeroYaw();
 
         // Get the Autonomous Command
         autoCommand = mRobotContainer.getAutoCommand();

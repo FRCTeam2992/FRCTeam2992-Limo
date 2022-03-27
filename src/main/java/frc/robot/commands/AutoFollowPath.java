@@ -108,6 +108,12 @@ public class AutoFollowPath extends CommandBase {
 
     // Get the Desired Heading
     double heading = mSwerveyTrajectory.getDesiredHeading(currentTime);
+    while (heading > Math.PI) {
+      heading -= 2 * Math.PI;
+    }
+    while (heading <= -1 * Math.PI) {
+      heading += 2 * Math.PI;
+    }
 
     // Get the Ajusted Speeds
     ChassisSpeeds adjustSpeeds = controller.calculate(mDriveTrain.latestSwervePose, latestState,

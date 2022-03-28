@@ -186,7 +186,7 @@ public class RobotContainer {
   */
     //-Triggers
       TriggerButton autoAimButton = new TriggerButton(controller0, .4, 'l');
-      autoAimButton.whileActiveContinuous(new AutoTurretAim(mTurret));
+      autoAimButton.whileActiveContinuous(new AutoTurretAim(mTurret, mClimb));
       autoAimButton.whileActiveContinuous(new AutoLimelightHood(mTurret, mShooterHood, cargoBallInterpolator));
       autoAimButton.whileActiveContinuous(new AutoLimelightMainShooter(mTurret, mShooter, cargoBallInterpolator));
       autoAimButton.whileActiveContinuous(new AutoLimelightSecondShooter(mTurret, mShooter, cargoBallInterpolator));

@@ -172,4 +172,8 @@ public class Constants {
   public static final double traverseLockMaxEncoder = 100000;          // Lock does nothing once past this point
   public static final double traversalPause = 150000;
   public static final double traversalFullExtendPitch = -45;
+
+
+  // DataLogManager enabled
+  public static final boolean dataLogging = true;
 }

@@ -13,6 +13,9 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
+import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.drive.swerve.trajectory.SwerveTrajectory;
@@ -40,6 +43,11 @@ public class AutoFollowPath extends CommandBase {
   //Gyro Offset
   private boolean mSetGyroOffset;
   private double mGyroOffset;
+  private DataLog mDataLog;
+  private DoubleLogEntry gyroReadLog;
+  private DoubleLogEntry trajectoryHeadingReadLog;
+  private DoubleLogEntry trajectoryTimeStamp;
+  private DoubleLogEntry omegaRotation;
 
   public AutoFollowPath(Drivetrain subsystem, SwerveTrajectory swerveTrajectory, boolean resetOdometry,
         boolean setGyroOffset, double gyroOffset) {
@@ -48,6 +56,7 @@ public class AutoFollowPath extends CommandBase {
     mResetOdometry = resetOdometry;
     mSetGyroOffset = setGyroOffset;
     mGyroOffset = gyroOffset;
+    
 
     // Set the Subsystem Requirement
     addRequirements(mDriveTrain);
@@ -73,6 +82,14 @@ public class AutoFollowPath extends CommandBase {
 
     // Timer
     elapsedTimer = new Timer();
+
+    if (Constants.dataLogging){
+      mDataLog = DataLogManager.getLog();
+      gyroReadLog = new DoubleLogEntry(mDataLog, "/afp/odometryHeading");
+      trajectoryHeadingReadLog = new DoubleLogEntry(mDataLog, "/afp/trajectoryHeading");
+      trajectoryTimeStamp = new DoubleLogEntry(mDataLog, "/afp/trajectoryTimeStamp");
+      omegaRotation = new DoubleLogEntry(mDataLog, "/afp/omegaRotation");
+    }
   }
 
   // Called when the command is initially scheduled.
@@ -115,9 +132,21 @@ public class AutoFollowPath extends CommandBase {
       heading += 2 * Math.PI;
     }
 
+
+
     // Get the Ajusted Speeds
     ChassisSpeeds adjustSpeeds = controller.calculate(mDriveTrain.latestSwervePose, latestState,
         Rotation2d.fromDegrees(heading));
+
+
+    // Data Logging
+    if (Constants.dataLogging) {
+      gyroReadLog.append(mDriveTrain.latestSwervePose.getRotation().getRadians());
+      trajectoryHeadingReadLog.append((heading));
+      trajectoryTimeStamp.append(currentTime);
+      omegaRotation.append(adjustSpeeds.omegaRadiansPerSecond);
+    }
+
 
     // Get the Module States
     SwerveModuleState[] moduleStates = mDriveTrain.swerveDriveKinematics.toSwerveModuleStates(adjustSpeeds);

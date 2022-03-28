@@ -13,6 +13,6 @@ public class ThreeBallForFivePath extends SwerveTrajectoryGenerator {
         setStartRotation(startRotation);
         
         // addHeadingWaypoint(.2, 90);
-        addHeadingWaypoint(.6, 230);
+        addHeadingWaypoint(.6, -130);
     }
 }

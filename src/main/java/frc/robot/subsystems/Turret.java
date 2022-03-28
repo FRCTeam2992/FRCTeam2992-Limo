@@ -187,6 +187,14 @@ public class Turret extends SubsystemBase {
         this.autoAiming = autoAiming;
     }
 
+    public void autoAimingOn() {
+        this.autoAiming = true;
+    }
+
+    public void autoAimingOff() {
+        this.autoAiming = false;
+    }
+
     public boolean readyToShoot() {
         return (onTarget() || !isAutoAiming());
     } 

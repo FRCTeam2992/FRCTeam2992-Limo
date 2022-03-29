@@ -133,7 +133,7 @@ public class Constants {
   public static final Translation2d rearRightLocation = new Translation2d(-0.2955, -0.327);
 
   // Swerve X Axis Correction PID (Path Following)
-  public static final double xCorrectionP = 6.0;
+  public static final double xCorrectionP = 5.0;
   public static final double xCorrectionI = 0.0;
   public static final double xCorrectionD = 0.0;
 
@@ -143,7 +143,7 @@ public class Constants {
   public static final double yCorrectionD = 0.0;
 
   // Swerve Theta Axis Correction PID (Path Following)
-  public static final double thetaCorrectionP = 6.0;
+  public static final double thetaCorrectionP = 3.0;
   public static final double thetaCorrectionI = 0.0;
   public static final double thetaCorrectionD = 0.0;
 
@@ -175,5 +175,5 @@ public class Constants {
 
 
   // DataLogManager enabled
-  public static final boolean dataLogging = true;
+  public static final boolean dataLogging = false;
 }

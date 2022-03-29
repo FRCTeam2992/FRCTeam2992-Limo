@@ -11,8 +11,9 @@ public class FiveBallFinalPath extends SwerveTrajectoryGenerator {
 
         // Set the Start Rotation
         setStartRotation(startRotation);
-    
+        addHeadingWaypoint(0.001, startRotation);
+        addTimedHeadingWaypoint(0.1, 1.0, 135);
         // addHeadingWaypoint(0.1, startRotation);
-        addHeadingWaypoint(1.00, 135);
+        addHeadingWaypoint(3.00, 135);
     }
 }

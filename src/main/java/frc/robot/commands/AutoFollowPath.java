@@ -13,6 +13,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.State;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
@@ -49,6 +50,8 @@ public class AutoFollowPath extends CommandBase {
   private DoubleLogEntry trajectoryTimeStamp;
   private DoubleLogEntry omegaRotation;
 
+  private ProfiledPIDController thetaController;
+
   public AutoFollowPath(Drivetrain subsystem, SwerveTrajectory swerveTrajectory, boolean resetOdometry,
         boolean setGyroOffset, double gyroOffset) {
     // Subsystem Instance
@@ -68,7 +71,7 @@ public class AutoFollowPath extends CommandBase {
     mTrajectory = mSwerveyTrajectory.getTrajectory();
 
     // Create the Theta Controller
-    ProfiledPIDController thetaController = new ProfiledPIDController(Constants.thetaCorrectionP,
+    thetaController = new ProfiledPIDController(Constants.thetaCorrectionP,
         Constants.thetaCorrectionI, Constants.thetaCorrectionD,
         new TrapezoidProfile.Constraints(Constants.maxThetaVelocity, Constants.maxThetaAcceleration));
 
@@ -109,6 +112,8 @@ public class AutoFollowPath extends CommandBase {
       Rotation2d.fromDegrees(-mDriveTrain.getGyroYaw())));
     }
 
+    thetaController.reset(mDriveTrain.latestSwervePose.getRotation().getRadians(), 0.0);
+
     // Reset and Start the Elapsed Timer
     elapsedTimer.reset();
     elapsedTimer.start();
@@ -125,12 +130,12 @@ public class AutoFollowPath extends CommandBase {
 
     // Get the Desired Heading
     double heading = mSwerveyTrajectory.getDesiredHeading(currentTime);
-    while (heading > Math.PI) {
-      heading -= 2 * Math.PI;
-    }
-    while (heading <= -1 * Math.PI) {
-      heading += 2 * Math.PI;
-    }
+    // while (heading > Math.PI) {
+    //   heading -= 2 * Math.PI;
+    // }
+    // while (heading <= -1 * Math.PI) {
+    //   heading += 2 * Math.PI;
+    // }
 
 
 

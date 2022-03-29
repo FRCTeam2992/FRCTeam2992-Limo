@@ -50,7 +50,7 @@ public class CargoFunnel extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    if (!mBottomLift.getSensor1State() && !mBottomLift.getSensor2State()) {
+    if (!mBottomLift.getBottomSensorState() && !mBottomLift.getTopSensorState()) {
       // Neither sensor sees a ball -- cargo lift is empty to reset timer
       sensorTimer.reset();
     }
@@ -64,7 +64,7 @@ public class CargoFunnel extends SubsystemBase {
   public void setFunnelSpeedUsingCommandedSensors() {
     if (isCommanded()) {
       // We should be running in default command mode
-      if ((!mBottomLift.getSensor1State() && !mBottomLift.getSensor2State()) || (sensorTimer.get() < sensorDelay)) {
+      if ((!mBottomLift.getBottomSensorState() && !mBottomLift.getTopSensorState()) || (sensorTimer.get() < sensorDelay)) {
         // No ball is seen so run at higher speed
         funnelMotor.set(ControlMode.PercentOutput, noBallSpeed);
       } else {

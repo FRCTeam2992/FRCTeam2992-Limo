@@ -33,6 +33,9 @@ public class Constants {
   public static final double intakeF = 0.005;
   public static final double intakeTolerance = 2;
 
+  //Lift Tower
+  public static final double liftEncoderClicksDeadBand = 100;
+
   // Shooter Constants
   public static final double defaultMainShooterSpeed = 2700;
   public static final double defaultSecondaryShooterSpeed = 3300;

@@ -15,13 +15,13 @@ public class CargoFunnel extends SubsystemBase {
 
   private WPI_VictorSPX funnelMotor;
 
-  private boolean isCommanded = false;        // Is commanded to be moving during default command
-  private boolean checkSensor = false;        // CHeck the ball sensor if commanded
-  private double  noBallSpeed = 0.0;        // Speed to be commanded if no ball is seen
-  private double  withBallSpeed = 0.0;      // Speed to be commanded if we see a ball
-  private double  sensorDelay = 0.0;        // How long after seeing a ball before we jump to the withBallSpeed
+  private boolean isCommanded = false; // Is commanded to be moving during default command
+  private boolean checkSensor = false; // CHeck the ball sensor if commanded
+  private double noBallSpeed = 0.0; // Speed to be commanded if no ball is seen
+  private double withBallSpeed = 0.0; // Speed to be commanded if we see a ball
+  private double sensorDelay = 0.0; // How long after seeing a ball before we jump to the withBallSpeed
 
-  private Timer sensorTimer;          // Timer to keep track of how long we have seen a ball in cargo lift
+  private Timer sensorTimer; // Timer to keep track of how long we have seen a ball in cargo lift
   private BottomLift mBottomLift;
 
   public CargoFunnel(BottomLift bottomLift) {
@@ -64,7 +64,8 @@ public class CargoFunnel extends SubsystemBase {
   public void setFunnelSpeedUsingCommandedSensors() {
     if (isCommanded()) {
       // We should be running in default command mode
-      if ((!mBottomLift.getBottomSensorState() && !mBottomLift.getTopSensorState()) || (sensorTimer.get() < sensorDelay)) {
+      if ((!mBottomLift.getBottomSensorState() && !mBottomLift.getTopSensorState())
+          || (sensorTimer.get() < sensorDelay)) {
         // No ball is seen so run at higher speed
         funnelMotor.set(ControlMode.PercentOutput, noBallSpeed);
       } else {
@@ -74,6 +75,29 @@ public class CargoFunnel extends SubsystemBase {
     } else {
       // We are commanded off
       funnelMotor.set(ControlMode.PercentOutput, 0.0);
+    }
+  }
+
+  public void setFunnelSpeedUsingCommandedSensorsNew() {
+    if (isCommanded()) {
+      // We should be running in default command
+      // sensorTimer.start();
+      if ((mBottomLift.getBottomSensorState() && mBottomLift.getTopSensorState())) {
+        // If the top and the bottom or just the top is triggered
+        funnelMotor.set(ControlMode.PercentOutput, 0.0);
+
+      } else if (mBottomLift.getBottomSensorState() || mBottomLift.getTopSensorState()) {
+        // The bottom sees a ball run at lower speed
+        funnelMotor.set(ControlMode.PercentOutput, withBallSpeed);
+
+      } else {
+        // No ball is seen so run at higher speed
+        funnelMotor.set(ControlMode.PercentOutput, noBallSpeed);
+
+      } 
+    } else {
+      funnelMotor.set(ControlMode.PercentOutput, 0.0);
+
     }
   }
 

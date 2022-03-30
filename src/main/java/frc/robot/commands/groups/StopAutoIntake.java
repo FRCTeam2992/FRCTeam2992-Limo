@@ -7,6 +7,7 @@ package frc.robot.commands.groups;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.ChangeIntakeState;
 import frc.robot.commands.SetBottomLiftCommanded;
+import frc.robot.commands.SetBottomLiftCommandedNew;
 import frc.robot.commands.SetCargoFunnelCommanded;
 import frc.robot.commands.SetIntakeCommanded;
 import frc.robot.commands.SetTopLiftCommanded;
@@ -27,7 +28,7 @@ public class StopAutoIntake extends ParallelCommandGroup {
       new ChangeIntakeState(mIntakeDeploy, false),
       new SetIntakeCommanded(mIntake, false, 0.0),
       new SetCargoFunnelCommanded(mCargoFunnel, false, false, 0.0, 0.0, 0.0),
-      new SetBottomLiftCommanded(mBottomLift, false, false, 0.0, 0.0, 0.0),
+      new SetBottomLiftCommandedNew(mBottomLift, false, 0.0, 0.0),
       new SetTopLiftCommanded(mTopLift, false, 0.0)
     );
   }

@@ -60,14 +60,16 @@ public class TwoBallAuto extends ParallelCommandGroup {
       new AutoLimelightSecondShooter(mTurret, mShooter, mInterpolator),
       new SequentialCommandGroup(
         // new WaitCommand(0.040),
+        new WaitCommand(2.0),
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
+        new WaitCommand(1.0),
         new ChangeIntakeState(mIntakeDeploy, true),
         new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
         new NewHoodTarget(mShooterHood, 112),
         new SetTurretTargetAngle(mTurret, true, 169),
         new SetShooterSpeedTargets(mShooter, 2200, 2750),
-        new AutoFollowPath(mDrivetrain, new TwoBallPath(mDrivetrain, 226.5).generateSwerveTrajectory(), true, false, 0.0).withTimeout(5),
-        new WaitCommand(0.25),
+        new AutoFollowPath(mDrivetrain, new TwoBallPath(mDrivetrain, 226.5).generateSwerveTrajectory(), true, false, 0.0).withTimeout(7),
+        new WaitCommand(0.5),
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3),
         new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
         new SetShooterCommanded(mShooter, false)

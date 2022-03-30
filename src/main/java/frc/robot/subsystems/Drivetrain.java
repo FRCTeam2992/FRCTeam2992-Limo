@@ -97,6 +97,8 @@ public class Drivetrain extends SubsystemBase {
   public Trajectory fiveBallFinalTrajectory;
   public Trajectory twoBallTrajectory;
   public Trajectory threeBallForFiveTrajectory;
+  public Trajectory fiveBallFinalPart1Trajectory;
+  public Trajectory fiveBallFinalPart2Trajectory;
 
   // DriveTrain Dashboard Update Counter
   private int dashboardCounter = 0;
@@ -387,13 +389,17 @@ public class Drivetrain extends SubsystemBase {
     Path fiveBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/FiveBallPathFinal.wpilib.json");
     Path twoBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/TwoBallPath.wpilib.json");
     Path threeBallPathForFive = Filesystem.getDeployDirectory().toPath().resolve("output/ThreeBallPathForFive.wpilib.json");
-
+    Path fiveBallPathPart1 = Filesystem.getDeployDirectory().toPath().resolve("output/FiveBallPathPart1.wpilib.json");
+    Path fiveBallPathPart2 = Filesystem.getDeployDirectory().toPath().resolve("output/FiveBallPathPart2.wpilib.json");
+    
     try {
       testPathTrajectory = TrajectoryUtil.fromPathweaverJson(testPath);
       threeBallMainTrajectory = TrajectoryUtil.fromPathweaverJson(threeBallPathMain);
       fiveBallFinalTrajectory = TrajectoryUtil.fromPathweaverJson(fiveBallPath);
       twoBallTrajectory = TrajectoryUtil.fromPathweaverJson(twoBallPath);
       threeBallForFiveTrajectory = TrajectoryUtil.fromPathweaverJson(threeBallPathForFive);
+      fiveBallFinalPart1Trajectory = TrajectoryUtil.fromPathweaverJson(fiveBallPathPart1);
+      fiveBallFinalPart2Trajectory = TrajectoryUtil.fromPathweaverJson(fiveBallPathPart2);
     } catch (IOException e) {
       DriverStation.reportError("Unable to load motion trajectories!", e.getStackTrace());
       e.printStackTrace();

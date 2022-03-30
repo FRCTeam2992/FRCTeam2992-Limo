@@ -107,11 +107,12 @@ public class BottomLift extends SubsystemBase {
 
   public void setBottomLiftSpeedAsCommandedSensorNew() {
     if (isCommanded()) {
-      // We should be running in default command
-      if ((getBottomSensorState() && getTopSensorState()) || getTopSensorState()) {
+      if (!checkSensor) {
+        bottomLiftMotor.set(ControlMode.PercentOutput, noBallSpeed);
+      } else if ((getBottomSensorState() && getTopSensorState()) || getTopSensorState()) {
         // If the top and the bottom or just the top is triggered
         sensorTimer.start();
-        if(sensorTimer.get() > .04){
+        if(sensorTimer.get() > .070){
           bottomLiftMotor.set(ControlMode.PercentOutput, 0.0);
         }
         // if (!isHoldingPosition) { // get intitial limit when sensor is triggered

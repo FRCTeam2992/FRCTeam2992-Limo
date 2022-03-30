@@ -16,12 +16,18 @@ import frc.robot.commands.AutoTurretAimAutonomous;
 import frc.robot.commands.ChangeIntakeState;
 import frc.robot.commands.NewHoodTarget;
 import frc.robot.commands.ResetGyro;
+import frc.robot.commands.SetBottomLiftCommandedNew;
+import frc.robot.commands.SetCargoFunnelCommanded;
 import frc.robot.commands.SetShooterCommanded;
 import frc.robot.commands.SetShooterSpeedTargets;
 import frc.robot.commands.SetTurretTargetAngle;
 import frc.robot.commands.StartHood;
+import frc.robot.commands.StopBottomLift;
+import frc.robot.commands.StopCargoFunnel;
 import frc.robot.commands.groups.AutoIntake;
 import frc.robot.commands.groups.AutoShootAutonomous;
+import frc.robot.paths.FiveBallFinalPart1Path;
+import frc.robot.paths.FiveBallFinalPart2Path;
 import frc.robot.paths.FiveBallFinalPath;
 import frc.robot.paths.ThreeBallForFivePath;
 import frc.robot.paths.ThreeBallMainPath;
@@ -54,27 +60,32 @@ public class FiveBallAuto extends ParallelCommandGroup {
       new StartHood(mShooterHood),
       new SetShooterSpeedTargets(mShooter, 1700, 2700),
       new SetShooterCommanded(mShooter, true),
-      //new AutoTurretAimAutonomous(mTurret, true, 194),
+      new AutoTurretAimAutonomous(mTurret, true, 194),
       new AutoLimelightHood(mTurret, mShooterHood, mInterpolator),
       new AutoLimelightMainShooter(mTurret, mShooter, mInterpolator),
       new AutoLimelightSecondShooter(mTurret, mShooter, mInterpolator),
       new SequentialCommandGroup(
-        new WaitCommand(0.25),
+        //new WaitCommand(0.25),
         // new WaitCommand(0.040),
-        new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(0.75),
+        new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(0.8),
         new ChangeIntakeState(mIntakeDeploy, true),
+        new SetBottomLiftCommandedNew(mBottomLift, false, false, 0.0, 0.0),
         new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
         new NewHoodTarget(mShooterHood, 106),
-        //new SetTurretTargetAngle(mTurret, true, 98.5),
+        new SetTurretTargetAngle(mTurret, true, 93.0),
         new SetShooterSpeedTargets(mShooter, 2266, 2850),
         new AutoFollowPath(mDrivetrain, new ThreeBallForFivePath(mDrivetrain, 88.5).generateSwerveTrajectory(), true, false, 0.0).withTimeout(5),
-        new WaitCommand(0.5),
+        new WaitCommand(0.20),
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.3),
+        new SetBottomLiftCommandedNew(mBottomLift, false, true, 0.0, 0.0),
         new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
-        //new SetTurretTargetAngle(mTurret, true, 174),
-        new SetShooterSpeedTargets(mShooter, 2377, 2877),
-        new NewHoodTarget(mShooterHood, 117),
-        new AutoFollowPath(mDrivetrain, new FiveBallFinalPath(mDrivetrain, -130).generateSwerveTrajectory(), false, false, -130.0).withTimeout(7.5),
+        new SetTurretTargetAngle(mTurret, true, 181),
+        new SetShooterSpeedTargets(mShooter, 2500, 3000),
+        new NewHoodTarget(mShooterHood, 128),
+        new AutoFollowPath(mDrivetrain, new FiveBallFinalPart1Path(mDrivetrain, -130).generateSwerveTrajectory(), false, false, -130.0).withTimeout(7.5),
+        new WaitCommand(0.4),
+        new AutoFollowPath(mDrivetrain, new FiveBallFinalPart2Path(mDrivetrain, 135).generateSwerveTrajectory(), false, false, 135).withTimeout(7.5),
+        new WaitCommand(0.2),
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3)
       )
     );

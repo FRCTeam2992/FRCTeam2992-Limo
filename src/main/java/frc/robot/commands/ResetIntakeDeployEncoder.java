@@ -23,7 +23,7 @@ public class ResetIntakeDeployEncoder extends CommandBase {
   @Override
   public void initialize() {
     // Reset the Gyro
-   mIntakeDeploy.initIntakeDeployMotor(-11.0);
+   mIntakeDeploy.initIntakeDeployMotor(-1.0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

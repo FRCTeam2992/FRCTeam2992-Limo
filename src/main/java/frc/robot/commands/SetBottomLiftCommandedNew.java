@@ -13,11 +13,13 @@ public class SetBottomLiftCommandedNew extends CommandBase {
   private boolean mCommanded;
   private double mNoBallSpeed;
   private double mWithBallSpeed;
+  private boolean mCheckSensor;
 
   public SetBottomLiftCommandedNew (BottomLift subsystem, boolean commanded,
-            double noBallSpeed, double withBallSpeed) {
+            boolean checkSensor, double noBallSpeed, double withBallSpeed) {
     mBottomLift = subsystem;
     mCommanded = commanded;
+    mCheckSensor = checkSensor;
     mNoBallSpeed = noBallSpeed;
     mWithBallSpeed = withBallSpeed;
   }
@@ -28,6 +30,7 @@ public class SetBottomLiftCommandedNew extends CommandBase {
     mBottomLift.setCommanded(mCommanded);
     mBottomLift.setNoBallSpeed(mNoBallSpeed);
     mBottomLift.setWithBallSpeed(mWithBallSpeed);
+    mBottomLift.setCheckSensor(mCheckSensor);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

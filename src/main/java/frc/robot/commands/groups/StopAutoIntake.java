@@ -28,7 +28,7 @@ public class StopAutoIntake extends ParallelCommandGroup {
       new ChangeIntakeState(mIntakeDeploy, false),
       new SetIntakeCommanded(mIntake, false, 0.0),
       new SetCargoFunnelCommanded(mCargoFunnel, false, false, 0.0, 0.0, 0.0),
-      new SetBottomLiftCommandedNew(mBottomLift, false, 0.0, 0.0),
+      new SetBottomLiftCommandedNew(mBottomLift, false, false, 0.0, 0.0),
       new SetTopLiftCommanded(mTopLift, false, 0.0)
     );
   }

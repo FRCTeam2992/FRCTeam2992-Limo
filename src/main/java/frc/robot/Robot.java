@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
         mRobotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         mRobotContainer.mDrivetrain.navx.zeroYaw();
-        mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-11.0);
+        mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-1.0);
         mRobotContainer.mClimb.resetClimbMotors();
 
         if (Constants.dataLogging) {
@@ -128,7 +128,7 @@ public class Robot extends TimedRobot {
         // Get the Autonomous Command
         autoCommand = mRobotContainer.getAutoCommand();
 
-        mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-11.0);
+        mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-1.0);
 
 
         resetSubsystems();

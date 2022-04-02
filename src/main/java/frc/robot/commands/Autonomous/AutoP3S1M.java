@@ -50,7 +50,7 @@ public class AutoP3S1M extends ParallelCommandGroup {
       new SequentialCommandGroup(
         // new WaitCommand(0.040),
         new AutoShoot(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
-        new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
+        new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy, true),
         new AutoFollowPath(mDrivetrain, new StraightPath(2.0, 0).generateSwerveTrajectory(), false, false, 0)
       )
     );

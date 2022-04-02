@@ -71,7 +71,7 @@ public class ThreeBallAuto extends ParallelCommandGroup {
           new AutoLimelightSecondShooter(mTurret, mShooter, mInterpolator),
           new SequentialCommandGroup(
             new ChangeIntakeState(mIntakeDeploy, true),
-            new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
+            new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy, true),
             new NewHoodTarget(mShooterHood, -93),
             new SetTurretTargetAngle(mTurret, true, 60),//nice
             new SetShooterSpeedTargets(mShooter, 1840, 2720),

@@ -198,7 +198,7 @@ public class RobotContainer {
 
 
       JoystickButton panicIntakeButton1 = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
-      panicIntakeButton1.whileHeld(new PanicIntake(mIntake, mIntakeDeploy));
+      panicIntakeButton1.whileHeld(new PanicIntake(mIntake, mIntakeDeploy, mBottomLift, mCargoFunnel));
 
       JoystickButton intakeOrientCameraButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
 
@@ -241,7 +241,7 @@ public class RobotContainer {
       dejamButton.whileActiveContinuous(new DejamBallPath(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
 
       JoystickButton driverBPanicButton = new JoystickButton(controller1, XboxController.Button.kRightBumper.value);
-      driverBPanicButton.whileHeld(new PanicIntake(mIntake, mIntakeDeploy));
+      driverBPanicButton.whileHeld(new PanicIntake(mIntake, mIntakeDeploy, mBottomLift, mCargoFunnel));
 
       TriggerButton lowGoalShotButton = new TriggerButton(controller1, .3, 'l');
       lowGoalShotButton.whileActiveOnce(new NewHoodTarget(mShooterHood, 152), true);
@@ -272,7 +272,7 @@ public class RobotContainer {
       startShooterButton.whenPressed(new SetShooterCommanded(mShooter, true), true);
 
       JoystickButton autoIntakeButton = new JoystickButton(controller1, XboxController.Button.kA.value);
-      autoIntakeButton.whenPressed(new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
+      autoIntakeButton.whenPressed(new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy, true), true);
       // autoIntakeButton.whenPressed(new ChangeIntakeState(mIntakeDeploy, true), true);
 
       JoystickButton stopAutoIntakeButton = new JoystickButton(controller1, XboxController.Button.kB.value);
@@ -290,7 +290,10 @@ public class RobotContainer {
 
       JoystickButton climbModeOnButton = new JoystickButton(controller1, XboxController.Button.kStart.value);
       climbModeOnButton.whenPressed(new ClimbModeOn(mClimb, mIntakeDeploy, mIntake, mDrivetrain));
-      // climbModeOnButton.whenPressed(new MoveTurretToAngle(mTurret, 180));
+      climbModeOnButton.whenPressed(new MoveTurretToAngle(mTurret, 180));
+
+      // JoystickButton reverseIntakeButton = new JoystickButton(controller1, XboxController.Button.kRightStick.value);
+      // reverseIntakeButton.whenPressed(new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy, false));
 
 
 

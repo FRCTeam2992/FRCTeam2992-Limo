@@ -77,7 +77,7 @@ public class FiveBallAuto extends ParallelCommandGroup {
           new SequentialCommandGroup(
             new ChangeIntakeState(mIntakeDeploy, true),
             new SetBottomLiftCommandedNew(mBottomLift, false, false, 0.0, 0.0),
-            new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
+            new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy, true),
             new NewHoodTarget(mShooterHood, 106),
             new SetTurretTargetAngle(mTurret, true, 93.0),
             new SetShooterSpeedTargets(mShooter, 2266, 2850),
@@ -85,12 +85,12 @@ public class FiveBallAuto extends ParallelCommandGroup {
             new WaitCommand(0.20),
             new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.3),
             new SetBottomLiftCommandedNew(mBottomLift, false, true, 0.0, 0.0),
-            new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
+            new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy, true),
             new SetTurretTargetAngle(mTurret, true, 181),
             new SetShooterSpeedTargets(mShooter, 2500, 3000),
             new NewHoodTarget(mShooterHood, 128),
             new AutoFollowPath(mDrivetrain, new FiveBallFinalPart1Path(mDrivetrain, -130).generateSwerveTrajectory(), false, false, -130.0).withTimeout(7.5),
-            new WaitCommand(0.4),
+            new WaitCommand(0.6),
             new AutoFollowPath(mDrivetrain, new FiveBallFinalPart2Path(mDrivetrain, 135).generateSwerveTrajectory(), false, false, 135).withTimeout(7.5),
             new WaitCommand(0.2),
             new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3)

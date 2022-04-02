@@ -112,7 +112,7 @@ public class BottomLift extends SubsystemBase {
       } else if ((getBottomSensorState() && getTopSensorState()) || getTopSensorState()) {
         // If the top and the bottom or just the top is triggered
         sensorTimer.start();
-        if(sensorTimer.get() > .070){
+        if(sensorTimer.get() > .065){
           bottomLiftMotor.set(ControlMode.PercentOutput, 0.0);
         }
         // if (!isHoldingPosition) { // get intitial limit when sensor is triggered

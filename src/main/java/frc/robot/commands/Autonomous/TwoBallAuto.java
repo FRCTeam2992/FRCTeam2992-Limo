@@ -64,7 +64,7 @@ public class TwoBallAuto extends ParallelCommandGroup {
         new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
         new WaitCommand(1.0),
         new ChangeIntakeState(mIntakeDeploy, true),
-        new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
+        new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy, true),
         new NewHoodTarget(mShooterHood, 112),
         new SetTurretTargetAngle(mTurret, true, 169),
         new SetShooterSpeedTargets(mShooter, 2200, 2750),

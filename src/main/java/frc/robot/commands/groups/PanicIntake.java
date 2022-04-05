@@ -24,9 +24,9 @@ public class PanicIntake extends ParallelCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new SpinIntake(mIntake, 0.0),
-      new RetractIntake(mIntakeDeploy),
-      new SpinCargoFunnel(mCargoFunnel, 0.0),
-      new SpinBottomLift(mBottomLift, 0.0)
+      new RetractIntake(mIntakeDeploy)
+      // new SpinCargoFunnel(mCargoFunnel, 0.0),
+      // new SpinBottomLift(mBottomLift, 0.0)
     );
   }
 }

@@ -6,7 +6,11 @@ package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.RetractIntake;
+import frc.robot.commands.SpinBottomLift;
+import frc.robot.commands.SpinCargoFunnel;
 import frc.robot.commands.SpinIntake;
+import frc.robot.subsystems.BottomLift;
+import frc.robot.subsystems.CargoFunnel;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeDeploy;
 
@@ -15,12 +19,14 @@ import frc.robot.subsystems.IntakeDeploy;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class PanicIntake extends ParallelCommandGroup {
   /** Creates a new PanicIntake. */
-  public PanicIntake(Intake mIntake, IntakeDeploy mIntakeDeploy) {
+  public PanicIntake(Intake mIntake, IntakeDeploy mIntakeDeploy, BottomLift mBottomLift, CargoFunnel mCargoFunnel) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new SpinIntake(mIntake, 0.0),
       new RetractIntake(mIntakeDeploy)
+      // new SpinCargoFunnel(mCargoFunnel, 0.0),
+      // new SpinBottomLift(mBottomLift, 0.0)
     );
   }
 }

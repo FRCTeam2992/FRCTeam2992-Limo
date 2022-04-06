@@ -44,12 +44,14 @@ public class AutoTurretAimAutonomous extends CommandBase {
         turretSetAngle = mTurret.turretTarget;
         mTurret.limeLightCamera.setLedMode(LedMode.On);
 
-        if (mTurret.limeLightCamera.hasTarget()) {
+        if (mTurret.limeLightCamera.hasTarget() && mTurret.isAutoAiming()) {
             lostTargetTime.reset();
             double xOffset = mTurret.limeLightCamera.getTargetXOffset();
 
             if (Math.abs(xOffset) > 0.5) {
                 turretSetAngle = mTurret.getTurretAngle() + xOffset;
+            } else {
+                //turretSetAngle = mTurret.getTurretAngle();
             }
             mTurret.goToAngle(turretSetAngle);
         }

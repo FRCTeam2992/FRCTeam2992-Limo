@@ -33,6 +33,9 @@ public class Constants {
   public static final double intakeF = 0.005;
   public static final double intakeTolerance = 2;
 
+  //Lift Tower
+  public static final double liftEncoderClicksDeadBand = 100;
+
   // Shooter Constants
   public static final double defaultMainShooterSpeed = 2700;
   public static final double defaultSecondaryShooterSpeed = 3300;
@@ -44,14 +47,12 @@ public class Constants {
   public static final double turretI = 0.04;
   public static final double turretD = 0.002;
   public static final double turretTolerance = 2.0;
-  //public static final int turretEncoderOffset = -1640;
-  public static final int turretEncoderOffset = 2429;
-  //public static final double turretRobotOffset = 320;
-  public static final int turretRobotOffset = 51;
-  public static final int turretMinEnd = 33;
-  public static final int turretMaxEnd = 340;
-  public static final int turretMaxSlowZone = 315;
-  public static final int turretMinSlowZone = 58;
+  public static final int turretEncoderOffset = 2935;
+  public static final int turretRobotOffset = 67; 
+  public static final int turretMinEnd = 26;
+  public static final int turretMaxEnd = 336;
+  public static final int turretMaxSlowZone = 311;
+  public static final int turretMinSlowZone = 51;
   public static final double turretJoystickDeadband = .75;
   public static final double turretDefaultAngle = 180;
 
@@ -133,7 +134,7 @@ public class Constants {
   public static final Translation2d rearRightLocation = new Translation2d(-0.2955, -0.327);
 
   // Swerve X Axis Correction PID (Path Following)
-  public static final double xCorrectionP = 6.0;
+  public static final double xCorrectionP = 5.0;
   public static final double xCorrectionI = 0.0;
   public static final double xCorrectionD = 0.0;
 
@@ -143,13 +144,13 @@ public class Constants {
   public static final double yCorrectionD = 0.0;
 
   // Swerve Theta Axis Correction PID (Path Following)
-  public static final double thetaCorrectionP = 6.0;
+  public static final double thetaCorrectionP = 3.0;
   public static final double thetaCorrectionI = 0.0;
   public static final double thetaCorrectionD = 0.0;
 
   // Max Path Following Drive Speeds
-  public static final double maxPathFollowingVelocity = 2.0; // (Meters per Second)
-  public static final double maxPathFollowingAcceleration = 0.5; // (Meters per Second Squared)
+  public static final double maxPathFollowingVelocity = 3.0; // (Meters per Second)
+  public static final double maxPathFollowingAcceleration = 2; // (Meters per Second Squared)
 
   // Max Path Following Turn Speeds
   public static final double maxThetaVelocity = 6.28; // (Radians per Second)
@@ -164,6 +165,16 @@ public class Constants {
   public static final double bottomClimbTarget = -200000.0;
   public static final double topClimbTarget = 325000 + 16000;
   public static final double bottomClimbSlowZone = 60000.0;
-  public static final double topClimbSlowZone = 270000.0;
-  public static final double climbSlowModifier = 0.5; 
+  public static final double topClimbSlowZone = 310000.0;
+  public static final double climbSlowModifier = 0.7; 
+  public static final double traversePitchMinDelta = 2.0/50.0;       // Degrees / 20ms cycle
+  public static final double traverseMaxPitch = 30.0;                  // Degrees
+  public static final double traverseMinPitch = -30.0;                 // Degrees
+  public static final double traverseLockMaxEncoder = 100000;          // Lock does nothing once past this point
+  public static final double traversalPause = 150000;
+  public static final double traversalFullExtendPitch = -45;
+
+
+  // DataLogManager enabled
+  public static final boolean dataLogging = true;
 }

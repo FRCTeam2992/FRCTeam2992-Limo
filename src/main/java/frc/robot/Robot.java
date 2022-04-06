@@ -18,6 +18,8 @@ import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.hal.HAL;
+import edu.wpi.first.wpilibj.DataLogManager;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -50,8 +52,13 @@ public class Robot extends TimedRobot {
         mRobotContainer = RobotContainer.getInstance();
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         mRobotContainer.mDrivetrain.navx.zeroYaw();
-        mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-11.0);
+        mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-1.0);
         mRobotContainer.mClimb.resetClimbMotors();
+
+        if (Constants.dataLogging) {
+            DataLogManager.start();
+            DriverStation.startDataLog(DataLogManager.getLog());
+        }
     }
 
     /**
@@ -116,12 +123,12 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveRampRate(0.0);
 
         mRobotContainer.mDrivetrain.resetOdometry();
-        mRobotContainer.mDrivetrain.navx.zeroYaw();
+        //mRobotContainer.mDrivetrain.navx.zeroYaw();
 
         // Get the Autonomous Command
         autoCommand = mRobotContainer.getAutoCommand();
 
-        mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-11.0);
+        mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-1.0);
 
 
         resetSubsystems();

@@ -32,7 +32,7 @@ public class IntakeDeploy extends SubsystemBase {
     intakeDeployMotor.setIdleMode(IdleMode.kBrake);
     intakeDeployMotor.setInverted(true);
 
-    intakeLimitSwitch = new DigitalInput(2);
+    intakeLimitSwitch = new DigitalInput(4);
 
     intakeContorller = new PIDController(Constants.intakeP, Constants.intakeI, Constants.intakeD);
     intakeContorller.setTolerance(Constants.hoodTolerance);

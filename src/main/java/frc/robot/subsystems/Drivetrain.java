@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -78,6 +79,10 @@ public class Drivetrain extends SubsystemBase {
   private double distanceTraveled;             // How far we moved this cycle (meters)
   private double angleTurned;                  // How much did we rotate this cycle (degrees)
 
+  // NavX Pitch change (used by climb code)
+  double lastPitch = 0.0;                     // Pitch angle from prior cycle
+  double pitchChange = 0.0;                   // Change in pitch angle last cycle
+
   // Swerve Drive Kinematics
   public final SwerveDriveKinematics swerveDriveKinematics;
 
@@ -88,9 +93,12 @@ public class Drivetrain extends SubsystemBase {
 
   // Motion Trajectories
   public Trajectory testPathTrajectory;
-  public Trajectory threeBallTrajectory;
-  public Trajectory fiveBallTrajectory;
+  public Trajectory threeBallMainTrajectory;
+  public Trajectory fiveBallFinalTrajectory;
   public Trajectory twoBallTrajectory;
+  public Trajectory threeBallForFiveTrajectory;
+  public Trajectory fiveBallFinalPart1Trajectory;
+  public Trajectory fiveBallFinalPart2Trajectory;
 
   // DriveTrain Dashboard Update Counter
   private int dashboardCounter = 0;
@@ -294,6 +302,10 @@ public class Drivetrain extends SubsystemBase {
     // SmartDashboard.putNumber("Odometry X", (latestSwervePose.getX() * (100 / 2.54)));
     // SmartDashboard.putNumber("Odometry Y", (latestSwervePose.getY() * (100 / 2.54)));
 
+
+    // Update the pitch info
+    pitchChange = navx.getPitch() - lastPitch;
+    lastPitch = navx.getPitch();
   }
 
   public void setDriveNeutralMode(NeutralMode mode) {
@@ -373,16 +385,21 @@ public class Drivetrain extends SubsystemBase {
   private void loadMotionPaths() {
     // Trajectory Paths
     Path testPath = Filesystem.getDeployDirectory().toPath().resolve("output/TestPath.wpilib.json");
-    Path threeBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/ThreeBallPath.wpilib.json");
-    Path fiveBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/FiveBallPath.wpilib.json");
+    Path threeBallPathMain = Filesystem.getDeployDirectory().toPath().resolve("output/ThreeBallPathMain.wpilib.json");
+    Path fiveBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/FiveBallPathFinal.wpilib.json");
     Path twoBallPath = Filesystem.getDeployDirectory().toPath().resolve("output/TwoBallPath.wpilib.json");
+    Path threeBallPathForFive = Filesystem.getDeployDirectory().toPath().resolve("output/ThreeBallPathForFive.wpilib.json");
+    Path fiveBallPathPart1 = Filesystem.getDeployDirectory().toPath().resolve("output/FiveBallPathPart1.wpilib.json");
+    Path fiveBallPathPart2 = Filesystem.getDeployDirectory().toPath().resolve("output/FiveBallPathPart2.wpilib.json");
     
-
     try {
       testPathTrajectory = TrajectoryUtil.fromPathweaverJson(testPath);
-      threeBallTrajectory = TrajectoryUtil.fromPathweaverJson(threeBallPath);
-      fiveBallTrajectory = TrajectoryUtil.fromPathweaverJson(fiveBallPath);
+      threeBallMainTrajectory = TrajectoryUtil.fromPathweaverJson(threeBallPathMain);
+      fiveBallFinalTrajectory = TrajectoryUtil.fromPathweaverJson(fiveBallPath);
       twoBallTrajectory = TrajectoryUtil.fromPathweaverJson(twoBallPath);
+      threeBallForFiveTrajectory = TrajectoryUtil.fromPathweaverJson(threeBallPathForFive);
+      fiveBallFinalPart1Trajectory = TrajectoryUtil.fromPathweaverJson(fiveBallPathPart1);
+      fiveBallFinalPart2Trajectory = TrajectoryUtil.fromPathweaverJson(fiveBallPathPart2);
     } catch (IOException e) {
       DriverStation.reportError("Unable to load motion trajectories!", e.getStackTrace());
       e.printStackTrace();
@@ -415,4 +432,13 @@ public class Drivetrain extends SubsystemBase {
     this.inSlowMode = inSlowMode;
   }
 
+  public double getLastPitch() {
+    return lastPitch;
+  }
+
+  public double getPitchChange() {
+    return pitchChange;
+  }
+
+ 
 }

@@ -3,19 +3,23 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.vision.LimeLight.LedMode;
-
+import frc.robot.Constants;
+import frc.robot.Robot;
+import frc.robot.subsystems.Climb;
 import frc.robot.subsystems.Turret;
 
 public class AutoTurretAim extends CommandBase {
 
     private Turret mTurret;
+    private Climb mClimb;
 
     private double turretSetAngle = 0.0;
 
-    public AutoTurretAim(Turret subsystem) {
+    public AutoTurretAim(Turret subsystem, Climb climb) {
         addRequirements(subsystem);
 
         mTurret = subsystem;
+        mClimb = climb;
     }
 
     // Called just before this Command runs the first time
@@ -41,7 +45,26 @@ public class AutoTurretAim extends CommandBase {
         }
 
         else {
-            mTurret.setTurretSpeed(0);
+            // Repleace stop turret with turret sticks logic if doesn't have target
+            // mTurret.setTurretSpeed(0);
+            double x = -Robot.mRobotContainer.controller1.getLeftX();
+            double y = -Robot.mRobotContainer.controller1.getLeftY();
+            double targetAngle;
+            double xyMagnitude = Math.sqrt((x * x) + (y * y));
+
+            if (xyMagnitude >= Constants.turretJoystickDeadband && !mClimb.getClimbMode()){
+                if(xyMagnitude > 1){
+                    x /= xyMagnitude;
+                    y /= xyMagnitude;
+                }
+                if(Constants.isFieldCentric){
+                    targetAngle = Turret.angleOverlap((Math.toDegrees(Math.atan2(y, x)) - 90) - mTurret.getGyroYaw());
+                }
+                mTurret.goToAngle(Turret.angleOverlap(targetAngle));
+                // SmartDashboard.putNumber("TurretStick output", targetAngle);
+            } else{
+                mTurret.stopTurret();
+            }
         }
     }
 

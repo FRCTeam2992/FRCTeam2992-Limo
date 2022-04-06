@@ -10,10 +10,13 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.DriveTrainStopped;
 import frc.robot.commands.HoodAtAngle;
 import frc.robot.commands.SetBottomLiftCommanded;
+import frc.robot.commands.SetBottomLiftCommandedNew;
 import frc.robot.commands.SetCargoFunnelCommanded;
 import frc.robot.commands.SetShooterCommanded;
 import frc.robot.commands.SetTopLiftCommanded;
 import frc.robot.commands.ShooterAtSpeed;
+import frc.robot.commands.SpinBottomLift;
+import frc.robot.commands.SpinCargoFunnel;
 import frc.robot.commands.TurretOnTarget;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;
@@ -45,7 +48,7 @@ public class AutoShootAutonomous extends SequentialCommandGroup {
     new ParallelCommandGroup(                       // OK TO shoot
       new SetCargoFunnelCommanded(mCargoFunnel, true, false, 0.55, 0.55, 0.0),
       new SetTopLiftCommanded(mTopLift, true, 0.9),
-      new SetBottomLiftCommanded(mBottomLift, true, false, 0.5, 0.5, 0.0),
+      new SetBottomLiftCommandedNew(mBottomLift, true, false, 0.5, 0.5),
       new WaitCommand(5.0)
     )
     );

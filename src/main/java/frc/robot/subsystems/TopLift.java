@@ -18,7 +18,7 @@ public class TopLift extends SubsystemBase {
   private double commandedSpeed = 0.0;             // Speed to run if its commanded on during default command
 
   public TopLift() {
-    topLiftMotor = new WPI_VictorSPX(24);
+    topLiftMotor = new WPI_VictorSPX(23);
     topLiftMotor.setInverted(true);
     topLiftMotor.setNeutralMode(NeutralMode.Brake);   
     topLiftMotor.setStatusFramePeriod(1, 255);

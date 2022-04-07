@@ -68,7 +68,7 @@ public class IntakeDeploy extends SubsystemBase {
   public void deployIntake() {
 
     double power = intakeContorller.calculate(getEncoderAngle(), Constants.maxIntakeEncoderAngle);
-    power = MathUtil.clamp(power, -.2, .5);
+    power = MathUtil.clamp(power, -.2, .8);
     if ((Math.abs(getEncoderAngle() - Constants.maxIntakeEncoderAngle) < Constants.intakeTolerance)) {
       power = 0;
     }
@@ -79,7 +79,7 @@ public class IntakeDeploy extends SubsystemBase {
 
   public void retractIntake() {
     double power = intakeContorller.calculate(getEncoderAngle(), Constants.minIntakeEncoderAngle);
-    power = MathUtil.clamp(power, -.5, .2);
+    power = MathUtil.clamp(power, -.8, .2);
     if ((Math.abs(getEncoderAngle() - Constants.minIntakeEncoderAngle) < Constants.intakeTolerance)) {
       power = Constants.intakeF;
     }

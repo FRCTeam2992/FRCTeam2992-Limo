@@ -191,8 +191,8 @@ public class Robot extends TimedRobot {
     public void vibrateControllers() {
         if (++vibrateCounter >= 10) {
 
-            if ((mRobotContainer.mTurret.getTurretAngleRaw() < 23)
-                    || (mRobotContainer.mTurret.getTurretAngleRaw() > 330)) {
+            if ((mRobotContainer.mTurret.getTurretAngleRaw() <= (Constants.turretMinEnd + 10))
+                    || (mRobotContainer.mTurret.getTurretAngleRaw() >= (Constants.turretMaxEnd - 10))) {
                 mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 1);
                 mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 1);
                 mRobotContainer.controller1.setRumble(RumbleType.kLeftRumble, 1);

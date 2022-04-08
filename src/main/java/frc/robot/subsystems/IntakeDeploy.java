@@ -23,7 +23,7 @@ public class IntakeDeploy extends SubsystemBase {
 
   private boolean intakeDeployedState = false;
 
-  private PIDController intakeContorller;
+  private PIDController intakePIDContorller;
 
   private int dashboardCounter = 0;
 
@@ -32,12 +32,12 @@ public class IntakeDeploy extends SubsystemBase {
     intakeDeployMotor.setIdleMode(IdleMode.kBrake);
     intakeDeployMotor.setInverted(true);
 
-    intakeLimitSwitch = new DigitalInput(4);
+    intakeLimitSwitch = new DigitalInput(2);
 
-    intakeContorller = new PIDController(Constants.intakeP, Constants.intakeI, Constants.intakeD);
-    intakeContorller.setTolerance(Constants.hoodTolerance);
-    intakeContorller.disableContinuousInput();
-    intakeContorller.setIntegratorRange(-0.2, 0.2);
+    intakePIDContorller = new PIDController(Constants.intakeP, Constants.intakeI, Constants.intakeD);
+    intakePIDContorller.setTolerance(Constants.hoodTolerance);
+    intakePIDContorller.disableContinuousInput();
+    intakePIDContorller.setIntegratorRange(-0.2, 0.2);
   }
 
   @Override
@@ -51,9 +51,9 @@ public class IntakeDeploy extends SubsystemBase {
       dashboardCounter = 0;
     }
 
-    // if (getLimitSwitch()) {
-    //   initIntakeDeployMotor(0.0);
-    // }
+    if (!getLimitSwitch() && !intakeDeployedState) {
+      initIntakeDeployMotor(0.0);
+    }
 
   }
 
@@ -67,7 +67,7 @@ public class IntakeDeploy extends SubsystemBase {
 
   public void deployIntake() {
 
-    double power = intakeContorller.calculate(getEncoderAngle(), Constants.maxIntakeEncoderAngle);
+    double power = intakePIDContorller.calculate(getEncoderAngle(), Constants.maxIntakeEncoderAngle);
     power = MathUtil.clamp(power, -.2, .5);
     if ((Math.abs(getEncoderAngle() - Constants.maxIntakeEncoderAngle) < Constants.intakeTolerance)) {
       power = 0;
@@ -78,7 +78,7 @@ public class IntakeDeploy extends SubsystemBase {
   }
 
   public void retractIntake() {
-    double power = intakeContorller.calculate(getEncoderAngle(), Constants.minIntakeEncoderAngle);
+    double power = intakePIDContorller.calculate(getEncoderAngle(), Constants.minIntakeEncoderAngle);
     power = MathUtil.clamp(power, -.5, .2);
     if ((Math.abs(getEncoderAngle() - Constants.minIntakeEncoderAngle) < Constants.intakeTolerance)) {
       power = Constants.intakeF;

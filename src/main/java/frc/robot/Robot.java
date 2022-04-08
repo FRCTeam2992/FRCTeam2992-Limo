@@ -39,7 +39,6 @@ public class Robot extends TimedRobot {
     public static RobotContainer mRobotContainer;
 
     private int vibrateCounter = 0;
-
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -50,9 +49,13 @@ public class Robot extends TimedRobot {
         // and put our
         // autonomous chooser on the dashboard.
         mRobotContainer = RobotContainer.getInstance();
+        addPeriodic(() -> {
+            mRobotContainer.mBottomLift.updatedBottomSensorState = mRobotContainer.mBottomLift.getBottomSensorState();
+            mRobotContainer.mBottomLift.updatedTopSensorState = mRobotContainer.mBottomLift.getTopSensorState();
+        }, 0.01, 0.005);
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         mRobotContainer.mDrivetrain.navx.zeroYaw();
-        mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-1.0);
+        mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(0.0);
         mRobotContainer.mClimb.resetClimbMotors();
 
         if (Constants.dataLogging) {
@@ -115,7 +118,7 @@ public class Robot extends TimedRobot {
         // Set the Drive Train to Brake
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Brake);
         mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Brake);
-       
+
         // Set the Drive Motors Current Limit
         mRobotContainer.mDrivetrain.setDriveCurrentLimit(60.0, 60.0);
 
@@ -123,13 +126,12 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveRampRate(0.0);
 
         mRobotContainer.mDrivetrain.resetOdometry();
-        //mRobotContainer.mDrivetrain.navx.zeroYaw();
+        // mRobotContainer.mDrivetrain.navx.zeroYaw();
 
         // Get the Autonomous Command
         autoCommand = mRobotContainer.getAutoCommand();
 
         mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(-1.0);
-
 
         resetSubsystems();
 
@@ -163,7 +165,7 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveCurrentLimit(40.0, 40.0);
         mRobotContainer.mDrivetrain.setDriveRampRate(0.25);
 
-         // mRobotContainer.mDrivetrain.resetOdometry();
+        // mRobotContainer.mDrivetrain.resetOdometry();
         resetSubsystems();
     }
 
@@ -188,6 +190,8 @@ public class Robot extends TimedRobot {
     public void testPeriodic() {
     }
 
+    
+
     public void vibrateControllers() {
         if (++vibrateCounter >= 10) {
 
@@ -210,10 +214,10 @@ public class Robot extends TimedRobot {
 
     public void stopVibrate() {
 
-            mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 0.0);
-            mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 0.0);
-            mRobotContainer.controller1.setRumble(RumbleType.kLeftRumble, 0.0);
-            mRobotContainer.controller1.setRumble(RumbleType.kRightRumble, 0.0);
+        mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 0.0);
+        mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 0.0);
+        mRobotContainer.controller1.setRumble(RumbleType.kLeftRumble, 0.0);
+        mRobotContainer.controller1.setRumble(RumbleType.kRightRumble, 0.0);
     }
 
     /**
@@ -227,5 +231,4 @@ public class Robot extends TimedRobot {
         mRobotContainer.mTopLift.reset();
     }
 
-   
 }

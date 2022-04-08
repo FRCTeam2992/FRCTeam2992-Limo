@@ -49,6 +49,10 @@ public class BottomLift extends SubsystemBase {
   private BooleanLogEntry topSensorLog;
   private StringLogEntry commandedBallSpeedLog;
 
+  public boolean updatedBottomSensorState;
+  public boolean updatedTopSensorState;
+
+
   public BottomLift() {
     bottomLiftMotor = new WPI_VictorSPX(24);
     bottomLiftMotor.setInverted(false);
@@ -69,7 +73,7 @@ public class BottomLift extends SubsystemBase {
     bottomLiftSensor = new DigitalInput(0);
     topLiftSensor = new DigitalInput(1);
 
-    liftTowerEncoder = new Encoder(2, 3, false, EncodingType.k4X);
+    liftTowerEncoder = new Encoder(3, 4, false, EncodingType.k4X);
 
     sensorTimer = new Timer();
     sensorTimer.start();
@@ -86,6 +90,8 @@ public class BottomLift extends SubsystemBase {
       commandedBallSpeedLog = new StringLogEntry(mDataLog, "/bl/commandedBallSpeed");
     }
 
+    
+
   }
 
   @Override
@@ -93,19 +99,18 @@ public class BottomLift extends SubsystemBase {
     // This method will be called once per scheduler run
     // SmartDashboard.putBoolean("bottom sensor", getBottomSensorState());
     // SmartDashboard.putBoolean("top sensor", getTopSensorState());
-    if (!getBottomSensorState() && !getTopSensorState()) {
-      // Neither sensor sees a ball -- cargo lift is empty to reset timer
-      sensorTimer.reset();
-      // SmartDashboard.putNumber("Lift Timer", sensorTimer.get());
+    if (Constants.dataLogging) {
+      topSensorLog.append(updatedTopSensorState);
+      bottomSensorLog.append(updatedBottomSensorState);
     }
-
     if (dashboardCounter++ > 5) {
       SmartDashboard.putBoolean("top sensor", getTopSensorState());
       SmartDashboard.putBoolean("bottom sensor", getBottomSensorState());
-
     }
 
   }
+
+  
 
   public void setBottomLiftSpeed(double speed) {
     bottomLiftMotor.set(ControlMode.PercentOutput, speed);
@@ -129,20 +134,17 @@ public class BottomLift extends SubsystemBase {
   }
 
   public void setBottomLiftSpeedAsCommandedSensorNew() {
-    if (Constants.dataLogging) {
-      topSensorLog.append(getTopSensorState());
-      bottomSensorLog.append(getBottomSensorState());
-    }
+    
     if (isCommanded()) {
       if (!checkSensor) {
         bottomLiftMotor.set(ControlMode.PercentOutput, noBallSpeed);
 
-      } else if (getTopSensorState()) {
+      } else if (updatedTopSensorState) {
         // If the top and the bottom or just the top is triggered
+        commandedBallSpeedLog.append("top sees ball");
         if (sensorTimer.get() > .065) {
           bottomLiftMotor.set(ControlMode.PercentOutput, 0.0);
           if (Constants.dataLogging) {
-            commandedBallSpeedLog.append("top sees ball");
           }
         }
         // if (!isHoldingPosition) { // get intitial limit when sensor is triggered
@@ -156,7 +158,7 @@ public class BottomLift extends SubsystemBase {
         // bottomLiftMotor.set(ControlMode.PercentOutput, -.1);
         // }
 
-      } else if (getBottomSensorState()) {
+      } else if (updatedBottomSensorState) {
         // The bottom sees a ball run at lower speed
         bottomLiftMotor.set(ControlMode.PercentOutput, withBallSpeed);
         sensorTimer.reset();

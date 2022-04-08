@@ -31,7 +31,7 @@ public class Constants {
   public static final double intakeI = 0;
   public static final double intakeD = 0;
   public static final double intakeF = 0.005;
-  public static final double intakeTolerance = 2;
+  public static final double intakeTolerance = 0;
 
   //Lift Tower
   public static final double liftEncoderClicksDeadBand = 100;

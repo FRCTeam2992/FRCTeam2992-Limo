@@ -43,9 +43,9 @@ public class Constants {
   public static final double shooterSpeedTolerance = 100;
 
   // Turret Constants
-  public static final double turretP = 0.03;
-  public static final double turretI = 0.04;
-  public static final double turretD = 0.002;
+  public static final double turretP = 0.0189; //0.03
+  public static final double turretI = 0.002; //0.04
+  public static final double turretD = 0.0003; //0.002
   public static final double turretTolerance = 2.0;
   public static final int turretEncoderOffset = 2935;
   public static final int turretRobotOffset = 67; 

@@ -68,7 +68,7 @@ public class IntakeDeploy extends SubsystemBase {
   public void deployIntake() {
 
     double power = intakePIDContorller.calculate(getEncoderAngle(), Constants.maxIntakeEncoderAngle);
-    power = MathUtil.clamp(power, -.2, .5);
+    power = MathUtil.clamp(power, -.2, 1);
     if ((Math.abs(getEncoderAngle() - Constants.maxIntakeEncoderAngle) < Constants.intakeTolerance)) {
       power = 0;
     }
@@ -88,6 +88,7 @@ public class IntakeDeploy extends SubsystemBase {
   
   }
 
+  
   public boolean getIntakeDeployedState() {
     return intakeDeployedState;
   }

@@ -309,6 +309,13 @@ public class RobotContainer {
       SmartDashboard.putData("Retract Intake", new ChangeIntakeState(mIntakeDeploy, false));
       SmartDashboard.putData("Reset Intake Encoder", new ResetIntakeDeployEncoder(mIntakeDeploy));
 
+      SmartDashboard.putData("Home Intake", new HomeIntakeDeploy(mIntakeDeploy));
+
+      SmartDashboard.putData("Turret 0", new MoveTurretToAngle(mTurret, 0));
+      SmartDashboard.putData("Turret 90", new MoveTurretToAngle(mTurret, 90));
+      SmartDashboard.putData("Turret 180", new MoveTurretToAngle(mTurret, 180));
+      SmartDashboard.putData("Turret 270", new MoveTurretToAngle(mTurret, 270));
+
     
     /*
     SmartDashboard.putData("0 Hood", new MoveHoodToAngle(mShooterHood, 0.0));
@@ -382,7 +389,8 @@ public class RobotContainer {
     intakeCamera = CameraServer.startAutomaticCapture();
     //intakeCamera.setConnectionStrategy(ConnectionStrategy.kAutoManage);
     intakeCamera.setFPS(20);
-    intakeCamera.setResolution(160, 90);
+    intakeCamera.setResolution(250, 120);
+    
 
     //virtualCamera = CameraServer.addSwitchedCamera("Drive Camera");
     //virtualCamera.setSource(intakeCamera);

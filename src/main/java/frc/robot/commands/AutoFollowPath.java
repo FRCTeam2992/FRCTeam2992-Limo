@@ -108,7 +108,7 @@ public class AutoFollowPath extends CommandBase {
 
     // Set the Odometry Position to the Trajectory Start Position
     if (mResetOdometry) {
-      mDriveTrain.setOdometryPosition(new Pose2d(trajectoryStartPose.getX(), trajectoryStartPose.getY(),
+      mDriveTrain.setOdometryPosition(true, new Pose2d(trajectoryStartPose.getX(), trajectoryStartPose.getY(),
       Rotation2d.fromDegrees(-mDriveTrain.getGyroYaw())));
     }
 

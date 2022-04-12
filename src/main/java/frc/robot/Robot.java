@@ -62,6 +62,7 @@ public class Robot extends TimedRobot {
             DataLogManager.start();
             DriverStation.startDataLog(DataLogManager.getLog());
         }
+        mRobotContainer.mDrivetrain.resetOdometry();
     }
 
     /**

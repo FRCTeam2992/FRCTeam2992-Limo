@@ -316,6 +316,7 @@ public class RobotContainer {
       SmartDashboard.putData("Turret 180", new MoveTurretToAngle(mTurret, 180));
       SmartDashboard.putData("Turret 270", new MoveTurretToAngle(mTurret, 270));
 
+      SmartDashboard.putData("Reset Odometry", new ResetOdometry(mDrivetrain));
     
     /*
     SmartDashboard.putData("0 Hood", new MoveHoodToAngle(mShooterHood, 0.0));

@@ -9,32 +9,26 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Drivetrain;
 
-public class ResetGyro extends CommandBase {
+public class ResetOdometry extends CommandBase {
 
   // Subsystem Instance
   private Drivetrain mDriveTrain;
-  private double  mGyroOffset;
 
-  public ResetGyro(Drivetrain subsystem) {
+  public ResetOdometry(Drivetrain subsystem) {
     // Subsystem Instance
     mDriveTrain = subsystem;
-    mGyroOffset = 0.0;
 
     // Set the Subsystem Requirement
   }
 
-  public ResetGyro(Drivetrain subsystem, double gyroOffset) {
-    mDriveTrain = subsystem;
-    mGyroOffset = gyroOffset;
-  }
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     // Reset the Gyro
     mDriveTrain.navx.zeroYaw();
-    mDriveTrain.gyroOffset = mGyroOffset;
+    mDriveTrain.gyroOffset = 0.0;
     Pose2d pose = mDriveTrain.latestSwervePose;
-    mDriveTrain.setOdometryPosition(true, new Pose2d(pose.getX(), pose.getY(), new Rotation2d(0.0)));
+    mDriveTrain.setOdometryPosition(true, new Pose2d(0.0, 0.0, new Rotation2d(0.0)));
 
     // Reset the Odometry
     // Kill reset of odometry.  We want odometry to stay unchanged until next robot init

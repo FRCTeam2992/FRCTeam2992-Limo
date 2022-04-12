@@ -280,9 +280,9 @@ public class Drivetrain extends SubsystemBase {
 
       dashboardCounter = 0;
 
-      SmartDashboard.putNumber("Gyro Pitch", navx.getPitch());
-      SmartDashboard.putNumber("Gyro Roll", navx.getRoll());
-      // SmartDashboard.putNumber("Gyro Yaw", getGyroYaw());
+      // SmartDashboard.putNumber("Gyro Pitch", navx.getPitch());
+      // SmartDashboard.putNumber("Gyro Roll", navx.getRoll());
+      SmartDashboard.putNumber("Gyro Yaw", getGyroYaw());
       // SmartDashboard.putBoolean("Gyro Ready", navx.isConnected());
       // SmartDashboard.putBoolean("Gyro Calibrating", navx.isCalibrating());
     }
@@ -297,10 +297,10 @@ public class Drivetrain extends SubsystemBase {
     angleTurned = Math.abs(moved.getRotation().getDegrees());
 
     // Display Odometry
-    // SmartDashboard.putNumber("Odometry Rotation",
-    //     latestSwervePose.getRotation().getDegrees());
-    // SmartDashboard.putNumber("Odometry X", (latestSwervePose.getX() * (100 / 2.54)));
-    // SmartDashboard.putNumber("Odometry Y", (latestSwervePose.getY() * (100 / 2.54)));
+    SmartDashboard.putNumber("Odometry Rotation",
+        latestSwervePose.getRotation().getDegrees());
+    SmartDashboard.putNumber("Odometry X", (latestSwervePose.getX() * (100 / 2.54)));
+    SmartDashboard.putNumber("Odometry Y", (latestSwervePose.getY() * (100 / 2.54)));
 
 
     // Update the pitch info
@@ -364,8 +364,8 @@ public class Drivetrain extends SubsystemBase {
         Rotation2d.fromDegrees(-getGyroYaw()));
   }
 
-  public void setOdometryPosition(Pose2d position) {
-    swerveDriveOdometry.resetPosition(position, Rotation2d.fromDegrees(-getGyroYaw()));
+  public void setOdometryPosition(boolean useGyro, Pose2d position) {
+    swerveDriveOdometry.resetPosition(position, useGyro?Rotation2d.fromDegrees(-getGyroYaw()):Rotation2d.fromDegrees(0.0));
 
     latestSwervePose = swerveDriveOdometry.update(Rotation2d.fromDegrees(-getGyroYaw()), frontLeftModule.getState(),
         frontRightModule.getState(), rearLeftModule.getState(), rearRightModule.getState());

@@ -27,7 +27,7 @@ public class ResetOdometry extends CommandBase {
     // Reset the Gyro
     mDriveTrain.navx.zeroYaw();
     mDriveTrain.gyroOffset = 0.0;
-    Pose2d pose = mDriveTrain.latestSwervePose;
+    Pose2d pose = mDriveTrain.latestSwervePoseEstimate;
     mDriveTrain.setOdometryPosition(true, new Pose2d(0.0, 0.0, new Rotation2d(0.0)));
 
     // Reset the Odometry

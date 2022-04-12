@@ -4,16 +4,28 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.lib.Ranging.CargoBallInterpolator;
+import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
 
 public class DefaultShooter extends CommandBase {
   /** Creates a new StopIntake. */
   private Shooter mShooter;
+  private Turret mTurret;
+  private CargoBallInterpolator mInterpolator;
   
-  public DefaultShooter(Shooter shooter) {
+  public DefaultShooter(Shooter shooter, Turret turret, CargoBallInterpolator interpolator) {
     // Use addRequirements() here to declare subsystem dependencies.
     mShooter = shooter;
+    mTurret = turret;
+    mInterpolator = interpolator;
     addRequirements(mShooter);
   }
 
@@ -30,6 +42,16 @@ public class DefaultShooter extends CommandBase {
     if (mShooter.isShooterCommanded()) {
       // Shooterwas last commanded on so spin it
       // CommandScheduler.getInstance().schedule(new StartShooter(mShooter));
+      if (!mTurret.limeLightCamera.hasTarget()) {
+          Pose2d robotPose = Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.getEstimatedPosition();
+          Transform2d toTarget = robotPose.minus(Constants.goalPose);
+          double distance = (100 / 2.54) * toTarget.getTranslation().getDistance(new Translation2d());
+          SmartDashboard.putNumber("PoseEst distance", distance);
+          double mainSpeed = mInterpolator.calcMainShooterSpeed(distance);
+          double secondarySpeed = mInterpolator.calcSecondShooterSpeed(distance);
+          mShooter.setMainShooterTargetRPM(mainSpeed);
+          mShooter.setSecondaryShooterTargetRPM(secondarySpeed);        
+      }
       mShooter.setMainShooterToTargetRPM();
       mShooter.setSecondaryShooterToTargetRPM();
     } else {

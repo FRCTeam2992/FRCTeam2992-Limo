@@ -105,19 +105,19 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putBoolean("Turret AutoAim", isAutoAiming());
         SmartDashboard.putBoolean("Turret Ready", readyToShoot());
 
-        SmartDashboard.putNumber("Turret Raw", getTurretAngleRaw());
+        // SmartDashboard.putNumber("Turret Raw", getTurretAngleRaw());
 
-        SmartDashboard.putNumber("LL Pose X", limeLightPose.getX() * 100 / 2.54);
-        SmartDashboard.putNumber("LL Pose Y", limeLightPose.getY() * 100 / 2.54);
-        SmartDashboard.putNumber("LL Pose Angle", limeLightPose.getRotation().getDegrees());
+        // SmartDashboard.putNumber("LL Pose X", limeLightPose.getX() * 100 / 2.54);
+        // SmartDashboard.putNumber("LL Pose Y", limeLightPose.getY() * 100 / 2.54);
+        // SmartDashboard.putNumber("LL Pose Angle", limeLightPose.getRotation().getDegrees());
 
-        SmartDashboard.putNumber("Turret Pose X", turretPose.getX() * 100 / 2.54);
-        SmartDashboard.putNumber("Turret Pose Y", turretPose.getY() * 100 / 2.54);
-        SmartDashboard.putNumber("Turret Pose Angle", turretPose.getRotation().getDegrees());
+        // SmartDashboard.putNumber("Turret Pose X", turretPose.getX() * 100 / 2.54);
+        // SmartDashboard.putNumber("Turret Pose Y", turretPose.getY() * 100 / 2.54);
+        // SmartDashboard.putNumber("Turret Pose Angle", turretPose.getRotation().getDegrees());
 
-        SmartDashboard.putNumber("Vision Pose X", visionPose.getX() * 100 / 2.54);
-        SmartDashboard.putNumber("Vision Pose Y", visionPose.getY() * 100 / 2.54);
-        SmartDashboard.putNumber("Vision Pose Angle", visionPose.getRotation().getDegrees());
+        // SmartDashboard.putNumber("Vision Pose X", visionPose.getX() * 100 / 2.54);
+        // SmartDashboard.putNumber("Vision Pose Y", visionPose.getY() * 100 / 2.54);
+        // SmartDashboard.putNumber("Vision Pose Angle", visionPose.getRotation().getDegrees());
 
         dashboardCounter = 0;
         }

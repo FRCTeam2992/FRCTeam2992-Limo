@@ -94,15 +94,23 @@ public class RobotContainer {
    */
   private RobotContainer() {
 
+    initInterpolator();
+
     // mIntake = new Intake();
     mDrivetrain = new Drivetrain();
     mDrivetrain.setDefaultCommand(new DriveSticks(mDrivetrain));
-    
+         
+    mClimb = new Climb();
+    mClimb.setDefaultCommand(new ClimbSticks(mClimb, mDrivetrain));
+
+    mTurret = new Turret(mDrivetrain);
+    mTurret.setDefaultCommand(new TurretSticks(mTurret, mClimb));
+  
     mShooterHood = new ShooterHood();
-    mShooterHood.setDefaultCommand(new HoldHoodAngle(mShooterHood));
+    mShooterHood.setDefaultCommand(new HoldHoodAngle(mShooterHood, mTurret, cargoBallInterpolator ));
     
     mShooter = new Shooter();
-    mShooter.setDefaultCommand(new DefaultShooter(mShooter));
+    mShooter.setDefaultCommand(new DefaultShooter(mShooter, mTurret, cargoBallInterpolator));
     
     mTopLift = new TopLift();
     mTopLift.setDefaultCommand(new DefaultTopLift(mTopLift));
@@ -118,17 +126,10 @@ public class RobotContainer {
 
     mIntakeDeploy = new IntakeDeploy();
     mIntakeDeploy.setDefaultCommand(new DefaultIntakeDeploy(mIntakeDeploy));
-    
-    mClimb = new Climb();
-    mClimb.setDefaultCommand(new ClimbSticks(mClimb, mDrivetrain));
-
-    mTurret = new Turret(mDrivetrain);
-    mTurret.setDefaultCommand(new TurretSticks(mTurret, mClimb));
-
+   
     controller0 = new XboxController(0);
     controller1 = new XboxController(1);
 
-    initInterpolator();
     setupAutoSelector();
 
     // limeLightCamera = new LimeLight();

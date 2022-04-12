@@ -112,7 +112,7 @@ public class AutoFollowPath extends CommandBase {
       Rotation2d.fromDegrees(-mDriveTrain.getGyroYaw())));
     }
 
-    thetaController.reset(mDriveTrain.latestSwervePose.getRotation().getRadians(), 0.0);
+    thetaController.reset(mDriveTrain.latestSwervePoseEstimate.getRotation().getRadians(), 0.0);
 
     // Reset and Start the Elapsed Timer
     elapsedTimer.reset();

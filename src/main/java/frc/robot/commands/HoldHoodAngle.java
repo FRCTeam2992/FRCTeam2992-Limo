@@ -4,17 +4,28 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.lib.Ranging.CargoBallInterpolator;
+import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.ShooterHood;
+import frc.robot.subsystems.Turret;
 
 public class HoldHoodAngle extends CommandBase {
   /** Creates a new HoldHoodAngle. */
   private ShooterHood mShooterHood;
+  private Turret mTurret;
+  private CargoBallInterpolator mInterpolator;
 
   private double startHoodAngle;
 
-  public HoldHoodAngle(ShooterHood subsystem) {
+  public HoldHoodAngle(ShooterHood subsystem, Turret turret, CargoBallInterpolator interpolator) {
     mShooterHood = subsystem;
+    mTurret = turret;
+    mInterpolator = interpolator;
 
     addRequirements(mShooterHood);
 
@@ -30,6 +41,14 @@ public class HoldHoodAngle extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (!mTurret.limeLightCamera.hasTarget()) {
+      Pose2d robotPose = Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.getEstimatedPosition();
+      Transform2d toTarget = robotPose.minus(Constants.goalPose);
+      double distance = (100 / 2.54) * toTarget.getTranslation().getDistance(new Translation2d());
+      double angle = mInterpolator.calcHoodPosition(distance);
+      mShooterHood.setHoodTarget(angle);  
+    }
+    
     mShooterHood.setToTarget();
   }
 

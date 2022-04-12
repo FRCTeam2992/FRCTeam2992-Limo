@@ -10,10 +10,16 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.vision.LimeLight;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 public class Turret extends SubsystemBase {
 
@@ -33,6 +39,11 @@ public class Turret extends SubsystemBase {
 
     private int dashboardCounter = 0;
     public double turretTarget = 180.0;
+
+    public Pose2d limeLightPose = new Pose2d();
+    public Pose2d turretPose = new Pose2d();
+    public Pose2d visionPose = new Pose2d();
+
 
     public Turret(Drivetrain drivetrain) {
         // Turret Motors
@@ -66,6 +77,17 @@ public class Turret extends SubsystemBase {
     public void periodic() {
         // Put code here to be run every loop
 
+        // Update limelight sighted pose -- based on last seen target and may be STALE
+       limeLightPose = calcLLPose(limeLightPose);       // Unchanged if no current target seen
+       turretPose = calcTurretPose(limeLightPose);      // This is the pose of center of turret
+       visionPose = calcRobotPose(turretPose);          // This is the pose of the drive chassis
+
+       if (limeLightCamera.hasTarget()) {
+           // Update pose estimator based on target
+           Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.addVisionMeasurement(visionPose, 
+                    Timer.getFPGATimestamp());
+       }
+
         if (++dashboardCounter >= 5) {
 
         // Update Dashboard
@@ -84,6 +106,18 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putBoolean("Turret Ready", readyToShoot());
 
         SmartDashboard.putNumber("Turret Raw", getTurretAngleRaw());
+
+        SmartDashboard.putNumber("LL Pose X", limeLightPose.getX() * 100 / 2.54);
+        SmartDashboard.putNumber("LL Pose Y", limeLightPose.getY() * 100 / 2.54);
+        SmartDashboard.putNumber("LL Pose Angle", limeLightPose.getRotation().getDegrees());
+
+        SmartDashboard.putNumber("Turret Pose X", turretPose.getX() * 100 / 2.54);
+        SmartDashboard.putNumber("Turret Pose Y", turretPose.getY() * 100 / 2.54);
+        SmartDashboard.putNumber("Turret Pose Angle", turretPose.getRotation().getDegrees());
+
+        SmartDashboard.putNumber("Vision Pose X", visionPose.getX() * 100 / 2.54);
+        SmartDashboard.putNumber("Vision Pose Y", visionPose.getY() * 100 / 2.54);
+        SmartDashboard.putNumber("Vision Pose Angle", visionPose.getRotation().getDegrees());
 
         dashboardCounter = 0;
         }
@@ -199,5 +233,57 @@ public class Turret extends SubsystemBase {
         return (onTarget() || !isAutoAiming());
     } 
 
+
+    public Pose2d calcLLPose (Pose2d defaultPose) { 
+        Pose2d tempPose = new Pose2d(0.0, 0.0, new Rotation2d(0.0));
+
+        if (limeLightCamera.hasTarget()) {
+            // Calculate the vector to goal relative to shooter turret
+            double distance = limeLightCamera.getDistanceToTarget(Constants.cameraAngle, 
+                Constants.cameraHeight, Constants.goalHeight);
+            // Convert to real world distance using interpolater and data table
+            distance = Robot.mRobotContainer.cargoBallInterpolator.calcRealDistance(distance);
+
+            // Convert to meters and Add radius of the goal -- distance from LL to center of field
+            distance *= 2.54 / 100;     // Now in meters
+            distance += Constants.goalRadius;
+
+            // Now calculate the angle adjusting for turret position and field oriented
+            double angle = limeLightCamera.getTargetXOffset();  // degrees
+            angle += getTurretAngle() + getGyroYaw();  // Apply  turret angle and field oriented
+            
+            // Calculate translation from center of hub to limelight
+            Rotation2d targetAngle = Rotation2d.fromDegrees(180+angle);
+            Translation2d limelightVector = new Translation2d(distance, targetAngle);
+            Transform2d limelightTransform = new Transform2d(limelightVector, Rotation2d.fromDegrees(angle)); 
+
+            // Calculate the pose of the limelight camera
+            tempPose = Constants.goalPose.plus(limelightTransform);
+        } else {
+            // Not seeing the target so return the default
+            return tempPose = defaultPose;
+        }
+
+        return tempPose;
+    }
+
+    public Pose2d calcTurretPose(Pose2d llPose) {
+        Pose2d tempPose = llPose;
+
+        Translation2d llOffset = new Translation2d(Constants.limeLightOffset, 
+                getTurretAngle() + getGyroYaw());
+        Transform2d llTransform = new Transform2d(llOffset, Rotation2d.fromDegrees(0.0));
+
+        return tempPose.plus(llTransform);
+    }
+
+    public Pose2d calcRobotPose(Pose2d turretPose) {
+        Pose2d tempPose = turretPose;
+
+        Translation2d turretOffset = new Translation2d(Constants.turretOffset, getGyroYaw());
+        Transform2d turretTransform = new Transform2d(turretOffset, Rotation2d.fromDegrees(0.0));
+
+        return tempPose.plus(turretTransform);
+    }
 
 }

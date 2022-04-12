@@ -42,8 +42,8 @@ public class CargoBallInterpolator {
         if (dataPointList.size() == 1) {
             tempMainSpeed = dataPointList.get(0).getMainShooterSpeed();
         } else if (dataPointList.size() > 1) {
-            CargoBallDataPoint upperDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0);
-            CargoBallDataPoint lowerDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0);
+            CargoBallDataPoint upperDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0, 0.0);
+            CargoBallDataPoint lowerDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0, 0.0);
 
             for (int i = 0; i < dataPointList.size(); i++) {
                 if (dataPointList.get(i).getDistance() >= distance) {
@@ -78,8 +78,8 @@ public class CargoBallInterpolator {
         if (dataPointList.size() == 1) {
             tempSecondSpeed = dataPointList.get(0).getSecondShooterSpeed();
         } else if (dataPointList.size() > 1) {
-            CargoBallDataPoint upperDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0);
-            CargoBallDataPoint lowerDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0);
+            CargoBallDataPoint upperDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0, 0.0);
+            CargoBallDataPoint lowerDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0, 0.0);
 
             for (int i = 0; i < dataPointList.size(); i++) {
                 if (dataPointList.get(i).getDistance() >= distance) {
@@ -114,8 +114,8 @@ public class CargoBallInterpolator {
         if (dataPointList.size() == 1) {
             tempHoodPosition = dataPointList.get(0).getHoodPosition();
         } else if (dataPointList.size() > 1) {
-            CargoBallDataPoint upperDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0);
-            CargoBallDataPoint lowerDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0);
+            CargoBallDataPoint upperDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0, 0.0);
+            CargoBallDataPoint lowerDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0, 0.0);
 
             for (int i = 0; i < dataPointList.size(); i++) {
                 if (dataPointList.get(i).getDistance() >= distance) {
@@ -142,6 +142,42 @@ public class CargoBallInterpolator {
         // SmartDashboard.putNumber("Hood Position", tempHoodPosition);
 
         return tempHoodPosition;
+    }
+
+    public double calcRealDistance(double distance) {
+        double tempRealDistance = 0;
+
+        if (dataPointList.size() == 1) {
+            tempRealDistance = dataPointList.get(0).getRealDistance();
+        } else if (dataPointList.size() > 1) {
+            CargoBallDataPoint upperDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0, 0.0);
+            CargoBallDataPoint lowerDataPoint = new CargoBallDataPoint(-1.0, 0, 0, 0.0, 0.0);
+
+            for (int i = 0; i < dataPointList.size(); i++) {
+                if (dataPointList.get(i).getDistance() >= distance) {
+                    upperDataPoint = dataPointList.get(i);
+
+                    break;
+                }
+
+                lowerDataPoint = dataPointList.get(i);
+            }
+            if (lowerDataPoint.getDistance() == -1.0) {
+                tempRealDistance = upperDataPoint.getRealDistance();
+            } else if (upperDataPoint.getDistance() == -1.0) {
+                tempRealDistance = lowerDataPoint.getRealDistance();
+            } else {
+                double upperRealDistance = upperDataPoint.getRealDistance();
+                double lowerRealDistance = lowerDataPoint.getRealDistance();
+
+                tempRealDistance = lerp(lowerRealDistance, upperRealDistance, (distance - lowerDataPoint.getDistance())
+                        / (upperDataPoint.getDistance() - lowerDataPoint.getDistance()));
+            }
+        }
+
+        SmartDashboard.putNumber("Real Distance", tempRealDistance);
+
+        return tempRealDistance;
     }
 
     private double lerp(double start, double end, double count) {

@@ -3,21 +3,25 @@ package frc.lib.Ranging;
 public class CargoBallDataPoint implements Comparable<CargoBallDataPoint> {
 
     // Variables
-    private double distance;
+    private double distance;                // Distance calculated by Limelight sighting
+
     private double mainShooterSpeed;
     private double secondShooterSpeed;
     private double hoodPosition;
+    private double realDistance;            // Real world distance
 
-    public CargoBallDataPoint(double distance, double mainShooterSpeed, double secondShooterSpeed, double hoodPosition) {
+    public CargoBallDataPoint(double distance, double mainShooterSpeed, double secondShooterSpeed, 
+        double hoodPosition, double realDistance) {
         // Save the Variables
         this.distance = distance;
         this.mainShooterSpeed = mainShooterSpeed;
         this.secondShooterSpeed = secondShooterSpeed;
         this.hoodPosition = hoodPosition;
+        this.realDistance = realDistance;
     }
 
     public CargoBallDataPoint() {
-        this(0.0, 0.0, 0.0, 0.0);
+        this(0.0, 0.0, 0.0, 0.0, 0.0);
     }
 
     public void setDistance(double distance) {
@@ -50,6 +54,14 @@ public class CargoBallDataPoint implements Comparable<CargoBallDataPoint> {
 
     public double getHoodPosition() {
         return hoodPosition;
+    }
+
+    public double getRealDistance() {
+        return realDistance;
+    }
+
+    public void setRealDistance(double realDistance) {
+        this.realDistance = realDistance;
     }
 
     @Override

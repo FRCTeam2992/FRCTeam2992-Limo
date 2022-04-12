@@ -15,7 +15,10 @@ import com.ctre.phoenix.sensors.AbsoluteSensorRange;
 import com.ctre.phoenix.sensors.CANCoder;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.math.MatBuilder;
+import edu.wpi.first.math.Nat;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -26,6 +29,7 @@ import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.drive.swerve.SwerveController;
@@ -75,7 +79,9 @@ public class Drivetrain extends SubsystemBase {
   public double gyroOffset = 0.0;
 
   public Pose2d latestSwervePose = new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0));
-    public Pose2d priorSwervePose;              // The pose from prior cycle
+  public Pose2d priorSwervePose;              // The pose from prior cycle
+  public Pose2d latestSwervePoseEstimate = new Pose2d(0.0, 0.0,  Rotation2d.fromDegrees(0.0));
+  public Pose2d priorSwervePoseEstimate;
   private double distanceTraveled;             // How far we moved this cycle (meters)
   private double angleTurned;                  // How much did we rotate this cycle (degrees)
 
@@ -88,6 +94,7 @@ public class Drivetrain extends SubsystemBase {
 
   // Swerve Drive Odometry
   public final SwerveDriveOdometry swerveDriveOdometry;
+  public final SwerveDrivePoseEstimator swerveDrivePoseEstimator;
 
   // // Swerve Pose
 
@@ -239,6 +246,14 @@ public class Drivetrain extends SubsystemBase {
         swerveDriveKinematics, Rotation2d.fromDegrees(navx.getYaw()),
         new Pose2d(0.0, 0.0, new Rotation2d()));
 
+    swerveDrivePoseEstimator = new SwerveDrivePoseEstimator(
+        Rotation2d.fromDegrees(navx.getYaw()),
+        new Pose2d(0.0, 0.0, new Rotation2d()),
+        swerveDriveKinematics, 
+        new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.02, 0.02, 0.01), // State measurement standard deviations. X, Y, theta.
+        new MatBuilder<>(Nat.N1(), Nat.N1()).fill(0.01), // Local measurement standard deviations. Left encoder, right encoder, gyro.
+        new MatBuilder<>(Nat.N3(), Nat.N1()).fill(0.1, 0.1, 0.05)); // Global measurement standard deviations. X, Y, and theta.
+ 
     // Motion Trajectories
     loadMotionPaths();
 
@@ -292,6 +307,12 @@ public class Drivetrain extends SubsystemBase {
     latestSwervePose = swerveDriveOdometry.update(Rotation2d.fromDegrees(-getGyroYaw()), frontLeftModule.getState(),
         frontRightModule.getState(), rearLeftModule.getState(), rearRightModule.getState());
 
+    priorSwervePoseEstimate = latestSwervePoseEstimate;
+    latestSwervePoseEstimate = swerveDrivePoseEstimator.updateWithTime(
+        Timer.getFPGATimestamp(), Rotation2d.fromDegrees(-getGyroYaw()),
+        frontLeftModule.getState(), frontRightModule.getState(), 
+        rearLeftModule.getState(), rearRightModule.getState());
+
     Transform2d moved = latestSwervePose.minus(priorSwervePose);
     distanceTraveled = Math.sqrt(moved.getX() * moved.getX() + moved.getY() * moved.getY());
     angleTurned = Math.abs(moved.getRotation().getDegrees());
@@ -302,6 +323,10 @@ public class Drivetrain extends SubsystemBase {
     SmartDashboard.putNumber("Odometry X", (latestSwervePose.getX() * (100 / 2.54)));
     SmartDashboard.putNumber("Odometry Y", (latestSwervePose.getY() * (100 / 2.54)));
 
+    SmartDashboard.putNumber("Estimation Rotation", 
+        latestSwervePoseEstimate.getRotation().getDegrees());
+    SmartDashboard.putNumber("Estimation X", latestSwervePoseEstimate.getX() * (100 / 2.54));
+    SmartDashboard.putNumber("Estimation Y", latestSwervePoseEstimate.getY() * (100 / 2.54));
 
     // Update the pitch info
     pitchChange = navx.getPitch() - lastPitch;
@@ -362,12 +387,19 @@ public class Drivetrain extends SubsystemBase {
   public void resetOdometry() {
     swerveDriveOdometry.resetPosition(new Pose2d(0.0, 0.0, new Rotation2d()),
         Rotation2d.fromDegrees(-getGyroYaw()));
+    swerveDrivePoseEstimator.resetPosition(new Pose2d(0.0, 0.0, new Rotation2d()), 
+        Rotation2d.fromDegrees(-getGyroYaw()));
   }
 
   public void setOdometryPosition(boolean useGyro, Pose2d position) {
     swerveDriveOdometry.resetPosition(position, useGyro?Rotation2d.fromDegrees(-getGyroYaw()):Rotation2d.fromDegrees(0.0));
 
     latestSwervePose = swerveDriveOdometry.update(Rotation2d.fromDegrees(-getGyroYaw()), frontLeftModule.getState(),
+        frontRightModule.getState(), rearLeftModule.getState(), rearRightModule.getState());
+        
+    swerveDrivePoseEstimator.resetPosition(position, useGyro?Rotation2d.fromDegrees(-getGyroYaw()):Rotation2d.fromDegrees(0.0));
+
+    latestSwervePoseEstimate = swerveDrivePoseEstimator.update(Rotation2d.fromDegrees(-getGyroYaw()), frontLeftModule.getState(),
         frontRightModule.getState(), rearLeftModule.getState(), rearRightModule.getState());
   }
 

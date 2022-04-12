@@ -87,7 +87,7 @@ public class RobotContainer {
   // A chooser for autonomous commands
   SendableChooser<Command> m_chooser = new SendableChooser<>();
 
-  private CargoBallInterpolator cargoBallInterpolator;
+  public CargoBallInterpolator cargoBallInterpolator;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -413,18 +413,18 @@ public class RobotContainer {
     // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(205, 2750, 3700, 146));
     // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(255, 3100, 4250, 141));
     // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(283, 3350, 4600, 136.7));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(37.7, 1750, 2650, -152));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(47.6, 1700, 2550, -125));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(71.6, 1900, 2800, -78.5));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(95.7, 1800, 3050, 2));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(119.4, 2200, 2850, 102));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(141.5, 2350, 2850, 112.6));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(165, 2600, 3100, 148.5));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(188.9, 2750, 3450, 148.5));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(213, 3050, 3500, 148.5));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(236, 3250, 3500, 148.5));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(265, 3300, 3850, 148.5));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(280, 3450, 4700, 138));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(37.7, 1750, 2650, -152, 24.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(47.6, 1700, 2550, -125, 48.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(71.6, 1900, 2800, -78.5, 72.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(95.7, 1800, 3050, 2, 96.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(119.4, 2200, 2850, 102, 120.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(141.5, 2350, 2850, 112.6, 144.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(165, 2600, 3100, 148.5, 168.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(188.9, 2750, 3450, 148.5, 192.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(213, 3050, 3500, 148.5, 216.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(236, 3250, 3500, 148.5, 240.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(265, 3300, 3850, 148.5, 264.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(280, 3450, 4700, 138, 288.0));
   }
 
 }

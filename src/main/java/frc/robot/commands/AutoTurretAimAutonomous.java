@@ -1,10 +1,14 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.vision.LimeLight.LedMode;
-
+import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.Turret;
 
 public class AutoTurretAimAutonomous extends CommandBase {
@@ -57,11 +61,22 @@ public class AutoTurretAimAutonomous extends CommandBase {
         }
 
         else {
-            if (lostTargetTime.get() > 0.25) {
-                mTurret.goToAngle(turretSetAngle);
-            } else {
-                mTurret.setTurretSpeed(0);
-            }
+            //mTurret.stopTurret();
+            Pose2d robotPose = Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.getEstimatedPosition();
+            Transform2d toTarget = robotPose.minus(Constants.goalPose);
+            double toTargetX = toTarget.getTranslation().getX();
+            double toTargetY = toTarget.getTranslation().getY();
+            double toTargetAngle = Turret.angleOverlap(180 - Math.toDegrees(Math.atan2(toTargetY, toTargetX)));
+            SmartDashboard.putNumber("toTargetAngle", toTargetAngle);
+            SmartDashboard.putNumber("toTargetX", toTarget.getX() * 2.54 / 100);
+            SmartDashboard.putNumber("toTargetY", toTarget.getY() * 2.54 / 100);
+            mTurret.goToAngle(toTargetAngle - mTurret.getGyroYaw());
+            
+            // if (lostTargetTime.get() > 0.25) {
+            //     mTurret.goToAngle(turretSetAngle);
+            // } else {
+            //     mTurret.setTurretSpeed(0);
+            // }
         }
     }
 

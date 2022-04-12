@@ -4,6 +4,9 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -44,11 +47,24 @@ public class TurretSticks extends CommandBase {
         y /= xyMagnitude;
       }
       if(Constants.isFieldCentric){
-      targetAngle = Turret.angleOverlap((Math.toDegrees(Math.atan2(y, x)) - 90) - mTurret.getGyroYaw());
+        targetAngle = Turret.angleOverlap((Math.toDegrees(Math.atan2(y, x)) - 90) - mTurret.getGyroYaw());
+      } else {
+        targetAngle = Turret.angleOverlap((Math.toDegrees(Math.atan2(y, x)) - 90));
       }
       mTurret.goToAngle(Turret.angleOverlap(targetAngle));
       // SmartDashboard.putNumber("TurretStick output", targetAngle);
-    } else{
+    } else if (!mClimb.getClimbMode()) {
+      //mTurret.stopTurret();
+      Pose2d robotPose = Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.getEstimatedPosition();
+      Transform2d toTarget = robotPose.minus(Constants.goalPose);
+      double toTargetX = toTarget.getTranslation().getX();
+      double toTargetY = toTarget.getTranslation().getY();
+      double toTargetAngle = Turret.angleOverlap(180 - Math.toDegrees(Math.atan2(toTargetY, toTargetX)));
+      SmartDashboard.putNumber("toTargetAngle", toTargetAngle);
+      SmartDashboard.putNumber("toTargetX", toTarget.getX() * 2.54 / 100);
+      SmartDashboard.putNumber("toTargetY", toTarget.getY() * 2.54 / 100);
+      mTurret.goToAngle(toTargetAngle - mTurret.getGyroYaw());
+    } else {
       mTurret.stopTurret();
     }
   }

@@ -249,13 +249,13 @@ public class Turret extends SubsystemBase {
             distance += Constants.goalRadius;
 
             // Now calculate the angle adjusting for turret position and field oriented
-            double angle = limeLightCamera.getTargetXOffset();  // degrees
-            angle += getTurretAngle() + getGyroYaw();  // Apply  turret angle and field oriented
+            double llAngle = getTurretAngle() + getGyroYaw();
+            double angle = llAngle + limeLightCamera.getTargetXOffset();
             
             // Calculate translation from center of hub to limelight
-            Rotation2d targetAngle = Rotation2d.fromDegrees(180+angle);
+            Rotation2d targetAngle = Rotation2d.fromDegrees(180-angle);
             Translation2d limelightVector = new Translation2d(distance, targetAngle);
-            Transform2d limelightTransform = new Transform2d(limelightVector, Rotation2d.fromDegrees(angle)); 
+            Transform2d limelightTransform = new Transform2d(limelightVector, Rotation2d.fromDegrees(llAngle)); 
 
             // Calculate the pose of the limelight camera
             tempPose = Constants.goalPose.plus(limelightTransform);
@@ -270,8 +270,8 @@ public class Turret extends SubsystemBase {
     public Pose2d calcTurretPose(Pose2d llPose) {
         Pose2d tempPose = llPose;
 
-        Translation2d llOffset = new Translation2d(Constants.limeLightOffset, 
-                getTurretAngle() + getGyroYaw());
+        Translation2d llOffset = new Translation2d (Constants.limeLightOffset, 
+               Rotation2d.fromDegrees(180 - getTurretAngle() - getGyroYaw()));
         Transform2d llTransform = new Transform2d(llOffset, Rotation2d.fromDegrees(0.0));
 
         return tempPose.plus(llTransform);
@@ -280,8 +280,9 @@ public class Turret extends SubsystemBase {
     public Pose2d calcRobotPose(Pose2d turretPose) {
         Pose2d tempPose = turretPose;
 
-        Translation2d turretOffset = new Translation2d(Constants.turretOffset, getGyroYaw());
-        Transform2d turretTransform = new Transform2d(turretOffset, Rotation2d.fromDegrees(0.0));
+        Translation2d turretOffset = new Translation2d(Constants.turretOffset, 
+            Rotation2d.fromDegrees(180 - getGyroYaw()));
+        Transform2d turretTransform = new Transform2d(turretOffset, Rotation2d.fromDegrees(-getTurretAngle()));
 
         return tempPose.plus(turretTransform);
     }

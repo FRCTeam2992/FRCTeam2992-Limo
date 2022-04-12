@@ -304,7 +304,9 @@ public class Drivetrain extends SubsystemBase {
 
     // Update the Odometry
     priorSwervePose = latestSwervePose;
-    latestSwervePose = swerveDriveOdometry.update(Rotation2d.fromDegrees(-getGyroYaw()), frontLeftModule.getState(),
+    latestSwervePose = swerveDriveOdometry.updateWithTime(
+        Timer.getFPGATimestamp(),
+        Rotation2d.fromDegrees(-getGyroYaw()), frontLeftModule.getState(),
         frontRightModule.getState(), rearLeftModule.getState(), rearRightModule.getState());
 
     priorSwervePoseEstimate = latestSwervePoseEstimate;

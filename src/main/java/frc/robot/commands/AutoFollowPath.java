@@ -140,13 +140,13 @@ public class AutoFollowPath extends CommandBase {
 
 
     // Get the Ajusted Speeds
-    ChassisSpeeds adjustSpeeds = controller.calculate(mDriveTrain.latestSwervePose, latestState,
+    ChassisSpeeds adjustSpeeds = controller.calculate(mDriveTrain.latestSwervePoseEstimate, latestState,
         Rotation2d.fromDegrees(heading));
 
 
     // Data Logging
     if (Constants.dataLogging) {
-      gyroReadLog.append(mDriveTrain.latestSwervePose.getRotation().getRadians());
+      gyroReadLog.append(mDriveTrain.latestSwervePoseEstimate.getRotation().getRadians());
       trajectoryHeadingReadLog.append((heading));
       trajectoryTimeStamp.append(currentTime);
       omegaRotation.append(adjustSpeeds.omegaRadiansPerSecond);

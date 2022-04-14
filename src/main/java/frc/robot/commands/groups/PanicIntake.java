@@ -6,8 +6,6 @@ package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.RetractIntake;
-import frc.robot.commands.SpinBottomLift;
-import frc.robot.commands.SpinCargoFunnel;
 import frc.robot.commands.SpinIntake;
 import frc.robot.subsystems.BottomLift;
 import frc.robot.subsystems.CargoFunnel;

@@ -96,7 +96,6 @@ public class ClimbSticks extends CommandBase {
             (pitch > Constants.traversalFullExtendPitch)) {
         // Moving up and in pause zone and not yet sloped enough
          //if (pitchChange < Constants.traversePitchMinDelta) {
-           //TODO: Show to mike from CJ not checking if swinging down
          climbY = 0.0;  
       
       }

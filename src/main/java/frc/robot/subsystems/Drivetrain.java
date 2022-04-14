@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -23,7 +22,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryUtil;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -182,15 +180,19 @@ public class Drivetrain extends SubsystemBase {
     // Turn PID Controllers
     frontLeftController = new PIDController(Constants.turnP, Constants.turnI, Constants.turnD);
     frontLeftController.enableContinuousInput(-180.0, 180.0);
+    frontLeftController.setTolerance(2.0);
 
     frontRightController = new PIDController(Constants.turnP, Constants.turnI, Constants.turnD);
     frontRightController.enableContinuousInput(-180.0, 180.0);
+    frontRightController.setTolerance(2.0);
 
     rearLeftController = new PIDController(Constants.turnP, Constants.turnI, Constants.turnD);
     rearLeftController.enableContinuousInput(-180.0, 180.0);
+    rearLeftController.setTolerance(2.0);
 
     rearRightController = new PIDController(Constants.turnP, Constants.turnI, Constants.turnD);
     rearRightController.enableContinuousInput(-180.0, 180.0);
+    rearRightController.setTolerance(2.0);
 
     // Set the Drive PID Controllers
     frontLeftDrive.config_kP(0, Constants.driveP);

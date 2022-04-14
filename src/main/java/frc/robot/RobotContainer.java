@@ -15,18 +15,16 @@ package frc.robot;
 import frc.lib.Ranging.CargoBallDataPoint;
 import frc.lib.Ranging.CargoBallInterpolator;
 import frc.robot.commands.*;
-import frc.robot.commands.Autonomous.AutoP3S1M;
 import frc.robot.commands.Autonomous.FiveBallAuto;
 import frc.robot.commands.Autonomous.ThreeBallAuto;
 import frc.robot.commands.Autonomous.TwoBallAuto;
+import frc.robot.commands.Deprecated.SetSwerveAngle;
 import frc.lib.oi.controller.TriggerButton;
 import frc.robot.commands.groups.AutoIntake;
 import frc.robot.commands.groups.AutoShoot;
 import frc.robot.commands.groups.DejamBallPath;
 import frc.robot.commands.groups.PanicIntake;
 import frc.robot.commands.groups.StopAutoIntake;
-import frc.robot.paths.StraightPath;
-import frc.robot.paths.TestPath;
 import frc.robot.subsystems.*;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -36,7 +34,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.MjpegServer;
 import edu.wpi.first.cscore.UsbCamera;
-import edu.wpi.first.cscore.VideoSource.ConnectionStrategy;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -230,7 +227,6 @@ public class RobotContainer {
       JoystickButton fieldOrientButton = new JoystickButton(controller0, XboxController.Button.kStart.value);
       fieldOrientButton.whenPressed(new ResetGyro(mDrivetrain), true);
 
-      //TODO: Remove Field Orient
     
 
 
@@ -301,10 +297,14 @@ public class RobotContainer {
   /*
   SmartDashBoard Buttons
   */
-      SmartDashboard.putData("0 Wheels", new SetSwerveAngleSafe(mDrivetrain, 0, 0, 0, 0));
+      SmartDashboard.putData("0 Wheels", new SetSwerveAngle(mDrivetrain, 0, 0, 0, 0));
+      // SmartDashboard.putData("90 Wheels", new SetSwerveAngle(mDrivetrain, 90, 90, 90, 90));
+      // SmartDashboard.putData("180 Wheels", new SetSwerveAngle(mDrivetrain, 180, 180, 180, 180));
+      // SmartDashboard.putData("270 Wheels", new SetSwerveAngle(mDrivetrain, 270, 270, 270, 270));
 
-      SmartDashboard.putData("Up 1 Angle", new NewHoodTarget(mShooterHood, Math.floor(mShooterHood.getHoodTarget() + 1)));
-      SmartDashboard.putData("Down 1 Angle", new NewHoodTarget(mShooterHood, Math.floor(mShooterHood.getHoodTarget() + -1)));
+
+      // SmartDashboard.putData("Up 1 Angle", new NewHoodTarget(mShooterHood, Math.floor(mShooterHood.getHoodTarget() + 1)));
+      // SmartDashboard.putData("Down 1 Angle", new NewHoodTarget(mShooterHood, Math.floor(mShooterHood.getHoodTarget() + -1)));
 
       SmartDashboard.putData("Deploy Intake", new ChangeIntakeState(mIntakeDeploy, true));
       SmartDashboard.putData("Retract Intake", new ChangeIntakeState(mIntakeDeploy, false));
@@ -313,11 +313,16 @@ public class RobotContainer {
       SmartDashboard.putData("Home Intake", new HomeIntakeDeploy(mIntakeDeploy));
 
       SmartDashboard.putData("Turret 0", new MoveTurretToAngle(mTurret, 0));
-      SmartDashboard.putData("Turret 90", new MoveTurretToAngle(mTurret, 90));
-      SmartDashboard.putData("Turret 180", new MoveTurretToAngle(mTurret, 180));
-      SmartDashboard.putData("Turret 270", new MoveTurretToAngle(mTurret, 270));
+      // SmartDashboard.putData("Turret 90", new MoveTurretToAngle(mTurret, 90));
+      // SmartDashboard.putData("Turret 180", new MoveTurretToAngle(mTurret, 180));
+      // SmartDashboard.putData("Turret 270", new MoveTurretToAngle(mTurret, 270));
 
       SmartDashboard.putData("Reset Odometry", new ResetOdometry(mDrivetrain));
+
+      SmartDashboard.putData("0 Hood", new NewHoodTarget(mShooterHood, 0.0));
+      SmartDashboard.putData("120 Hood", new NewHoodTarget(mShooterHood, 120.0));
+      SmartDashboard.putData("-120 Hood", new NewHoodTarget(mShooterHood, -120.0));
+      
     
     /*
     SmartDashboard.putData("0 Hood", new MoveHoodToAngle(mShooterHood, 0.0));
@@ -402,18 +407,7 @@ public class RobotContainer {
     cargoBallInterpolator = new CargoBallInterpolator();
 
     // Example adding point
-    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(distance, Main,
-    // Backspin, Hood));
-    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(35.5, 1750, 2650, -152));
-    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(48, 1800, 2750, -125));
-    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(69, 1900, 2900, -98));
-    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(90.5, 2050, 3150, -36));
-    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(113.5, 2300, 3150, 31));
-    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(136.8, 2300, 3500, 89.4));
-    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(160, 2400, 3600, 130));
-    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(205, 2750, 3700, 146));
-    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(255, 3100, 4250, 141));
-    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(283, 3350, 4600, 136.7));
+    // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(limeLightDistance, Main, Backspin, Hood, realDistance));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(37.7, 1750, 2650, -152, 24.0));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(47.6, 1700, 2550, -125, 48.0));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(71.6, 1900, 2800, -78.5, 72.0));

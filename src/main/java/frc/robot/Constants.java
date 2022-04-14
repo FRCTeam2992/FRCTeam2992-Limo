@@ -80,9 +80,9 @@ public class Constants {
   public static final double distanceTest = 120;
   public static final double cameraAngle = 35;
 
-  public static final double hoodP = .007;
-  public static final double hoodI = 0.02; 
-  public static final double hoodD = 0.0002; 
+  public static final double hoodP = .007;//.007
+  public static final double hoodI = 0.02; //.02
+  public static final double hoodD = 0.0001; //.0002
   public static final double hoodF = 0.02; 
 
   public static final double hoodTolerance = 4;
@@ -120,10 +120,10 @@ public class Constants {
 
   // Analog Encoder Offsets (Degrees) - Opposite of Raw Reading - Bevel Gear to
   // Right
-  public static final double frontLeftOffset = 147.57;
-  public static final double frontRightOffset = -144.23;
-  public static final double rearLeftOffset = 100.00;
-  public static final double rearRightOffset = -24.35;
+  public static final double frontLeftOffset = 146.42578125;
+  public static final double frontRightOffset = -144.140625;
+  public static final double rearLeftOffset = 101.25;
+  public static final double rearRightOffset = -24.521484375;
 
   // Swerve Drive PID (Velocity Control)
   public static final double driveP = 0.05;
@@ -132,9 +132,11 @@ public class Constants {
   public static final double driveF = 0.047;
 
   // Swerve Turn PIDs
-  public static final double turnP = .013;
+  public static final double turnP = 0.0045; //.013
   public static final double turnI = 0.0;
-  public static final double turnD = 0.0000;
+  public static final double turnD = 0.00005;
+  
+  
 
   // Gyro P
   public static final double driveGyroP = 0.005;

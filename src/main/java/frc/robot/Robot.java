@@ -49,14 +49,15 @@ public class Robot extends TimedRobot {
         // and put our
         // autonomous chooser on the dashboard.
         mRobotContainer = RobotContainer.getInstance();
-        addPeriodic(() -> {
-            mRobotContainer.mBottomLift.updatedBottomSensorState = mRobotContainer.mBottomLift.getBottomSensorState();
-            mRobotContainer.mBottomLift.updatedTopSensorState = mRobotContainer.mBottomLift.getTopSensorState();
-        }, 0.01, 0.005);
+        
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
         mRobotContainer.mDrivetrain.navx.zeroYaw();
         mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(0.0);
         mRobotContainer.mClimb.resetClimbMotors();
+        addPeriodic(() -> {
+            mRobotContainer.mBottomLift.updatedBottomSensorState = mRobotContainer.mBottomLift.getBottomSensorState();
+            mRobotContainer.mBottomLift.updatedTopSensorState = mRobotContainer.mBottomLift.getTopSensorState();
+        }, 0.01, 0.015);
 
         if (Constants.dataLogging) {
             DataLogManager.start();
@@ -196,8 +197,8 @@ public class Robot extends TimedRobot {
     public void vibrateControllers() {
         if (++vibrateCounter >= 10) {
 
-            if ((mRobotContainer.mTurret.getTurretAngleRaw() < 23)
-                    || (mRobotContainer.mTurret.getTurretAngleRaw() > 330)) {
+            if ((mRobotContainer.mTurret.getTurretAngleRaw() < Constants.turretMinSlowZone)
+                    || (mRobotContainer.mTurret.getTurretAngleRaw() > Constants.turretMaxSlowZone)) {
                 mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 1);
                 mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 1);
                 mRobotContainer.controller1.setRumble(RumbleType.kLeftRumble, 1);

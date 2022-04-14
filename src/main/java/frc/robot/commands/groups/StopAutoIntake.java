@@ -6,7 +6,6 @@ package frc.robot.commands.groups;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.commands.ChangeIntakeState;
-import frc.robot.commands.SetBottomLiftCommanded;
 import frc.robot.commands.SetBottomLiftCommandedNew;
 import frc.robot.commands.SetCargoFunnelCommanded;
 import frc.robot.commands.SetIntakeCommanded;

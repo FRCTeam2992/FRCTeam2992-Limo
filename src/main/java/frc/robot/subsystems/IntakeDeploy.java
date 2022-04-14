@@ -44,14 +44,14 @@ public class IntakeDeploy extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     if (++dashboardCounter >= 5) {
-      SmartDashboard.putNumber("Intake Deploy Motor Encoder", getEncoderAngle());
-      SmartDashboard.putBoolean("Intake Deploy Limit Switch", getLimitSwitch());
-      SmartDashboard.putBoolean("Intake State", getIntakeDeployedState());
+      // SmartDashboard.putNumber("Intake Deploy Motor Encoder", getEncoderAngle());
+      // SmartDashboard.putBoolean("Intake Deploy Limit Switch", getLimitSwitch());
+      // SmartDashboard.putBoolean("Intake State", getIntakeDeployedState());
 
       dashboardCounter = 0;
     }
 
-    if (!getLimitSwitch() && !intakeDeployedState) {
+    if (!getLimitSwitch() && !intakeDeployedState && Math.abs(getEncoderAngle()) > 0.2) {
       initIntakeDeployMotor(0.0);
     }
 

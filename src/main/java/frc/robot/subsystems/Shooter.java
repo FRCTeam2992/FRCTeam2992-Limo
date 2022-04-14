@@ -74,15 +74,15 @@ public class Shooter extends SubsystemBase {
   public void periodic() {
     // Display the Shooter Set Speed and Current RPM
     if (++dashboardCounter >= 5) {
-      SmartDashboard.putNumber("Main Shooter Set Speed", mainShooterSetRPM);
-      SmartDashboard.putNumber("Main Shooter Current RPM", getMainShooterRPM());
+      // SmartDashboard.putNumber("Main Shooter Set Speed", mainShooterSetRPM);
+      // SmartDashboard.putNumber("Main Shooter Current RPM", getMainShooterRPM());
 
-      SmartDashboard.putNumber("Secondary Shooter Set Speed", secondaryShooterSetRPM);
-      SmartDashboard.putNumber("Secondary Shooter Current RPM", getSecondaryShooterRPM());
+      // SmartDashboard.putNumber("Secondary Shooter Set Speed", secondaryShooterSetRPM);
+      // SmartDashboard.putNumber("Secondary Shooter Current RPM", getSecondaryShooterRPM());
 
-      SmartDashboard.putBoolean("Main Shooter At Speed", atMainShooterRPM());
-      SmartDashboard.putBoolean("Secondary Shooter At Speed", atSecondaryShooterRPM());
-      SmartDashboard.putBoolean("Shooters at Speed", atShooterRPM());
+      // SmartDashboard.putBoolean("Main Shooter At Speed", atMainShooterRPM());
+      // SmartDashboard.putBoolean("Secondary Shooter At Speed", atSecondaryShooterRPM());
+      // SmartDashboard.putBoolean("Shooters at Speed", atShooterRPM());
 
       dashboardCounter = 0;
     }

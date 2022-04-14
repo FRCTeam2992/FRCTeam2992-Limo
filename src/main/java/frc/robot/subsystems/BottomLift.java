@@ -102,8 +102,8 @@ public class BottomLift extends SubsystemBase {
       bottomSensorLog.append(updatedBottomSensorState);
     }
     if (dashboardCounter++ > 5) {
-      SmartDashboard.putBoolean("top sensor", getTopSensorState());
-      SmartDashboard.putBoolean("bottom sensor", getBottomSensorState());
+      // SmartDashboard.putBoolean("top sensor", getTopSensorState());
+      // SmartDashboard.putBoolean("bottom sensor", getBottomSensorState());
     }
 
   }

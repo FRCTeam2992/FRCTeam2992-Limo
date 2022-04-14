@@ -395,8 +395,8 @@ public class RobotContainer {
   private void initCamera() {
     intakeCamera = CameraServer.startAutomaticCapture();
     //intakeCamera.setConnectionStrategy(ConnectionStrategy.kAutoManage);
-    intakeCamera.setFPS(20);
-    intakeCamera.setResolution(250, 120);
+    // intakeCamera.setFPS(20);
+    //intakeCamera.setResolution(250, 120);
     
 
     //virtualCamera = CameraServer.addSwitchedCamera("Drive Camera");

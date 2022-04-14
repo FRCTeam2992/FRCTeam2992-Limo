@@ -77,33 +77,34 @@ public class Turret extends SubsystemBase {
     public void periodic() {
         // Put code here to be run every loop
 
-        // Update limelight sighted pose -- based on last seen target and may be STALE
-       limeLightPose = calcLLPose(limeLightPose);       // Unchanged if no current target seen
-       turretPose = calcTurretPose(limeLightPose);      // This is the pose of center of turret
-       visionPose = calcRobotPose(turretPose);          // This is the pose of the drive chassis
-
+    
        if (limeLightCamera.hasTarget()) {
-           // Update pose estimator based on target
-           Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.addVisionMeasurement(visionPose, 
+            // Update limelight sighted pose -- based on last seen target and may be STALE
+            limeLightPose = calcLLPose(limeLightPose);       // Unchanged if no current target seen
+            turretPose = calcTurretPose(limeLightPose);      // This is the pose of center of turret
+            visionPose = calcRobotPose(turretPose);          // This is the pose of the drive chassis
+
+            // Update pose estimator based on target
+            Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.addVisionMeasurement(visionPose, 
                     Timer.getFPGATimestamp());
        }
 
         if (++dashboardCounter >= 5) {
 
         // Update Dashboard
-        SmartDashboard.putNumber("Turret Encoder", getTurretEncoder());
-        SmartDashboard.putNumber("Turret Angle", angleOverlap(getTurretAngle()));
-        SmartDashboard.putNumber("Turret Target", turretTargetAngle);
+        // SmartDashboard.putNumber("Turret Encoder", getTurretEncoder());
+        // SmartDashboard.putNumber("Turret Angle", angleOverlap(getTurretAngle()));
+        // SmartDashboard.putNumber("Turret Target", turretTargetAngle);
         // SmartDashboard.putNumber("Camera Angle", limeLightCamera.getCameraAngle(Constants.distanceTest,
         //         Constants.cameraHeight, Constants.goalHeight));
         // SmartDashboard.putNumber("Y-Offset", limeLightCamera.getTargetYOffset());
-        SmartDashboard.putNumber("Distance", limeLightCamera.getDistanceToTarget(Constants.cameraAngle, Constants.cameraHeight, Constants.goalHeight));
-        SmartDashboard.putNumber("x-Offset", limeLightCamera.getTargetXOffset());
+        // SmartDashboard.putNumber("Distance", limeLightCamera.getDistanceToTarget(Constants.cameraAngle, Constants.cameraHeight, Constants.goalHeight));
+        // SmartDashboard.putNumber("x-Offset", limeLightCamera.getTargetXOffset());
 
-        SmartDashboard.putBoolean("LL Has Target", limeLightCamera.hasTarget());
-        SmartDashboard.putBoolean("Turret OnTarget", onTarget());
-        SmartDashboard.putBoolean("Turret AutoAim", isAutoAiming());
-        SmartDashboard.putBoolean("Turret Ready", readyToShoot());
+        // SmartDashboard.putBoolean("LL Has Target", limeLightCamera.hasTarget());
+        // SmartDashboard.putBoolean("Turret OnTarget", onTarget());
+        // SmartDashboard.putBoolean("Turret AutoAim", isAutoAiming());
+        // SmartDashboard.putBoolean("Turret Ready", readyToShoot());
 
         // SmartDashboard.putNumber("Turret Raw", getTurretAngleRaw());
 

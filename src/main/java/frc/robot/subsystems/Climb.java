@@ -39,9 +39,9 @@ public class Climb extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
     if (++dashboardCounter >= 5) {
-      SmartDashboard.putBoolean("Climb Mode", getClimbMode());
-      SmartDashboard.putNumber("Left Climb Position", getLeftEncoderAngle());
-      SmartDashboard.putNumber("Right Climb Position", getRighttEncoderAngle());
+      // SmartDashboard.putBoolean("Climb Mode", getClimbMode());
+      // SmartDashboard.putNumber("Left Climb Position", getLeftEncoderAngle());
+      // SmartDashboard.putNumber("Right Climb Position", getRighttEncoderAngle());
       dashboardCounter = 0;
     }
   }

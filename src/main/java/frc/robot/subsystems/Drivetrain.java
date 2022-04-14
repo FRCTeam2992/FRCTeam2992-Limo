@@ -275,15 +275,15 @@ public class Drivetrain extends SubsystemBase {
       // Display Gyro Angle
       // SmartDashboard.putNumber("Gyro Yaw", getGyroYaw());
 
-      // Display Module Angles
-      SmartDashboard.putNumber("Front Left Module Angle",
-          frontLeftModule.getEncoderAngle());
-      SmartDashboard.putNumber("Front Right Module Angle",
-          frontRightModule.getEncoderAngle());
-      SmartDashboard.putNumber("Rear Left Module Angle",
-          rearLeftModule.getEncoderAngle());
-      SmartDashboard.putNumber("Rear Right Module Angle",
-          rearRightModule.getEncoderAngle());
+      // // Display Module Angles
+      // SmartDashboard.putNumber("Front Left Module Angle",
+      //     frontLeftModule.getEncoderAngle());
+      // SmartDashboard.putNumber("Front Right Module Angle",
+      //     frontRightModule.getEncoderAngle());
+      // SmartDashboard.putNumber("Rear Left Module Angle",
+      //     rearLeftModule.getEncoderAngle());
+      // SmartDashboard.putNumber("Rear Right Module Angle",
+      //     rearRightModule.getEncoderAngle());
 
       // Display Wheel Velocities
       // SmartDashboard.putNumber("Front Left Module Velocity",
@@ -299,7 +299,7 @@ public class Drivetrain extends SubsystemBase {
 
       // SmartDashboard.putNumber("Gyro Pitch", navx.getPitch());
       // SmartDashboard.putNumber("Gyro Roll", navx.getRoll());
-      SmartDashboard.putNumber("Gyro Yaw", getGyroYaw());
+      // SmartDashboard.putNumber("Gyro Yaw", getGyroYaw());
       // SmartDashboard.putBoolean("Gyro Ready", navx.isConnected());
       // SmartDashboard.putBoolean("Gyro Calibrating", navx.isCalibrating());
     }
@@ -333,8 +333,8 @@ public class Drivetrain extends SubsystemBase {
     // SmartDashboard.putNumber("Estimation Y", latestSwervePoseEstimate.getY() * (100 / 2.54));
 
     // Update the pitch info
-    pitchChange = navx.getPitch() - lastPitch;
-    lastPitch = navx.getPitch();
+    // pitchChange = navx.getPitch() - lastPitch;
+    // lastPitch = navx.getPitch();
   }
 
   public void setDriveNeutralMode(NeutralMode mode) {

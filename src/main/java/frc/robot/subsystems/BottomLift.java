@@ -13,9 +13,9 @@ import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Encoder;
+// import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+// import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -30,12 +30,12 @@ public class BottomLift extends SubsystemBase {
   private double noBallSpeed = 0.0; // Speed to be commanded if no ball is seen
   private double withBallSpeed = 0.0; // Speed to be commanded if we see a ball
   private double sensorDelay = 0.0; // How long after seeing a ball before we jump to the withBallSpeed
-  private double encoderHoldPosition = 0.0;
-
-  private Encoder liftTowerEncoder;
+ 
+  // private double encoderHoldPosition = 0.0;
+  // private Encoder liftTowerEncoder;
 
   private Timer sensorTimer;
-  private Timer turnOnTimer;
+  // private Timer turnOnTimer;
 
   private DigitalInput bottomLiftSensor;
   private DigitalInput topLiftSensor;
@@ -71,7 +71,7 @@ public class BottomLift extends SubsystemBase {
     bottomLiftSensor = new DigitalInput(0);
     topLiftSensor = new DigitalInput(1);
 
-    liftTowerEncoder = new Encoder(3, 4, false, EncodingType.k4X);
+    // liftTowerEncoder = new Encoder(3, 4, false, EncodingType.k4X);
 
     sensorTimer = new Timer();
     sensorTimer.start();

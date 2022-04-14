@@ -80,9 +80,9 @@ public class Constants {
   public static final double distanceTest = 120;
   public static final double cameraAngle = 35;
 
-  public static final double hoodP = .007;//.007
-  public static final double hoodI = 0.02; //.02
-  public static final double hoodD = 0.0001; //.0002
+  public static final double hoodP = .007;
+  public static final double hoodI = 0.02; 
+  public static final double hoodD = 0.0001;
   public static final double hoodF = 0.02; 
 
   public static final double hoodTolerance = 4;

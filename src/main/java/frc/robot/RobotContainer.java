@@ -258,10 +258,10 @@ public class RobotContainer {
       moveHoodDownButton.whileHeld(new MoveHood(mShooterHood, -.25), true);
 
       POVButton moveTurretLeftButton = new POVButton(controller1, 270);
-      moveTurretLeftButton.whileHeld(new MoveTurret(mTurret, -.45), true);
+      moveTurretLeftButton.whileHeld(new MoveTurret(mTurret, -.40), true);
 
       POVButton moveTurretRightButton = new POVButton(controller1, 90);
-      moveTurretRightButton.whileHeld(new MoveTurret(mTurret, .45), true);
+      moveTurretRightButton.whileHeld(new MoveTurret(mTurret, .35), true);
 
 
     //-ABXY
@@ -313,10 +313,9 @@ public class RobotContainer {
       SmartDashboard.putData("Home Intake", new HomeIntakeDeploy(mIntakeDeploy));
 
       SmartDashboard.putData("Turret 0", new MoveTurretToAngle(mTurret, 0));
-      // SmartDashboard.putData("Turret 90", new MoveTurretToAngle(mTurret, 90));
-      // SmartDashboard.putData("Turret 180", new MoveTurretToAngle(mTurret, 180));
-      // SmartDashboard.putData("Turret 270", new MoveTurretToAngle(mTurret, 270));
-
+      SmartDashboard.putData("Turret 90", new MoveTurretToAngle(mTurret, 90));
+      SmartDashboard.putData("Turret 180", new MoveTurretToAngle(mTurret, 180));
+      
       SmartDashboard.putData("Reset Odometry", new ResetOdometry(mDrivetrain));
 
       SmartDashboard.putData("0 Hood", new NewHoodTarget(mShooterHood, 0.0));

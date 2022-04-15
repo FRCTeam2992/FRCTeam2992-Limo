@@ -7,7 +7,11 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.sensors.CANCoder;
+import com.ctre.phoenix.sensors.SensorInitializationStrategy;
+
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -24,10 +28,12 @@ import frc.robot.Robot;
 public class Turret extends SubsystemBase {
 
     // Turret Motors
-    private static WPI_TalonSRX turretTalon;
+    private static WPI_TalonFX turretTalon;
+    private static CANCoder turretEncoder;
 
     // Turret PID Controller
     public PIDController turretRotate;
+    double pidPower = 0.0;              // Last commanded PID power
 
     // Limelight Camera
     public final LimeLight limeLightCamera;
@@ -47,10 +53,10 @@ public class Turret extends SubsystemBase {
 
     public Turret(Drivetrain drivetrain) {
         // Turret Motors
-        turretTalon = new WPI_TalonSRX(34);
+        turretTalon = new WPI_TalonFX(34, "CanBus2");
         turretTalon.setNeutralMode(NeutralMode.Brake);
-        turretTalon.setInverted(true);
-        turretTalon.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
+        turretTalon.setInverted(false);
+        //turretTalon.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
         turretTalon.setStatusFramePeriod(3, 255);
         turretTalon.setStatusFramePeriod(4, 254);
         turretTalon.setStatusFramePeriod(8, 253);
@@ -60,11 +66,14 @@ public class Turret extends SubsystemBase {
         turretTalon.setStatusFramePeriod(14, 249);
         addChild("Turret Motor", turretTalon);
 
+        turretEncoder = new CANCoder(34, "CanBus2");
+        turretEncoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
+
         // Turret PID Controller
         turretRotate = new PIDController(Constants.turretP, Constants.turretI, Constants.turretD);
         turretRotate.setTolerance(Constants.turretTolerance);
         turretRotate.disableContinuousInput();
-        turretRotate.setIntegratorRange(-0.2, 0.2);
+        turretRotate.setIntegratorRange(-0.18, 0.14);
 
 
         // LimeLight Camera
@@ -92,8 +101,9 @@ public class Turret extends SubsystemBase {
         if (++dashboardCounter >= 5) {
 
         // Update Dashboard
-        // SmartDashboard.putNumber("Turret Encoder", getTurretEncoder());
-        // SmartDashboard.putNumber("Turret Angle", angleOverlap(getTurretAngle()));
+        SmartDashboard.putNumber("Turret Encoder", getTurretEncoder());
+        SmartDashboard.putNumber("Turret Angle Raw", getTurretAngleRaw());
+        SmartDashboard.putNumber("Turret Angle", angleOverlap(getTurretAngle()));
         // SmartDashboard.putNumber("Turret Target", turretTargetAngle);
         // SmartDashboard.putNumber("Camera Angle", limeLightCamera.getCameraAngle(Constants.distanceTest,
         //         Constants.cameraHeight, Constants.goalHeight));
@@ -135,7 +145,7 @@ public class Turret extends SubsystemBase {
         double setSpeed = speed;
 
         if (setSpeed > 0 && getTurretAngleRaw() >= Constants.turretMaxSlowZone) {
-            setSpeed = Math.min(0.15, setSpeed);
+            setSpeed = Math.min(0.10, setSpeed);
         }
 
         if (setSpeed < 0 && getTurretAngleRaw() <= Constants.turretMinSlowZone) {
@@ -162,34 +172,36 @@ public class Turret extends SubsystemBase {
         if (Math.abs(angle - getTurretAngleRaw()) > Constants.turretTolerance) {
             turretRotate.setSetpoint(angle);
         }
-        if (Math.abs(angle - getTurretAngleRaw()) > 5.0) {
+        if (Math.abs(angle - getTurretAngleRaw()) > 20.0) {
             turretRotate.reset();
         }
         
+        // power = 0.0;
+        pidPower = turretRotate.calculate(getTurretAngleRaw());
+        pidPower += Constants.turretF;
+    
+        pidPower = MathUtil.clamp(pidPower, -.50, 0.46);
         
-        double power = turretRotate.calculate(getTurretAngleRaw());
-        power = MathUtil.clamp(power, -1, 1);
+        SmartDashboard.putNumber("TurretToAngle Speed", pidPower);
         
-        // SmartDashboard.putNumber("TurretToAngle Speed", power);
-        
-        setTurretSpeed(power);
+        setTurretSpeed(pidPower);
     }
 
     public static double getTurretEncoder() {
-        double position = -1 * (turretTalon.getSelectedSensorPosition() + Constants.turretEncoderOffset);
+        double position = (turretEncoder.getAbsolutePosition() + Constants.turretEncoderOffset);
 
         while (position < 0) {
-            position += 4096;
+            position += 360.0;
         } 
-        while (position > 4096) {
-            position -= 4096;
+        while (position > 360.0) {
+            position -= 360.0;
         }
 
         return position;
     }
 
     public static double getTurretAngleRaw() {
-        return getTurretEncoder() * (360.0 / 4096.0);
+        return angleOverlap(getTurretEncoder() * 2.3);       // Adjust for gear ratio of abs encoder
     }
     
     public double getTurretAngle() {
@@ -211,7 +223,8 @@ public class Turret extends SubsystemBase {
     }
 
     public boolean onTarget(){
-        return (Math.abs(turretTargetAngle - getTurretAngle()) < Constants.turretTolerance);
+        return ((Math.abs(turretTargetAngle - getTurretAngle()) < Constants.turretTolerance) &&
+            (Math.abs(pidPower) < 0.02));
     }
 
     public boolean isAutoAiming() {

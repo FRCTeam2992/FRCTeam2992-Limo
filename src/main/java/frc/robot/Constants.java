@@ -51,14 +51,16 @@ public class Constants {
   public static final double turretD = 0.0003; //0.002
   public static final double turretF = -0.02; // Need to push against CF spring in neg dir
   public static final double turretTolerance = 1.0;
-  public static final int turretEncoderOffset = -50;
-  public static final int turretRobotOffset = 54; 
-  public static final int turretMinEnd = 8;
-  public static final int turretMaxEnd = 280;
-  public static final int turretMaxSlowZone = 240;
-  public static final int turretMinSlowZone = 48;
+  public static final int turretEncoderOffset = 69;
+  public static final int turretRobotOffset = 64; 
+  public static final int turretMinEnd = 45;
+  public static final int turretMaxEnd = 298;
+  public static final int turretMaxSlowZone = 223;
+  public static final int turretMinSlowZone = 100;
   public static final double turretJoystickDeadband = .75;
   public static final double turretDefaultAngle = 180;
+  public static final double turretGearRatio = (240.0 / 18.0) * (24.0 / 18.0);
+  // public static final double turretGearRatio = 40.0 / 2.3;  // Faked to make angles work!
 
   // Vision Constants
 

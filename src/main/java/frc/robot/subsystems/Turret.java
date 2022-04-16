@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -28,7 +29,7 @@ import frc.robot.Robot;
 public class Turret extends SubsystemBase {
 
     // Turret Motors
-    private static WPI_TalonFX turretTalon;
+    private static WPI_TalonFX turretFalcon;
     private static CANCoder turretEncoder;
 
     // Turret PID Controller
@@ -53,18 +54,18 @@ public class Turret extends SubsystemBase {
 
     public Turret(Drivetrain drivetrain) {
         // Turret Motors
-        turretTalon = new WPI_TalonFX(34, "CanBus2");
-        turretTalon.setNeutralMode(NeutralMode.Brake);
-        turretTalon.setInverted(false);
+        turretFalcon = new WPI_TalonFX(34, "CanBus2");
+        turretFalcon.setNeutralMode(NeutralMode.Brake);
+        turretFalcon.setInverted(false);
         //turretTalon.configSelectedFeedbackSensor(FeedbackDevice.PulseWidthEncodedPosition);
-        turretTalon.setStatusFramePeriod(3, 255);
-        turretTalon.setStatusFramePeriod(4, 254);
-        turretTalon.setStatusFramePeriod(8, 253);
-        turretTalon.setStatusFramePeriod(10, 252);
-        turretTalon.setStatusFramePeriod(12, 251);
-        turretTalon.setStatusFramePeriod(13, 250);
-        turretTalon.setStatusFramePeriod(14, 249);
-        addChild("Turret Motor", turretTalon);
+        turretFalcon.setStatusFramePeriod(3, 255);
+        turretFalcon.setStatusFramePeriod(4, 254);
+        turretFalcon.setStatusFramePeriod(8, 253);
+        turretFalcon.setStatusFramePeriod(10, 252);
+        turretFalcon.setStatusFramePeriod(12, 251);
+        turretFalcon.setStatusFramePeriod(13, 250);
+        turretFalcon.setStatusFramePeriod(14, 249);
+        addChild("Turret Motor", turretFalcon);
 
         turretEncoder = new CANCoder(34, "CanBus2");
         turretEncoder.configSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
@@ -75,6 +76,7 @@ public class Turret extends SubsystemBase {
         turretRotate.disableContinuousInput();
         turretRotate.setIntegratorRange(-0.18, 0.14);
 
+        setTurretFalconEncoder();
 
         // LimeLight Camera
         limeLightCamera = new LimeLight();
@@ -100,10 +102,15 @@ public class Turret extends SubsystemBase {
 
         if (++dashboardCounter >= 5) {
 
+            if (hasTurretFalconReset()) {
+                setTurretFalconEncoder();
+            }
+
         // Update Dashboard
-        SmartDashboard.putNumber("Turret Encoder", getTurretEncoder());
-        SmartDashboard.putNumber("Turret Angle Raw", getTurretAngleRaw());
-        SmartDashboard.putNumber("Turret Angle", angleOverlap(getTurretAngle()));
+        SmartDashboard.putNumber("Turret CanCoder Real", getCanCoderRealDegrees());
+        SmartDashboard.putNumber("Turret RobotCentric Angle", angleOverlap(getTurretAngle()));
+        SmartDashboard.putNumber("Turret Falcon Real", getFalconRealDegrees());
+        SmartDashboard.putNumber("Turret Falcon Encoder Clicks", turretFalcon.getSelectedSensorPosition());
         // SmartDashboard.putNumber("Turret Target", turretTargetAngle);
         // SmartDashboard.putNumber("Camera Angle", limeLightCamera.getCameraAngle(Constants.distanceTest,
         //         Constants.cameraHeight, Constants.goalHeight));
@@ -138,26 +145,26 @@ public class Turret extends SubsystemBase {
     // here. Call these from Commands.
 
     public void stopTurret() {
-        turretTalon.set(ControlMode.PercentOutput, 0);
+        turretFalcon.set(ControlMode.PercentOutput, 0);
     }
 
     public void setTurretSpeed(double speed) {
         double setSpeed = speed;
 
-        if (setSpeed > 0 && getTurretAngleRaw() >= Constants.turretMaxSlowZone) {
+        if (setSpeed > 0 && getFalconRealDegrees() >= Constants.turretMaxSlowZone) {
             setSpeed = Math.min(0.10, setSpeed);
         }
 
-        if (setSpeed < 0 && getTurretAngleRaw() <= Constants.turretMinSlowZone) {
-            setSpeed = Math.max(-0.15, setSpeed);
+        if (setSpeed < 0 && getFalconRealDegrees() <= Constants.turretMinSlowZone) {
+            setSpeed = Math.max(-0.12, setSpeed);
         }
 
-        if ((setSpeed > 0 && getTurretAngleRaw() >= Constants.turretMaxEnd)
-                || (setSpeed < 0 && getTurretAngleRaw() < Constants.turretMinEnd)) {
+        if ((setSpeed > 0 && getFalconRealDegrees() >= Constants.turretMaxEnd)
+                || (setSpeed < 0 && getFalconRealDegrees() < Constants.turretMinEnd)) {
             setSpeed = 0;
         }
         setSpeed = MathUtil.clamp(setSpeed, -1, 1);
-        turretTalon.set(ControlMode.PercentOutput, setSpeed);
+        turretFalcon.set(ControlMode.PercentOutput, setSpeed);
     }
 
     public void goToAngle(double angle) {
@@ -169,26 +176,47 @@ public class Turret extends SubsystemBase {
         angle = Math.max(angle, Constants.turretMinEnd);
         
         
-        if (Math.abs(angle - getTurretAngleRaw()) > Constants.turretTolerance) {
-            turretRotate.setSetpoint(angle);
-        }
-        if (Math.abs(angle - getTurretAngleRaw()) > 20.0) {
-            turretRotate.reset();
-        }
+        // if (Math.abs(angle - getTurretAngleRaw()) > Constants.turretTolerance) {
+        //     turretRotate.setSetpoint(angle);
+        // }
+        // if (Math.abs(angle - getTurretAngleRaw()) > 20.0) {
+        //     turretRotate.reset();
+        // }
         
         // power = 0.0;
-        pidPower = turretRotate.calculate(getTurretAngleRaw());
-        pidPower += Constants.turretF;
+        // pidPower = turretRotate.calculate(getTurretAngleRaw());
+        // pidPower += Constants.turretF;
     
-        pidPower = MathUtil.clamp(pidPower, -.50, 0.46);
+        // pidPower = MathUtil.clamp(pidPower, -.50, 0.46);
         
-        SmartDashboard.putNumber("TurretToAngle Speed", pidPower);
+        // SmartDashboard.putNumber("TurretToAngle Speed", pidPower);
         
-        setTurretSpeed(pidPower);
+        // Convert angle to Falcon encoder clicks
+        // angle -= Constants.turretRobotOffset;
+        double motorTarget = angle * 2048.0 * Constants.turretGearRatio / 360.0;
+
+        SmartDashboard.putNumber("Turret target ticks", motorTarget);
+
+        //setTurretSpeed(pidPower);
+        turretFalcon.set(ControlMode.MotionMagic, motorTarget, DemandType.ArbitraryFeedForward, -0.02);
     }
 
-    public static double getTurretEncoder() {
+    public void setTurretFalconEncoder() {
+        double value = Constants.turretGearRatio * getCanCoderRealDegrees() * 2048 / 360.0;
+        turretFalcon.setSelectedSensorPosition(value);
+    }
+
+    public double getFalconRealDegrees() {
+        return turretFalcon.getSelectedSensorPosition() * 360.0 / 2048.0 / Constants.turretGearRatio;
+    }
+
+    public boolean hasTurretFalconReset() {
+        return turretFalcon.hasResetOccurred();
+    }
+
+    public double getCanCoderRealDegrees() {
         double position = (turretEncoder.getAbsolutePosition() + Constants.turretEncoderOffset);
+        position *= 40.0 / Constants.turretGearRatio;
 
         while (position < 0) {
             position += 360.0;
@@ -200,12 +228,12 @@ public class Turret extends SubsystemBase {
         return position;
     }
 
-    public static double getTurretAngleRaw() {
-        return angleOverlap(getTurretEncoder() * 2.3);       // Adjust for gear ratio of abs encoder
-    }
+    // public static double getTurretAngleRaw() {
+    //     return angleOverlap(getCanCoderRealDegrees() * 40.0 /  Constants.turretGearRatio);       // Adjust for gear ratio of abs encoder
+    // }
     
     public double getTurretAngle() {
-        return angleOverlap(getTurretAngleRaw() - Constants.turretRobotOffset);
+        return angleOverlap(getFalconRealDegrees() - Constants.turretRobotOffset);
     }
 
     public static double angleOverlap(double tempAngle) {
@@ -223,8 +251,11 @@ public class Turret extends SubsystemBase {
     }
 
     public boolean onTarget(){
-        return ((Math.abs(turretTargetAngle - getTurretAngle()) < Constants.turretTolerance) &&
-            (Math.abs(pidPower) < 0.02));
+        return (Math.abs(turretTargetAngle - getTurretAngle()) < Constants.turretTolerance);
+    }
+
+    public double getClosedLoopError() {
+        return turretFalcon.getClosedLoopError();
     }
 
     public boolean isAutoAiming() {

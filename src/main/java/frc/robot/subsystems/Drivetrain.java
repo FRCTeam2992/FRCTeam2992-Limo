@@ -81,7 +81,7 @@ public class Drivetrain extends SubsystemBase {
   public Pose2d latestSwervePoseEstimate = new Pose2d(0.0, 0.0,  Rotation2d.fromDegrees(0.0));
   public Pose2d priorSwervePoseEstimate;
   private double distanceTraveled;             // How far we moved this cycle (meters)
-  private double angleTurned;                  // How much did we rotate this cycle (degrees)
+  public double angleTurned;                  // How much did we rotate this cycle (degrees)
 
   // NavX Pitch change (used by climb code)
   double lastPitch = 0.0;                     // Pitch angle from prior cycle

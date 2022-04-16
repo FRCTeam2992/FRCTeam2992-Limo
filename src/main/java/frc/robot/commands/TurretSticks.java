@@ -41,6 +41,10 @@ public class TurretSticks extends CommandBase {
     double targetAngle;
     double xyMagnitude = Math.sqrt((x * x) + (y * y));
 
+    // Compensate to lead for robot rotation -- try 3 samples worth of drive train rotation
+    double turned = Robot.mRobotContainer.mDrivetrain.angleTurned;
+    double cycles = Math.max(Math.min(2.0 * Math.abs(turned * turned * turned), 15.0), 5.0);
+
     if (xyMagnitude >= Constants.turretJoystickDeadband && !mClimb.getClimbMode()){
       if(xyMagnitude > 1){
         x /= xyMagnitude;
@@ -51,19 +55,24 @@ public class TurretSticks extends CommandBase {
       } else {
         targetAngle = Turret.angleOverlap((Math.toDegrees(Math.atan2(y, x)) - 90));
       }
+
+      // Compensate to lead for robot rotation -- try 3 samples worth of drive train rotation
+      targetAngle -= cycles *turned;
+      // SmartDashboard.putNumber("Angle Turned", Robot.mRobotContainer.mDrivetrain.angleTurned);
+
       mTurret.goToAngle(Turret.angleOverlap(targetAngle));
       // SmartDashboard.putNumber("TurretStick output", targetAngle);
     } else if (!mClimb.getClimbMode()) {
-      mTurret.stopTurret();
-      // Pose2d robotPose = Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.getEstimatedPosition();
-      // Transform2d toTarget = robotPose.minus(Constants.goalPose);
-      // double toTargetX = toTarget.getTranslation().getX();
-      // double toTargetY = toTarget.getTranslation().getY();
-      // double toTargetAngle = Turret.angleOverlap(180 - Math.toDegrees(Math.atan2(toTargetY, toTargetX)));
+      //mTurret.stopTurret();
+      Pose2d robotPose = Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.getEstimatedPosition();
+      Transform2d toTarget = robotPose.minus(Constants.goalPose);
+      double toTargetX = toTarget.getTranslation().getX();
+      double toTargetY = toTarget.getTranslation().getY();
+      double toTargetAngle = Turret.angleOverlap(180 - Math.toDegrees(Math.atan2(toTargetY, toTargetX)));
       // SmartDashboard.putNumber("toTargetAngle", toTargetAngle);
       // SmartDashboard.putNumber("toTargetX", toTarget.getX() * 2.54 / 100);
       // SmartDashboard.putNumber("toTargetY", toTarget.getY() * 2.54 / 100);
-      // mTurret.goToAngle(toTargetAngle - mTurret.getGyroYaw());
+      mTurret.goToAngle(toTargetAngle - mTurret.getGyroYaw() - cycles*turned);
     } else {
       mTurret.stopTurret();
     }

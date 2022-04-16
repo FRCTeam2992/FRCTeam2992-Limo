@@ -197,12 +197,12 @@ public class Robot extends TimedRobot {
     public void vibrateControllers() {
         if (++vibrateCounter >= 10) {
 
-            if ((mRobotContainer.mTurret.getTurretAngleRaw() < Constants.turretMinSlowZone)
-                    || (mRobotContainer.mTurret.getTurretAngleRaw() > Constants.turretMaxSlowZone)) {
-                mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 1);
-                mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 1);
-                mRobotContainer.controller1.setRumble(RumbleType.kLeftRumble, 1);
-                mRobotContainer.controller1.setRumble(RumbleType.kRightRumble, 1);
+            if ((mRobotContainer.mTurret.getFalconRealDegrees() < Constants.turretMinSlowZone)
+                    || (mRobotContainer.mTurret.getFalconRealDegrees() > Constants.turretMaxSlowZone)) {
+                // mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 1);
+                // mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 1);
+                // mRobotContainer.controller1.setRumble(RumbleType.kLeftRumble, 1);
+                // mRobotContainer.controller1.setRumble(RumbleType.kRightRumble, 1);
             } else {
                 mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 0.0);
                 mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 0.0);

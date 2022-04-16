@@ -258,10 +258,10 @@ public class RobotContainer {
       moveHoodDownButton.whileHeld(new MoveHood(mShooterHood, -.25), true);
 
       POVButton moveTurretLeftButton = new POVButton(controller1, 270);
-      moveTurretLeftButton.whileHeld(new MoveTurret(mTurret, -.40), true);
+      moveTurretLeftButton.whileHeld(new MoveTurret(mTurret, -.30), true);
 
       POVButton moveTurretRightButton = new POVButton(controller1, 90);
-      moveTurretRightButton.whileHeld(new MoveTurret(mTurret, .35), true);
+      moveTurretRightButton.whileHeld(new MoveTurret(mTurret, .25), true);
 
 
     //-ABXY

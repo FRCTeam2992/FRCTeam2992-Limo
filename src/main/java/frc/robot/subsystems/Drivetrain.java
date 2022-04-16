@@ -273,7 +273,7 @@ public class Drivetrain extends SubsystemBase {
       // Constants.cameraHeight, Constants.targetHeight));
 
       // Display Gyro Angle
-      // SmartDashboard.putNumber("Gyro Yaw", getGyroYaw());
+      SmartDashboard.putNumber("Gyro Yaw", navx.getYaw());
 
       // // Display Module Angles
       // SmartDashboard.putNumber("Front Left Module Angle",

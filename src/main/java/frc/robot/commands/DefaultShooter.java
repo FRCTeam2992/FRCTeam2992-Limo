@@ -42,7 +42,7 @@ public class DefaultShooter extends CommandBase {
     if (mShooter.isShooterCommanded()) {
       // Shooterwas last commanded on so spin it
       // CommandScheduler.getInstance().schedule(new StartShooter(mShooter));
-      if (!mTurret.limeLightCamera.hasTarget()) {
+      if (!mTurret.limeLightCamera.hasTarget() && Robot.mRobotContainer.controller1.getLeftBumper()) {
           Pose2d robotPose = Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.getEstimatedPosition();
           Transform2d toTarget = robotPose.minus(Constants.goalPose);
           double distance = (100 / 2.54) * toTarget.getTranslation().getDistance(new Translation2d());

@@ -66,7 +66,7 @@ public class RobotContainer {
 
   public final Intake mIntake;
   public final CargoFunnel mCargoFunnel;
-  public final TopLift mTopLift;
+
   public final BottomLift mBottomLift;
   public final IntakeDeploy mIntakeDeploy;
   public final Climb mClimb;
@@ -109,9 +109,6 @@ public class RobotContainer {
     mShooter = new Shooter();
     mShooter.setDefaultCommand(new DefaultShooter(mShooter, mTurret, cargoBallInterpolator));
     
-    mTopLift = new TopLift();
-    mTopLift.setDefaultCommand(new DefaultTopLift(mTopLift));
-    
     mBottomLift = new BottomLift();
     mBottomLift.setDefaultCommand(new DefaultBottomLift(mBottomLift));
 
@@ -139,7 +136,6 @@ public class RobotContainer {
     SmartDashboard.putData(mCargoFunnel);
     SmartDashboard.putData(mDrivetrain);
     SmartDashboard.putData(mBottomLift);
-    SmartDashboard.putData(mTopLift);
     SmartDashboard.putData(mIntakeDeploy);
     SmartDashboard.putData(mClimb);
 
@@ -190,9 +186,9 @@ public class RobotContainer {
       autoAimButton.whileActiveContinuous(new AutoLimelightSecondShooter(mTurret, mShooter, cargoBallInterpolator));
 
       TriggerButton autoShootButton = new TriggerButton(controller0, .4, 'r');
-      autoShootButton.whileActiveContinuous(new AutoShoot(mCargoFunnel, mTopLift, mBottomLift,
+      autoShootButton.whileActiveContinuous(new AutoShoot(mCargoFunnel, mBottomLift,
             mShooter, mShooterHood, mTurret, mDrivetrain), true);
-      autoShootButton.whileActiveContinuous(new SetSwerveAngleSafe(mDrivetrain, 45, -45, -45, 45));
+      // autoShootButton.whileActiveContinuous(new SetSwerveAngleSafe(mDrivetrain, 45, -45, -45, 45));
 
 
       JoystickButton panicIntakeButton1 = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
@@ -235,20 +231,20 @@ public class RobotContainer {
   */
     //-Triggers and Bumpers
       TriggerButton dejamButton = new TriggerButton(controller1, .3, 'r');
-      dejamButton.whileActiveContinuous(new DejamBallPath(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
+      dejamButton.whileActiveContinuous(new DejamBallPath(mIntake, mCargoFunnel, mBottomLift, mIntakeDeploy), true);
 
       JoystickButton driverBPanicButton = new JoystickButton(controller1, XboxController.Button.kRightBumper.value);
       driverBPanicButton.whileHeld(new PanicIntake(mIntake, mIntakeDeploy, mBottomLift, mCargoFunnel));
 
-      TriggerButton lowGoalShotButton = new TriggerButton(controller1, .3, 'l');
-      lowGoalShotButton.whileActiveOnce(new NewHoodTarget(mShooterHood, 152), true);
-      lowGoalShotButton.whileActiveOnce(new SetShooterSpeedTargets(mShooter, 1200, 0), true);
-      lowGoalShotButton.whileActiveOnce(new MoveTurretToAngle(mTurret, 180));
-
-      JoystickButton highGoalShotButton = new JoystickButton(controller1, XboxController.Button.kLeftBumper.value);
-      highGoalShotButton.whenHeld(new NewHoodTarget(mShooterHood, -152));
-      highGoalShotButton.whenHeld(new SetShooterSpeedTargets(mShooter, 1750, 2650));
-      highGoalShotButton.whenHeld(new MoveTurretToAngle(mTurret, 0.0));
+      TriggerButton highGoalShotButton = new TriggerButton(controller1, .3, 'l');
+      highGoalShotButton.whileActiveContinuous(new NewHoodTarget(mShooterHood, -152));
+      highGoalShotButton.whileActiveContinuous(new SetShooterSpeedTargets(mShooter, 1750, 2650));
+      highGoalShotButton.whileActiveContinuous(new MoveTurretToAngle(mTurret, 0.0));
+      
+      JoystickButton autoTrackHub = new JoystickButton(controller1, XboxController.Button.kLeftBumper.value);
+      // lowGoalShotButton.whileActiveOnce(new NewHoodTarget(mShooterHood, 152), true);
+      // lowGoalShotButton.whileActiveOnce(new SetShooterSpeedTargets(mShooter, 1200, 0), true);
+      // lowGoalShotButton.whileActiveOnce(new MoveTurretToAngle(mTurret, 180));
       
     //-D-Pad
       POVButton moveHoodUpButton = new POVButton(controller1, 0);
@@ -269,11 +265,11 @@ public class RobotContainer {
       startShooterButton.whenPressed(new SetShooterCommanded(mShooter, true), true);
 
       JoystickButton autoIntakeButton = new JoystickButton(controller1, XboxController.Button.kA.value);
-      autoIntakeButton.whenPressed(new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy, true), true);
+      autoIntakeButton.whenPressed(new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mIntakeDeploy, true), true);
       // autoIntakeButton.whenPressed(new ChangeIntakeState(mIntakeDeploy, true), true);
 
       JoystickButton stopAutoIntakeButton = new JoystickButton(controller1, XboxController.Button.kB.value);
-      stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy), true);
+      stopAutoIntakeButton.whenPressed(new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mIntakeDeploy), true);
 
       JoystickButton stopShooterButton = new JoystickButton(controller1, XboxController.Button.kY.value);
       stopShooterButton.whenPressed(new SetShooterCommanded(mShooter, false), true);
@@ -352,9 +348,9 @@ public class RobotContainer {
     //Command testPathAuto = new AutoFollowPath(mDrivetrain, new TestPath(mDrivetrain, 90.0).generateSwerveTrajectory(), true, true, 90.0);
     //Command p3s1mAuto = new AutoP3S1M(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift,
     //  mDrivetrain, mIntake, mIntakeDeploy);
-    Command threeBallAuto = new ThreeBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift, mDrivetrain, mIntake, mIntakeDeploy);
-    Command twoBallAuto = new TwoBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift, mDrivetrain, mIntake, mIntakeDeploy);
-    Command fiveBallAuto = new FiveBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mTopLift, mBottomLift, mDrivetrain, mIntake, mIntakeDeploy);
+    Command threeBallAuto = new ThreeBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mBottomLift, mDrivetrain, mIntake, mIntakeDeploy);
+    Command twoBallAuto = new TwoBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mBottomLift, mDrivetrain, mIntake, mIntakeDeploy);
+    Command fiveBallAuto = new FiveBallAuto(mShooterHood, mShooter, mTurret, cargoBallInterpolator, mCargoFunnel, mBottomLift, mDrivetrain, mIntake, mIntakeDeploy);
     autoChooser = new SendableChooser<>();
 
 

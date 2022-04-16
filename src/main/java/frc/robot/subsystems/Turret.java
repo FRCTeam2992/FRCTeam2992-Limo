@@ -198,7 +198,7 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putNumber("Turret target ticks", motorTarget);
 
         //setTurretSpeed(pidPower);
-        turretFalcon.set(ControlMode.MotionMagic, motorTarget, DemandType.ArbitraryFeedForward, -0.02);
+        turretFalcon.set(ControlMode.MotionMagic, motorTarget, DemandType.ArbitraryFeedForward, Constants.turretF);
     }
 
     public void setTurretFalconEncoder() {

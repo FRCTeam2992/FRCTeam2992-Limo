@@ -96,7 +96,6 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveNeutralMode(NeutralMode.Coast);
         mRobotContainer.mDrivetrain.setTurnNeutralMode(NeutralMode.Coast);
         mRobotContainer.mBottomLift.setCommanded(false);
-        mRobotContainer.mTopLift.setCommanded(false);
         mRobotContainer.mShooter.setShooterCommanded(false);
         mRobotContainer.mIntake.setIntakeCommanded(false);
         mRobotContainer.mIntakeDeploy.setIntakeDeployedState(false);
@@ -197,12 +196,12 @@ public class Robot extends TimedRobot {
     public void vibrateControllers() {
         if (++vibrateCounter >= 10) {
 
-            if ((mRobotContainer.mTurret.getFalconRealDegrees() < Constants.turretMinSlowZone)
-                    || (mRobotContainer.mTurret.getFalconRealDegrees() > Constants.turretMaxSlowZone)) {
-                // mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 1);
-                // mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 1);
-                // mRobotContainer.controller1.setRumble(RumbleType.kLeftRumble, 1);
-                // mRobotContainer.controller1.setRumble(RumbleType.kRightRumble, 1);
+            if ((mRobotContainer.mTurret.getFalconRealDegrees() < Constants.turretMinRumble)
+                    || (mRobotContainer.mTurret.getFalconRealDegrees() > Constants.turretMaxRumble)) {
+                mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 1);
+                mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 1);
+                mRobotContainer.controller1.setRumble(RumbleType.kLeftRumble, 1);
+                mRobotContainer.controller1.setRumble(RumbleType.kRightRumble, 1);
             } else {
                 mRobotContainer.controller0.setRumble(RumbleType.kLeftRumble, 0.0);
                 mRobotContainer.controller0.setRumble(RumbleType.kRightRumble, 0.0);
@@ -230,7 +229,6 @@ public class Robot extends TimedRobot {
         mRobotContainer.mCargoFunnel.reset();
         mRobotContainer.mIntake.reset();
         mRobotContainer.mShooter.reset();
-        mRobotContainer.mTopLift.reset();
     }
 
 }

@@ -65,7 +65,7 @@ public class AutoTurretAim extends CommandBase {
                 }
                 mTurret.goToAngle(Turret.angleOverlap(targetAngle));
                 // SmartDashboard.putNumber("TurretStick output", targetAngle);
-            } else{
+            } else if (Robot.mRobotContainer.controller1.getLeftBumper()) {
                 //mTurret.stopTurret();
                 Pose2d robotPose = Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.getEstimatedPosition();
                 Transform2d toTarget = robotPose.minus(Constants.goalPose);
@@ -76,6 +76,8 @@ public class AutoTurretAim extends CommandBase {
                 SmartDashboard.putNumber("toTargetX", toTarget.getX() * 2.54 / 100);
                 SmartDashboard.putNumber("toTargetY", toTarget.getY() * 2.54 / 100);
                 mTurret.goToAngle(toTargetAngle - mTurret.getGyroYaw());
+            } else {
+                mTurret.stopTurret();
             }
 
         }

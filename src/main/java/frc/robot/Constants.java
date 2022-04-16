@@ -46,15 +46,18 @@ public class Constants {
   public static final double shooterSpeedTolerance = 100;
 
   // Turret Constants
-  public static final double turretP = 0.0038; //0.03
-  public static final double turretI = 0.015; //0.04
-  public static final double turretD = 0.0003; //0.002
+  public static final double turretP = 0.06;
+  public static final double turretI = 0.012;
+  public static final double turretD = 1.5;
   public static final double turretF = -0.02; // Need to push against CF spring in neg dir
+  
   public static final double turretTolerance = 1.0;
   public static final int turretEncoderOffset = 69;
   public static final int turretRobotOffset = 70; 
   public static final int turretMinEnd = 45;
   public static final int turretMaxEnd = 298;
+  public static final int turretMinRumble = 60;
+  public static final int turretMaxRumble = 283;
   public static final int turretMaxSlowZone = 223;
   public static final int turretMinSlowZone = 100;
   public static final double turretJoystickDeadband = .75;
@@ -193,6 +196,6 @@ public class Constants {
 
 
   // DataLogManager enabled
-  public static final boolean dataLogging = true;
+  public static final boolean dataLogging = false;
 
 }

@@ -32,7 +32,6 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakeDeploy;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.ShooterHood;
-import frc.robot.subsystems.TopLift;
 import frc.robot.subsystems.Turret;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -42,7 +41,7 @@ public class ThreeBallAuto extends ParallelCommandGroup {
 
   /** Creates a new AutoIntake. */
   public ThreeBallAuto(ShooterHood mShooterHood, Shooter mShooter, Turret mTurret, 
-      CargoBallInterpolator mInterpolator, CargoFunnel mCargoFunnel, TopLift mTopLift,
+      CargoBallInterpolator mInterpolator, CargoFunnel mCargoFunnel, 
       BottomLift mBottomLift, Drivetrain mDrivetrain, Intake mIntake, IntakeDeploy mIntakeDeploy) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -60,7 +59,7 @@ public class ThreeBallAuto extends ParallelCommandGroup {
         new InstantCommand(mTurret::autoAimingOff),
         new WaitCommand(2),
         // new WaitCommand(0.040),
-        new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
+        new AutoShootAutonomous(mCargoFunnel, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
         new InstantCommand(mTurret::autoAimingOn),
         new ParallelCommandGroup(
           new AutoLimelightHood(mTurret, mShooterHood, mInterpolator),
@@ -68,14 +67,14 @@ public class ThreeBallAuto extends ParallelCommandGroup {
           new AutoLimelightSecondShooter(mTurret, mShooter, mInterpolator),
           new SequentialCommandGroup(
             new ChangeIntakeState(mIntakeDeploy, true),
-            new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy, true),
+            new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mIntakeDeploy, true),
             new NewHoodTarget(mShooterHood, -93),
             new SetTurretTargetAngle(mTurret, true, 60),//nice
             new SetShooterSpeedTargets(mShooter, 1840, 2720),
             new AutoFollowPath(mDrivetrain, new ThreeBallMainPath(mDrivetrain, 88.5).generateSwerveTrajectory(), true, false, 0.0).withTimeout(5),
             new WaitCommand(1),
-            new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3),
-            new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy),
+            new AutoShootAutonomous(mCargoFunnel, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3),
+            new StopAutoIntake(mIntake, mCargoFunnel, mBottomLift, mIntakeDeploy),
             new SetShooterCommanded(mShooter, false)
           )
         )

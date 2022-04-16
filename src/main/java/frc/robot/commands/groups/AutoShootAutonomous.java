@@ -29,7 +29,7 @@ import frc.robot.subsystems.Turret;
 public class AutoShootAutonomous extends SequentialCommandGroup {
 
   /** Creates a new AutoShoot. */
-  public AutoShootAutonomous(CargoFunnel mCargoFunnel, TopLift mTopLift, BottomLift mBottomLift,
+  public AutoShootAutonomous(CargoFunnel mCargoFunnel, BottomLift mBottomLift,
         Shooter mShooter, ShooterHood mShooterHood, Turret mTurret, Drivetrain mDrivetrain) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
@@ -44,7 +44,6 @@ public class AutoShootAutonomous extends SequentialCommandGroup {
       ),      
     new ParallelCommandGroup(                       // OK TO shoot
       new SetCargoFunnelCommanded(mCargoFunnel, true, false, 0.55, 0.55, 0.0),
-      new SetTopLiftCommanded(mTopLift, true, 0.9),
       new SetBottomLiftCommandedNew(mBottomLift, true, false, 0.5, 0.5),
       new WaitCommand(5.0)
     )

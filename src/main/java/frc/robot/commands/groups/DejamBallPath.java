@@ -22,12 +22,11 @@ import frc.robot.subsystems.TopLift;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class DejamBallPath extends SequentialCommandGroup {
   /** Creates a new DejamBallPath. */
-  public DejamBallPath(Intake mIntake, CargoFunnel mCargoFunnel, BottomLift mBottomLift, TopLift mTopLift, IntakeDeploy mIntakeDeploy) {
+  public DejamBallPath(Intake mIntake, CargoFunnel mCargoFunnel, BottomLift mBottomLift, IntakeDeploy mIntakeDeploy) {
     addCommands(
       //new DeployIntake(mIntake, true),
       new ParallelCommandGroup(
         new DeployIntake(mIntakeDeploy),
-        new SpinTopLift(mTopLift, -1),
         new SpinBottomLift(mBottomLift, -1),
         new SpinCargoFunnel(mCargoFunnel, -.75),
         new SpinIntake(mIntake, -.75)

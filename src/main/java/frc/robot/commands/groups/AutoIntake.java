@@ -21,7 +21,7 @@ import frc.robot.subsystems.TopLift;
 public class AutoIntake extends ParallelCommandGroup {
 
   /** Creates a new AutoIntake. */
-  public AutoIntake(Intake mIntake, CargoFunnel mCargoFunnel, BottomLift mBottomLift, TopLift mTopLift, IntakeDeploy mIntakeDeploy, boolean isDeployed) {
+  public AutoIntake(Intake mIntake, CargoFunnel mCargoFunnel, BottomLift mBottomLift, IntakeDeploy mIntakeDeploy, boolean isDeployed) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
@@ -30,7 +30,6 @@ public class AutoIntake extends ParallelCommandGroup {
       new SetCargoFunnelCommanded(mCargoFunnel, true, true, .5, .3, 0.0),
       // new SetBottomLiftCommanded(mBottomLift, true, true, 0.5, 0.0, 0.12),
       new SetBottomLiftCommandedNew(mBottomLift, true, true, 0.7,  0.4)
-      // new SetTopLiftCommanded(mTopLift, false, 0.0)
-    );
+      );
   }
 }

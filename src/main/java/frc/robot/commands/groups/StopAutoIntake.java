@@ -22,13 +22,12 @@ import frc.robot.subsystems.TopLift;
 public class StopAutoIntake extends ParallelCommandGroup {
 
   /** Creates a new AutoIntake. */
-  public StopAutoIntake(Intake mIntake, CargoFunnel mCargoFunnel, BottomLift mBottomLift, TopLift mTopLift, IntakeDeploy mIntakeDeploy) {
+  public StopAutoIntake(Intake mIntake, CargoFunnel mCargoFunnel, BottomLift mBottomLift, IntakeDeploy mIntakeDeploy) {
     addCommands(
       new ChangeIntakeState(mIntakeDeploy, false),
       new SetIntakeCommanded(mIntake, false, 0.0),
       new SetCargoFunnelCommanded(mCargoFunnel, false, false, 0.0, 0.0, 0.0),
-      new SetBottomLiftCommandedNew(mBottomLift, false, false, 0.0, 0.0),
-      new SetTopLiftCommanded(mTopLift, false, 0.0)
+      new SetBottomLiftCommandedNew(mBottomLift, false, false, 0.0, 0.0)
     );
   }
 }

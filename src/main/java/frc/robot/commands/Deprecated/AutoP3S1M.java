@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Autonomous;
+package frc.robot.commands.Deprecated;
 
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
@@ -49,8 +49,8 @@ public class AutoP3S1M extends ParallelCommandGroup {
       new AutoLimelightSecondShooter(mTurret, mShooter, mInterpolator),
       new SequentialCommandGroup(
         // new WaitCommand(0.040),
-        new AutoShoot(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
-        new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy, true),
+        new AutoShoot(mCargoFunnel, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.0),
+        new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mIntakeDeploy, true),
         new AutoFollowPath(mDrivetrain, new StraightPath(2.0, 0).generateSwerveTrajectory(), false, false, 0)
       )
     );

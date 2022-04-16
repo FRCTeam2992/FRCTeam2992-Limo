@@ -44,7 +44,7 @@ public class FiveBallAuto extends ParallelCommandGroup {
 
   /** Creates a new AutoIntake. */
   public FiveBallAuto(ShooterHood mShooterHood, Shooter mShooter, Turret mTurret, 
-      CargoBallInterpolator mInterpolator, CargoFunnel mCargoFunnel, TopLift mTopLift,
+      CargoBallInterpolator mInterpolator, CargoFunnel mCargoFunnel, 
       BottomLift mBottomLift, Drivetrain mDrivetrain, Intake mIntake, IntakeDeploy mIntakeDeploy) {
     addCommands(
       //new NewHoodTarget(mShooterHood, 0.0),
@@ -63,7 +63,7 @@ public class FiveBallAuto extends ParallelCommandGroup {
         //new WaitCommand(0.25),
         // new WaitCommand(0.040),
         new InstantCommand(mTurret::autoAimingOff),
-        new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(0.8),
+        new AutoShootAutonomous(mCargoFunnel, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(0.8),
         new InstantCommand(mTurret::autoAimingOn),
         new ParallelCommandGroup(
           new AutoLimelightHood(mTurret, mShooterHood, mInterpolator),
@@ -72,15 +72,15 @@ public class FiveBallAuto extends ParallelCommandGroup {
           new SequentialCommandGroup(
             new ChangeIntakeState(mIntakeDeploy, true),
             new SetBottomLiftCommandedNew(mBottomLift, false, false, 0.0, 0.0),
-            new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy, true),
+            new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mIntakeDeploy, true),
             new NewHoodTarget(mShooterHood, 106),
             new SetTurretTargetAngle(mTurret, true, 93.0),
             new SetShooterSpeedTargets(mShooter, 2266, 2850),
             new AutoFollowPath(mDrivetrain, new ThreeBallForFivePath(mDrivetrain, 88.5).generateSwerveTrajectory(), true, false, 0.0).withTimeout(5),
             new WaitCommand(0.20),
-            new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.3),
+            new AutoShootAutonomous(mCargoFunnel, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(1.3),
             new SetBottomLiftCommandedNew(mBottomLift, false, true, 0.0, 0.0),
-            new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mTopLift, mIntakeDeploy, true),
+            new AutoIntake(mIntake, mCargoFunnel, mBottomLift, mIntakeDeploy, true),
             new SetTurretTargetAngle(mTurret, true, 181),
             new SetShooterSpeedTargets(mShooter, 2500, 3000),
             new NewHoodTarget(mShooterHood, 128),
@@ -88,7 +88,7 @@ public class FiveBallAuto extends ParallelCommandGroup {
             new WaitCommand(0.6),
             new AutoFollowPath(mDrivetrain, new FiveBallFinalPart2Path(mDrivetrain, 135).generateSwerveTrajectory(), false, false, 135).withTimeout(7.5),
             new WaitCommand(0.2),
-            new AutoShootAutonomous(mCargoFunnel, mTopLift, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3)
+            new AutoShootAutonomous(mCargoFunnel, mBottomLift, mShooter, mShooterHood, mTurret, mDrivetrain).withTimeout(3)
           )
         )
         

@@ -145,11 +145,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public boolean atMainShooterRPM() {
-    return (Math.abs(getMainShooterTargetRPM() - getMainShooterRPM()) < 100.0);
+    return (Math.abs(getMainShooterTargetRPM() - getMainShooterRPM()) < 200.0);
   }
 
   public boolean atSecondaryShooterRPM() {
-    return (Math.abs(getSecondaryShooterTargetRPM() - getSecondaryShooterRPM()) < 100.0);
+    return (Math.abs(getSecondaryShooterTargetRPM() - getSecondaryShooterRPM()) < 150.0);
   }
 
   public boolean atShooterRPM() {

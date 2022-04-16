@@ -91,7 +91,7 @@ public class Constants {
   public static final double hoodD = 0.0001;
   public static final double hoodF = 0.02; 
 
-  public static final double hoodTolerance = 4;
+  public static final double hoodTolerance = 10;
 
   public static final double defaultHoodPosition = 0;
 

@@ -8,6 +8,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.math.filter.Debouncer;
+import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.util.datalog.BooleanLogEntry;
 import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.StringLogEntry;
@@ -30,7 +32,7 @@ public class BottomLift extends SubsystemBase {
   private double noBallSpeed = 0.0; // Speed to be commanded if no ball is seen
   private double withBallSpeed = 0.0; // Speed to be commanded if we see a ball
   private double sensorDelay = 0.0; // How long after seeing a ball before we jump to the withBallSpeed
- 
+
   // private double encoderHoldPosition = 0.0;
   // private Encoder liftTowerEncoder;
 
@@ -42,6 +44,9 @@ public class BottomLift extends SubsystemBase {
 
   private double dashboardCounter = 0;
 
+  private Debouncer topSensorDebouncer;
+  private Debouncer bottomSensorDebouncer;
+
   private DataLog mDataLog;
   private BooleanLogEntry bottomSensorLog;
   private BooleanLogEntry topSensorLog;
@@ -49,7 +54,6 @@ public class BottomLift extends SubsystemBase {
 
   public boolean updatedBottomSensorState;
   public boolean updatedTopSensorState;
-
 
   public BottomLift() {
     bottomLiftMotor = new WPI_VictorSPX(24);
@@ -71,6 +75,9 @@ public class BottomLift extends SubsystemBase {
     bottomLiftSensor = new DigitalInput(0);
     topLiftSensor = new DigitalInput(1);
 
+    topSensorDebouncer = new Debouncer(.1, DebounceType.kFalling);
+    bottomSensorDebouncer = new Debouncer(.1, DebounceType.kFalling);
+
     // liftTowerEncoder = new Encoder(3, 4, false, EncodingType.k4X);
 
     sensorTimer = new Timer();
@@ -87,8 +94,6 @@ public class BottomLift extends SubsystemBase {
       topSensorLog = new BooleanLogEntry(mDataLog, "/bl/topSensor");
       commandedBallSpeedLog = new StringLogEntry(mDataLog, "/bl/commandedBallSpeed");
     }
-
-    
 
   }
 
@@ -108,58 +113,48 @@ public class BottomLift extends SubsystemBase {
 
   }
 
-  
-
   public void setBottomLiftSpeed(double speed) {
     bottomLiftMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void setBottomLiftSpeedAsCommandedSensor() {
-    if (isCommanded()) {
-      // We should be running in default command
-      sensorTimer.reset();
-      if ((!getBottomSensorState() && !getTopSensorState()) || (sensorTimer.get() < getSensorDelay())) {
-        // No ball is seen so run at higher speed
-        bottomLiftMotor.set(ControlMode.PercentOutput, noBallSpeed);
-      } else {
-        // We have a ball in cargo lift for long enough so change speed
-        bottomLiftMotor.set(ControlMode.PercentOutput, withBallSpeed);
-      }
-    } else {
-      // We are commanded off
-      bottomLiftMotor.set(ControlMode.PercentOutput, 0.0);
-    }
-  }
-
+  /*
+   * public void setBottomLiftSpeedAsCommandedSensor() {
+   * if (isCommanded()) {
+   * // We should be running in default command
+   * sensorTimer.reset();
+   * if ((!getBottomSensorState() && !getTopSensorState()) || (sensorTimer.get() <
+   * getSensorDelay())) {
+   * // No ball is seen so run at higher speed
+   * bottomLiftMotor.set(ControlMode.PercentOutput, noBallSpeed);
+   * } else {
+   * // We have a ball in cargo lift for long enough so change speed
+   * bottomLiftMotor.set(ControlMode.PercentOutput, withBallSpeed);
+   * }
+   * } else {
+   * // We are commanded off
+   * bottomLiftMotor.set(ControlMode.PercentOutput, 0.0);
+   * }
+   * }
+   */
   public void setBottomLiftSpeedAsCommandedSensorNew() {
-    
+
     if (isCommanded()) {
       if (!checkSensor) {
         bottomLiftMotor.set(ControlMode.PercentOutput, noBallSpeed);
 
       } else if (updatedTopSensorState) {
         // If the top and the bottom or just the top is triggered
-        commandedBallSpeedLog.append("top sees ball");
-        if (sensorTimer.get() > .065) {
+        
+        if (sensorTimer.get() > .125) {
           bottomLiftMotor.set(ControlMode.PercentOutput, 0.0);
           if (Constants.dataLogging) {
+            commandedBallSpeedLog.append("top sees ball");
           }
         }
-        // if (!isHoldingPosition) { // get intitial limit when sensor is triggered
-        // isHoldingPosition = true;
-        // encoderHoldPosition = liftTowerEncoder.get();
-        // }
-
-        // if (isHoldingPosition &&
-        // (encoderHoldPosition < liftTowerEncoder.get())) { // push back down if motor
-        // gets rotated past
-        // bottomLiftMotor.set(ControlMode.PercentOutput, -.1);
-        // }
 
       } else if (updatedBottomSensorState) {
         // The bottom sees a ball run at lower speed
         bottomLiftMotor.set(ControlMode.PercentOutput, withBallSpeed);
-        sensorTimer.reset();
 
         isHoldingPosition = false;
 
@@ -171,7 +166,6 @@ public class BottomLift extends SubsystemBase {
         // No ball is seen so run at higher speed
 
         bottomLiftMotor.set(ControlMode.PercentOutput, noBallSpeed);
-        sensorTimer.reset();
 
         isHoldingPosition = false;
 
@@ -188,6 +182,15 @@ public class BottomLift extends SubsystemBase {
       }
     }
 
+  }
+
+  public void fastPeriodic() {
+    updatedBottomSensorState = bottomSensorDebouncer.calculate(getBottomSensorState());
+    updatedTopSensorState = topSensorDebouncer.calculate(getTopSensorState());
+
+    if (!updatedTopSensorState) {
+      sensorTimer.reset();
+    }
   }
 
   public boolean getBottomSensorState() {

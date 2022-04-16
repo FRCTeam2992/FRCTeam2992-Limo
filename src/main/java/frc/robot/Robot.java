@@ -51,18 +51,20 @@ public class Robot extends TimedRobot {
         mRobotContainer = RobotContainer.getInstance();
         
         HAL.report(tResourceType.kResourceType_Framework, tInstances.kFramework_RobotBuilder);
+
         mRobotContainer.mDrivetrain.navx.zeroYaw();
         mRobotContainer.mIntakeDeploy.initIntakeDeployMotor(0.0);
         mRobotContainer.mClimb.resetClimbMotors();
+
         addPeriodic(() -> {
-            mRobotContainer.mBottomLift.updatedBottomSensorState = mRobotContainer.mBottomLift.getBottomSensorState();
-            mRobotContainer.mBottomLift.updatedTopSensorState = mRobotContainer.mBottomLift.getTopSensorState();
-        }, 0.01, 0.015);
+            mRobotContainer.mBottomLift.fastPeriodic();
+        }, 0.005, 0.0025);
 
         if (Constants.dataLogging) {
             DataLogManager.start();
             DriverStation.startDataLog(DataLogManager.getLog());
         }
+
         mRobotContainer.mDrivetrain.resetOdometry();
     }
 

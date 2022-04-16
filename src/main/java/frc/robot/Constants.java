@@ -52,7 +52,7 @@ public class Constants {
   public static final double turretF = -0.02; // Need to push against CF spring in neg dir
   public static final double turretTolerance = 1.0;
   public static final int turretEncoderOffset = 69;
-  public static final int turretRobotOffset = 64; 
+  public static final int turretRobotOffset = 70; 
   public static final int turretMinEnd = 45;
   public static final int turretMaxEnd = 298;
   public static final int turretMaxSlowZone = 223;

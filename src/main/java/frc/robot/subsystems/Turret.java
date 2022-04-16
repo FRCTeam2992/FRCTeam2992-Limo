@@ -216,14 +216,15 @@ public class Turret extends SubsystemBase {
 
     public double getCanCoderRealDegrees() {
         double position = (turretEncoder.getAbsolutePosition() + Constants.turretEncoderOffset);
-        position *= 40.0 / Constants.turretGearRatio;
-
         while (position < 0) {
             position += 360.0;
         } 
         while (position > 360.0) {
             position -= 360.0;
         }
+
+        position *= 40.0 / Constants.turretGearRatio;
+
 
         return position;
     }

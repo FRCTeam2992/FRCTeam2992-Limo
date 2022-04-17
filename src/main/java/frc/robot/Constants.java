@@ -196,6 +196,6 @@ public class Constants {
 
 
   // DataLogManager enabled
-  public static final boolean dataLogging = false;
+  public static final boolean dataLogging = true;
 
 }

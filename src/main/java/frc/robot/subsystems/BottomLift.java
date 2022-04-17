@@ -12,6 +12,7 @@ import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.util.datalog.BooleanLogEntry;
 import edu.wpi.first.util.datalog.DataLog;
+import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.util.datalog.StringLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -51,6 +52,9 @@ public class BottomLift extends SubsystemBase {
   private BooleanLogEntry bottomSensorLog;
   private BooleanLogEntry topSensorLog;
   private StringLogEntry commandedBallSpeedLog;
+  private BooleanLogEntry bottomSensorDebouncedLog;
+  private BooleanLogEntry topSensorDebouncedLog;
+  private DoubleLogEntry sensorTimerLog;
 
   public boolean updatedBottomSensorState;
   public boolean updatedTopSensorState;
@@ -93,6 +97,9 @@ public class BottomLift extends SubsystemBase {
       bottomSensorLog = new BooleanLogEntry(mDataLog, "/bl/bottomSensor");
       topSensorLog = new BooleanLogEntry(mDataLog, "/bl/topSensor");
       commandedBallSpeedLog = new StringLogEntry(mDataLog, "/bl/commandedBallSpeed");
+      bottomSensorDebouncedLog = new BooleanLogEntry(mDataLog, "/bl/bottomSensorDebounced");
+      topSensorDebouncedLog = new BooleanLogEntry(mDataLog, "/bl/topSensorDebounced");
+      sensorTimerLog = new DoubleLogEntry(mDataLog, "/bl/timer");
     }
 
   }
@@ -103,8 +110,13 @@ public class BottomLift extends SubsystemBase {
     // SmartDashboard.putBoolean("bottom sensor", getBottomSensorState());
     // SmartDashboard.putBoolean("top sensor", getTopSensorState());
     if (Constants.dataLogging) {
-      topSensorLog.append(updatedTopSensorState);
-      bottomSensorLog.append(updatedBottomSensorState);
+      //topSensorLog.append(updatedTopSensorState);
+      //bottomSensorLog.append(updatedBottomSensorState);
+        bottomSensorLog.append(getBottomSensorState());
+        bottomSensorDebouncedLog.append(updatedBottomSensorState);
+        topSensorLog.append(getTopSensorState());
+        topSensorDebouncedLog.append(updatedTopSensorState);
+        sensorTimerLog.append(sensorTimer.get());
     }
     if (dashboardCounter++ > 5) {
       // SmartDashboard.putBoolean("top sensor", getTopSensorState());
@@ -114,6 +126,9 @@ public class BottomLift extends SubsystemBase {
   }
 
   public void setBottomLiftSpeed(double speed) {
+    if (Constants.dataLogging) {
+      commandedBallSpeedLog.append("spin at " + speed);
+    }
     bottomLiftMotor.set(ControlMode.PercentOutput, speed);
   }
 
@@ -145,11 +160,13 @@ public class BottomLift extends SubsystemBase {
       } else if (updatedTopSensorState) {
         // If the top and the bottom or just the top is triggered
         
+        if (Constants.dataLogging) {
+          commandedBallSpeedLog.append("top sees ball");
+        }
+        
         if (sensorTimer.get() > .125) {
           bottomLiftMotor.set(ControlMode.PercentOutput, 0.0);
-          if (Constants.dataLogging) {
-            commandedBallSpeedLog.append("top sees ball");
-          }
+          
         }
 
       } else if (updatedBottomSensorState) {
@@ -191,6 +208,7 @@ public class BottomLift extends SubsystemBase {
     if (!updatedTopSensorState) {
       sensorTimer.reset();
     }
+    
   }
 
   public boolean getBottomSensorState() {

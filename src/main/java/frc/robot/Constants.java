@@ -38,6 +38,8 @@ public class Constants {
 
   //Lift Tower
   public static final double liftEncoderClicksDeadBand = 100;
+  public static final double liftEncoderBallAdvanceClicks = 5600; 
+  //^^^ how far to turn the motor in order to position top ball in lift tower ^^^
 
   // Shooter Constants
   public static final double defaultMainShooterSpeed = 2700;

@@ -5,7 +5,11 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.LimitSwitchNormal;
+import com.ctre.phoenix.motorcontrol.LimitSwitchSource;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.math.filter.Debouncer;
@@ -25,15 +29,17 @@ import frc.robot.Constants;
 
 public class BottomLift extends SubsystemBase {
 
-  private WPI_VictorSPX bottomLiftMotor;
+  private WPI_TalonSRX bottomLiftMotor;
 
   private boolean isCommanded = false; // Is commanded to be moving during default command
   private boolean checkSensor = false; // CHeck the ball sensor if commanded
-  private boolean isHoldingPosition = false;
+ 
   private double noBallSpeed = 0.0; // Speed to be commanded if no ball is seen
   private double withBallSpeed = 0.0; // Speed to be commanded if we see a ball
   private double sensorDelay = 0.0; // How long after seeing a ball before we jump to the withBallSpeed
-
+  private boolean limitBypassed = false;
+  private boolean hasTopBall = false;
+  private double encoderTarget = 0.0;
   // private double encoderHoldPosition = 0.0;
   // private Encoder liftTowerEncoder;
 
@@ -41,7 +47,7 @@ public class BottomLift extends SubsystemBase {
   // private Timer turnOnTimer;
 
   private DigitalInput bottomLiftSensor;
-  private DigitalInput topLiftSensor;
+  // private DigitalInput topLiftSensor;
 
   private double dashboardCounter = 0;
 
@@ -60,24 +66,13 @@ public class BottomLift extends SubsystemBase {
   public boolean updatedTopSensorState;
 
   public BottomLift() {
-    bottomLiftMotor = new WPI_VictorSPX(24);
-    bottomLiftMotor.setInverted(false);
-    bottomLiftMotor.setNeutralMode(NeutralMode.Brake);
-    bottomLiftMotor.setStatusFramePeriod(1, 255);
-    bottomLiftMotor.setStatusFramePeriod(2, 254);
-    bottomLiftMotor.setStatusFramePeriod(3, 253);
-    bottomLiftMotor.setStatusFramePeriod(4, 252);
-    bottomLiftMotor.setStatusFramePeriod(8, 251);
-    bottomLiftMotor.setStatusFramePeriod(10, 250);
-    bottomLiftMotor.setStatusFramePeriod(12, 249);
-    bottomLiftMotor.setStatusFramePeriod(13, 248);
-    bottomLiftMotor.setStatusFramePeriod(14, 247);
-    bottomLiftMotor.setStatusFramePeriod(21, 246);
+    bottomLiftMotor = new WPI_TalonSRX(24);
+    configLiftMotor();
 
     addChild("bottomLiftMotor", bottomLiftMotor);
 
     bottomLiftSensor = new DigitalInput(0);
-    topLiftSensor = new DigitalInput(1);
+    // topLiftSensor = new DigitalInput(1);
 
     topSensorDebouncer = new Debouncer(.1, DebounceType.kFalling);
     bottomSensorDebouncer = new Debouncer(.1, DebounceType.kFalling);
@@ -119,16 +114,31 @@ public class BottomLift extends SubsystemBase {
         sensorTimerLog.append(sensorTimer.get());
     }
     if (dashboardCounter++ > 5) {
-      // SmartDashboard.putBoolean("top sensor", getTopSensorState());
-      // SmartDashboard.putBoolean("bottom sensor", getBottomSensorState());
+      SmartDashboard.putBoolean("top sensor", updatedTopSensorState);
+      SmartDashboard.putBoolean("bottom sensor", updatedBottomSensorState);
+      SmartDashboard.putNumber("Bottom Lift Encoder", bottomLiftMotor.getSelectedSensorPosition());
+      SmartDashboard.putString("bottom lift control mode", bottomLiftMotor.getControlMode().toString());
+      SmartDashboard.putNumber("bottom lift motor power", bottomLiftMotor.getMotorOutputPercent());
+
+      if (bottomLiftMotor.hasResetOccurred()) {
+        configLiftMotor();
+      }
     }
 
   }
 
   public void setBottomLiftSpeed(double speed) {
+<<<<<<< Updated upstream
     if (Constants.dataLogging) {
       commandedBallSpeedLog.append("spin at " + speed);
     }
+=======
+    if (!limitBypassed) {
+      limitBypassed = true;
+      bottomLiftMotor.overrideLimitSwitchesEnable(false);
+    }
+    hasTopBall = false;
+>>>>>>> Stashed changes
     bottomLiftMotor.set(ControlMode.PercentOutput, speed);
   }
 
@@ -152,13 +162,23 @@ public class BottomLift extends SubsystemBase {
    * }
    */
   public void setBottomLiftSpeedAsCommandedSensorNew() {
-
+    
     if (isCommanded()) {
       if (!checkSensor) {
+        if (!limitBypassed) {
+          limitBypassed = true;
+          bottomLiftMotor.overrideLimitSwitchesEnable(false);
+        }
+        hasTopBall = false;
         bottomLiftMotor.set(ControlMode.PercentOutput, noBallSpeed);
 
       } else if (updatedTopSensorState) {
+        if (!limitBypassed && !hasTopBall) {
+          limitBypassed = true;
+          bottomLiftMotor.overrideLimitSwitchesEnable(false);
+        }
         // If the top and the bottom or just the top is triggered
+<<<<<<< Updated upstream
         
         if (Constants.dataLogging) {
           commandedBallSpeedLog.append("top sees ball");
@@ -167,13 +187,31 @@ public class BottomLift extends SubsystemBase {
         if (sensorTimer.get() > .125) {
           bottomLiftMotor.set(ControlMode.PercentOutput, 0.0);
           
+=======
+        if (!hasTopBall) {
+          hasTopBall = true;
+          SmartDashboard.putNumber("initial encoder", bottomLiftMotor.getSelectedSensorPosition());
+          encoderTarget = bottomLiftMotor.getSelectedSensorPosition() + Constants.liftEncoderBallAdvanceClicks;
+          SmartDashboard.putNumber("encoder target", encoderTarget);
+
+          bottomLiftMotor.set(ControlMode.Position, encoderTarget);
+        }
+
+        if (Constants.dataLogging) {
+          commandedBallSpeedLog.append("top sees ball");
+
+>>>>>>> Stashed changes
         }
 
       } else if (updatedBottomSensorState) {
         // The bottom sees a ball run at lower speed
+        hasTopBall = false;
+        if (limitBypassed) {
+          limitBypassed = false;
+          bottomLiftMotor.overrideLimitSwitchesEnable(true);
+        }
         bottomLiftMotor.set(ControlMode.PercentOutput, withBallSpeed);
 
-        isHoldingPosition = false;
 
         if (Constants.dataLogging) {
           commandedBallSpeedLog.append("bottom sees ball");
@@ -181,10 +219,13 @@ public class BottomLift extends SubsystemBase {
 
       } else {
         // No ball is seen so run at higher speed
+        hasTopBall = false;
+        if (limitBypassed) {
+          limitBypassed = false;
+          bottomLiftMotor.overrideLimitSwitchesEnable(true);
+        }
 
         bottomLiftMotor.set(ControlMode.PercentOutput, noBallSpeed);
-
-        isHoldingPosition = false;
 
         if (Constants.dataLogging) {
           commandedBallSpeedLog.append("neither sees ball");
@@ -193,6 +234,11 @@ public class BottomLift extends SubsystemBase {
 
     } else {
       bottomLiftMotor.set(ControlMode.PercentOutput, 0.0);
+      hasTopBall = false;
+      if (limitBypassed) {
+        limitBypassed = false;
+        bottomLiftMotor.overrideLimitSwitchesEnable(true);
+      }
 
       if (Constants.dataLogging) {
         commandedBallSpeedLog.append("bottom lift is off");
@@ -216,7 +262,8 @@ public class BottomLift extends SubsystemBase {
   }
 
   public boolean getTopSensorState() {
-    return topLiftSensor.get();
+    // return topLiftSensor.get();
+    return (bottomLiftMotor.isFwdLimitSwitchClosed() == 0);
   }
 
   public boolean isCommanded() {
@@ -265,5 +312,27 @@ public class BottomLift extends SubsystemBase {
     setNoBallSpeed(0.0);
     setWithBallSpeed(0.0);
     setSensorDelay(0.0);
+    hasTopBall = false;
+    limitBypassed = false;
+    bottomLiftMotor.overrideLimitSwitchesEnable(true);
+  }
+
+  public void configLiftMotor() {
+    bottomLiftMotor.setInverted(false);
+    bottomLiftMotor.configForwardLimitSwitchSource(LimitSwitchSource.FeedbackConnector,
+        LimitSwitchNormal.NormallyClosed);
+    bottomLiftMotor.setNeutralMode(NeutralMode.Brake);
+    bottomLiftMotor.setSensorPhase(true);
+    bottomLiftMotor.setStatusFramePeriod(1, 255);
+    bottomLiftMotor.setStatusFramePeriod(2, 254);
+    bottomLiftMotor.setStatusFramePeriod(3, 253);
+    bottomLiftMotor.setStatusFramePeriod(4, 252);
+    bottomLiftMotor.setStatusFramePeriod(8, 251);
+    bottomLiftMotor.setStatusFramePeriod(10, 250);
+    bottomLiftMotor.setStatusFramePeriod(12, 249);
+    bottomLiftMotor.setStatusFramePeriod(13, 248);
+    bottomLiftMotor.setStatusFramePeriod(14, 247);
+    bottomLiftMotor.setStatusFramePeriod(21, 246);
+
   }
 }

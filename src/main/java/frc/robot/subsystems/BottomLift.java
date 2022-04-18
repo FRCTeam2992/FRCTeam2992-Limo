@@ -128,17 +128,11 @@ public class BottomLift extends SubsystemBase {
   }
 
   public void setBottomLiftSpeed(double speed) {
-<<<<<<< Updated upstream
-    if (Constants.dataLogging) {
-      commandedBallSpeedLog.append("spin at " + speed);
-    }
-=======
     if (!limitBypassed) {
       limitBypassed = true;
       bottomLiftMotor.overrideLimitSwitchesEnable(false);
     }
     hasTopBall = false;
->>>>>>> Stashed changes
     bottomLiftMotor.set(ControlMode.PercentOutput, speed);
   }
 
@@ -178,16 +172,6 @@ public class BottomLift extends SubsystemBase {
           bottomLiftMotor.overrideLimitSwitchesEnable(false);
         }
         // If the top and the bottom or just the top is triggered
-<<<<<<< Updated upstream
-        
-        if (Constants.dataLogging) {
-          commandedBallSpeedLog.append("top sees ball");
-        }
-        
-        if (sensorTimer.get() > .125) {
-          bottomLiftMotor.set(ControlMode.PercentOutput, 0.0);
-          
-=======
         if (!hasTopBall) {
           hasTopBall = true;
           SmartDashboard.putNumber("initial encoder", bottomLiftMotor.getSelectedSensorPosition());
@@ -200,7 +184,6 @@ public class BottomLift extends SubsystemBase {
         if (Constants.dataLogging) {
           commandedBallSpeedLog.append("top sees ball");
 
->>>>>>> Stashed changes
         }
 
       } else if (updatedBottomSensorState) {

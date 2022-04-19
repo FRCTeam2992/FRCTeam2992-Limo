@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.sql.Driver;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -19,6 +21,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -90,14 +93,17 @@ public class Turret extends SubsystemBase {
 
     
        if (limeLightCamera.hasTarget()) {
-            // Update limelight sighted pose -- based on last seen target and may be STALE
-            limeLightPose = calcLLPose(limeLightPose);       // Unchanged if no current target seen
-            turretPose = calcTurretPose(limeLightPose);      // This is the pose of center of turret
-            visionPose = calcRobotPose(turretPose);          // This is the pose of the drive chassis
-
+           
             // Update pose estimator based on target
-            Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.addVisionMeasurement(visionPose, 
-                    Timer.getFPGATimestamp());
+            if (DriverStation.isTeleop()) {
+                 // Update limelight sighted pose -- based on last seen target and may be STALE
+                limeLightPose = calcLLPose(limeLightPose);       // Unchanged if no current target seen
+                turretPose = calcTurretPose(limeLightPose);      // This is the pose of center of turret
+                visionPose = calcRobotPose(turretPose);          // This is the pose of the drive chassis
+
+                Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.addVisionMeasurement(visionPose, 
+                Timer.getFPGATimestamp());
+            }
        }
 
         if (++dashboardCounter >= 5) {

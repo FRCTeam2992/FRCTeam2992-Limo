@@ -73,7 +73,7 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // Display the Shooter Set Speed and Current RPM
-    if (++dashboardCounter >= 5) {
+    // if (++dashboardCounter >= 5) {
       // SmartDashboard.putNumber("Main Shooter Set Speed", mainShooterSetRPM);
       // SmartDashboard.putNumber("Main Shooter Current RPM", getMainShooterRPM());
 
@@ -84,8 +84,8 @@ public class Shooter extends SubsystemBase {
       // SmartDashboard.putBoolean("Secondary Shooter At Speed", atSecondaryShooterRPM());
       // SmartDashboard.putBoolean("Shooters at Speed", atShooterRPM());
 
-      dashboardCounter = 0;
-    }
+    //   dashboardCounter = 0;
+    // }
   }
 
   @Override

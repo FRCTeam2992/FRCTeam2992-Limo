@@ -62,21 +62,21 @@ public class AutoTurretAimAutonomous extends CommandBase {
 
         else {
             //mTurret.stopTurret();
-            Pose2d robotPose = Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.getEstimatedPosition();
-            Transform2d toTarget = robotPose.minus(Constants.goalPose);
-            double toTargetX = toTarget.getTranslation().getX();
-            double toTargetY = toTarget.getTranslation().getY();
-            double toTargetAngle = Turret.angleOverlap(180 - Math.toDegrees(Math.atan2(toTargetY, toTargetX)));
-            SmartDashboard.putNumber("toTargetAngle", toTargetAngle);
-            SmartDashboard.putNumber("toTargetX", toTarget.getX() * 2.54 / 100);
-            SmartDashboard.putNumber("toTargetY", toTarget.getY() * 2.54 / 100);
-            mTurret.goToAngle(toTargetAngle - mTurret.getGyroYaw());
+            //Pose2d robotPose = Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.getEstimatedPosition();
+            // Transform2d toTarget = robotPose.minus(Constants.goalPose);
+            // double toTargetX = toTarget.getTranslation().getX();
+            // double toTargetY = toTarget.getTranslation().getY();
+            // double toTargetAngle = Turret.angleOverlap(180 - Math.toDegrees(Math.atan2(toTargetY, toTargetX)));
+            // SmartDashboard.putNumber("toTargetAngle", toTargetAngle);
+            // SmartDashboard.putNumber("toTargetX", toTarget.getX() * 2.54 / 100);
+            // SmartDashboard.putNumber("toTargetY", toTarget.getY() * 2.54 / 100);
+            // mTurret.goToAngle(toTargetAngle - mTurret.getGyroYaw());
             
-            // if (lostTargetTime.get() > 0.25) {
-            //     mTurret.goToAngle(turretSetAngle);
-            // } else {
-            //     mTurret.setTurretSpeed(0);
-            // }
+            if (lostTargetTime.get() > 0.25) {
+                mTurret.goToAngle(turretSetAngle);
+            } else {
+                mTurret.setTurretSpeed(0);
+            }
         }
     }
 

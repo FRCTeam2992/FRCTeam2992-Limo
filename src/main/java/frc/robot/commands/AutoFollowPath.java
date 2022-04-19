@@ -9,6 +9,8 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
@@ -17,6 +19,7 @@ import edu.wpi.first.util.datalog.DataLog;
 import edu.wpi.first.util.datalog.DoubleLogEntry;
 import edu.wpi.first.wpilibj.DataLogManager;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.lib.drive.swerve.trajectory.SwerveTrajectory;
 import frc.robot.Constants;
@@ -68,6 +71,7 @@ public class AutoFollowPath extends CommandBase {
 
     // Get the Trajectory
     mTrajectory = mSwerveyTrajectory.getTrajectory();
+    mTrajectory.transformBy(new Transform2d(new Translation2d(Constants.goalX, Constants.goalY), Rotation2d.fromDegrees(0.0)));
 
     // Create the Theta Controller
     thetaController = new ProfiledPIDController(Constants.thetaCorrectionP,
@@ -111,7 +115,7 @@ public class AutoFollowPath extends CommandBase {
       Rotation2d.fromDegrees(-mDriveTrain.getGyroYaw())));
     }
 
-    thetaController.reset(mDriveTrain.latestSwervePoseEstimate.getRotation().getRadians(), 0.0);
+    thetaController.reset(mDriveTrain.latestSwervePose.getRotation().getRadians(), 0.0);
 
     // Reset and Start the Elapsed Timer
     elapsedTimer.reset();
@@ -126,6 +130,9 @@ public class AutoFollowPath extends CommandBase {
 
     // Get the Latest State
     Trajectory.State latestState = mTrajectory.sample(currentTime);
+    // SmartDashboard.putNumber("Trajectory X", latestState.poseMeters.getX() * 100.0 / 2.54);
+    // SmartDashboard.putNumber("Trajectory Y", latestState.poseMeters.getY() * 100.0 / 2.54);
+    
 
     // Get the Desired Heading
     double heading = mSwerveyTrajectory.getDesiredHeading(currentTime);
@@ -135,17 +142,17 @@ public class AutoFollowPath extends CommandBase {
     // while (heading <= -1 * Math.PI) {
     //   heading += 2 * Math.PI;
     // }
-
+    // SmartDashboard.putNumber("trajectory heading", heading);
 
 
     // Get the Ajusted Speeds
-    ChassisSpeeds adjustSpeeds = controller.calculate(mDriveTrain.latestSwervePoseEstimate, latestState,
+    ChassisSpeeds adjustSpeeds = controller.calculate(mDriveTrain.latestSwervePose, latestState,
         Rotation2d.fromDegrees(heading));
 
 
     // Data Logging
     if (Constants.dataLogging) {
-      gyroReadLog.append(mDriveTrain.latestSwervePoseEstimate.getRotation().getRadians());
+      gyroReadLog.append(mDriveTrain.latestSwervePose.getRotation().getRadians());
       trajectoryHeadingReadLog.append((heading));
       trajectoryTimeStamp.append(currentTime);
       omegaRotation.append(adjustSpeeds.omegaRadiansPerSecond);

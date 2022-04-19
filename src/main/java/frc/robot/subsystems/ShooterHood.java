@@ -58,13 +58,13 @@ public class ShooterHood extends SubsystemBase {
   public void periodic() {
     // This method will be called once per scheduler run
 
-    if (++dashboardCounter >= 5) {
+    // if (++dashboardCounter >= 5) {
       // SmartDashboard.putNumber("Hood Encoder Angle", getEncoderAngle());
       // SmartDashboard.putNumber("Hood Target", hoodPosition);
       // SmartDashboard.putBoolean("Hood Aiming", isAiming());
       // SmartDashboard.putBoolean("Hood On Target", atTarget());
-      dashboardCounter = 0;
-    }
+      // dashboardCounter = 0;
+    // }
   }
 
   public void setHoodSpeed(double speed) {

@@ -55,11 +55,11 @@ public class Intake extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        if (++dashboardCounter >= 5) {
-            // SmartDashboard.putNumber("Intake Motor Speed", speedCommanded);
-            // SmartDashboard.putBoolean("Intake Commanded", intakeCommanded);
-            dashboardCounter = 0;
-        }
+        // if (++dashboardCounter >= 5) {
+        //     // SmartDashboard.putNumber("Intake Motor Speed", speedCommanded);
+        //     // SmartDashboard.putBoolean("Intake Commanded", intakeCommanded);
+        //     dashboardCounter = 0;
+        // }
 
     }
 

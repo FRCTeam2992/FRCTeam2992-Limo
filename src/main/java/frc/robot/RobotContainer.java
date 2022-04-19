@@ -302,21 +302,21 @@ public class RobotContainer {
       // SmartDashboard.putData("Up 1 Angle", new NewHoodTarget(mShooterHood, Math.floor(mShooterHood.getHoodTarget() + 1)));
       // SmartDashboard.putData("Down 1 Angle", new NewHoodTarget(mShooterHood, Math.floor(mShooterHood.getHoodTarget() + -1)));
 
-      SmartDashboard.putData("Deploy Intake", new ChangeIntakeState(mIntakeDeploy, true));
-      SmartDashboard.putData("Retract Intake", new ChangeIntakeState(mIntakeDeploy, false));
-      SmartDashboard.putData("Reset Intake Encoder", new ResetIntakeDeployEncoder(mIntakeDeploy));
+      // SmartDashboard.putData("Deploy Intake", new ChangeIntakeState(mIntakeDeploy, true));
+      // SmartDashboard.putData("Retract Intake", new ChangeIntakeState(mIntakeDeploy, false));
+      // SmartDashboard.putData("Reset Intake Encoder", new ResetIntakeDeployEncoder(mIntakeDeploy));
 
       SmartDashboard.putData("Home Intake", new HomeIntakeDeploy(mIntakeDeploy));
 
-      SmartDashboard.putData("Turret 0", new MoveTurretToAngle(mTurret, 0));
-      SmartDashboard.putData("Turret 90", new MoveTurretToAngle(mTurret, 90));
-      SmartDashboard.putData("Turret 180", new MoveTurretToAngle(mTurret, 180));
+      // SmartDashboard.putData("Turret 0", new MoveTurretToAngle(mTurret, 0));
+      // SmartDashboard.putData("Turret 90", new MoveTurretToAngle(mTurret, 90));
+      // SmartDashboard.putData("Turret 180", new MoveTurretToAngle(mTurret, 180));
       
       SmartDashboard.putData("Reset Odometry", new ResetOdometry(mDrivetrain));
 
-      SmartDashboard.putData("0 Hood", new NewHoodTarget(mShooterHood, 0.0));
-      SmartDashboard.putData("120 Hood", new NewHoodTarget(mShooterHood, 120.0));
-      SmartDashboard.putData("-120 Hood", new NewHoodTarget(mShooterHood, -120.0));
+      // SmartDashboard.putData("0 Hood", new NewHoodTarget(mShooterHood, 0.0));
+      // SmartDashboard.putData("120 Hood", new NewHoodTarget(mShooterHood, 120.0));
+      // SmartDashboard.putData("-120 Hood", new NewHoodTarget(mShooterHood, -120.0));
       
     
     /*

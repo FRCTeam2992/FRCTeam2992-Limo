@@ -114,11 +114,11 @@ public class BottomLift extends SubsystemBase {
         sensorTimerLog.append(sensorTimer.get());
     }
     if (dashboardCounter++ > 5) {
-      SmartDashboard.putBoolean("top sensor", updatedTopSensorState);
-      SmartDashboard.putBoolean("bottom sensor", updatedBottomSensorState);
-      SmartDashboard.putNumber("Bottom Lift Encoder", bottomLiftMotor.getSelectedSensorPosition());
-      SmartDashboard.putString("bottom lift control mode", bottomLiftMotor.getControlMode().toString());
-      SmartDashboard.putNumber("bottom lift motor power", bottomLiftMotor.getMotorOutputPercent());
+      // SmartDashboard.putBoolean("top sensor", updatedTopSensorState);
+      // SmartDashboard.putBoolean("bottom sensor", updatedBottomSensorState);
+      // SmartDashboard.putNumber("Bottom Lift Encoder", bottomLiftMotor.getSelectedSensorPosition());
+      // SmartDashboard.putString("bottom lift control mode", bottomLiftMotor.getControlMode().toString());
+      // SmartDashboard.putNumber("bottom lift motor power", bottomLiftMotor.getMotorOutputPercent());
 
       if (bottomLiftMotor.hasResetOccurred()) {
         configLiftMotor();
@@ -174,9 +174,9 @@ public class BottomLift extends SubsystemBase {
         // If the top and the bottom or just the top is triggered
         if (!hasTopBall) {
           hasTopBall = true;
-          SmartDashboard.putNumber("initial encoder", bottomLiftMotor.getSelectedSensorPosition());
+          // SmartDashboard.putNumber("initial encoder", bottomLiftMotor.getSelectedSensorPosition());
           encoderTarget = bottomLiftMotor.getSelectedSensorPosition() + Constants.liftEncoderBallAdvanceClicks;
-          SmartDashboard.putNumber("encoder target", encoderTarget);
+          // SmartDashboard.putNumber("encoder target", encoderTarget);
 
           bottomLiftMotor.set(ControlMode.Position, encoderTarget);
         }

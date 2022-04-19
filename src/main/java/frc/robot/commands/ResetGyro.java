@@ -34,6 +34,7 @@ public class ResetGyro extends CommandBase {
     mDriveTrain.navx.zeroYaw();
     mDriveTrain.gyroOffset = mGyroOffset;
     Pose2d pose = mDriveTrain.latestSwervePoseEstimate;
+    mDriveTrain.setPoseEstimatePosition(true, new Pose2d(pose.getX(), pose.getY(), new Rotation2d(0.0)));
     mDriveTrain.setOdometryPosition(true, new Pose2d(pose.getX(), pose.getY(), new Rotation2d(0.0)));
 
     // Reset the Odometry

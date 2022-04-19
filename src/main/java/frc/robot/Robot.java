@@ -65,7 +65,7 @@ public class Robot extends TimedRobot {
             DriverStation.startDataLog(DataLogManager.getLog());
         }
 
-        mRobotContainer.mDrivetrain.resetOdometry();
+        mRobotContainer.mDrivetrain.resetPoseEstimate();
     }
 
     /**
@@ -129,6 +129,7 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveRampRate(0.0);
 
         mRobotContainer.mDrivetrain.resetOdometry();
+        // mRobotContainer.mDrivetrain.resetPoseEstimate();
         // mRobotContainer.mDrivetrain.navx.zeroYaw();
 
         // Get the Autonomous Command
@@ -169,6 +170,7 @@ public class Robot extends TimedRobot {
         mRobotContainer.mDrivetrain.setDriveRampRate(0.25);
 
         // mRobotContainer.mDrivetrain.resetOdometry();
+        mRobotContainer.mDrivetrain.setPoseEstimatePosition(true, mRobotContainer.mDrivetrain.latestSwervePose);
         resetSubsystems();
     }
 

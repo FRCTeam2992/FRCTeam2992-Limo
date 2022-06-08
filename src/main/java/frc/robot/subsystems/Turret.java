@@ -96,13 +96,13 @@ public class Turret extends SubsystemBase {
            
             // Update pose estimator based on target
             if (DriverStation.isTeleop()) {
-                 // Update limelight sighted pose -- based on last seen target and may be STALE
-                limeLightPose = calcLLPose(limeLightPose);       // Unchanged if no current target seen
-                turretPose = calcTurretPose(limeLightPose);      // This is the pose of center of turret
-                visionPose = calcRobotPose(turretPose);          // This is the pose of the drive chassis
+                //  // Update limelight sighted pose -- based on last seen target and may be STALE
+                // limeLightPose = calcLLPose(limeLightPose);       // Unchanged if no current target seen
+                // turretPose = calcTurretPose(limeLightPose);      // This is the pose of center of turret
+                // visionPose = calcRobotPose(turretPose);          // This is the pose of the drive chassis
 
-                Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.addVisionMeasurement(visionPose, 
-                Timer.getFPGATimestamp());
+                // Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.addVisionMeasurement(visionPose, 
+                // Timer.getFPGATimestamp());
             }
        }
 
@@ -113,10 +113,10 @@ public class Turret extends SubsystemBase {
             }
 
         // Update Dashboard
-        SmartDashboard.putNumber("Turret CanCoder Real", getCanCoderRealDegrees());
-        SmartDashboard.putNumber("Turret RobotCentric Angle", angleOverlap(getTurretAngle()));
-        SmartDashboard.putNumber("Turret Falcon Real", getFalconRealDegrees());
-        SmartDashboard.putNumber("Turret Falcon Encoder Clicks", turretFalcon.getSelectedSensorPosition());
+        // SmartDashboard.putNumber("Turret CanCoder Real", getCanCoderRealDegrees());
+        // SmartDashboard.putNumber("Turret RobotCentric Angle", angleOverlap(getTurretAngle()));
+        // SmartDashboard.putNumber("Turret Falcon Real", getFalconRealDegrees());
+        // SmartDashboard.putNumber("Turret Falcon Encoder Clicks", turretFalcon.getSelectedSensorPosition());
         // SmartDashboard.putNumber("Turret Target", turretTargetAngle);
         // SmartDashboard.putNumber("Camera Angle", limeLightCamera.getCameraAngle(Constants.distanceTest,
         //         Constants.cameraHeight, Constants.goalHeight));
@@ -201,7 +201,7 @@ public class Turret extends SubsystemBase {
         // angle -= Constants.turretRobotOffset;
         double motorTarget = angle * 2048.0 * Constants.turretGearRatio / 360.0;
 
-        SmartDashboard.putNumber("Turret target ticks", motorTarget);
+        // SmartDashboard.putNumber("Turret target ticks", motorTarget);
 
         //setTurretSpeed(pidPower);
         turretFalcon.set(ControlMode.MotionMagic, motorTarget, DemandType.ArbitraryFeedForward, Constants.turretF);

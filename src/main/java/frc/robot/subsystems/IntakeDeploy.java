@@ -43,13 +43,13 @@ public class IntakeDeploy extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    // if (++dashboardCounter >= 5) {
-    //   // SmartDashboard.putNumber("Intake Deploy Motor Encoder", getEncoderAngle());
+    if (++dashboardCounter >= 5) {
+      // SmartDashboard.putNumber("Intake Deploy Motor Encoder", getEncoderAngle());
     //   // SmartDashboard.putBoolean("Intake Deploy Limit Switch", getLimitSwitch());
     //   // SmartDashboard.putBoolean("Intake State", getIntakeDeployedState());
 
     //   dashboardCounter = 0;
-    // }
+    }
 
     if (!getLimitSwitch() && !intakeDeployedState && Math.abs(getEncoderAngle()) > 0.2) {
       initIntakeDeployMotor(0.0);
@@ -74,7 +74,7 @@ public class IntakeDeploy extends SubsystemBase {
     }
 
     intakeDeployMotor.set(power);
-    SmartDashboard.putNumber("deploy power", power);
+    // SmartDashboard.putNumber("deploy power", power);
   }
 
   public void retractIntake() {
@@ -84,7 +84,7 @@ public class IntakeDeploy extends SubsystemBase {
       power = Constants.intakeF;
     }
     intakeDeployMotor.set(power);
-    SmartDashboard.putNumber("retract power", power);
+    // SmartDashboard.putNumber("retract power", power);
   
   }
 

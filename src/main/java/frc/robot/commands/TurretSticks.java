@@ -66,22 +66,22 @@ public class TurretSticks extends CommandBase {
       }
       // SmartDashboard.putNumber("TurretStick output", targetAngle);
     } else if (!mClimb.getClimbMode() && Robot.mRobotContainer.controller1.getLeftBumper()) {
-      //mTurret.stopTurret();
-      Pose2d robotPose = Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.getEstimatedPosition();
-      Transform2d toTarget = robotPose.minus(Constants.goalPose);
-      double toTargetX = toTarget.getTranslation().getX();
-      double toTargetY = toTarget.getTranslation().getY();
-      double toTargetAngle = Turret.angleOverlap(180 - Math.toDegrees(Math.atan2(toTargetY, toTargetX)));
-      // SmartDashboard.putNumber("toTargetAngle", toTargetAngle);
-      // SmartDashboard.putNumber("toTargetX", toTarget.getX() * 2.54 / 100);
-      // SmartDashboard.putNumber("toTargetY", toTarget.getY() * 2.54 / 100);
-      targetAngle = toTargetAngle;
-      if (Math.abs(turned) > 0.5) {
-        targetAngle -= cycles * turned;
-      }
-      if (Math.abs((targetAngle - mTurret.getGyroYaw()) - mTurret.getTurretAngle()) > 1.0 ) {
-          mTurret.goToAngle(targetAngle - mTurret.getGyroYaw());
-      }
+      mTurret.stopTurret();
+      // Pose2d robotPose = Robot.mRobotContainer.mDrivetrain.swerveDrivePoseEstimator.getEstimatedPosition();
+      // Transform2d toTarget = robotPose.minus(Constants.goalPose);
+      // double toTargetX = toTarget.getTranslation().getX();
+      // double toTargetY = toTarget.getTranslation().getY();
+      // double toTargetAngle = Turret.angleOverlap(180 - Math.toDegrees(Math.atan2(toTargetY, toTargetX)));
+      // // SmartDashboard.putNumber("toTargetAngle", toTargetAngle);
+      // // SmartDashboard.putNumber("toTargetX", toTarget.getX() * 2.54 / 100);
+      // // SmartDashboard.putNumber("toTargetY", toTarget.getY() * 2.54 / 100);
+      // targetAngle = toTargetAngle;
+      // if (Math.abs(turned) > 0.5) {
+      //   targetAngle -= cycles * turned;
+      // }
+      // if (Math.abs((targetAngle - mTurret.getGyroYaw()) - mTurret.getTurretAngle()) > 1.0 ) {
+      //     mTurret.goToAngle(targetAngle - mTurret.getGyroYaw());
+      // }
     } else {
       mTurret.stopTurret();
     }

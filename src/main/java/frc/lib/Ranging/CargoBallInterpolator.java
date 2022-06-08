@@ -175,7 +175,7 @@ public class CargoBallInterpolator {
             }
         }
 
-        SmartDashboard.putNumber("Real Distance", tempRealDistance);
+        // SmartDashboard.putNumber("Real Distance", tempRealDistance);
 
         return tempRealDistance;
     }

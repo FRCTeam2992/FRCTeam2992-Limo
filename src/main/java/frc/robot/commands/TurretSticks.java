@@ -56,10 +56,10 @@ public class TurretSticks extends CommandBase {
         targetAngle = Turret.angleOverlap((Math.toDegrees(Math.atan2(y, x)) - 90));
       }
 
-      // Compensate to lead for robot rotation -- try 3 samples worth of drive train rotation
-      if (Math.abs(turned) > 0.5) {
-        targetAngle -= cycles *turned;
-      }
+      // // Compensate to lead for robot rotation -- try 3 samples worth of drive train rotation
+      // if (Math.abs(turned) > 0.5) {
+      //   targetAngle -= cycles *turned;
+      // }
       // SmartDashboard.putNumber("Angle Turned", Robot.mRobotContainer.mDrivetrain.angleTurned);
       if (Math.abs(targetAngle - mTurret.getTurretAngle()) > 1.0) {
          mTurret.goToAngle(Turret.angleOverlap(targetAngle));

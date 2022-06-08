@@ -54,14 +54,14 @@ public class Constants {
   public static final double turretF = -0.02; // Need to push against CF spring in neg dir
   
   public static final double turretTolerance = 1.0;
-  public static final int turretEncoderOffset = 69;
+  public static final int turretEncoderOffset = 90;
   public static final int turretRobotOffset = 70; 
-  public static final int turretMinEnd = 45;
-  public static final int turretMaxEnd = 298;
-  public static final int turretMinRumble = 60;
-  public static final int turretMaxRumble = 283;
-  public static final int turretMaxSlowZone = 223;
-  public static final int turretMinSlowZone = 100;
+  public static final int turretMinEnd = 35; // 45
+  public static final int turretMaxEnd = 320; // 298
+  public static final int turretMinRumble = 50; // 60
+  public static final int turretMaxRumble = 305; // 283
+  public static final int turretMaxSlowZone = 245; // 223
+  public static final int turretMinSlowZone = 110; // 100
   public static final double turretJoystickDeadband = .75;
   public static final double turretDefaultAngle = 180;
   public static final double turretGearRatio = (240.0 / 18.0) * (24.0 / 18.0);

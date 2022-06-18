@@ -308,6 +308,8 @@ public class Drivetrain extends SubsystemBase {
       // SmartDashboard.putNumber("Gyro Yaw", getGyroYaw());
       // SmartDashboard.putBoolean("Gyro Ready", navx.isConnected());
       // SmartDashboard.putBoolean("Gyro Calibrating", navx.isCalibrating());
+
+      // SmartDashboard.putBoolean("Is In Slow Mode", isInSlowMode());
     }
 
     // Update the Odometry

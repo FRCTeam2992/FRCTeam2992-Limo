@@ -191,8 +191,13 @@ public class RobotContainer {
       // autoShootButton.whileActiveContinuous(new SetSwerveAngleSafe(mDrivetrain, 45, -45, -45, 45));
 
 
-      JoystickButton panicIntakeButton1 = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
-      panicIntakeButton1.whileHeld(new PanicIntake(mIntake, mIntakeDeploy, mBottomLift, mCargoFunnel));
+      // JoystickButton panicIntakeButton1 = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
+      // panicIntakeButton1.whileHeld(new PanicIntake(mIntake, mIntakeDeploy, mBottomLift, mCargoFunnel));
+
+      JoystickButton slowModeButton = new JoystickButton(controller0, XboxController.Button.kRightBumper.value);
+      slowModeButton.whenPressed(new SetSlowMode(mDrivetrain, true));
+      slowModeButton.whenReleased(new SetSlowMode(mDrivetrain, false));
+
 
       JoystickButton intakeOrientCameraButton = new JoystickButton(controller0, XboxController.Button.kLeftBumper.value);
 
@@ -407,9 +412,9 @@ public class RobotContainer {
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(47.6, 1700, 2550, -125, 48.0));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(71.6, 1900, 2800, -78.5, 72.0));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(95.7, 1800, 3050, 2, 96.0));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(119.4, 2200, 2850, 102, 120.0));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(141.5, 2350, 2850, 112.6, 144.0));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(165, 2600, 3100, 148.5, 168.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(119.4, 2200, 2850, 110, 120.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(141.5, 2450, 3000, 135.6, 144.0));//2350, 2850
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(165, 2600, 3250, 148.5, 168.0));//2600, 3100
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(188.9, 2750, 3450, 148.5, 192.0));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(213, 3050, 3500, 148.5, 216.0));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(236, 3250, 3500, 148.5, 240.0));

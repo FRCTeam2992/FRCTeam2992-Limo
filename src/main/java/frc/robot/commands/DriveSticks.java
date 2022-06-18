@@ -137,7 +137,7 @@ public class DriveSticks extends CommandBase {
       // Slow the Rotation
       x2 *= (2.0 / 3.0);
 
-      // // Check for Slow Mode
+      // Check for Slow Mode
       if (mDriveTrain.isInSlowMode()) {
         x1 *= 0.6;
         y1 *= 0.6;

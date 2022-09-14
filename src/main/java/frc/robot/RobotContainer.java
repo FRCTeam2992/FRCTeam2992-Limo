@@ -238,7 +238,7 @@ public class RobotContainer {
       TriggerButton dejamButton = new TriggerButton(controller1, .3, 'r');
       dejamButton.whileActiveContinuous(new DejamBallPath(mIntake, mCargoFunnel, mBottomLift, mIntakeDeploy), true);
 
-      JoystickButton driverBPanicButton = new JoystickButton(controller1, XboxController.Button.kRightBumper.value);
+      JoystickButton driverBPanicButton = new JoystickButton(controller1, XboxController.Button.kLeftBumper.value);
       driverBPanicButton.whileHeld(new PanicIntake(mIntake, mIntakeDeploy, mBottomLift, mCargoFunnel));
 
       TriggerButton highGoalShotButton = new TriggerButton(controller1, .3, 'l');
@@ -246,7 +246,7 @@ public class RobotContainer {
       highGoalShotButton.whileActiveContinuous(new SetShooterSpeedTargets(mShooter, 1750, 2650));
       highGoalShotButton.whileActiveContinuous(new MoveTurretToAngle(mTurret, 0.0));
       
-      JoystickButton autoTrackHub = new JoystickButton(controller1, XboxController.Button.kLeftBumper.value);
+      JoystickButton autoTrackHub = new JoystickButton(controller1, XboxController.Button.kRightBumper.value);
       // lowGoalShotButton.whileActiveOnce(new NewHoodTarget(mShooterHood, 152), true);
       // lowGoalShotButton.whileActiveOnce(new SetShooterSpeedTargets(mShooter, 1200, 0), true);
       // lowGoalShotButton.whileActiveOnce(new MoveTurretToAngle(mTurret, 180));
@@ -410,11 +410,13 @@ public class RobotContainer {
     // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(limeLightDistance, Main, Backspin, Hood, realDistance));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(37.7, 1750, 2650, -152, 24.0));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(47.6, 1700, 2550, -125, 48.0));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(71.6, 1900, 2800, -78.5, 72.0));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(95.7, 1800, 3050, 2, 96.0));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(119.4, 2200, 2850, 110, 120.0));
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(141.5, 2450, 3000, 135.6, 144.0));//2350, 2850
-    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(165, 2600, 3250, 148.5, 168.0));//2600, 3100
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(63.7, 1836, 2720, -93.4, 48.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(71.6, 1900, 2800, -50.1, 72.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(95.7, 2050, 2800, 25.8, 96.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(119.4, 2200, 2850, 94.5, 120.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(141.5, 2600, 3100, 142.6, 144.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(165, 2800, 3250, 148.5, 168.0));
+    cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(177.4, 2850, 3300, 148.5, 168.0));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(188.9, 2750, 3450, 148.5, 192.0));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(213, 3050, 3500, 148.5, 216.0));
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(236, 3250, 3500, 148.5, 240.0));
@@ -422,4 +424,18 @@ public class RobotContainer {
     cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(280, 3450, 4700, 138, 288.0));
   }
 
-}
+
+  // cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(37.7, 1750, 2650, -152, 24.0));
+  //   cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(47.6, 1700, 2550, -125, 48.0));
+  //   cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(71.6, 1900, 2800, -78.5, 72.0));
+  //   cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(95.7, 1800, 3050, 2, 96.0));
+  //   cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(119.4, 2200, 2850, 110, 120.0));
+  //   cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(141.5, 2450, 3000, 135.6, 144.0));//2350, 2850
+  //   cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(165, 2600, 3250, 148.5, 168.0));//2600, 3100
+  //   cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(188.9, 2750, 3450, 148.5, 192.0));
+  //   cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(213, 3050, 3500, 148.5, 216.0));
+  //   cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(236, 3250, 3500, 148.5, 240.0));
+  //   cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(265, 3300, 3850, 148.5, 264.0));
+  //   cargoBallInterpolator.addDataPoint(new CargoBallDataPoint(280, 3450, 4700, 138, 288.0));
+
+} 

@@ -49,9 +49,9 @@ public class ClimbSticks extends CommandBase {
   public void execute() {
     double climbY;
    
-    climbY = -Robot.mRobotContainer.controller1.getRightY();
+    climbY = -Robot.mRobotContainer.controller1.getLeftY();
 
-    if (Math.abs(climbY) <= Constants.joystickDeadband*2){
+    if (Math.abs(climbY) <= Constants.joystickDeadband * 2){
       climbY = 0.0;
     }      
     climbY = climbY * climbY * climbY;

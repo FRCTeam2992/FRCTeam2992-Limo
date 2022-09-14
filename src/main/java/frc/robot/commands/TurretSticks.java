@@ -36,8 +36,8 @@ public class TurretSticks extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double x = -Robot.mRobotContainer.controller1.getLeftX();
-    double y = -Robot.mRobotContainer.controller1.getLeftY();
+    double x = -Robot.mRobotContainer.controller1.getRightX();
+    double y = -Robot.mRobotContainer.controller1.getRightY();
     double targetAngle;
     double xyMagnitude = Math.sqrt((x * x) + (y * y));
 

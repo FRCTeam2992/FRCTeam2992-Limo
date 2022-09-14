@@ -84,7 +84,7 @@ public class FiveBallAuto extends ParallelCommandGroup {
             new SetTurretTargetAngle(mTurret, true, 181),
             new SetShooterSpeedTargets(mShooter, 2500, 3000),
             new NewHoodTarget(mShooterHood, 128),
-            new AutoFollowPath(mDrivetrain, new FiveBallFinalPart1Path(mDrivetrain, -130).generateSwerveTrajectory(), false, false, -130.0).withTimeout(7.5),
+            new AutoFollowPath(mDrivetrain, new FiveBallFinalPart1Path(mDrivetrain, -125).generateSwerveTrajectory(), false, false, -130.0).withTimeout(7.5),
             new WaitCommand(0.6),
             new AutoFollowPath(mDrivetrain, new FiveBallFinalPart2Path(mDrivetrain, 135).generateSwerveTrajectory(), false, false, 135).withTimeout(7.5),
             new WaitCommand(0.2),
